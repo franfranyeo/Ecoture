@@ -1,0 +1,12 @@
+{
+  "Version": 1,
+  "Hash": "ENRyHqt7ed1ux+CfItJQDFo4wT4BTlJ0rh57ysSQ6Vg=",
+  "Source": "Ecoture-server",
+  "BasePath": "_content/Ecoture-server",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": [],
+  "Endpoints": []
+}
