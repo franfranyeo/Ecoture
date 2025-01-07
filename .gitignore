@@ -173,10 +173,11 @@ msbuild.wrn
 # Visual Studio 2022
 .vs/
 /Ecoture-server/.vs
+Ecoture-server/.vs/
 
 # Image Uploads
 uploads/
 
 # Migrations
-/Ecoture-server/Ecoture-server/Migrations/*
-Ecoture-server/Ecoture-server/Migrations/ApplicationDbContextModelSnapshot.cs
+/Ecoture-server/Ecoture/Migrations/*
+Ecoture-server/Ecoture/Migrations/ApplicationDbContextModelSnapshot.cs
