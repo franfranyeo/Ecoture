@@ -172,7 +172,8 @@ msbuild.wrn
 
 # Visual Studio 2022
 .vs/
-/Ecoture-server/.vs
+Ecoture-server/.vs
+Ecoture-server/Ecoture-server/obj/
 
 # Image Uploads
 uploads/
