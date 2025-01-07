@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
 
-namespace Ecoture.Models
+namespace Models.Entity
 {
     public class User
     {
@@ -32,7 +32,7 @@ namespace Ecoture.Models
         public UserRole role { get; set; } = UserRole.Customer; // default role is customer
 
         [MaxLength(255)]
-        public string? pfpURL { get; set; } // optional
+        public string? pfpURL { get; set; } 
 
         [Column(TypeName = "datetime")]
         public DateTime lastLogin { get; set; }
@@ -43,6 +43,16 @@ namespace Ecoture.Models
 
         [MaxLength(10)]
         public string? referralCode { get; set; }
+
+        public bool agreedToTerms { get; set; } = false;
+
+        [Column(TypeName = "datetime")]
+        public DateTime? agreedToTermsAt { get; set; }
+
+        public bool deleteRequested { get; set; }
+
+        [Column(TypeName = "datetime")]
+        public DateTime? deleteRequestedAt { get; set; }
 
         [Column(TypeName = "datetime")]
         public DateTime createdAt { get; set; }

@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
 
-namespace Ecoture.Models
+namespace Models.Request
 {
     public class LoginRequest
     {

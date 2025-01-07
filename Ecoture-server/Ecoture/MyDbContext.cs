@@ -1,6 +1,6 @@
-﻿using Ecoture.Models;
-using Ecoture.Models.Enum;
+﻿using Ecoture.Models.Enum;
 using Microsoft.EntityFrameworkCore;
+using Models.Entity;
 
 namespace Ecoture
 {
