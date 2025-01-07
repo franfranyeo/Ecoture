@@ -181,3 +181,4 @@ uploads/
 # Migrations
 /Ecoture-server/Ecoture-server/Migrations/*
 Ecoture-server/Ecoture-server/Migrations/ApplicationDbContextModelSnapshot.cs
+/Ecoture-server/.vs
