@@ -14,6 +14,7 @@ import Register from './pages/user/Register';
 import TermsOfUse from './pages/user/TermsOfUse';
 import PrivacyPolicy from './pages/user/PrivacyPolicy';
 import { GoogleOAuthProvider } from '@react-oauth/google';
+import Profile from './pages/user/Profile';
 
 function App() {
     const routes = [];
@@ -27,6 +28,7 @@ function App() {
                         <Route path="/login" element={<Login />} />
                         <Route path="/register" element={<Register />} />
                         <Route path="/terms-of-use" element={<TermsOfUse />} />
+                        <Route path="/profile" element={<Profile />} />
                         <Route
                             path="/privacy-policy"
                             element={<PrivacyPolicy />}

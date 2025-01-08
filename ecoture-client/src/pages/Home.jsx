@@ -13,10 +13,6 @@ import placeholderImage from '../assets/images/placeholder.jpg';
 function Home() {
     return (
         <Box
-            sx={{
-                fontFamily:
-                    'Outfit, system-ui, Avenir, Helvetica, Arial, sans-serif'
-            }}
         >
             {/* Hero Section */}
             <Box
@@ -76,7 +72,6 @@ function Home() {
                         color: 'black',
                         padding: '10px 20px',
                         fontSize: '16px',
-                        fontFamily: 'inherit',
                         '&:hover': { backgroundColor: '#f0f0f0' }
                     }}
                 >
