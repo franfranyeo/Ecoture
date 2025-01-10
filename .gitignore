@@ -175,12 +175,12 @@ msbuild.wrn
 /Ecoture-server/.vs
 Ecoture-server/.vs/
 Ecoture-server/.vs
-Ecoture-server/Ecoture/obj/
 
 # Image Uploads
 uploads/
 
 # Migrations
-/Ecoture-server/Ecoture-server/Migrations/*
-Ecoture-server/Ecoture-server/Migrations/ApplicationDbContextModelSnapshot.cs
-/Ecoture-server/Ecoture/obj
+# ignore the ecotureAPI migrations
+EcotureAPI/.vs
+EcotureAPI/Ecoture/obj
+

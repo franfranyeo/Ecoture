@@ -42,26 +42,26 @@ instance.interceptors.response.use(
     }
 );
 
-// Fetch users example
-export const fetchUsers = async () => {
-    try {
-        const response = await instance.get('/user/users');
-        return response.data;
-    } catch (error) {
-        // Handle any errors that occurred during the request
-        throw error;
-    }
-};
+// // Fetch users example
+// export const fetchUsers = async () => {
+//     try {
+//         const response = await instance.get('/user/users');
+//         return response.data;
+//     } catch (error) {
+//         // Handle any errors that occurred during the request
+//         throw error;
+//     }
+// };
 
-// Subscription example
-export const subscribe = async (name, email) => {
-    try {
-        const response = await instance.post('/subscribe', { name, email });
-        return response.data;
-    } catch (error) {
-        // Handle any errors that occurred during the request
-        throw error;
-    }
-};
+// // Subscription example
+// export const subscribe = async (name, email) => {
+//     try {
+//         const response = await instance.post('/subscribe', { name, email });
+//         return response.data;
+//     } catch (error) {
+//         // Handle any errors that occurred during the request
+//         throw error;
+//     }
+// };
 
 export default instance;
