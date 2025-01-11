@@ -1,17 +1,31 @@
 import React, { useState } from 'react';
-import { Box, Typography, TextField, Button, Grid } from '@mui/material';
+import {
+    Box,
+    Typography,
+    TextField,
+    Button,
+    Grid,
+    IconButton
+} from '@mui/material';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import http from 'utils/http';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import loginImage from 'assets/images/login.png';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 
 function ResetPassword() {
     const { search } = useLocation();
     const token = new URLSearchParams(search).get('token'); // Assume token is passed as query parameter
     const [isLoading, setIsLoading] = useState(false);
+    const navigate = useNavigate();
+    const [showPassword, setShowPassword] = useState(false);
+
+    const handleClickShowPassword = () => {
+        setShowPassword(!showPassword);
+    };
 
     const formik = useFormik({
         initialValues: {
@@ -40,9 +54,10 @@ function ResetPassword() {
             try {
                 const res = await http.post('/user/reset-password', {
                     token,
-                    password: data.password
+                    newPassword: data.password
                 });
                 toast.success(res.data.message);
+                navigate('/login');
             } catch (err) {
                 toast.error(
                     `${
@@ -71,7 +86,7 @@ function ResetPassword() {
                     display: 'flex',
                     borderRadius: 2,
                     alignItems: 'center',
-                    gap: { xs: 0, md: 12 },
+                    gap: { xs: 0, md: 6, lg: 12 },
                     height: '85%',
                     maxHeight: '750px',
                     width: '100%',
@@ -114,27 +129,30 @@ function ResetPassword() {
                     sx={{
                         width: '50%',
                         display: 'flex',
+                        flexDirection: 'column',
                         flex: 1,
                         justifyContent: 'center',
                         bgcolor: 'rgba(255, 255, 255, 0.8)', // Optional: semi-transparent background
-                        p: 3
+                        p: 3,
+                        height: '100%',
+                        alignItems: 'center'
                     }}
                 >
+                    <Typography
+                        variant="h4"
+                        align="center"
+                        gutterBottom
+                        sx={{ fontWeight: '600' }}
+                    >
+                        RESET PASSWORD
+                    </Typography>
                     <Box component="form" onSubmit={formik.handleSubmit}>
-                        <Typography
-                            variant="h4"
-                            align="center"
-                            gutterBottom
-                            sx={{ fontWeight: '600' }}
-                        >
-                            RESET PASSWORD
-                        </Typography>
                         <Grid container spacing={2}>
                             <Grid item xs={12}>
                                 <TextField
                                     fullWidth
                                     margin="dense"
-                                    type="password"
+                                    type={showPassword ? 'text' : 'password'}
                                     label="New Password"
                                     name="password"
                                     value={formik.values.password}
@@ -148,6 +166,24 @@ function ResetPassword() {
                                         formik.touched.password &&
                                         formik.errors.password
                                     }
+                                    InputProps={{
+                                        endAdornment: (
+                                            <IconButton
+                                                edge="end"
+                                                onClick={
+                                                    handleClickShowPassword
+                                                }
+                                                aria-label="toggle password visibility"
+                                                sx={{ color: 'action.active' }}
+                                            >
+                                                {showPassword ? (
+                                                    <VisibilityOff />
+                                                ) : (
+                                                    <Visibility />
+                                                )}
+                                            </IconButton>
+                                        )
+                                    }}
                                 />
                             </Grid>
 
@@ -155,7 +191,7 @@ function ResetPassword() {
                                 <TextField
                                     fullWidth
                                     margin="dense"
-                                    type="password"
+                                    type={showPassword ? 'text' : 'password'}
                                     label="Confirm Password"
                                     name="confirmPassword"
                                     value={formik.values.confirmPassword}
@@ -169,6 +205,24 @@ function ResetPassword() {
                                         formik.touched.confirmPassword &&
                                         formik.errors.confirmPassword
                                     }
+                                    InputProps={{
+                                        endAdornment: (
+                                            <IconButton
+                                                edge="end"
+                                                onClick={
+                                                    handleClickShowPassword
+                                                }
+                                                aria-label="toggle password visibility"
+                                                sx={{ color: 'action.active' }}
+                                            >
+                                                {showPassword ? (
+                                                    <VisibilityOff />
+                                                ) : (
+                                                    <Visibility />
+                                                )}
+                                            </IconButton>
+                                        )
+                                    }}
                                 />
                             </Grid>
                         </Grid>

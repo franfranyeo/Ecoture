@@ -55,6 +55,7 @@ namespace Models.Entity
         [Column(TypeName = "datetime")]
         public DateTime UpdatedAt { get; set; }
 
+
         public Membership? Membership { get; set; }
 
         //public ICollection<Referral> ReferralsSent { get; set; } = new List<Referral>(); // Referrals made by the user

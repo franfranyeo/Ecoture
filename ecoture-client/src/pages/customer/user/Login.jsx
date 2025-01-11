@@ -111,7 +111,7 @@ function Login() {
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',
-                height: '100vh',
+                height: '100%',
                 px: 5
             }}
         >
@@ -120,23 +120,26 @@ function Login() {
                     display: 'flex',
                     borderRadius: 2,
                     alignItems: 'center',
-                    gap: 8,
-                    height: '80%',
-                    width: '100%'
+                    gap: { xs: 0, md: 6, lg: 12 },
+                    height: '85%',
+                    maxHeight: '750px',
+                    width: '100%',
+                    maxWidth: '1250px'
                 }}
             >
                 <Box
                     sx={{
+                        flex: 1,
                         p: 4,
                         width: '50%',
                         height: '100%',
-                        display: 'flex',
+                        display: { xs: 'none', md: 'flex' },
                         flexDirection: 'column',
                         justifyContent: 'flex-end',
                         alignItems: 'flex-end',
-                        backgroundImage: `url(${loginImage})`,
+                        backgroundImage: `url(${loginImage})`, // Keep the same background
                         backgroundSize: 'cover',
-                        backgroundPosition: 'center',
+                        backgroundPosition: 'center bottom',
                         borderRadius: 3
                     }}
                 >
@@ -159,29 +162,24 @@ function Login() {
                     sx={{
                         width: '50%',
                         display: 'flex',
+                        flexDirection: 'column',
+                        flex: 1,
                         justifyContent: 'center',
                         bgcolor: 'rgba(255, 255, 255, 0.8)', // Optional: semi-transparent background
-                        p: 3
+                        p: 3,
+                        height: '100%',
+                        alignItems: 'center'
                     }}
                 >
+                    <Typography
+                        variant="h4"
+                        align="center"
+                        gutterBottom
+                        sx={{ fontWeight: '600' }}
+                    >
+                        WELCOME BACK
+                    </Typography>
                     <Box component="form" onSubmit={formik.handleSubmit}>
-                        <Box
-                            sx={{
-                                display: 'flex',
-                                justifyContent: 'center',
-                                alignItems: 'center'
-                            }}
-                        >
-                            {/* <img src={logo} alt="logo" style={{ width: 100 }} /> */}
-                        </Box>
-                        <Typography
-                            variant="h4"
-                            align="center"
-                            gutterBottom
-                            sx={{ fontWeight: '600' }}
-                        >
-                            WELCOME BACK
-                        </Typography>
                         <Grid container spacing={2}>
                             <Grid item xs={12}>
                                 <TextField

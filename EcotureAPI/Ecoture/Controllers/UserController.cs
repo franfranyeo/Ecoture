@@ -11,58 +11,32 @@ using Ecoture.Models.Request;
 using EcotureAPI.Models.Request;
 using Google.Apis.Auth;
 using Microsoft.EntityFrameworkCore;
-using System;
-using Microsoft.AspNetCore.Identity;
 using EcotureAPI.Models.Entity;
-
-
+using EcotureAPI.Services;
 
 
 namespace Ecoture.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class UserController(MyDbContext context, IConfiguration configuration) : ControllerBase
+    public class UserController(MyDbContext context, IConfiguration configuration, IUserManager userManager, IEmailService emailService) : ControllerBase
     {
         private readonly MyDbContext _context = context;
         private readonly IConfiguration _configuration = configuration;
+        private readonly IUserManager _userManager = userManager;
+        private readonly IEmailService _emailService = emailService;
 
 
         // REGISTER USER
-        [HttpPost("register")] // URL path for the HTTP Post method is “register”.
+        [HttpPost("register")]
         public async Task<IActionResult> Register(RegisterRequest request)
         {
-            // trim string values
-            request.FirstName = request.FirstName.Trim();
-            request.LastName = request.LastName.Trim();
-            request.Email = request.Email.Trim();
-            request.Password = request.Password.Trim();
+            // Register user via UserManager
+            var result = await _userManager.RegisterUserAsync(request);
+            if (!result.IsSuccess)
+                return BadRequest(new { message = result.ErrorMessage });
 
-            // Check if user already exists
-            var userExists = _context.Users.Any(u => u.Email == request.Email);
-            if (userExists)
-            {
-                string message = "Email already exists.";
-                return BadRequest(new { message });
-            }
-
-            // Create user object 
-            var now = DateTime.Now;
-            string passwordHash = BCrypt.Net.BCrypt.HashPassword(request.Password);
-            var user = new User()
-            {
-                FirstName = request.FirstName,
-                LastName = request.LastName,
-                Email = request.Email,
-                Password = passwordHash,
-                CreatedAt = now,
-                UpdatedAt = now
-            };
-
-            // Add user 
-            _context.Users.Add(user);
-            await _context.SaveChangesAsync();
-            return Ok(user);
+            return Ok(new { message = "User registered successfully." });
         }
 
 
@@ -70,50 +44,19 @@ namespace Ecoture.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login(LoginRequest request)
         {
-            // Trim string values 
-            request.email = request.email.Trim().ToLower();
-            request.password = request.password.Trim();
-
-            // Check if email is correct
-            string message = "Invalid email or password.";
-            var user = _context.Users.Where(x => x.Email == request.email).FirstOrDefault();
-            
-            if (user == null)
+            try
             {
-                return BadRequest(new { message });
+                var response = await _userManager.LoginUserAsync(request);
+                return Ok(response);
             }
-
-            // Check if password is correct
-            bool isPasswordCorrect = BCrypt.Net.BCrypt.Verify(request.password, user.Password);
-            if (!isPasswordCorrect)
+            catch (ArgumentException ex)
             {
-                return BadRequest(new { message });
+                return BadRequest(new { message = ex.Message });
             }
-
-            // Check if the account is soft-deleted
-            if (user.DeleteRequested)
+            catch (UnauthorizedAccessException ex)
             {
-                var gracePeriod = TimeSpan.FromDays(30);
-                var timeSinceRequest = DateTime.UtcNow - user.DeleteRequestedAt;
-
-                if (timeSinceRequest <= gracePeriod)
-                {
-                    // Reactivate account
-                    user.DeleteRequested = false;
-                    user.DeleteRequestedAt = null;
-                    await _context.SaveChangesAsync();
-
-                    return Ok(new { message = "Your account has been reactivated." });
-                }
-                else
-                {
-                    return Unauthorized(new { message = "Your account has been permanently deleted." });
-                }
+                return Unauthorized(new { message = ex.Message });
             }
-
-            // Return user info 
-            string accessToken = CreateToken(user);
-            return Ok(new { user, accessToken });
         }
 
         [HttpPost("google")]
@@ -355,6 +298,51 @@ namespace Ecoture.Controllers
             }
         }
 
+        [HttpPost("forgot-password")]
+        public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordRequest request)
+        {
+            var user = await _userManager.FindByEmailAsync(request.Email);
+            if (user == null)
+            {
+                // Do not reveal if the user does not exist for security reasons
+                return Ok("If an account with this email exists, a password reset email has been sent.");
+            }
+
+            // Generate a password reset token
+            var resetToken = await _userManager.GeneratePasswordResetTokenAsync(user.UserId);
+
+            // Create password reset URL (you can add token expiration here)
+            var resetUrl = $"{_configuration["AppSettings:FrontendUrl"]}/reset-password?token={resetToken.Token}";
+
+            // Send the password reset email (e.g., using SendGrid)
+            await _emailService.SendAsync(user.Email, "Password Reset Request", $"Click the link to reset your password: {resetUrl}");
+
+            return Ok("If an account with this email exists, a password reset email has been sent.");
+        }
+
+        // Reset Password API
+        [HttpPost("reset-password")]
+        public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordRequest request)
+        {
+            // Find user by email (token doesn't store email, so it must be passed explicitly)
+            // look for user by token
+            var userToken = await _context.UserTokens.FirstOrDefaultAsync(t => t.Token == request.Token && t.TokenType == "PasswordReset");
+            if (userToken == null)
+            {
+                return BadRequest(new { message = "Invalid token" });
+            }
+
+            var user = await _context.Users.FindAsync(userToken.UserId);
+            if (user == null)
+                return BadRequest(new { message = "User not found" });
+
+            // Reset the password using the token
+            var result = await _userManager.ResetPasswordAsync(user.Email, request.Token, request.NewPassword);
+            if (!result)
+                return BadRequest(new { message = "Invalid token or password reset failed" });
+
+            return Ok(new { message = "Password reset successful" });
+        }
 
         // CUSTOMER DELETE ACCOUNT (2 STEPS)
         // Step 1: Request account deletion

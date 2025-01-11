@@ -1,4 +1,5 @@
 ﻿using Ecoture.Models.Enum;
+using EcotureAPI.Models.Entity;
 using Microsoft.EntityFrameworkCore;
 using Models.Entity;
 
@@ -18,6 +19,8 @@ namespace Ecoture
         }
 
         public required DbSet<User> Users { get; set; }
+
+        public required DbSet<UserToken> UserTokens { get; set; }
 
         public required DbSet<Membership> Memberships { get; set; }
 

@@ -161,7 +161,12 @@ function Navbar() {
                                             onClick={handleMenuOpen}
                                         />
                                     ) : (
-                                        <Avatar width="40px" height="40px" />
+                                        <Avatar
+                                            width="40px"
+                                            height="40px"
+                                            sx={{ cursor: 'pointer' }}
+                                            onClick={handleMenuOpen}
+                                        />
                                     )}
                                     {/* Dropdown Menu */}
                                     <Menu

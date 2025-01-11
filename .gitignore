@@ -170,12 +170,6 @@ msbuild.log
 msbuild.err
 msbuild.wrn
 
-# Visual Studio 2022
-.vs/
-/Ecoture-server/.vs
-Ecoture-server/.vs/
-Ecoture-server/.vs
-
 # Image Uploads
 uploads/
 
@@ -183,4 +177,5 @@ uploads/
 # ignore the ecotureAPI migrations
 EcotureAPI/.vs
 EcotureAPI/Ecoture/obj
-
+EcotureAPI\Ecoture\bin
+EcotureAPI\Ecoture\obj

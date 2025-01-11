@@ -24,7 +24,8 @@ function ForgotPassword() {
             data.email = data.email.trim().toLowerCase();
             try {
                 const res = await http.post('/user/forgot-password', data);
-                toast.success(res.data.message);
+
+                toast.success(res.data);
             } catch (err) {
                 toast.error(
                     `${
@@ -52,23 +53,26 @@ function ForgotPassword() {
                     display: 'flex',
                     borderRadius: 2,
                     alignItems: 'center',
-                    gap: 8,
+                    gap: { xs: 0, md: 6, lg: 12 },
                     height: '85%',
-                    width: '100%'
+                    maxHeight: '750px',
+                    width: '100%',
+                    maxWidth: '1250px'
                 }}
             >
                 <Box
                     sx={{
+                        flex: 1,
                         p: 4,
                         width: '50%',
                         height: '100%',
-                        display: 'flex',
+                        display: { xs: 'none', md: 'flex' },
                         flexDirection: 'column',
                         justifyContent: 'flex-end',
                         alignItems: 'flex-end',
                         backgroundImage: `url(${loginImage})`, // Keep the same background
                         backgroundSize: 'cover',
-                        backgroundPosition: 'center',
+                        backgroundPosition: 'center bottom',
                         borderRadius: 3
                     }}
                 >
@@ -92,20 +96,24 @@ function ForgotPassword() {
                     sx={{
                         width: '50%',
                         display: 'flex',
+                        flexDirection: 'column',
+                        flex: 1,
                         justifyContent: 'center',
                         bgcolor: 'rgba(255, 255, 255, 0.8)', // Optional: semi-transparent background
-                        p: 3
+                        p: 3,
+                        height: '100%',
+                        alignItems: 'center'
                     }}
                 >
+                    <Typography
+                        variant="h4"
+                        align="center"
+                        gutterBottom
+                        sx={{ fontWeight: '600' }}
+                    >
+                        FORGOT PASSWORD
+                    </Typography>
                     <Box component="form" onSubmit={formik.handleSubmit}>
-                        <Typography
-                            variant="h4"
-                            align="center"
-                            gutterBottom
-                            sx={{ fontWeight: '600' }}
-                        >
-                            FORGOT PASSWORD
-                        </Typography>
                         <Grid container spacing={2}>
                             <Grid item xs={12}>
                                 <TextField
@@ -128,26 +136,17 @@ function ForgotPassword() {
                                 />
                             </Grid>
                         </Grid>
-                        <Box
+
+                        <Button
+                            type="submit"
+                            variant="contained"
+                            fullWidth
                             sx={{
-                                display: 'flex',
-                                justifyContent: 'center',
-                                alignItems: 'center'
+                                mt: 5
                             }}
                         >
-                            <Button
-                                type="submit"
-                                variant="contained"
-                                sx={{
-                                    mt: 5,
-                                    paddingX: 12,
-                                    fontSize: 16,
-                                    width: '100%'
-                                }}
-                            >
-                                Send Reset Link
-                            </Button>
-                        </Box>
+                            Send Reset Link
+                        </Button>
                     </Box>
                 </Box>
             </Box>
