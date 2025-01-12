@@ -1,11 +1,14 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import {
     Box,
     Typography,
     TextField,
     Button,
     Grid,
-    IconButton
+    IconButton,
+    List,
+    ListItem,
+    ListItemText
 } from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
@@ -13,18 +16,26 @@ import * as yup from 'yup';
 import http from 'utils/http';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import UserContext from '../../../contexts/UserContext';
-import GoogleLoginButton from '../../../components/user/GoogleLoginButton';
-import loginImage from 'assets/images/login.png';
+import UserContext from 'contexts/UserContext';
+import GoogleLoginButton from 'components/user/GoogleLoginButton';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
+import AuthLayout from 'components/user/AuthLayout';
 
 function Login() {
     const navigate = useNavigate();
     const { setUser } = useContext(UserContext);
-    const [showPassword, setShowPassword] = React.useState(false);
+    const [showPassword, setShowPassword] = useState(false);
+    const [showMFA, setShowMFA] = useState(false);
+    const [mfaMethods, setMfaMethods] = useState(null);
+    const [selectedMethod, setSelectedMethod] = useState(null);
+    const [otp, setOtp] = useState('');
 
     const handleClickShowPassword = () => {
         setShowPassword((prev) => !prev);
+    };
+
+    const handleSelectMethod = (method) => {
+        setSelectedMethod(method);
     };
 
     const formik = useFormik({
@@ -74,9 +85,27 @@ function Login() {
                 //     }
                 const user = res.data.user;
                 if (user) {
-                    user['fullName'] = `${user.firstName} ${user.lastName}`;
-                    localStorage.setItem('user', JSON.stringify(user));
-                    localStorage.setItem('accessToken', res.data.accessToken);
+                    // check if 2fa is enabled
+                    if (user.is2FAEnabled) {
+                        // Redirect to OTP page if OTP is needed
+                        setShowMFA(true);
+                        // fetch user's 2fa methods
+                        const res = await http.get('/user/2fa-methods');
+                        console.log(res.data);
+                        // { sample response
+                        //     "sms": true,
+                        //     "email": true,
+                        //     "authenticator": true
+                        // }
+                        setMfaMethods(res.data);
+                    } else {
+                        user['fullName'] = `${user.firstName} ${user.lastName}`;
+                        localStorage.setItem('user', JSON.stringify(user));
+                        localStorage.setItem(
+                            'accessToken',
+                            res.data.accessToken
+                        );
+                    }
                 } else {
                     console.error('User data is not available');
                 }
@@ -105,234 +134,187 @@ function Login() {
         }
     });
 
-    return (
-        <Box
-            sx={{
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                height: '100%',
-                px: 5
-            }}
-        >
+    const loginForm = (
+        <Box component="form" onSubmit={formik.handleSubmit}>
+            <Grid container spacing={2}>
+                <Grid item xs={12}>
+                    <TextField
+                        fullWidth
+                        margin="dense"
+                        autoComplete="off"
+                        label="Email Address"
+                        name="email"
+                        value={formik.values.email}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        error={
+                            formik.touched.email && Boolean(formik.errors.email)
+                        }
+                        helperText={formik.touched.email && formik.errors.email}
+                    />
+                </Grid>
+
+                <Grid item xs={12}>
+                    <TextField
+                        fullWidth
+                        margin="dense"
+                        autoComplete="off"
+                        type={showPassword ? 'text' : 'password'}
+                        label="Password"
+                        name="password"
+                        value={formik.values.password}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        error={
+                            formik.touched.password &&
+                            Boolean(formik.errors.password)
+                        }
+                        helperText={
+                            formik.touched.password && formik.errors.password
+                        }
+                        InputProps={{
+                            endAdornment: (
+                                <IconButton
+                                    edge="end"
+                                    onClick={handleClickShowPassword}
+                                    aria-label="toggle password visibility"
+                                    sx={{ color: 'action.active' }}
+                                >
+                                    {showPassword ? (
+                                        <VisibilityOff />
+                                    ) : (
+                                        <Visibility />
+                                    )}
+                                </IconButton>
+                            )
+                        }}
+                    />
+                </Grid>
+            </Grid>
+            <Link to="/forgot-password" style={{ textDecoration: 'none' }}>
+                <Typography
+                    variant="p"
+                    align="right"
+                    sx={{
+                        color: 'red',
+                        fontSize: '14px',
+                        mt: 1
+                    }}
+                >
+                    Forgot Password?
+                </Typography>
+            </Link>
             <Box
                 sx={{
                     display: 'flex',
-                    borderRadius: 2,
-                    alignItems: 'center',
-                    gap: { xs: 0, md: 6, lg: 12 },
-                    height: '85%',
-                    maxHeight: '750px',
-                    width: '100%',
-                    maxWidth: '1250px'
+                    justifyContent: 'center',
+                    alignItems: 'center'
                 }}
             >
-                <Box
+                <Button
+                    type="submit"
+                    variant="contained"
                     sx={{
-                        flex: 1,
-                        p: 4,
-                        width: '50%',
-                        height: '100%',
-                        display: { xs: 'none', md: 'flex' },
-                        flexDirection: 'column',
-                        justifyContent: 'flex-end',
-                        alignItems: 'flex-end',
-                        backgroundImage: `url(${loginImage})`, // Keep the same background
-                        backgroundSize: 'cover',
-                        backgroundPosition: 'center bottom',
-                        borderRadius: 3
+                        mt: 5,
+                        paddingX: 12,
+                        fontSize: 16,
+                        width: '100%'
                     }}
                 >
-                    <Box>
-                        <Typography
-                            variant="h3"
-                            sx={{ color: 'white', fontWeight: 'bold' }}
-                        >
-                            UNIQLO
-                        </Typography>
-                        <Typography
-                            variant="h5"
-                            sx={{ color: 'white', fontWeight: 'bold' }}
-                        >
-                            Made for all.
-                        </Typography>
-                    </Box>
-                </Box>
-                <Box
-                    sx={{
-                        width: '50%',
-                        display: 'flex',
-                        flexDirection: 'column',
-                        flex: 1,
-                        justifyContent: 'center',
-                        bgcolor: 'rgba(255, 255, 255, 0.8)', // Optional: semi-transparent background
-                        p: 3,
-                        height: '100%',
-                        alignItems: 'center'
-                    }}
-                >
-                    <Typography
-                        variant="h4"
-                        align="center"
-                        gutterBottom
-                        sx={{ fontWeight: '600' }}
-                    >
-                        WELCOME BACK
-                    </Typography>
-                    <Box component="form" onSubmit={formik.handleSubmit}>
-                        <Grid container spacing={2}>
-                            <Grid item xs={12}>
-                                <TextField
-                                    fullWidth
-                                    margin="dense"
-                                    autoComplete="off"
-                                    label="Email Address"
-                                    name="email"
-                                    value={formik.values.email}
-                                    onChange={formik.handleChange}
-                                    onBlur={formik.handleBlur}
-                                    error={
-                                        formik.touched.email &&
-                                        Boolean(formik.errors.email)
-                                    }
-                                    helperText={
-                                        formik.touched.email &&
-                                        formik.errors.email
-                                    }
-                                />
-                            </Grid>
-
-                            <Grid item xs={12}>
-                                <TextField
-                                    fullWidth
-                                    margin="dense"
-                                    autoComplete="off"
-                                    type={showPassword ? 'text' : 'password'}
-                                    label="Password"
-                                    name="password"
-                                    value={formik.values.password}
-                                    onChange={formik.handleChange}
-                                    onBlur={formik.handleBlur}
-                                    error={
-                                        formik.touched.password &&
-                                        Boolean(formik.errors.password)
-                                    }
-                                    helperText={
-                                        formik.touched.password &&
-                                        formik.errors.password
-                                    }
-                                    InputProps={{
-                                        endAdornment: (
-                                            <IconButton
-                                                edge="end"
-                                                onClick={
-                                                    handleClickShowPassword
-                                                }
-                                                aria-label="toggle password visibility"
-                                                sx={{ color: 'action.active' }}
-                                            >
-                                                {showPassword ? (
-                                                    <VisibilityOff />
-                                                ) : (
-                                                    <Visibility />
-                                                )}
-                                            </IconButton>
-                                        )
-                                    }}
-                                />
-                            </Grid>
-                        </Grid>
-                        <Link
-                            to="/forgot-password"
-                            style={{ textDecoration: 'none' }}
-                        >
-                            <Typography
-                                variant="p"
-                                align="right"
-                                sx={{
-                                    color: 'red',
-                                    fontSize: '14px',
-                                    mt: 1
-                                }}
-                            >
-                                Forgot Password?
-                            </Typography>
-                        </Link>
-                        <Box
-                            sx={{
-                                display: 'flex',
-                                justifyContent: 'center',
-                                alignItems: 'center'
-                            }}
-                        >
-                            <Button
-                                type="submit"
-                                variant="contained"
-                                sx={{
-                                    mt: 5,
-                                    paddingX: 12,
-                                    fontSize: 16,
-                                    width: '100%'
-                                }}
-                            >
-                                Login
-                            </Button>
-                        </Box>
-                        <Box
-                            sx={{
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                width: '100%',
-                                my: 3 // Margin on Y-axis
-                            }}
-                        >
-                            {/* Left Line */}
-                            <Box
-                                sx={{
-                                    flex: 1,
-                                    height: '1px',
-                                    backgroundColor: 'grey',
-                                    marginRight: 1
-                                }}
-                            ></Box>
-
-                            {/* Text */}
-                            <Typography variant="body2" color="textSecondary">
-                                Or login with
-                            </Typography>
-
-                            {/* Right Line */}
-                            <Box
-                                sx={{
-                                    flex: 1,
-                                    height: '1px',
-                                    backgroundColor: 'grey',
-                                    marginLeft: 1
-                                }}
-                            ></Box>
-                        </Box>
-                        {/* Google Login Button */}
-                        <GoogleLoginButton />
-
-                        {/* Footer Links */}
-                        <Typography
-                            variant="body2"
-                            align="center"
-                            sx={{ mt: 2, mb: 1 }}
-                        >
-                            Don’t have an account?{' '}
-                            <Link
-                                to="/register"
-                                style={{ textDecoration: 'none' }}
-                            >
-                                Register
-                            </Link>
-                        </Typography>
-                    </Box>
-                </Box>
+                    Login
+                </Button>
             </Box>
+            <Box
+                sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    width: '100%',
+                    my: 3 // Margin on Y-axis
+                }}
+            >
+                {/* Left Line */}
+                <Box
+                    sx={{
+                        flex: 1,
+                        height: '1px',
+                        backgroundColor: 'grey',
+                        marginRight: 1
+                    }}
+                ></Box>
+
+                {/* Text */}
+                <Typography variant="body2" color="textSecondary">
+                    Or login with
+                </Typography>
+
+                {/* Right Line */}
+                <Box
+                    sx={{
+                        flex: 1,
+                        height: '1px',
+                        backgroundColor: 'grey',
+                        marginLeft: 1
+                    }}
+                ></Box>
+            </Box>
+            {/* Google Login Button */}
+            <GoogleLoginButton />
+
+            {/* Footer Links */}
+            <Typography variant="body2" align="center" sx={{ mt: 2, mb: 1 }}>
+                Don’t have an account?{' '}
+                <Link to="/register" style={{ textDecoration: 'none' }}>
+                    Register
+                </Link>
+            </Typography>
         </Box>
+    );
+
+    // TODO: Implement MFA
+    const MFAForm = (
+        <Box>
+            {!selectedMethod ? (
+                <List>
+                    {mfaMethods.map((method) => (
+                        <ListItem
+                            button
+                            key={method.type}
+                            onClick={() => handleSelectMethod(method)}
+                        >
+                            <ListItemText primary={method.label} />
+                        </ListItem>
+                    ))}
+                </List>
+            ) : (
+                <Box>
+                    <Typography variant="h6">
+                        {`Enter the OTP sent via ${selectedMethod}`}
+                    </Typography>
+                    <TextField
+                        label="OTP"
+                        fullWidth
+                        margin="normal"
+                        value={otp}
+                        onChange={(e) => setOtp(e.target.value)}
+                    />
+                </Box>
+            )}
+
+            {selectedMethod && (
+                <Button onClick={() => setSelectedMethod(null)}>Back</Button>
+            )}
+            <Button>Cancel</Button>
+            {selectedMethod && <Button variant="contained">Verify</Button>}
+        </Box>
+    );
+
+    return (
+        <AuthLayout
+            title={showMFA ? 'CHOOSE AUTHENTICATION METHOD' : 'WELCOME BACK'}
+        >
+            {showMFA ? MFAForm : loginForm}
+        </AuthLayout>
     );
 }
 

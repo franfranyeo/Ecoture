@@ -12,17 +12,10 @@ using System.Text;
 
 namespace EcotureAPI.Services
 {
-    public class UserManager : IUserManager
+    public class UserManager(MyDbContext context, IConfiguration configuration) : IUserManager
     {
-        private readonly MyDbContext _context;
-        private readonly IConfiguration _configuration;
-
-
-        public UserManager(MyDbContext context, IConfiguration configuration)
-        {
-            _context = context;
-            _configuration = configuration;
-        }
+        private readonly MyDbContext _context = context;
+        private readonly IConfiguration _configuration = configuration;
 
         // CREATE JWT TOKEN
         private string CreateToken(User user)
@@ -185,6 +178,57 @@ namespace EcotureAPI.Services
             return true;
         }
 
+        public async Task GenerateOtpAsync(int userId, string otpType)
+        {
+            var otp = new Random().Next(100000, 999999).ToString(); // Generate 6-digit OTP
+            var expiresAt = DateTime.UtcNow.AddMinutes(5); // Set expiration time
+
+            var existingOtp = await _context.UserOTPs.FirstOrDefaultAsync(u => u.UserId == userId);
+
+            if (existingOtp != null)
+            {
+                existingOtp.Otp = otp;
+                existingOtp.OtpType = otpType;
+                existingOtp.ExpirationDate = expiresAt;
+                existingOtp.IsVerified = false;
+                existingOtp.CreatedAt = DateTime.UtcNow;
+            }
+            else
+            {
+                var newOtp = new UserOtp
+                {
+                    UserId = userId,
+                    Otp = otp,
+                    OtpType = otpType,
+                    ExpirationDate = expiresAt,
+                    IsVerified = false,
+                    CreatedAt = DateTime.UtcNow
+                };
+
+                await _context.UserOTPs.AddAsync(newOtp);
+            }
+
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task<bool> VerifyOtpAsync(int userId, string otp)
+        {
+            var userOtp = await _context.UserOTPs.FirstOrDefaultAsync(u => u.UserId == userId);
+
+            if (userOtp == null || userOtp.ExpirationDate < DateTime.UtcNow || userOtp.IsVerified)
+            {
+                return false; // OTP not found, expired, or already verified
+            }
+
+            if (userOtp.Otp == otp)
+            {
+                userOtp.IsVerified = true;
+                await _context.SaveChangesAsync();
+                return true; // OTP successfully verified
+            }
+
+            return false; // Invalid OTP
+        }
 
     }
 
@@ -195,5 +239,6 @@ namespace EcotureAPI.Services
         Task<User?> FindByEmailAsync(string email);
         Task<UserToken> GeneratePasswordResetTokenAsync(int userId);
         Task<bool> ResetPasswordAsync(string email, string token, string newPassword);
+        Task GenerateOtpAsync(int userId, string otpType);
     }
 }

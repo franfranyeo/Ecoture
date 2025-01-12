@@ -1,10 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Typography, Box } from '@mui/material';
 import UserContext from 'contexts/UserContext';
-import Profile from '../../../components/user/Profile';
-import Membership from '../../../components/user/Membership';
-import LoadingContainer from '../../../components/LoadingScreen';
+import ProfileTab from 'components/user/ProfileTab';
+import MembershipTab from 'components/user/MembershipTab';
+import LoadingContainer from 'components/LoadingScreen';
 import AccountSidePanel from 'components/user/AccountSidePanel';
+import SecurityTab from 'components/user/SecurityTab';
 
 const Account = () => {
     const { user, setUser } = useContext(UserContext);
@@ -34,8 +35,9 @@ const Account = () => {
                             selected={selected}
                             setSelected={setSelected}
                         />
-                        {selected === 'Profile' && <Profile user={user} />}
-                        {selected === 'Membership' && <Membership />}
+                        {selected === 'Profile' && <ProfileTab user={user} />}
+                        {selected === 'Membership' && <MembershipTab />}
+                        {selected === 'Security' && <SecurityTab />}
                     </Box>
                 </Box>
             )}

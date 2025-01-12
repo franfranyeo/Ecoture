@@ -25,6 +25,7 @@
     </PackageReference>
     <PackageReference Include="MySql.EntityFrameworkCore" Version="8.0.8" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="7.2.0" />
+    <PackageReference Include="Twilio" Version="7.8.1" />
   </ItemGroup>
 
   <ItemGroup>

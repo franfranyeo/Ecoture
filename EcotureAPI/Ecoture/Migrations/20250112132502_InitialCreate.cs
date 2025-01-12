@@ -32,6 +32,7 @@ namespace EcotureAPI.Migrations
                     LastLogin = table.Column<DateTime>(type: "datetime", nullable: false),
                     Is2FAEnabled = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     IsEmailVerified = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    IsPhoneVerified = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     ReferralCode = table.Column<string>(type: "varchar(10)", maxLength: 10, nullable: true),
                     DeleteRequested = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     DeleteRequestedAt = table.Column<DateTime>(type: "datetime", nullable: true),
@@ -134,6 +135,31 @@ namespace EcotureAPI.Migrations
                         principalTable: "Users",
                         principalColumn: "UserId",
                         onDelete: ReferentialAction.Restrict);
+                })
+                .Annotation("MySQL:Charset", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "UserOTPs",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    Otp = table.Column<string>(type: "longtext", nullable: false),
+                    OtpType = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
+                    ExpirationDate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    IsVerified = table.Column<bool>(type: "tinyint(1)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserOTPs", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_UserOTPs_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySQL:Charset", "utf8mb4");
 
@@ -273,6 +299,11 @@ namespace EcotureAPI.Migrations
                 column: "UserId1");
 
             migrationBuilder.CreateIndex(
+                name: "IX_UserOTPs_UserId",
+                table: "UserOTPs",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_UserRedemptions_userId",
                 table: "UserRedemptions",
                 column: "userId");
@@ -296,6 +327,9 @@ namespace EcotureAPI.Migrations
 
             migrationBuilder.DropTable(
                 name: "PointsTransactions");
+
+            migrationBuilder.DropTable(
+                name: "UserOTPs");
 
             migrationBuilder.DropTable(
                 name: "UserRedemptions");

@@ -3,6 +3,7 @@ using EcotureAPI.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using System.Configuration;
 using System.Text;
 
 
@@ -49,8 +50,10 @@ builder.Services
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+
 builder.Services.AddTransient<IUserManager, UserManager>();
 builder.Services.AddTransient<IEmailService, EmailService>();
+builder.Services.AddSingleton<ISmsService, SmsService>();
 
 
 var app = builder.Build();

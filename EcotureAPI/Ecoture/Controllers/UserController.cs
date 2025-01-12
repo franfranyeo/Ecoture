@@ -134,36 +134,6 @@ namespace Ecoture.Controllers
             }
         }
 
-        // CREATE JWT TOKEN
-        private string CreateToken(User user)
-        {
-            string? secret = _configuration.GetValue<string>("Authentication:Secret");
-            if (string.IsNullOrEmpty(secret))
-            {
-                throw new Exception("Secret is required for JWT authentication.");
-            }
-            int tokenExpiresDays = _configuration.GetValue<int>("Authentication:TokenExpiresDays");
-
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(secret);
-
-            var tokenDescriptor = new SecurityTokenDescriptor
-            {
-                Subject = new ClaimsIdentity(
-                [
-                    new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()),
-                    new Claim(ClaimTypes.Name, $"{user.FirstName} {user.LastName}".Trim()),
-                    new Claim(ClaimTypes.Email, user.Email)
-                ]),
-                Expires = DateTime.UtcNow.AddDays(tokenExpiresDays),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-            };
-            var securityToken = tokenHandler.CreateToken(tokenDescriptor);
-            string token = tokenHandler.WriteToken(securityToken);
-
-            return token;
-        }
-
         // AUTHENTICATE USER
         [HttpGet("auth"), Authorize]
         public IActionResult Auth()
@@ -343,6 +313,8 @@ namespace Ecoture.Controllers
 
             return Ok(new { message = "Password reset successful" });
         }
+
+
 
         // CUSTOMER DELETE ACCOUNT (2 STEPS)
         // Step 1: Request account deletion

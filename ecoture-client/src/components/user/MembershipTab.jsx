@@ -19,7 +19,7 @@ import ShareIcon from '@mui/icons-material/Share';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import DataTable from '../DataTable';
 
-const Membership = () => {
+const MembershipTab = () => {
     const [vouchers, setVouchers] = useState([
         {
             voucherCode: 'V12345',
@@ -271,4 +271,4 @@ const Membership = () => {
     );
 };
 
-export default Membership;
+export default MembershipTab;

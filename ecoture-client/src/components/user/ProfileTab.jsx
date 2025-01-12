@@ -11,7 +11,7 @@ import {
 import EditIcon from '@mui/icons-material/Edit';
 import React from 'react';
 
-const Profile = ({ user }) => {
+const ProfileTab = ({ user }) => {
     console.log(user);
     return (
         <Box sx={{ flex: 1 }}>
@@ -99,4 +99,4 @@ const Profile = ({ user }) => {
     );
 };
 
-export default Profile;
+export default ProfileTab;

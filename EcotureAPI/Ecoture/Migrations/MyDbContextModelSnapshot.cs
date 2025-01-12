@@ -19,6 +19,40 @@ namespace EcotureAPI.Migrations
                 .HasAnnotation("ProductVersion", "8.0.8")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
+            modelBuilder.Entity("EcotureAPI.Models.Entity.UserOtp", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<DateTime>("ExpirationDate")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<bool>("IsVerified")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<string>("Otp")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("OtpType")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserOTPs");
+                });
+
             modelBuilder.Entity("EcotureAPI.Models.Entity.UserToken", b =>
                 {
                     b.Property<int>("Id")
@@ -213,6 +247,9 @@ namespace EcotureAPI.Migrations
                     b.Property<bool>("IsEmailVerified")
                         .HasColumnType("tinyint(1)");
 
+                    b.Property<bool>("IsPhoneVerified")
+                        .HasColumnType("tinyint(1)");
+
                     b.Property<DateTime>("LastLogin")
                         .HasColumnType("datetime");
 
@@ -334,6 +371,17 @@ namespace EcotureAPI.Migrations
                     b.HasKey("voucherId");
 
                     b.ToTable("Vouchers");
+                });
+
+            modelBuilder.Entity("EcotureAPI.Models.Entity.UserOtp", b =>
+                {
+                    b.HasOne("Models.Entity.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("EcotureAPI.Models.Entity.UserToken", b =>

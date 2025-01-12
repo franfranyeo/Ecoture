@@ -21,6 +21,7 @@ namespace Ecoture
         public required DbSet<User> Users { get; set; }
 
         public required DbSet<UserToken> UserTokens { get; set; }
+        public required DbSet<UserOtp> UserOTPs { get; set; }
 
         public required DbSet<Membership> Memberships { get; set; }
 

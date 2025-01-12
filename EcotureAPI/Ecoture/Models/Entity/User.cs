@@ -41,6 +41,8 @@ namespace Models.Entity
 
         public bool IsEmailVerified { get; set; } = false;
 
+        public bool IsPhoneVerified { get; set; } = false;
+
         [MaxLength(10)]
         public string? ReferralCode { get; set; }
 
