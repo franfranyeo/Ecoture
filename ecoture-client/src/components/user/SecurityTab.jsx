@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
     Box,
     Paper,
@@ -21,9 +21,9 @@ import http from 'utils/http';
 import { toast } from 'react-toastify';
 
 const SecurityTab = () => {
-    const [is2FAEnabled, setIs2FAEnabled] = useState(false);
-    const [authMethods, setAuthMethods] = useState([]);
     const { user, setUser } = useContext(UserContext);
+    const [is2FAEnabled, setIs2FAEnabled] = useState(user.is2FAEnabled);
+    const [authMethods, setAuthMethods] = useState([]);
 
     const [tempIs2FAEnabled, setTempIs2FAEnabled] = useState(is2FAEnabled);
     const [tempAuthMethods, setTempAuthMethods] = useState(authMethods);
@@ -40,7 +40,35 @@ const SecurityTab = () => {
     const [isEmailOtpSent, setIsEmailOtpSent] = useState(false);
     const [isPhoneOtpSent, setIsPhoneOtpSent] = useState(false);
 
-    const availableMethods = ['SMS', 'Email', 'Authenticator App'];
+    const availableMethods = ['SMS', 'Email', 'Authenticator'];
+
+    useEffect(() => {
+        if (user && user.userId && authMethods.length === 0) {
+            // Check if user is valid and userId is non-zero
+            const getAuthMethods = async () => {
+                try {
+                    const res = await http.post('/user/get-mfa', {
+                        userId: user.userId
+                    });
+                    if (res.data) {
+                        // Transform the response to extract active MFA methods
+                        const mfaMethods = res.data; // assuming response is like { sms: true, email: true, authenticator: false }
+
+                        // Convert object keys with 'true' values to an array
+                        const activeMfaMethods = Object.keys(mfaMethods).filter(
+                            (key) => mfaMethods[key] && key !== 'userId'
+                        );
+
+                        setTempAuthMethods(activeMfaMethods);
+                        setAuthMethods(activeMfaMethods);
+                    }
+                } catch (error) {
+                    console.error(error);
+                }
+            };
+            getAuthMethods();
+        }
+    }, [user]);
 
     const handleToggle2FA = () => {
         setTempIs2FAEnabled(!tempIs2FAEnabled);
@@ -192,7 +220,7 @@ const SecurityTab = () => {
         setIsEditing(false);
     };
 
-    const handleSaveClick = () => {
+    const handleSaveClick = async () => {
         if (tempIs2FAEnabled && tempAuthMethods.length === 0) {
             setError('You must select at least one authentication method.');
             return;
@@ -208,12 +236,28 @@ const SecurityTab = () => {
             return;
         }
 
-        // Save temp states to main states
-        setIs2FAEnabled(tempIs2FAEnabled);
-        setAuthMethods(tempAuthMethods);
-        setUser({ ...tempUser, is2FAEnabled: tempIs2FAEnabled });
-        setError(null); // Clear error on save
-        setIsEditing(false);
+        const payload = {
+            userId: tempUser.userId, // Assuming tempUser has an id property
+            mfaTypes: tempAuthMethods.map((method) => method.toLowerCase()), // Convert methods to lowercase
+            enable: tempIs2FAEnabled
+        };
+        try {
+            const res = await http.post('/user/update-mfa', payload);
+            if (!res.data) {
+                toast.error('Failed to update MFA settings.');
+                throw new Error('Failed to update MFA settings.');
+            }
+            setIs2FAEnabled(tempIs2FAEnabled);
+            setAuthMethods(tempAuthMethods);
+            setUser({ ...tempUser, is2FAEnabled: tempIs2FAEnabled });
+            setError(null); // Clear error on success
+            setIsEditing(false);
+        } catch (error) {
+            console.error(error);
+            setError(
+                'An error occurred while updating MFA settings. Please try again.'
+            );
+        }
     };
 
     const toggleAuthMethod = (method) => {
@@ -309,16 +353,21 @@ const SecurityTab = () => {
                                     key={method}
                                     label={method}
                                     color={
-                                        tempAuthMethods.includes(method)
+                                        tempAuthMethods.includes(
+                                            method.toLowerCase()
+                                        )
                                             ? 'primary'
                                             : 'default'
                                     }
                                     onClick={() =>
-                                        isEditing && toggleAuthMethod(method)
+                                        isEditing &&
+                                        toggleAuthMethod(method.toLowerCase())
                                     }
                                     clickable={isEditing}
                                     variant={
-                                        tempAuthMethods.includes(method)
+                                        tempAuthMethods.includes(
+                                            method.toLowerCase()
+                                        )
                                             ? 'filled'
                                             : 'outlined'
                                     }
@@ -327,7 +376,7 @@ const SecurityTab = () => {
                         </Box>
 
                         <Box mt={3}>
-                            {tempAuthMethods.includes('SMS') && (
+                            {tempAuthMethods.includes('sms') && (
                                 <Box mb={2}>
                                     <Typography variant="subtitle1">
                                         SMS
@@ -384,7 +433,7 @@ const SecurityTab = () => {
                                 </Box>
                             )}
 
-                            {tempAuthMethods.includes('Email') && (
+                            {tempAuthMethods.includes('email') && (
                                 <Box mb={2}>
                                     <Typography variant="subtitle1">
                                         Email
@@ -434,7 +483,7 @@ const SecurityTab = () => {
                                 </Box>
                             )}
 
-                            {tempAuthMethods.includes('Authenticator App') && (
+                            {tempAuthMethods.includes('authenticator') && (
                                 <Box mb={2}>
                                     <Typography variant="subtitle1">
                                         Authenticator App

@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EcotureAPI.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20250112132502_InitialCreate")]
+    [Migration("20250113061336_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -21,6 +21,26 @@ namespace EcotureAPI.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "8.0.8")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
+
+            modelBuilder.Entity("EcotureAPI.Models.DataTransferObjects.MfaResponse", b =>
+                {
+                    b.Property<int>("UserId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<bool>("Authenticator")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<bool>("Email")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<bool>("Sms")
+                        .HasColumnType("tinyint(1)");
+
+                    b.HasKey("UserId");
+
+                    b.ToTable("MfaResponses");
+                });
 
             modelBuilder.Entity("EcotureAPI.Models.Entity.UserOtp", b =>
                 {

@@ -19,6 +19,26 @@ namespace EcotureAPI.Migrations
                 .HasAnnotation("ProductVersion", "8.0.8")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
+            modelBuilder.Entity("EcotureAPI.Models.DataTransferObjects.MfaResponse", b =>
+                {
+                    b.Property<int>("UserId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<bool>("Authenticator")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<bool>("Email")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<bool>("Sms")
+                        .HasColumnType("tinyint(1)");
+
+                    b.HasKey("UserId");
+
+                    b.ToTable("MfaResponses");
+                });
+
             modelBuilder.Entity("EcotureAPI.Models.Entity.UserOtp", b =>
                 {
                     b.Property<int>("Id")

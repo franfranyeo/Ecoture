@@ -1,4 +1,5 @@
 ﻿using Ecoture.Models.Enum;
+using EcotureAPI.Models.DataTransferObjects;
 using EcotureAPI.Models.Entity;
 using Microsoft.EntityFrameworkCore;
 using Models.Entity;
@@ -22,7 +23,7 @@ namespace Ecoture
 
         public required DbSet<UserToken> UserTokens { get; set; }
         public required DbSet<UserOtp> UserOTPs { get; set; }
-
+        public required DbSet<MfaResponse> MfaResponses { get; set; }
         public required DbSet<Membership> Memberships { get; set; }
 
         public required DbSet<PointsTransaction> PointsTransactions { get; set; }
@@ -44,6 +45,8 @@ namespace Ecoture
                 .WithOne(m => m.User)
                 .HasForeignKey<Membership>(m => m.userId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<MfaResponse>().HasKey(m => m.UserId);
 
             // Referral relationships
             modelBuilder.Entity<Referral>()

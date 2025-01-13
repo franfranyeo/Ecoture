@@ -16,16 +16,18 @@ import TermsOfUse from './pages/customer/user/TermsOfUse';
 import PrivacyPolicy from './pages/customer/user/PrivacyPolicy';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import UserContext from './contexts/UserContext';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { ToastContainer } from 'react-toastify';
 import Account from './pages/customer/user/Account';
 import Navbar from './components/Navbar';
 import ResetPassword from './pages/customer/user/ResetPassword';
 import ForgotPassword from './pages/customer/user/ForgotPassword';
+import http from 'utils/http';
 
 function App() {
     // update in the user context too
     const [user, setUser] = useState(null);
+    const isFirstLoad = useRef(true); // tracks first load to avoid API call
 
     // Retrieve user data from localStorage (if available)
     useEffect(() => {
@@ -43,6 +45,19 @@ function App() {
     useEffect(() => {
         if (user) {
             localStorage.setItem('user', JSON.stringify(user));
+            if (isFirstLoad.current) {
+                isFirstLoad.current = false; // Skip the first load call
+                return; // Don't call the API for the first user set
+            }
+            try {
+                const updateUser = async () => {
+                    const res = await http.post(`/user/${user.userId}`, user);
+                    console.log(res.data);
+                };
+                updateUser();
+            } catch (err) {
+                console.error(err);
+            }
         } else {
             localStorage.removeItem('user');
         }

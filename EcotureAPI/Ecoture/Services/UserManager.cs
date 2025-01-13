@@ -68,11 +68,26 @@ namespace EcotureAPI.Services
                 Email = request.Email,
                 Password = BCrypt.Net.BCrypt.HashPassword(request.Password),
                 CreatedAt = now,
-                UpdatedAt = now
+                UpdatedAt = now,
+            };
+
+            var membership = new Membership
+            {
+                userId = user.UserId,
+                createdAt = now,
+                updatedAt = now
+            };
+
+            user.Membership = membership;
+
+            var mfaResponse = new MfaResponse
+            {
+                UserId = user.UserId
             };
 
             // Add user to the database
-            _context.Users.Add(user);
+            await _context.Users.AddAsync(user);
+            await _context.MfaResponses.AddAsync(mfaResponse);
             await _context.SaveChangesAsync();
             return (true, null);
         }

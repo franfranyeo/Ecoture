@@ -16,6 +16,22 @@ namespace EcotureAPI.Migrations
                 .Annotation("MySQL:Charset", "utf8mb4");
 
             migrationBuilder.CreateTable(
+                name: "MfaResponses",
+                columns: table => new
+                {
+                    UserId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    Sms = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    Email = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    Authenticator = table.Column<bool>(type: "tinyint(1)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MfaResponses", x => x.UserId);
+                })
+                .Annotation("MySQL:Charset", "utf8mb4");
+
+            migrationBuilder.CreateTable(
                 name: "Users",
                 columns: table => new
                 {
@@ -324,6 +340,9 @@ namespace EcotureAPI.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Memberships");
+
+            migrationBuilder.DropTable(
+                name: "MfaResponses");
 
             migrationBuilder.DropTable(
                 name: "PointsTransactions");

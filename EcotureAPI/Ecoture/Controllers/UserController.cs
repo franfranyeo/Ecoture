@@ -13,6 +13,7 @@ using Google.Apis.Auth;
 using Microsoft.EntityFrameworkCore;
 using EcotureAPI.Models.Entity;
 using EcotureAPI.Services;
+using EcotureAPI.Models.DataTransferObjects;
 
 
 namespace Ecoture.Controllers
@@ -204,69 +205,198 @@ namespace Ecoture.Controllers
             return Ok();
         }
 
+        [HttpPost("get-mfa")]
+        public async Task<ActionResult<MfaResponse>> GetMfaResponse([FromBody] MfaRequest request)
+        {
+            var userId = request.UserId;
+            var mfaResponse = await _context.MfaResponses
+                                            .FirstOrDefaultAsync(u => u.UserId == userId);
 
-        // UPDATE USER ACCOUNT
-        [HttpPut("{id}"), Authorize]
+            if (mfaResponse == null)
+            {
+                return NotFound(new { message = $"User with ID '{userId}' not found." });
+            }
+
+            return Ok(mfaResponse);
+        }
+
+        [HttpPost("update-mfa"), Authorize]
+        public async Task<ActionResult> UpdateMfa([FromBody] UpdateMfaRequest request)
+        {
+            // Retrieve the user's current MFA response from the database
+            var mfaResponse = await _context.MfaResponses.FirstOrDefaultAsync(m => m.UserId == request.UserId);
+            if (mfaResponse == null)
+            {
+                return NotFound(new { message = "User not found." });
+            }
+
+            // List of valid MFA types
+            var validMfaTypes = new List<string> { "sms", "email", "authenticator" };
+
+            // Process each MFA type in the request
+            foreach (var mfaType in request.MfaTypes)
+            {
+                if (!validMfaTypes.Contains(mfaType.ToLower()))
+                {
+                    return BadRequest(new { message = $"Invalid MFA type: {mfaType}" });
+                }
+
+                switch (mfaType.ToLower())
+                {
+                    case "sms":
+                        mfaResponse.Sms = request.Enable;
+                        break;
+                    case "email":
+                        mfaResponse.Email = request.Enable;
+                        break;
+                    case "authenticator":
+                        mfaResponse.Authenticator = request.Enable;
+                        break;
+                }
+            }
+
+            // Save changes to the database
+            await _context.SaveChangesAsync();
+            return Ok(new { message = "MFA settings updated successfully." });
+        }
+
+        [HttpPost("{id}"), Authorize]
         public async Task<IActionResult> UpdateUser(int id, UpdateUserInfoRequest request)
         {
-            // Find the user
             var user = _context.Users.Find(id);
             if (user == null)
             {
                 return NotFound(new { message = "User not found." });
             }
 
-            // Get logged-in user's ID and role
-            var loggedInUserId = Convert.ToInt32(User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value);
-            var loggedInUserRole = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
+            //var loggedInUserId = Convert.ToInt32(User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value);
+            //var loggedInUserRole = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
 
-            // Authorisation: Ensure the user can only update their own account or is an admin
-            if (user.UserId != loggedInUserId && loggedInUserRole != UserRole.Admin.ToString())
-            {
-                return Unauthorized(new { message = "You are not authorised to update this account." });
-            }
+            //if (user.UserId != loggedInUserId && loggedInUserRole != UserRole.Admin.ToString())
+            //{
+            //    System.Diagnostics.Debug.WriteLine(loggedInUserId);
+            //    return Unauthorized(new { message = "You are not authorised to update this account." });
+            //}
 
-            // Update fields
             try
             {
-                // Trim and validate required fields
-                user.FirstName = request.firstName.Trim();
-                user.LastName = request.lastName.Trim();
-                user.Email = request.email.Trim();
-
-                // Validate email uniqueness if it can be updated
-                var emailExists = _context.Users.Any(u => u.Email == request.email && u.UserId != id);
-                if (emailExists)
+                // Update only provided fields
+                if (!string.IsNullOrEmpty(request.FirstName))
                 {
-                    return BadRequest(new { message = "Email already exists." });
+                    user.FirstName = request.FirstName.Trim();
                 }
 
-                user.MobileNo = request.mobileNo.Trim();
-
-                // Validate the date of birth if provided (ensure it's a valid past date)
-                if (request.dateofBirth != default(DateTime) && request.dateofBirth > DateTime.UtcNow)
+                if (!string.IsNullOrEmpty(request.LastName))
                 {
-                    return BadRequest(new { message = "Date of birth must be in the past." });
+                    user.LastName = request.LastName.Trim();
                 }
-                user.DateofBirth = request.dateofBirth;
 
-                // Update the profile picture URL if provided
-                if (!string.IsNullOrEmpty(request.pfpURL))
+                if (!string.IsNullOrEmpty(request.Email))
                 {
-                    user.PfpURL = request.pfpURL.Trim();
+                    var emailExists = _context.Users.Any(u => u.Email == request.Email && u.UserId != id);
+                    if (emailExists)
+                    {
+                        return BadRequest(new { message = "Email already exists." });
+                    }
+                    user.Email = request.Email.Trim();
+                }
+
+                if (!string.IsNullOrEmpty(request.MobileNo))
+                {
+                    user.MobileNo = request.MobileNo.Trim();
+                }
+
+                if (request.DateofBirth.HasValue)
+                {
+                    user.DateofBirth = request.DateofBirth.Value;
+                }
+
+                //if (request.Role.HasValue)
+                //{
+                //    if (loggedInUserRole != UserRole.Admin.ToString())
+                //    {
+                //        return Unauthorized(new { message = "Only admins can change roles." });
+                //    }
+                //    user.Role = request.Role.Value;
+                //}
+
+                if (!string.IsNullOrEmpty(request.PfpURL))
+                {
+                    user.PfpURL = request.PfpURL.Trim();
+                }
+
+                if (request.LastLogin.HasValue)
+                {
+                    user.LastLogin = request.LastLogin.Value;
+                }
+
+                if (request.Is2FAEnabled.HasValue)
+                {
+                    user.Is2FAEnabled = request.Is2FAEnabled.Value;
+                }
+
+                if (request.IsEmailVerified.HasValue)
+                {
+                    user.IsEmailVerified = request.IsEmailVerified.Value;
+                }
+
+                if (request.IsPhoneVerified.HasValue)
+                {
+                    user.IsPhoneVerified = request.IsPhoneVerified.Value;
+                }
+
+                if (!string.IsNullOrEmpty(request.ReferralCode))
+                {
+                    user.ReferralCode = request.ReferralCode.Trim();
+                }
+
+                if (request.DeleteRequested.HasValue)
+                {
+                    user.DeleteRequested = request.DeleteRequested.Value;
+                }
+
+                if (request.DeleteRequestedAt.HasValue)
+                {
+                    user.DeleteRequestedAt = request.DeleteRequestedAt.Value;
+                }
+
+                if (request.Membership != null)
+                {
+                    user.Membership = request.Membership;
+                }
+
+                if (request.ReferralsSent != null)
+                {
+                    user.ReferralsSent = request.ReferralsSent;
+                }
+
+                if (request.ReferralsReceived != null)
+                {
+                    user.ReferralsReceived = request.ReferralsReceived;
+                }
+
+                if (request.PointsTransactions != null)
+                {
+                    user.PointsTransactions = request.PointsTransactions;
+                }
+
+                if (request.UserRedemptions != null)
+                {
+                    user.UserRedemptions = request.UserRedemptions;
                 }
 
                 user.UpdatedAt = DateTime.UtcNow;
 
                 await _context.SaveChangesAsync();
-
-                return Ok(new { message = "User updated successfully." });
+                return Ok(user);
             }
             catch (Exception ex)
             {
                 return StatusCode(500, new { message = "An error occurred while updating the user.", error = ex.Message });
             }
         }
+
+
 
         [HttpPost("forgot-password")]
         public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordRequest request)
