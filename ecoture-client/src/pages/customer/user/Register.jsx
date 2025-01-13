@@ -21,9 +21,16 @@ import AuthLayout from 'components/user/AuthLayout';
 const Register = () => {
     const [showPassword, setShowPassword] = React.useState(false);
 
+    const [showConfirmPassword, setShowConfirmPassword] = React.useState(false);
+
     const handleClickShowPassword = () => {
         setShowPassword(!showPassword);
     };
+
+    const handleClickShowConfirmPassword = () => {
+        setShowConfirmPassword(!showConfirmPassword);
+    };
+
     const navigate = useNavigate();
     const formik = useFormik({
         initialValues: {
@@ -180,7 +187,7 @@ const Register = () => {
                             fullWidth
                             margin="dense"
                             autoComplete="off"
-                            type={showPassword ? 'text' : 'password'}
+                            type={showConfirmPassword ? 'text' : 'password'}
                             label="Confirm Password"
                             name="confirmPassword"
                             value={formik.values.confirmPassword}
@@ -198,11 +205,11 @@ const Register = () => {
                                 endAdornment: (
                                     <IconButton
                                         edge="end"
-                                        onClick={handleClickShowPassword}
-                                        aria-label="toggle password visibility"
+                                        onClick={handleClickShowConfirmPassword}
+                                        aria-label="toggle confirm password visibility"
                                         sx={{ color: 'action.active' }}
                                     >
-                                        {showPassword ? (
+                                        {showConfirmPassword ? (
                                             <VisibilityOff />
                                         ) : (
                                             <Visibility />

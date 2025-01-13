@@ -19,7 +19,7 @@ import UserContext from './contexts/UserContext';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { ToastContainer } from 'react-toastify';
 import Account from './pages/customer/user/Account';
-import Navbar from './components/Navbar';
+import Navbar from 'components/Navbar';
 import ResetPassword from './pages/customer/user/ResetPassword';
 import ForgotPassword from './pages/customer/user/ForgotPassword';
 import http from 'utils/http';

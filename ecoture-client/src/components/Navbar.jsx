@@ -17,7 +17,7 @@ import {
 } from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
 import UserContext from '../contexts/UserContext';
-import EcoTureLogo from '../assets/images/placeholder.jpg'; // Update with the actual image path
+import EcoTureLogo from '../assets/images/ecoture-logo.png'; // Update with the actual image path
 import { toast } from 'react-toastify';
 import MenuIcon from '@mui/icons-material/Menu';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
