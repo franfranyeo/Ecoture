@@ -48,6 +48,8 @@ function Login() {
     };
 
     const handleSelectMethod = async (method) => {
+        setSelectedMethod(method);
+
         switch (method) {
             case 'email':
                 // call API to send OTP to email
@@ -95,7 +97,6 @@ function Login() {
             default:
                 break;
         }
-        setSelectedMethod(method);
     };
 
     const handleVerifyOtp = async () => {
@@ -108,9 +109,10 @@ function Login() {
                         otp
                     });
                     if (res.data) {
-                        loggedInUser[
-                            'fullName'
-                        ] = `${loggedInUser.firstName} ${loggedInUser.lastName}`;
+                        loggedInUser['fullName'] =
+                            `${loggedInUser.firstName} ${loggedInUser.lastName}`.replaceAll(
+                                'Empty'
+                            );
                         localStorage.setItem(
                             'user',
                             JSON.stringify(loggedInUser)
@@ -143,9 +145,10 @@ function Login() {
                         otp
                     });
                     if (res.data) {
-                        loggedInUser[
-                            'fullName'
-                        ] = `${loggedInUser.firstName} ${loggedInUser.lastName}`;
+                        loggedInUser['fullName'] =
+                            `${loggedInUser.firstName} ${loggedInUser.lastName}`.replaceAll(
+                                'Empty'
+                            );
                         localStorage.setItem(
                             'user',
                             JSON.stringify(loggedInUser)
@@ -234,7 +237,10 @@ function Login() {
                         console.log(activeMfaMethods);
                         setMfaMethods(activeMfaMethods);
                     } else {
-                        user['fullName'] = `${user.firstName} ${user.lastName}`;
+                        user['fullName'] =
+                            `${user.firstName} ${user.lastName}`.replaceAll(
+                                'Empty'
+                            );
                         localStorage.setItem('user', JSON.stringify(user));
                         localStorage.setItem(
                             'accessToken',
@@ -453,7 +459,7 @@ function Login() {
                                               /^(\+65 )\d{4} (\d{4})$/,
                                               '$1**** $2'
                                           )}`
-                                } // Display 'Email' for email and 'SMS' for SMS
+                                }
                                 sx={{
                                     textAlign: 'center',
                                     fontWeight: '500', // Slightly bold text

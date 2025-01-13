@@ -86,16 +86,21 @@ namespace Ecoture.Controllers
                     user = new User
                     {
                         Email = userInfo.Email,
-                        FirstName = userInfo.GivenName,
-                        LastName = userInfo.FamilyName,
+                        FirstName = string.IsNullOrEmpty(userInfo.GivenName) ? "" : userInfo.GivenName,
+                        LastName = string.IsNullOrEmpty(userInfo.FamilyName) ? "" : userInfo.FamilyName,
                         Password = string.Empty,
                         PfpURL = userInfo.Picture,
                         CreatedAt = DateTime.Now,
                         UpdatedAt = DateTime.Now,
-                       
+                    };
+
+                    var mfaResponse = new MfaResponse
+                    {
+                        UserId = user.UserId
                     };
                     // Add user 
-                    _context.Users.Add(user);
+                    await _context.Users.AddAsync(user);
+                    await _context.MfaResponses.AddAsync(mfaResponse);
                     await _context.SaveChangesAsync();
                 }
 
@@ -286,10 +291,10 @@ namespace Ecoture.Controllers
                     user.FirstName = request.FirstName.Trim();
                 }
 
-                if (!string.IsNullOrEmpty(request.LastName))
-                {
-                    user.LastName = request.LastName.Trim();
-                }
+                //if (!string.IsNullOrEmpty(request.LastName))
+                //{
+                //    user.LastName = request.LastName.Trim();
+                //}
 
                 if (!string.IsNullOrEmpty(request.Email))
                 {

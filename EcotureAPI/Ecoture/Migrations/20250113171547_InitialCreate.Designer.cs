@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EcotureAPI.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20250113160043_InitialCreate")]
+    [Migration("20250113171547_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -277,7 +277,6 @@ namespace EcotureAPI.Migrations
                         .HasColumnType("datetime");
 
                     b.Property<string>("LastName")
-                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("varchar(100)");
 

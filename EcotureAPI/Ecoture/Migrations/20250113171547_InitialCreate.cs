@@ -38,7 +38,7 @@ namespace EcotureAPI.Migrations
                     UserId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
                     FirstName = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false),
-                    LastName = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false),
+                    LastName = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: true),
                     Email = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false),
                     Password = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false),
                     MobileNo = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: false),

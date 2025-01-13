@@ -274,7 +274,6 @@ namespace EcotureAPI.Migrations
                         .HasColumnType("datetime");
 
                     b.Property<string>("LastName")
-                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("varchar(100)");
 

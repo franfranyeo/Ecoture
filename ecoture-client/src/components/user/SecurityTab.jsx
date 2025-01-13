@@ -24,41 +24,34 @@ const SecurityTab = () => {
     const { user, setUser } = useContext(UserContext);
     const [is2FAEnabled, setIs2FAEnabled] = useState(user.is2FAEnabled);
     const [authMethods, setAuthMethods] = useState([]);
-
+    const [modalConfig, setModalConfig] = useState({
+        open: false,
+        type: '', // 'phone' or 'email'
+        otpSent: false,
+        loading: false,
+        otp: '',
+        isChange: false
+    });
     const [tempIs2FAEnabled, setTempIs2FAEnabled] = useState(is2FAEnabled);
     const [tempAuthMethods, setTempAuthMethods] = useState(authMethods);
     const [tempUser, setTempUser] = useState({ ...user });
     const [isEditing, setIsEditing] = useState(false);
-    const [isVerifyingPhone, setIsVerifyingPhone] = useState(false);
-    const [isVerifyingEmail, setIsVerifyingEmail] = useState(false);
-
     const [error, setError] = useState(null);
-    const [open, setOpen] = useState(false);
     const [phoneNumber, setPhoneNumber] = useState('+65 ');
-    const [otp, setOtp] = useState('');
-    const [loading, setLoading] = useState(false);
-    const [isEmailOtpSent, setIsEmailOtpSent] = useState(false);
-    const [isPhoneOtpSent, setIsPhoneOtpSent] = useState(false);
-
     const availableMethods = ['SMS', 'Email', 'Authenticator'];
 
     useEffect(() => {
         if (user && user.userId && authMethods.length === 0) {
-            // Check if user is valid and userId is non-zero
             const getAuthMethods = async () => {
                 try {
                     const res = await http.post('/user/get-mfa', {
                         userId: user.userId
                     });
                     if (res.data) {
-                        // Transform the response to extract active MFA methods
-                        const mfaMethods = res.data; // assuming response is like { sms: true, email: true, authenticator: false }
-
-                        // Convert object keys with 'true' values to an array
+                        const mfaMethods = res.data;
                         const activeMfaMethods = Object.keys(mfaMethods).filter(
                             (key) => mfaMethods[key] && key !== 'userId'
                         );
-
                         setTempAuthMethods(activeMfaMethods);
                         setAuthMethods(activeMfaMethods);
                     }
@@ -68,89 +61,76 @@ const SecurityTab = () => {
             };
             getAuthMethods();
         }
-    }, [user]);
+    }, [user, authMethods.length]);
 
     const handleToggle2FA = () => {
         setTempIs2FAEnabled(!tempIs2FAEnabled);
-        if (!isEditing) setTempAuthMethods([]); // Reset methods when enabling 2FA
+        if (!isEditing) setTempAuthMethods([]);
     };
 
-    const handleOpen = (type) => {
-        console.log(type);
-        if (type === 'phone') setIsVerifyingPhone(true);
-        if (type === 'email') setIsVerifyingEmail(true);
-        setOpen(true);
+    const handleOpenModal = (type, isChange = false) => {
+        setModalConfig({
+            open: true,
+            type,
+            otpSent: false,
+            loading: false,
+            otp: '',
+            isChange
+        });
     };
-    const handleClose = () => setOpen(false);
+
+    const handleCloseModal = () => {
+        setModalConfig((prevState) => ({ ...prevState, open: false }));
+    };
 
     const handlePhoneNoChange = (e) => {
         let { value } = e.target;
-
-        // Ensure the +65 prefix stays fixed and no leading spaces before the digits
         if (!value.startsWith('+65 ')) {
             value = '+65 ' + value.slice(4);
         }
-
-        // Remove non-numeric characters and reformat to 8-digit phone number
         let numericValue = value.slice(4).replace(/\D/g, '');
-
-        // Format the phone number with space after every 4 digits
         if (numericValue.length > 4) {
             numericValue =
                 numericValue.slice(0, 4) + ' ' + numericValue.slice(4, 8);
         }
-
-        // Update the phone number state with the formatted value
         setPhoneNumber('+65 ' + numericValue);
     };
-    const handlePhoneOtpSend = async () => {
-        // check if phone number is valid
-        if (phoneNumber.length !== 13) {
-            toast.error('Invalid phone number.');
-            return;
-        }
 
-        // check if phone number starts with +65 9 or +65 8
+    const handlePhoneOtpSend = async () => {
         if (
-            !phoneNumber.startsWith('+65 9') &&
-            !phoneNumber.startsWith('+65 8')
+            phoneNumber.length !== 13 ||
+            (!phoneNumber.startsWith('+65 9') &&
+                !phoneNumber.startsWith('+65 8'))
         ) {
             toast.error('Invalid phone number.');
             return;
         }
-
-        setLoading(true);
+        setModalConfig((prevState) => ({ ...prevState, loading: true }));
         try {
-            // clean up phone number field
             const updatedPhoneNo = phoneNumber.replaceAll(' ', '').trim();
-            // Call your send OTP API
             const res = await http.post('/verify/phone', {
                 email: user.email,
                 phoneNo: updatedPhoneNo
             });
-
             console.log(res);
-            setIsPhoneOtpSent(true);
+            setModalConfig((prevState) => ({ ...prevState, otpSent: true }));
             toast.success(res.data);
         } catch (error) {
             toast.error('Error while sending OTP.');
         } finally {
-            setLoading(false);
-            setIsVerifyingPhone(false);
+            setModalConfig((prevState) => ({ ...prevState, loading: false }));
         }
     };
 
     const handleVerifyPhoneOtp = async () => {
-        setLoading(true);
+        setModalConfig((prevState) => ({ ...prevState, loading: true }));
         try {
             const updatedPhoneNo = phoneNumber.replaceAll(' ', '').trim();
-            // Call your verify OTP API
             const res = await http.post('/verify/phone-otp', {
                 email: user.email,
                 phoneNo: updatedPhoneNo,
-                otp
+                otp: modalConfig.otp
             });
-
             setTempUser({
                 ...tempUser,
                 isPhoneVerified: true,
@@ -158,55 +138,44 @@ const SecurityTab = () => {
             });
             setUser({ ...user, isPhoneVerified: true, mobileNo: phoneNumber });
             toast.success(res.data);
-            handleClose();
+            handleCloseModal();
         } catch (error) {
             toast.error('Error while verifying OTP.');
         } finally {
-            setLoading(false);
-            setIsVerifyingEmail(false);
+            setModalConfig((prevState) => ({ ...prevState, loading: false }));
         }
     };
 
-    const handleVerifyMobile = () => {
-        setIsVerifyingPhone(true);
-        handleOpen('phone');
-    };
-
     const handleEmailOtpSend = async () => {
-        setLoading(true);
+        setModalConfig((prevState) => ({ ...prevState, loading: true }));
         try {
-            // Call your send OTP API
             const res = await http.post('/verify/email', {
                 email: user.email
             });
-
-            setIsEmailOtpSent(true);
+            setModalConfig((prevState) => ({ ...prevState, otpSent: true }));
             toast.success(res.data);
         } catch (error) {
             toast.error('Error while sending OTP.');
         } finally {
-            setLoading(false);
+            setModalConfig((prevState) => ({ ...prevState, loading: false }));
         }
     };
 
     const handleVerifyEmailOtp = async () => {
-        setLoading(true);
+        setModalConfig((prevState) => ({ ...prevState, loading: true }));
         try {
-            // Call your verify OTP API
             const res = await http.post('/verify/email-otp', {
                 email: user.email,
-                otp
+                otp: modalConfig.otp
             });
-
             setTempUser({ ...tempUser, isEmailVerified: true });
             setUser({ ...user, isEmailVerified: true });
             toast.success(res.data);
-            handleClose();
+            handleCloseModal();
         } catch (error) {
             toast.error('Error while verifying OTP.');
         } finally {
-            setLoading(false);
-            setIsVerifyingEmail(false);
+            setModalConfig((prevState) => ({ ...prevState, loading: false }));
         }
     };
 
@@ -216,7 +185,7 @@ const SecurityTab = () => {
         setTempIs2FAEnabled(is2FAEnabled);
         setTempAuthMethods(authMethods);
         setTempUser({ ...user });
-        setError(null); // Clear error on cancel
+        setError(null);
         setIsEditing(false);
     };
 
@@ -226,19 +195,20 @@ const SecurityTab = () => {
             return;
         }
 
-        if (tempAuthMethods.includes('SMS') && !tempUser.mobileNo) {
-            setError('Please set up your mobile number to use OTP.');
-            return;
-        }
-
-        if (tempAuthMethods.includes('Email') && !tempUser.email) {
-            setError('Please set up your email to use this method.');
-            return;
+        // Ensure verification before letting users save a method
+        for (const method of tempAuthMethods) {
+            if (
+                (method === 'sms' && !tempUser.isPhoneVerified) ||
+                (method === 'email' && !tempUser.isEmailVerified)
+            ) {
+                toast.error(`Please verify your ${method} to enable it.`);
+                return;
+            }
         }
 
         const payload = {
-            userId: tempUser.userId, // Assuming tempUser has an id property
-            mfaTypes: tempAuthMethods.map((method) => method.toLowerCase()), // Convert methods to lowercase
+            userId: tempUser.userId,
+            mfaTypes: tempAuthMethods.map((method) => method.toLowerCase()),
             enable: tempIs2FAEnabled
         };
         try {
@@ -250,7 +220,7 @@ const SecurityTab = () => {
             setIs2FAEnabled(tempIs2FAEnabled);
             setAuthMethods(tempAuthMethods);
             setUser({ ...tempUser, is2FAEnabled: tempIs2FAEnabled });
-            setError(null); // Clear error on success
+            setError(null);
             setIsEditing(false);
         } catch (error) {
             console.error(error);
@@ -270,12 +240,13 @@ const SecurityTab = () => {
 
     const handleSetUpEmail = () => {
         const newEmail = prompt('Enter your email:');
-        if (newEmail)
+        if (newEmail) {
             setTempUser({
                 ...tempUser,
                 email: newEmail,
                 isEmailVerified: false
             });
+        }
     };
 
     return (
@@ -397,13 +368,11 @@ const SecurityTab = () => {
                                             {isEditing && (
                                                 <Link
                                                     component="button"
-                                                    onClick={
-                                                        tempUser.isPhoneVerified
-                                                            ? () =>
-                                                                  handleOpen(
-                                                                      'phone'
-                                                                  )
-                                                            : handleVerifyMobile
+                                                    onClick={() =>
+                                                        handleOpenModal(
+                                                            'phone',
+                                                            tempUser.isPhoneVerified
+                                                        )
                                                     }
                                                     sx={{
                                                         textDecoration: 'none'
@@ -420,7 +389,7 @@ const SecurityTab = () => {
                                             No mobile number set.{' '}
                                             <Link
                                                 onClick={() =>
-                                                    handleOpen('phone')
+                                                    handleOpenModal('phone')
                                                 }
                                                 sx={{
                                                     textDecoration: 'none'
@@ -454,13 +423,11 @@ const SecurityTab = () => {
                                             {isEditing && (
                                                 <Link
                                                     component="button"
-                                                    onClick={
-                                                        tempUser.isEmailVerified
-                                                            ? handleSetUpEmail
-                                                            : () =>
-                                                                  handleOpen(
-                                                                      'email'
-                                                                  )
+                                                    onClick={() =>
+                                                        handleOpenModal(
+                                                            'email',
+                                                            tempUser.isEmailVerified
+                                                        )
                                                     }
                                                     sx={{
                                                         textDecoration: 'none'
@@ -523,7 +490,7 @@ const SecurityTab = () => {
                 </Box>
             </Paper>
 
-            <Modal open={open} onClose={handleClose}>
+            <Modal open={modalConfig.open} onClose={handleCloseModal}>
                 <Box
                     sx={{
                         width: 400,
@@ -534,10 +501,18 @@ const SecurityTab = () => {
                     }}
                 >
                     <Typography variant="h6" sx={{ marginBottom: 2 }}>
-                        {isVerifyingPhone ? 'Verify Phone' : 'Verify Email'}
+                        {modalConfig.isChange
+                            ? `Change ${
+                                  modalConfig.type.charAt(0).toUpperCase() +
+                                  modalConfig.type.slice(1)
+                              }`
+                            : `Verify ${
+                                  modalConfig.type.charAt(0).toUpperCase() +
+                                  modalConfig.type.slice(1)
+                              }`}
                     </Typography>
 
-                    {isVerifyingPhone && !user.isPhoneVerified && (
+                    {modalConfig.type === 'phone' && (
                         <Box sx={{ marginBottom: 2 }}>
                             <FormControl fullWidth>
                                 <TextField
@@ -546,61 +521,61 @@ const SecurityTab = () => {
                                     value={phoneNumber}
                                     helperText="Enter your 8-digit phone number (e.g. +65 9123 4567)"
                                     inputProps={{
-                                        maxLength: 13 // 3 for +65 and 8 digits for the phone number with spaces
+                                        maxLength: 13
                                     }}
                                     onChange={handlePhoneNoChange}
                                     fullWidth
-                                    disabled={
-                                        isPhoneOtpSent || user.isPhoneVerified
-                                    }
+                                    // Allow editing regardless of the verification status
+                                    disabled={modalConfig.loading}
                                 />
                             </FormControl>
                         </Box>
                     )}
-
-                    {isPhoneOtpSent && !user.isPhoneVerified && (
-                        <Box sx={{ marginBottom: 2 }}>
-                            <TextField
-                                label="SMS"
-                                variant="outlined"
-                                value={otp}
-                                onChange={(e) => setOtp(e.target.value)}
-                                fullWidth
-                            />
-                        </Box>
-                    )}
-
-                    {isVerifyingPhone &&
-                        !isPhoneOtpSent &&
+                    {modalConfig.otpSent &&
+                        modalConfig.type === 'phone' &&
                         !user.isPhoneVerified && (
-                            <Button
-                                variant="contained"
-                                color="primary"
-                                fullWidth
-                                onClick={handlePhoneOtpSend}
-                                disabled={loading}
-                            >
-                                {loading ? (
-                                    <CircularProgress
-                                        size={24}
-                                        color="inherit"
-                                    />
-                                ) : (
-                                    'Send OTP to Phone'
-                                )}
-                            </Button>
+                            <Box sx={{ marginBottom: 2 }}>
+                                <TextField
+                                    label="SMS"
+                                    variant="outlined"
+                                    value={modalConfig.otp}
+                                    onChange={(e) =>
+                                        setModalConfig((prev) => ({
+                                            ...prev,
+                                            otp: e.target.value
+                                        }))
+                                    }
+                                    fullWidth
+                                />
+                            </Box>
                         )}
 
-                    {isPhoneOtpSent && !user.isPhoneVerified && (
+                    {!modalConfig.otpSent && modalConfig.type === 'phone' && (
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            fullWidth
+                            onClick={handlePhoneOtpSend}
+                            disabled={modalConfig.loading}
+                        >
+                            {modalConfig.loading ? (
+                                <CircularProgress size={24} color="inherit" />
+                            ) : (
+                                'Send OTP to Phone'
+                            )}
+                        </Button>
+                    )}
+
+                    {modalConfig.otpSent && modalConfig.type === 'phone' && (
                         <Button
                             variant="contained"
                             color="primary"
                             fullWidth
                             onClick={handleVerifyPhoneOtp}
-                            disabled={loading}
+                            disabled={modalConfig.loading}
                             sx={{ marginTop: 2 }}
                         >
-                            {loading ? (
+                            {modalConfig.loading ? (
                                 <CircularProgress size={24} color="inherit" />
                             ) : (
                                 'Verify Phone OTP'
@@ -608,71 +583,69 @@ const SecurityTab = () => {
                         </Button>
                     )}
 
-                    {user.email &&
-                        !user.isEmailVerified &&
-                        isVerifyingEmail &&
-                        !isEmailOtpSent && (
-                            <Box sx={{ marginTop: 2 }}>
-                                <Typography sx={{ color: 'grey', mb: 2 }}>
-                                    {user.email}
-                                </Typography>
+                    {modalConfig.type === 'email' && !user.isEmailVerified && (
+                        <>
+                            {!modalConfig.otpSent ? (
+                                <Box sx={{ marginTop: 2 }}>
+                                    <Typography sx={{ color: 'grey', mb: 2 }}>
+                                        {user.email}
+                                    </Typography>
 
+                                    <Button
+                                        variant="contained"
+                                        color="primary"
+                                        fullWidth
+                                        onClick={handleEmailOtpSend}
+                                        disabled={modalConfig.loading}
+                                    >
+                                        {modalConfig.loading ? (
+                                            <CircularProgress
+                                                size={24}
+                                                color="inherit"
+                                            />
+                                        ) : (
+                                            'Send OTP to Email'
+                                        )}
+                                    </Button>
+                                </Box>
+                            ) : (
+                                <Box sx={{ marginTop: 2 }}>
+                                    <TextField
+                                        label="Email OTP"
+                                        variant="outlined"
+                                        value={modalConfig.otp}
+                                        onChange={(e) =>
+                                            setModalConfig((prev) => ({
+                                                ...prev,
+                                                otp: e.target.value
+                                            }))
+                                        }
+                                        fullWidth
+                                    />
+                                </Box>
+                            )}
+
+                            {modalConfig.otpSent && (
                                 <Button
                                     variant="contained"
                                     color="primary"
                                     fullWidth
-                                    onClick={handleEmailOtpSend}
-                                    disabled={loading}
+                                    onClick={handleVerifyEmailOtp}
+                                    disabled={modalConfig.loading}
+                                    sx={{ marginTop: 2 }}
                                 >
-                                    {loading ? (
+                                    {modalConfig.loading ? (
                                         <CircularProgress
                                             size={24}
                                             color="inherit"
                                         />
                                     ) : (
-                                        'Send OTP to Email'
+                                        'Verify Email OTP'
                                     )}
                                 </Button>
-                            </Box>
-                        )}
-
-                    {user.email &&
-                        !user.isEmailVerified &&
-                        isVerifyingEmail &&
-                        isEmailOtpSent && (
-                            <Box sx={{ marginTop: 2 }}>
-                                <TextField
-                                    label="Email OTP"
-                                    variant="outlined"
-                                    value={otp}
-                                    onChange={(e) => setOtp(e.target.value)}
-                                    fullWidth
-                                />
-                            </Box>
-                        )}
-
-                    {user.email &&
-                        !user.isEmailVerified &&
-                        isVerifyingEmail &&
-                        isEmailOtpSent && (
-                            <Button
-                                variant="contained"
-                                color="primary"
-                                fullWidth
-                                onClick={handleVerifyEmailOtp}
-                                disabled={loading}
-                                sx={{ marginTop: 2 }}
-                            >
-                                {loading ? (
-                                    <CircularProgress
-                                        size={24}
-                                        color="inherit"
-                                    />
-                                ) : (
-                                    'Verify Email OTP'
-                                )}
-                            </Button>
-                        )}
+                            )}
+                        </>
+                    )}
                 </Box>
             </Modal>
         </Box>
