@@ -60,6 +60,7 @@ namespace Ecoture.Controllers
             }
         }
 
+        // GOOGLE SIGNIN
         [HttpPost("google")]
         public async Task<IActionResult> GoogleLogin(GoogleLoginRequest request)
         {
@@ -210,6 +211,7 @@ namespace Ecoture.Controllers
             return Ok();
         }
 
+        // GET MFA
         [HttpPost("get-mfa")]
         public async Task<ActionResult<MfaResponse>> GetMfaResponse([FromBody] MfaRequest request)
         {
@@ -225,6 +227,7 @@ namespace Ecoture.Controllers
             return Ok(mfaResponse);
         }
 
+        // UPDATE MFA
         [HttpPost("update-mfa"), Authorize]
         public async Task<ActionResult> UpdateMfa([FromBody] UpdateMfaRequest request)
         {
@@ -265,6 +268,7 @@ namespace Ecoture.Controllers
             return Ok(new { message = "MFA settings updated successfully." });
         }
 
+        // UPDATE USER
         [HttpPost("{id}"), Authorize]
         public async Task<IActionResult> UpdateUser(int id, UpdateUserInfoRequest request)
         {
@@ -402,7 +406,7 @@ namespace Ecoture.Controllers
         }
 
 
-
+        // FORGOT PASSWORD
         [HttpPost("forgot-password")]
         public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordRequest request)
         {
@@ -425,7 +429,7 @@ namespace Ecoture.Controllers
             return Ok("If an account with this email exists, a password reset email has been sent.");
         }
 
-        // Reset Password API
+        // RESET PASSWORD
         [HttpPost("reset-password")]
         public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordRequest request)
         {

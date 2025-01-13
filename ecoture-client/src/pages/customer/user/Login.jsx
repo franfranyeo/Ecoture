@@ -189,7 +189,7 @@ function Login() {
             email: yup
                 .string()
                 .trim()
-                .email('Enter a valid email')
+                .email('Invalid email address')
                 .max(50, 'Email must be at most 50 characters')
                 .required('Email is required'),
             password: yup

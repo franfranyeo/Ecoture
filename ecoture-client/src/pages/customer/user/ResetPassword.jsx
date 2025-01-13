@@ -15,9 +15,14 @@ function ResetPassword() {
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
     const [showPassword, setShowPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = React.useState(false);
 
     const handleClickShowPassword = () => {
         setShowPassword(!showPassword);
+    };
+
+    const handleClickShowConfirmPassword = () => {
+        setShowConfirmPassword(!showConfirmPassword);
     };
 
     const formik = useFormik({
@@ -109,7 +114,7 @@ function ResetPassword() {
                         <TextField
                             fullWidth
                             margin="dense"
-                            type={showPassword ? 'text' : 'password'}
+                            type={showConfirmPassword ? 'text' : 'password'}
                             label="Confirm Password"
                             name="confirmPassword"
                             value={formik.values.confirmPassword}
@@ -127,11 +132,11 @@ function ResetPassword() {
                                 endAdornment: (
                                     <IconButton
                                         edge="end"
-                                        onClick={handleClickShowPassword}
+                                        onClick={handleClickShowConfirmPassword}
                                         aria-label="toggle password visibility"
                                         sx={{ color: 'action.active' }}
                                     >
-                                        {showPassword ? (
+                                        {showConfirmPassword ? (
                                             <VisibilityOff />
                                         ) : (
                                             <Visibility />

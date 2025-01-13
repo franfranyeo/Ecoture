@@ -1,5 +1,6 @@
 import React from 'react';
 import { Box, TextField, Button, Grid } from '@mui/material';
+import Typography from '@mui/material/Typography';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import http from 'utils/http';
@@ -40,6 +41,10 @@ function ForgotPassword() {
 
     return (
         <AuthLayout title="Forgot Password">
+            <Typography variant="body2" color="textSecondary">
+                No worries! Enter your email address below, and we'll send you a link to reset your password.
+            </Typography>
+
             <Box component="form" onSubmit={formik.handleSubmit}>
                 <Grid container spacing={2}>
                     <Grid item xs={12}>

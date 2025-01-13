@@ -66,15 +66,27 @@ const AccountSidePanel = ({ user, selected, setSelected }) => {
                                 mb: 1,
                                 backgroundColor:
                                     selected === text
-                                        ? 'primary.light'
+                                        ? 'primary.main'
                                         : 'transparent',
                                 '&:hover': {
-                                    backgroundColor: 'primary.light',
-                                    cursor: 'pointer'
+                                    backgroundColor: 'primary.dark',
+                                    cursor: 'pointer',
+                                    '& .MuiTypography-root': {
+                                        color: 'white' 
+                                    }
                                 }
                             }}
                         >
-                            <ListItemText primary={text} />
+                            <ListItemText
+                                primary={text}
+                                sx={{
+                                    color:
+                                        selected === text ? 'white' : 'black',
+                                    '&:hover': {
+                                        color: 'white' 
+                                    }
+                                }}
+                            />
                         </ListItem>
                     ))}
                 </List>

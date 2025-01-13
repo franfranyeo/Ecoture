@@ -42,12 +42,29 @@ const Register = () => {
             agreeToTerms: false
         },
         validationSchema: yup.object({
-            firstName: yup.string().required('Required'),
-            lastName: yup.string().required('Required'),
+            firstName: yup
+                .string()
+                .required('First name is required')
+                .min(2, 'First name must be at least 2 characters')
+                .max(100, 'First name must be at most 100 characters')
+                .matches(
+                    /^[\p{L} '-,.]+$/,
+                    "Only letters, spaces, and characters: ' - , . are allowed"
+                ),
+            lastName: yup
+                .string()
+                .required('Last name is required')
+                .min(2, 'Last name must be at least 2 characters')
+                .max(100, 'Last name must be at most 100 characters')
+                .matches(
+                    /^[\p{L} '-,.]+$/,
+                    "Only letters, spaces, and characters: ' - , . are allowed"
+                ),
             email: yup
                 .string()
                 .email('Invalid email address')
-                .required('Required'),
+                .max(50, 'Email must be at most 50 characters')
+                .required('Email is required'),
             password: yup
                 .string()
                 .trim()
@@ -61,7 +78,7 @@ const Register = () => {
             confirmPassword: yup
                 .string()
                 .oneOf([yup.ref('password'), null], 'Passwords must match')
-                .required('Required'),
+                .required('Confirm password is required'),
             agreeToTerms: yup
                 .boolean()
                 .oneOf([true], 'You must accept the terms and conditions')
