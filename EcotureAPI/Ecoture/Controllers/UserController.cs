@@ -180,13 +180,13 @@ namespace Ecoture.Controllers
             }
 
             // trim string values
-            request.firstName = request.firstName.Trim();
-            request.lastName = request.lastName.Trim();
-            request.email = request.email.Trim();
-            request.password = request.password.Trim();
+            request.FirstName = request.FirstName.Trim();
+            request.LastName = request.LastName.Trim();
+            request.Email = request.Email.Trim();
+            request.Password = request.Password.Trim();
             
             // Check if user already exists
-            var userExists = _context.Users.Any(u => u.Email == request.email);
+            var userExists = _context.Users.Any(u => u.Email == request.Email);
             if (userExists)
             {
                 string message = "Email already exists.";
@@ -194,12 +194,12 @@ namespace Ecoture.Controllers
             }
             // Create user object 
             var now = DateTime.Now;
-            string passwordHash = BCrypt.Net.BCrypt.HashPassword(request.password);
+            string passwordHash = BCrypt.Net.BCrypt.HashPassword(request.Password);
             var staff = new User()
             {
-                FirstName = request.firstName,
-                LastName = request.lastName,
-                Email = request.email,
+                FirstName = request.FirstName,
+                LastName = request.LastName,
+                Email = request.Email,
                 Password = passwordHash,
                 Role = UserRole.Staff,
                 CreatedAt = now,
@@ -268,142 +268,36 @@ namespace Ecoture.Controllers
             return Ok(new { message = "MFA settings updated successfully." });
         }
 
-        // UPDATE USER
-        [HttpPost("{id}"), Authorize]
-        public async Task<IActionResult> UpdateUser(int id, UpdateUserInfoRequest request)
+
+        // EDIT PROFILE
+        [HttpPost("edit-profile"), Authorize]
+        public async Task<IActionResult> EditProfile([FromBody] EditProfileRequest request)
         {
-            var user = _context.Users.Find(id);
-            if (user == null)
-            {
-                return NotFound(new { message = "User not found." });
-            }
+            var userId = Convert.ToInt32(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+            if (userId <= 0) return Unauthorized();
 
-            //var loggedInUserId = Convert.ToInt32(User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value);
-            //var loggedInUserRole = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
+            var result = await _userManager.EditProfileAsync(userId, request);
+            if (!result.IsSuccess) return BadRequest(new { message = result.ErrorMessage });
 
-            //if (user.UserId != loggedInUserId && loggedInUserRole != UserRole.Admin.ToString())
-            //{
-            //    System.Diagnostics.Debug.WriteLine(loggedInUserId);
-            //    return Unauthorized(new { message = "You are not authorised to update this account." });
-            //}
+            return Ok(new { message = "Profile updated successfully." });
 
-            try
-            {
-                // Update only provided fields
-                if (!string.IsNullOrEmpty(request.FirstName))
-                {
-                    user.FirstName = request.FirstName.Trim();
-                }
-
-                //if (!string.IsNullOrEmpty(request.LastName))
-                //{
-                //    user.LastName = request.LastName.Trim();
-                //}
-
-                if (!string.IsNullOrEmpty(request.Email))
-                {
-                    var emailExists = _context.Users.Any(u => u.Email == request.Email && u.UserId != id);
-                    if (emailExists)
-                    {
-                        return BadRequest(new { message = "Email already exists." });
-                    }
-                    user.Email = request.Email.Trim();
-                }
-
-                if (!string.IsNullOrEmpty(request.MobileNo))
-                {
-                    user.MobileNo = request.MobileNo.Trim();
-                }
-
-                if (request.DateofBirth.HasValue)
-                {
-                    user.DateofBirth = request.DateofBirth.Value;
-                }
-
-                //if (request.Role.HasValue)
-                //{
-                //    if (loggedInUserRole != UserRole.Admin.ToString())
-                //    {
-                //        return Unauthorized(new { message = "Only admins can change roles." });
-                //    }
-                //    user.Role = request.Role.Value;
-                //}
-
-                if (!string.IsNullOrEmpty(request.PfpURL))
-                {
-                    user.PfpURL = request.PfpURL.Trim();
-                }
-
-                if (request.LastLogin.HasValue)
-                {
-                    user.LastLogin = request.LastLogin.Value;
-                }
-
-                if (request.Is2FAEnabled.HasValue)
-                {
-                    user.Is2FAEnabled = request.Is2FAEnabled.Value;
-                }
-
-                if (request.IsEmailVerified.HasValue)
-                {
-                    user.IsEmailVerified = request.IsEmailVerified.Value;
-                }
-
-                if (request.IsPhoneVerified.HasValue)
-                {
-                    user.IsPhoneVerified = request.IsPhoneVerified.Value;
-                }
-
-                if (!string.IsNullOrEmpty(request.ReferralCode))
-                {
-                    user.ReferralCode = request.ReferralCode.Trim();
-                }
-
-                if (request.DeleteRequested.HasValue)
-                {
-                    user.DeleteRequested = request.DeleteRequested.Value;
-                }
-
-                if (request.DeleteRequestedAt.HasValue)
-                {
-                    user.DeleteRequestedAt = request.DeleteRequestedAt.Value;
-                }
-
-                if (request.Membership != null)
-                {
-                    user.Membership = request.Membership;
-                }
-
-                if (request.ReferralsSent != null)
-                {
-                    user.ReferralsSent = request.ReferralsSent;
-                }
-
-                if (request.ReferralsReceived != null)
-                {
-                    user.ReferralsReceived = request.ReferralsReceived;
-                }
-
-                if (request.PointsTransactions != null)
-                {
-                    user.PointsTransactions = request.PointsTransactions;
-                }
-
-                if (request.UserRedemptions != null)
-                {
-                    user.UserRedemptions = request.UserRedemptions;
-                }
-
-                user.UpdatedAt = DateTime.UtcNow;
-
-                await _context.SaveChangesAsync();
-                return Ok(user);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { message = "An error occurred while updating the user.", error = ex.Message });
-            }
         }
+
+
+        // CHANGE PASSWORD
+        [HttpPost("change-password"), Authorize]
+        public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordRequest request)
+        {
+            var userId = Convert.ToInt32(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+            if (userId <= 0) return Unauthorized();
+
+            var result = await _userManager.ChangePasswordAsync(userId, request);
+            if (!result.IsSuccess) return BadRequest(new { message = result.ErrorMessage });
+
+            return Ok(new { message = "Password changed successfully." });
+        }
+
+
 
 
         // FORGOT PASSWORD
@@ -460,36 +354,12 @@ namespace Ecoture.Controllers
         [HttpPost("{id}/delete-request"), Authorize]
         public async Task<IActionResult> RequestDeletion(int id)
         {
-            // Get logged-in user's ID and role
-            var loggedInUserId = Convert.ToInt32(User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value);
-            var loggedInUserRole = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
-
-            // Find the target user
-            var userToDelete = await _context.Users.FindAsync(id);
-            if (userToDelete == null)
+            var result = await _userManager.RequestAccountDeletionAsync(id, User);
+            if (!result.IsSuccess)
             {
-                return NotFound(new { message = "User not found." });
+                return StatusCode(result.StatusCode, new { message = result.Message });
             }
-
-            // Customers can only request deletion for their own accounts
-            if (loggedInUserRole == UserRole.Customer.ToString() && loggedInUserId != id)
-            {
-                return Unauthorized(new { message = "You can only delete your own account." });
-            }
-
-            // If deletion is already requested, return an error
-            if (userToDelete.DeleteRequested)
-            {
-                return BadRequest(new { message = "Account deletion already requested." });
-            }
-
-            // Mark account as deletion requested
-            userToDelete.DeleteRequested = true;
-            userToDelete.DeleteRequestedAt = DateTime.UtcNow;
-
-            await _context.SaveChangesAsync();
-
-            return Ok(new { message = "Account deletion requested." });
+            return Ok(new { message = result.Message });
         }
 
 
@@ -497,38 +367,12 @@ namespace Ecoture.Controllers
         [HttpPost("{id}/permanent-delete"), Authorize]
         public async Task<IActionResult> PermanentDelete(int id)
         {
-            // Get logged-in user's role
-            var loggedInUserRole = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value;
-
-            // Find the target user
-            var userToDelete = await _context.Users.FindAsync(id);
-            if (userToDelete == null)
+            var result = await _userManager.PermanentlyDeleteAccountAsync(id, User);
+            if (!result.IsSuccess)
             {
-                return NotFound(new { message = "User not found." });
+                return StatusCode(result.StatusCode, new { message = result.Message });
             }
-
-            // Only Admins can perform permanent deletion
-            if (loggedInUserRole != UserRole.Admin.ToString())
-            {
-                return Unauthorized(new { message = "You are not authorized to permanently delete this account." });
-            }
-
-            // Ensure deletion request exists and grace period has expired
-            if (!userToDelete.DeleteRequested || !userToDelete.DeleteRequestedAt.HasValue)
-            {
-                return BadRequest(new { message = "Deletion request not made." });
-            }
-
-            var deletionRequestTime = userToDelete.DeleteRequestedAt.Value;
-            if ((DateTime.UtcNow - deletionRequestTime).TotalDays < 30)
-            {
-                return BadRequest(new { message = "You must wait 30 days before permanent deletion." });
-            }
-
-            _context.Users.Remove(userToDelete);
-            await _context.SaveChangesAsync();
-
-            return Ok(new { message = "User account permanently deleted." });
+            return Ok(new { message = result.Message });
         }
 
 

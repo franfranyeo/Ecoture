@@ -5,11 +5,11 @@ namespace Models.Request
     public class RegisterRequest
     {
         [Required, MinLength(2), MaxLength(100)]
-        [RegularExpression(@"^[\p{L} '-,.]+$", ErrorMessage = "Only allow letters, spaces, and characters: ' - , .")]
+        [RegularExpression(@"^[A-Za-z\s'\-.,]+$", ErrorMessage = "Only allow letters, spaces, and characters: ' - , .")]
         public string FirstName { get; set; } = string.Empty;
 
         [Required, MinLength(2), MaxLength(100)]
-        [RegularExpression(@"^[\p{L} '-,.]+$", ErrorMessage = "Only allow letters, spaces, and characters: ' - , .")]
+        [RegularExpression(@"^[A-Za-z\s'\-.,]+$", ErrorMessage = "Only allow letters, spaces, and characters: ' - , .")]
         public string LastName { get; set; } = string.Empty;
 
         [Required, EmailAddress, MaxLength(255)]

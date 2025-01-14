@@ -30,7 +30,8 @@ function Login() {
     const [mfaMethods, setMfaMethods] = useState([]);
     const [selectedMethod, setSelectedMethod] = useState(null);
     const [otp, setOtp] = useState('');
-    const [tempUser, setTempUser] = useState(null);
+
+    let tempUser = {};
 
     const handleClickShowPassword = () => {
         setShowPassword((prev) => !prev);
@@ -41,7 +42,6 @@ function Login() {
         setMfaMethods([]);
         setSelectedMethod(null);
         setOtp('');
-        setTempUser(null);
         setLoggedInUser(null);
         // clear formik values
         formik.setValues({ email: '', password: '' });
@@ -226,13 +226,13 @@ function Login() {
                             (key) => mfaMethods[key] && key !== 'userId'
                         );
 
-                        setTempUser({
+                        tempUser = {
                             userId: user.userId,
                             firstName: user.firstName,
                             lastName: user.lastName,
                             email: user.email,
                             mobileNo: user.mobileNo
-                        });
+                        };
 
                         setLoggedInUser(user);
                         setMfaMethods(activeMfaMethods);
@@ -368,7 +368,11 @@ function Login() {
                         mt: 5,
                         paddingX: 12,
                         fontSize: 16,
-                        width: '100%'
+                        width: '100%',
+                        backgroundColor: 'primary.main',
+                        '&:hover': {
+                            backgroundColor: 'primary.light'
+                        }
                     }}
                 >
                     Login

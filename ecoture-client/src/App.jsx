@@ -22,7 +22,9 @@ import Account from './pages/customer/user/Account';
 import Navbar from 'components/Navbar';
 import ResetPassword from './pages/customer/user/ResetPassword';
 import ForgotPassword from './pages/customer/user/ForgotPassword';
+import EditProfile from './components/user/EditProfileTab';
 import http from 'utils/http';
+import { Edit } from '@mui/icons-material';
 
 function App() {
     // update in the user context too
@@ -81,7 +83,12 @@ function App() {
                             }}
                         >
                             <Navbar />
-                            <Box sx={{ flex: 1, overflowY: 'auto' }}>
+                            <Box
+                                sx={{
+                                    flex: 1,
+                                    overflowY: 'auto'
+                                }}
+                            >
                                 <Routes>
                                     <Route path="/" element={<Home />} />
                                     <Route path="/login" element={<Login />} />
@@ -108,6 +115,13 @@ function App() {
                                     <Route
                                         path="/privacy-policy"
                                         element={<PrivacyPolicy />}
+                                    />
+
+                                    <Route
+                                        path="/edit-profile"
+                                        element={
+                                            <EditProfile user={user} />
+                                        }
                                     />
                                 </Routes>
                             </Box>

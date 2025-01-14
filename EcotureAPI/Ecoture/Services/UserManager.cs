@@ -1,6 +1,8 @@
 ﻿using Ecoture;
+using Ecoture.Models.Enum;
 using EcotureAPI.Models.DataTransferObjects;
 using EcotureAPI.Models.Entity;
+using EcotureAPI.Models.Request;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Models.Entity;
@@ -47,6 +49,7 @@ namespace EcotureAPI.Services
             return token;
         }
 
+        // REGISTER USER
         public async Task<(bool IsSuccess, string ErrorMessage)> RegisterUserAsync(RegisterRequest request)
         {
             // Trim input values
@@ -92,21 +95,22 @@ namespace EcotureAPI.Services
             return (true, null);
         }
 
+        // LOGIN USER
         public async Task<LoginResponse> LoginUserAsync(LoginRequest request)
         {
             // Trim string values
-            request.email = request.email.Trim().ToLower();
-            request.password = request.password.Trim();
+            request.Email = request.Email.Trim().ToLower();
+            request.Password = request.Password.Trim();
 
             // Check if email is correct
-            var user = _context.Users.FirstOrDefault(x => x.Email == request.email);
+            var user = _context.Users.FirstOrDefault(x => x.Email == request.Email);
             if (user == null)
             {
                 throw new ArgumentException("Invalid email or password.");
             }
 
             // Check if password is correct
-            bool isPasswordCorrect = BCrypt.Net.BCrypt.Verify(request.password, user.Password);
+            bool isPasswordCorrect = BCrypt.Net.BCrypt.Verify(request.Password, user.Password);
             if (!isPasswordCorrect)
             {
                 throw new ArgumentException("Invalid email or password.");
@@ -123,13 +127,17 @@ namespace EcotureAPI.Services
                     // Reactivate account
                     user.DeleteRequested = false;
                     user.DeleteRequestedAt = null;
-                    await _context.SaveChangesAsync();
                 }
                 else
                 {
                     throw new UnauthorizedAccessException("Your account has been permanently deleted.");
                 }
             }
+
+            user.LastLogin = DateTime.UtcNow;
+
+            await _context.SaveChangesAsync();
+
 
             // Generate access token
             string accessToken = CreateToken(user);
@@ -144,6 +152,7 @@ namespace EcotureAPI.Services
             return response;
         }
 
+        // FIND USER BY EMAIL
         public async Task<User?> FindByEmailAsync(string email)
         {
             return await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
@@ -173,6 +182,7 @@ namespace EcotureAPI.Services
         }
 
 
+        // RESET PASSWORD
         public async Task<bool> ResetPasswordAsync(string email, string token, string newPassword)
         {
             var userToken = await _context.UserTokens
@@ -193,6 +203,7 @@ namespace EcotureAPI.Services
             return true;
         }
 
+        // GENERATE OTP
         public async Task GenerateOtpAsync(int userId, string otpType)
         {
             var otp = new Random().Next(100000, 999999).ToString(); // Generate 6-digit OTP
@@ -226,6 +237,7 @@ namespace EcotureAPI.Services
             await _context.SaveChangesAsync();
         }
 
+        // VERIFY OTP
         public async Task<bool> VerifyOtpAsync(int userId, string otp)
         {
             var userOtp = await _context.UserOTPs.FirstOrDefaultAsync(u => u.UserId == userId);
@@ -245,6 +257,125 @@ namespace EcotureAPI.Services
             return false; // Invalid OTP
         }
 
+
+        // CUSTOMER DELETE ACCOUNT 
+        // Step 1: Request account deletion
+        public async Task<(bool IsSuccess, int StatusCode, string Message)> RequestAccountDeletionAsync(int userId, ClaimsPrincipal userPrincipal)
+        {
+            // Get logged-in user's ID and role
+            var loggedInUserId = Convert.ToInt32(userPrincipal.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+            var loggedInUserRole = userPrincipal.FindFirst(ClaimTypes.Role)?.Value;
+
+            // Find the target user
+            var userToDelete = await _context.Users.FindAsync(userId);
+            if (userToDelete == null)
+            {
+                return (false, 404, "User not found.");
+            }
+
+            // Customers can only request deletion for their own accounts
+            if (loggedInUserRole == UserRole.Customer.ToString() && loggedInUserId != userId)
+            {
+                return (false, 401, "You can only delete your own account.");
+            }
+
+            // If deletion is already requested, return an error
+            if (userToDelete.DeleteRequested)
+            {
+                return (false, 400, "Account deletion already requested.");
+            }
+
+            // Mark account as deletion requested
+            userToDelete.DeleteRequested = true;
+            userToDelete.DeleteRequestedAt = DateTime.UtcNow;
+
+            await _context.SaveChangesAsync();
+            return (true, 200, "Account deletion requested.");
+        }
+
+        public async Task<(bool IsSuccess, int StatusCode, string Message)> PermanentlyDeleteAccountAsync(int userId, ClaimsPrincipal userPrincipal)
+        {
+            // Get logged-in user's role
+            var loggedInUserRole = userPrincipal.FindFirst(ClaimTypes.Role)?.Value;
+
+            var userToDelete = await _context.Users.FindAsync(userId);
+            if (userToDelete == null)
+            {
+                return (false, 404, "User not found.");
+            }
+
+            // Only Admins can perform permanent deletion
+            if (loggedInUserRole != UserRole.Admin.ToString())
+            {
+                return (false, 401, "You are not authorised to permanently delete this account.");
+            }
+
+            // Ensure deletion request exists and grace period has expired
+
+            if (!userToDelete.DeleteRequested || !userToDelete.DeleteRequestedAt.HasValue)
+            {
+                return (false, 400, "Deletion request not made.");
+            }
+
+            var deletionRequestTime = userToDelete.DeleteRequestedAt.Value;
+            if ((DateTime.UtcNow - deletionRequestTime).TotalDays < 30)
+            {
+                return (false, 400, "You must wait 30 days before permanent deletion.");
+            }
+
+            _context.Users.Remove(userToDelete);
+            await _context.SaveChangesAsync();
+
+            return (true, 200, "User account permanently deleted.");
+        }
+
+
+        // EDIT USER PROFILE
+        public async Task<(bool IsSuccess, string? ErrorMessage)> EditProfileAsync(int userId, EditProfileRequest request)
+        {
+            var user = await _context.Users.FindAsync(userId);
+            if (user == null) return (false, "User not found.");
+
+            // Validate for unique email
+            if (user.Email != request.Email)
+            {
+                var emailExists = await _context.Users.AnyAsync(u => u.Email == request.Email && u.UserId != userId);
+                if (emailExists) return (false, "Email is already taken.");
+            }
+
+            // Update fields
+            user.FirstName = request.FirstName?.Trim();
+            user.LastName = request.LastName?.Trim();
+            user.Email = request.Email?.Trim();
+            user.MobileNo = request.MobileNo?.Trim();
+            user.DateofBirth = request.DateofBirth;
+            user.UpdatedAt = DateTime.UtcNow;
+
+            await _context.SaveChangesAsync();
+            return (true, null);
+
+        }
+
+        // CHNAGE PASSWORD
+        public async Task<(bool IsSuccess, string? ErrorMessage)> ChangePasswordAsync(int userId, ChangePasswordRequest request)
+        {
+            var user = await _context.Users.FindAsync(userId);
+            if (user == null) return (false, "User not found.");
+
+            // Verify current password
+            if (!BCrypt.Net.BCrypt.Verify(request.CurrentPassword, user.Password))
+                return (false, "Current password is incorrect.");
+
+            // Hash and update new password
+            user.Password = BCrypt.Net.BCrypt.HashPassword(request.NewPassword);
+            user.UpdatedAt = DateTime.UtcNow;
+
+            await _context.SaveChangesAsync();
+            return (true, null);
+        }
+
+
+
     }
 
     public interface IUserManager
@@ -255,5 +386,11 @@ namespace EcotureAPI.Services
         Task<UserToken> GeneratePasswordResetTokenAsync(int userId);
         Task<bool> ResetPasswordAsync(string email, string token, string newPassword);
         Task GenerateOtpAsync(int userId, string otpType);
+        Task<bool> VerifyOtpAsync(int userId, string otp);
+        Task<(bool IsSuccess, int StatusCode, string Message)> RequestAccountDeletionAsync(int userId, ClaimsPrincipal userPrincipal);
+        Task<(bool IsSuccess, int StatusCode, string Message)> PermanentlyDeleteAccountAsync(int userId, ClaimsPrincipal userPrincipal);
+        Task<(bool IsSuccess, string? ErrorMessage)> EditProfileAsync(int userId, EditProfileRequest request);
+        Task<(bool IsSuccess, string? ErrorMessage)> ChangePasswordAsync(int userId, ChangePasswordRequest request);
     }
+
 }

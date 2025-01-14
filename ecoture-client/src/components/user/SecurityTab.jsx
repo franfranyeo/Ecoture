@@ -13,7 +13,12 @@ import {
     TextField,
     Modal,
     FormControl,
-    CircularProgress
+    CircularProgress,
+    Dialog,
+    DialogTitle,
+    DialogContent,
+    DialogContentText,
+    DialogActions
 } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import UserContext from 'contexts/UserContext';
@@ -39,6 +44,7 @@ const SecurityTab = () => {
     const [error, setError] = useState(null);
     const [phoneNumber, setPhoneNumber] = useState('+65 ');
     const availableMethods = ['SMS', 'Email', 'Authenticator'];
+    const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
 
     useEffect(() => {
         if (user && user.userId && authMethods.length === 0) {
@@ -249,6 +255,34 @@ const SecurityTab = () => {
         }
     };
 
+    const handleAccountDeletion = async () => {
+        // Added account deletion logic
+        try {
+            await http.post(`/user/${user.userId}/delete-request`);
+            toast.success(
+                'Your account will be disabled for 30 days before permanent deletion. You can undo this action by logging in again within this period.'
+            );
+            localStorage.clear();
+            setUser(null);
+            window.location.href = '/';
+        } catch (error) {
+            console.error('Error requesting account deletion:', error);
+            toast.error('Error requesting account deletion.');
+        } finally {
+            setOpenDeleteDialog(false); // Close the dialog
+        }
+    };
+
+    const handleOpenDeleteDialog = () => {
+        // Added dialog open handler
+        setOpenDeleteDialog(true);
+    };
+
+    const handleCloseDeleteDialog = () => {
+        // Added dialog close handler
+        setOpenDeleteDialog(false);
+    };
+
     return (
         <Box sx={{ flex: 1 }}>
             <Paper elevation={2} sx={{ padding: 4 }}>
@@ -269,8 +303,15 @@ const SecurityTab = () => {
                                 variant="contained"
                                 color="primary"
                                 onClick={handleSaveClick}
+                                sx={{
+                                    backgroundColor: 'primary.main',
+                                    '&:hover': {
+                                        backgroundColor: 'primary.light'
+                                    },
+                                    textTransform: 'none'
+                                }}
                             >
-                                Save
+                                SAVE
                             </Button>
                             <Button
                                 variant="outlined"
@@ -349,7 +390,10 @@ const SecurityTab = () => {
                         <Box mt={3}>
                             {tempAuthMethods.includes('sms') && (
                                 <Box mb={2}>
-                                    <Typography variant="subtitle1">
+                                    <Typography
+                                        variant="subtitle1"
+                                        sx={{ fontWeight: '600' }}
+                                    >
                                         SMS
                                     </Typography>
                                     {tempUser.mobileNo ? (
@@ -375,7 +419,17 @@ const SecurityTab = () => {
                                                         )
                                                     }
                                                     sx={{
-                                                        textDecoration: 'none'
+                                                        textDecoration: 'none',
+                                                        color: 'primary.main',
+                                                        fontWeight: 'bold',
+                                                        fontSize: '0.875rem', // Slightly smaller font for elegance
+                                                        transition:
+                                                            'color 0.2s ease-in-out', // Smooth color transition
+                                                        '&:hover': {
+                                                            color: 'primary.light', // Slightly darker color on hover
+                                                            textDecoration:
+                                                                'underline' // Add underline on hover
+                                                        }
                                                     }}
                                                 >
                                                     {tempUser.isPhoneVerified
@@ -404,7 +458,10 @@ const SecurityTab = () => {
 
                             {tempAuthMethods.includes('email') && (
                                 <Box mb={2}>
-                                    <Typography variant="subtitle1">
+                                    <Typography
+                                        variant="subtitle1"
+                                        sx={{ fontWeight: '600' }}
+                                    >
                                         Email
                                     </Typography>
                                     {tempUser.email ? (
@@ -430,7 +487,17 @@ const SecurityTab = () => {
                                                         )
                                                     }
                                                     sx={{
-                                                        textDecoration: 'none'
+                                                        textDecoration: 'none',
+                                                        color: 'primary.main',
+                                                        fontWeight: 'bold',
+                                                        fontSize: '0.875rem', // Slightly smaller font for elegance
+                                                        transition:
+                                                            'color 0.2s ease-in-out', // Smooth color transition
+                                                        '&:hover': {
+                                                            color: 'primary.light', // Slightly darker color on hover
+                                                            textDecoration:
+                                                                'underline' // Add underline on hover
+                                                        }
                                                     }}
                                                 >
                                                     {tempUser.isEmailVerified
@@ -452,7 +519,10 @@ const SecurityTab = () => {
 
                             {tempAuthMethods.includes('authenticator') && (
                                 <Box mb={2}>
-                                    <Typography variant="subtitle1">
+                                    <Typography
+                                        variant="subtitle1"
+                                        sx={{ fontWeight: '600' }}
+                                    >
                                         Authenticator App
                                     </Typography>
                                     <Typography
@@ -476,19 +546,52 @@ const SecurityTab = () => {
                         Delete Account
                     </Typography>
                     <Typography variant="body2" color="textSecondary" mt={1}>
-                        Deleting your account will permanently remove all your
-                        data. This action cannot be undone.
+                        Deleting your account will disable it for 30 days before
+                        permanent deletion. You can undo this action by logging
+                        in again within this period.
                     </Typography>
                     <Button
                         variant="contained"
                         color="error"
-                        sx={{ mt: 1 }}
-                        onClick={() => alert('Account deletion initiated.')}
+                        sx={{ mt: 2 }}
+                        onClick={handleOpenDeleteDialog}
                     >
                         Delete Account
                     </Button>
                 </Box>
             </Paper>
+
+            {/* Confirmation Dialog */}
+            <Dialog
+                open={openDeleteDialog}
+                onClose={handleCloseDeleteDialog}
+                aria-labelledby="delete-account-dialog-title"
+                aria-describedby="delete-account-dialog-description"
+            >
+                <DialogTitle id="delete-account-dialog-title">
+                    Delete Account?
+                </DialogTitle>
+                <DialogContent>
+                    <DialogContentText id="delete-account-dialog-description">
+                        Are you sure you want to delete your account? This
+                        action will disable your account for 30 days. You can
+                        undo this action by logging in again within this period.
+                        After 30 days, your account will be permanently deleted.
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleCloseDeleteDialog} color="primary">
+                        Cancel
+                    </Button>
+                    <Button
+                        onClick={handleAccountDeletion}
+                        color="error"
+                        variant="contained"
+                    >
+                        Delete My Account
+                    </Button>
+                </DialogActions>
+            </Dialog>
 
             <Modal open={modalConfig.open} onClose={handleCloseModal}>
                 <Box

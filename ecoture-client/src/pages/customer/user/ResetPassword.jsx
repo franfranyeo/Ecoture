@@ -1,5 +1,12 @@
 import React, { useState } from 'react';
-import { Box, TextField, Button, Grid, IconButton } from '@mui/material';
+import {
+    Box,
+    TextField,
+    Button,
+    Grid,
+    IconButton,
+    Typography
+} from '@mui/material';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import http from 'utils/http';
@@ -74,6 +81,15 @@ function ResetPassword() {
             <Box component="form" onSubmit={formik.handleSubmit}>
                 <Grid container spacing={2}>
                     <Grid item xs={12}>
+                        <Typography
+                            variant="body2"
+                            sx={{ mb: 2, textAlign: 'center' }}
+                        >
+                            Enter your new password to complete the reset
+                            process. <br /> Ensure password is strong and
+                            secure.
+                        </Typography>
+
                         <TextField
                             fullWidth
                             margin="dense"
@@ -162,7 +178,12 @@ function ResetPassword() {
                             paddingX: 12,
                             fontSize: 16,
                             width: '100%',
-                            backgroundColor: isLoading ? 'gray' : 'primary.main'
+                            backgroundColor: isLoading
+                                ? 'gray'
+                                : 'primary.main',
+                            '&:hover': {
+                                backgroundColor: 'primary.light'
+                            }
                         }}
                         disabled={isLoading}
                     >

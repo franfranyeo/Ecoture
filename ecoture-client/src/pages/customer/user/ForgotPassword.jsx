@@ -1,14 +1,48 @@
-import React from 'react';
-import { Box, TextField, Button, Grid } from '@mui/material';
-import Typography from '@mui/material/Typography';
+import React, { useState } from 'react';
+import {
+    Box,
+    TextField,
+    Button,
+    Grid,
+    IconButton,
+    Typography,
+    Modal,
+    Dialog,
+    DialogTitle,
+    DialogContent,
+    DialogContentText,
+    DialogActions
+} from '@mui/material';
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import http from 'utils/http';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import AuthLayout from '../../../components/user/AuthLayout';
+import { useNavigate } from 'react-router-dom';
 
 function ForgotPassword() {
+    const navigate = useNavigate();
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [email, setEmail] = useState('');
+
+    const handleResendEmail = async () => {
+        try {
+            await http.post('/user/forgot-password', { email });
+            toast.success('Password reset email has been resent!');
+        } catch (err) {
+            console.error(err);
+            toast.error(
+                `${
+                    err.response && err.response.data
+                        ? err.response.data.message
+                        : 'Failed to resend the email. Please try again later.'
+                }`
+            );
+        }
+    };
+
     const formik = useFormik({
         initialValues: {
             email: ''
@@ -23,11 +57,12 @@ function ForgotPassword() {
         }),
         onSubmit: async (data) => {
             data.email = data.email.trim().toLowerCase();
+            setEmail(data.email); // Save the email for resending
             try {
                 const res = await http.post('/user/forgot-password', data);
-
-                toast.success(res.data);
+                setIsModalOpen(true); // Show modal on successful response
             } catch (err) {
+                console.error(err);
                 toast.error(
                     `${
                         err.response && err.response.data
@@ -40,14 +75,57 @@ function ForgotPassword() {
     });
 
     return (
-        <AuthLayout title="Forgot Password">
-            <Typography variant="body2" color="textSecondary">
-                No worries! Enter your email address below, and we'll send you a link to reset your password.
-            </Typography>
-
+        <AuthLayout title="FORGOT PASSWORD">
             <Box component="form" onSubmit={formik.handleSubmit}>
                 <Grid container spacing={2}>
                     <Grid item xs={12}>
+                        {/* Container to force alignment */}
+                        <Box
+                            sx={{
+                                display: 'flex',
+                                justifyContent: 'flex-start', // Forces alignment to the left
+                                alignItems: 'center', // Vertically aligns back icon and text
+                                width: '100%', // Ensures full width
+                                mb: 2 // Margin below the back button
+                            }}
+                        >
+                            <IconButton
+                                onClick={() => navigate('/login')}
+                                sx={{
+                                    padding: 0, // Removes extra padding from the button
+                                    mr: 1 // Margin between the icon and text
+                                }}
+                            >
+                                <ArrowBackIosIcon
+                                    fontSize="small"
+                                    sx={{ color: 'text.secondary' }}
+                                />
+                            </IconButton>
+                            <Typography
+                                variant="body2"
+                                sx={{
+                                    color: 'text.secondary',
+                                    cursor: 'pointer'
+                                }}
+                                onClick={() => navigate('/login')}
+                            >
+                                Back
+                            </Typography>
+                        </Box>
+
+                        {/* Description */}
+                        <Typography
+                            variant="body2"
+                            color="black"
+                            sx={{
+                                textAlign: 'center', // Center description
+                                mb: 3 // Margin below description
+                            }}
+                        >
+                            No worries! Enter your email address below, and
+                            we'll send you a link to reset your password.
+                        </Typography>
+
                         <TextField
                             fullWidth
                             margin="dense"
@@ -64,6 +142,9 @@ function ForgotPassword() {
                             helperText={
                                 formik.touched.email && formik.errors.email
                             }
+                            sx={{
+                                width: '100%' // Ensure full width of parent
+                            }}
                         />
                     </Grid>
                 </Grid>
@@ -73,12 +154,77 @@ function ForgotPassword() {
                     variant="contained"
                     fullWidth
                     sx={{
-                        mt: 5
+                        mt: 2,
+                        paddingX: 12,
+                        fontSize: 16,
+                        width: '100%',
+                        backgroundColor: 'primary.main',
+                        '&:hover': {
+                            backgroundColor: 'primary.light'
+                        } // Full width of parent
                     }}
                 >
                     Send Reset Link
                 </Button>
             </Box>
+
+            {/* Modal */}
+            <Dialog
+                open={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+                aria-labelledby="check-email-title"
+            >
+                <DialogTitle id="check-email-title">
+                    Check Your Email
+                </DialogTitle>
+                <DialogContent>
+                    <DialogContentText>
+                        We’ve sent a password reset link to your email address.
+                        Please check your inbox and follow the instructions to
+                        reset your password. If you don’t see it, check your
+                        spam folder or try resending the email.
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button
+                        onClick={() => setIsModalOpen(false)}
+                        color="primary"
+                    >
+                        Cancel
+                    </Button>
+                    <Button
+                        onClick={() => navigate('/login')}
+                        sx={{
+                            backgroundColor: 'primary.main',
+                            '&:hover': {
+                                backgroundColor: 'primary.light'
+                            },
+                            textTransform: 'none'
+                        }}
+                        variant="contained"
+                    >
+                        GO TO LOGIN
+                    </Button>
+                </DialogActions>
+                <Box
+                    sx={{
+                        padding: 2,
+                        textAlign: 'center',
+                        borderTop: '1px solid #ddd'
+                    }}
+                >
+                    <Typography variant="body2">
+                        Didn’t receive an email?{' '}
+                        <Button
+                            variant="text"
+                            color="primary"
+                            onClick={handleResendEmail}
+                        >
+                            Resend
+                        </Button>
+                    </Typography>
+                </Box>
+            </Dialog>
         </AuthLayout>
     );
 }

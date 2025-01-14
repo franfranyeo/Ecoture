@@ -48,7 +48,7 @@ const Register = () => {
                 .min(2, 'First name must be at least 2 characters')
                 .max(100, 'First name must be at most 100 characters')
                 .matches(
-                    /^[\p{L} '-,.]+$/,
+                    /^[A-Za-z\s'-.,]+$/,
                     "Only letters, spaces, and characters: ' - , . are allowed"
                 ),
             lastName: yup
@@ -57,7 +57,7 @@ const Register = () => {
                 .min(2, 'Last name must be at least 2 characters')
                 .max(100, 'Last name must be at most 100 characters')
                 .matches(
-                    /^[\p{L} '-,.]+$/,
+                    /^[A-Za-z\s'-.,]+$/,
                     "Only letters, spaces, and characters: ' - , . are allowed"
                 ),
             email: yup
@@ -250,6 +250,7 @@ const Register = () => {
                                 <Typography variant="body2">
                                     I agree to the{' '}
                                     <Link
+                                        target="_blank"
                                         to="/terms-of-use"
                                         style={{
                                             textDecoration: 'none',
@@ -260,6 +261,7 @@ const Register = () => {
                                     </Link>{' '}
                                     and{' '}
                                     <Link
+                                        target="_blank"
                                         to="/privacy-policy"
                                         style={{
                                             textDecoration: 'none',
@@ -291,7 +293,13 @@ const Register = () => {
                     fullWidth
                     variant="contained"
                     color="primary"
-                    sx={{ mt: 3 }}
+                    sx={{
+                        mt: 3,
+                        backgroundColor: 'primary.main',
+                        '&:hover': {
+                            backgroundColor: 'primary.light'
+                        }
+                    }}
                 >
                     Register
                 </Button>

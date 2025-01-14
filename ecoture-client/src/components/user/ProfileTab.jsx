@@ -10,8 +10,10 @@ import {
 } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const ProfileTab = ({ user }) => {
+    const navigate = useNavigate();
     console.log(user);
     return (
         <Box sx={{ flex: 1 }}>
@@ -22,7 +24,7 @@ const ProfileTab = ({ user }) => {
                     alignItems="center"
                 >
                     <Typography variant="h5">Profile</Typography>
-                    <IconButton>
+                    <IconButton onClick={() => navigate('/edit-profile')}>
                         <EditIcon />
                     </IconButton>
                 </Box>
@@ -68,12 +70,13 @@ const ProfileTab = ({ user }) => {
                     </Grid>
                     <Grid item xs={6}>
                         <Typography variant="body1">
-                            Email: {user.email}
+                            Email Address: {user.email}
                         </Typography>
                     </Grid>
                     <Grid item xs={6}>
                         <Typography variant="body1">
-                            Phone: {user.mobileNo ? user.mobileNo : 'Not set'}
+                            Mobile Number:{' '}
+                            {user.mobileNo ? user.mobileNo : 'Not set'}
                         </Typography>
                     </Grid>
                     <Grid item xs={6}>

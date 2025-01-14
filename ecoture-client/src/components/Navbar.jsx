@@ -197,8 +197,18 @@ function Navbar() {
                                     </Link>
 
                                     <Link to="/register" className="nav-link">
-                                        <Button variant="contained">
-                                            Register
+                                        <Button
+                                            variant="contained"
+                                            sx={{
+                                                backgroundColor: 'primary.main',
+                                                '&:hover': {
+                                                    backgroundColor:
+                                                        'primary.light'
+                                                },
+                                                textTransform: 'none'
+                                            }}
+                                        >
+                                            REGISTER
                                         </Button>
                                     </Link>
                                 </Box>

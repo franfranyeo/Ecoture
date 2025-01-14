@@ -69,7 +69,7 @@ const AccountSidePanel = ({ user, selected, setSelected }) => {
                                         ? 'primary.main'
                                         : 'transparent',
                                 '&:hover': {
-                                    backgroundColor: 'primary.dark',
+                                    backgroundColor: 'primary.light',
                                     cursor: 'pointer',
                                     '& .MuiTypography-root': {
                                         color: 'white' 

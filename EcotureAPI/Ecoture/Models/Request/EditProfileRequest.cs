@@ -1,18 +1,17 @@
-﻿using Ecoture.Models.Enum;
-using Models.Entity;
+﻿using Ecoture.Models.Request;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Ecoture.Models.Request
+namespace EcotureAPI.Models.Request
 {
-    public class UpdateUserInfoRequest
+    public class EditProfileRequest
     {
         [MinLength(2), MaxLength(100)]
-        [RegularExpression(@"^[\p{L} '-,.]+$", ErrorMessage = "Only allow letters, spaces, and characters: ' - , .")]
+        [RegularExpression(@"^[A-Za-z\s'\-.,]+$", ErrorMessage = "Only allow letters, spaces, and characters: ' - , .")]
         public string? FirstName { get; set; }
 
         [MaxLength(100)]
-        [RegularExpression(@"^[\p{L} '-,.]+$", ErrorMessage = "Only allow letters, spaces, and characters: ' - , .")]
+        [RegularExpression(@"^[A-Za-z\s'\-.,]+$", ErrorMessage = "Only allow letters, spaces, and characters: ' - , .")]
         public string? LastName { get; set; }
 
         [EmailAddress, MaxLength(255)]
@@ -27,46 +26,15 @@ namespace Ecoture.Models.Request
         public string? MobileNo { get; set; }
 
         [Column(TypeName = "date")]
-        [CustomValidation(typeof(UpdateUserInfoRequest), nameof(ValidateDateOfBirth))]
+        [CustomValidation(typeof(EditProfileRequest), nameof(ValidateDateOfBirth))]
         public DateTime? DateofBirth { get; set; }
-
-        public UserRole? Role { get; set; }  // Optional: User role can only be changed by admins
 
         [MaxLength(255)]
         public string? PfpURL { get; set; }
 
         [Column(TypeName = "datetime")]
-        public DateTime? LastLogin { get; set; }
-
-        public bool? Is2FAEnabled { get; set; }
-
-        public bool? IsEmailVerified { get; set; }
-
-        public bool? IsPhoneVerified { get; set; }
-
-        [MaxLength(10)]
-        public string? ReferralCode { get; set; }
-
-        public bool? DeleteRequested { get; set; }
-
-        [Column(TypeName = "datetime")]
-        public DateTime? DeleteRequestedAt { get; set; }
-
-        [Column(TypeName = "datetime")]
-        public DateTime? CreatedAt { get; set; }
-
-        [Column(TypeName = "datetime")]
         public DateTime? UpdatedAt { get; set; }
 
-        public Membership? Membership { get; set; }
-
-        public List<Referral>? ReferralsSent { get; set; }
-
-        public List<Referral>? ReferralsReceived { get; set; }
-
-        public List<PointsTransaction>? PointsTransactions { get; set; }
-
-        public List<UserRedemptions>? UserRedemptions { get; set; }
 
         // Custom validation for Date of Birth
         public static ValidationResult? ValidateDateOfBirth(DateTime? date, ValidationContext context)
