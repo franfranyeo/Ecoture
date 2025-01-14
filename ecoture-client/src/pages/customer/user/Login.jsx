@@ -63,6 +63,7 @@ function Login() {
                         toast.error('Failed to send OTP');
                     }
                 } catch (err) {
+                    console.log(err);
                     toast.error(
                         `${
                             err.response && err.response.data
@@ -85,6 +86,8 @@ function Login() {
                         toast.error('Failed to send OTP');
                     }
                 } catch (err) {
+                    console.log(err);
+
                     toast.error(
                         `${
                             err.response && err.response.data
@@ -219,7 +222,6 @@ function Login() {
                             userId: user.userId
                         });
                         const mfaMethods = res.data;
-                        console.log(mfaMethods);
                         const activeMfaMethods = Object.keys(mfaMethods).filter(
                             (key) => mfaMethods[key] && key !== 'userId'
                         );
@@ -233,9 +235,10 @@ function Login() {
                         });
 
                         setLoggedInUser(user);
-
-                        console.log(activeMfaMethods);
                         setMfaMethods(activeMfaMethods);
+                        if (activeMfaMethods.length === 1) {
+                            handleSelectMethod(activeMfaMethods[0]);
+                        }
                     } else {
                         user['fullName'] =
                             `${user.firstName} ${user.lastName}`.replaceAll(
@@ -496,7 +499,15 @@ function Login() {
             )}
 
             {selectedMethod && (
-                <Button onClick={() => setSelectedMethod(null)}>Back</Button>
+                <Button
+                    onClick={
+                        mfaMethods.length === 1
+                            ? () => setShowMFA(false)
+                            : () => setSelectedMethod(null)
+                    }
+                >
+                    Back
+                </Button>
             )}
             <Button onClick={handleCancelClick}>Cancel</Button>
             {selectedMethod && (
