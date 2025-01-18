@@ -46,7 +46,7 @@ const AuthLayout = ({ title, children }) => {
                             variant="h3"
                             sx={{ color: 'white', fontWeight: 'bold' }}
                         >
-                            UNIQLO
+                            ECOTURE
                         </Typography>
                         <Typography
                             variant="h5"

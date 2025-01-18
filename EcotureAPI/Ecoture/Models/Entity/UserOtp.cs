@@ -20,6 +20,8 @@ namespace EcotureAPI.Models.Entity
 
         public bool IsVerified { get; set; }  // Flag if the token is used
 
+        public string? Data { get; set; }
+
         public User User { get; set; } = null!;
     }
 }

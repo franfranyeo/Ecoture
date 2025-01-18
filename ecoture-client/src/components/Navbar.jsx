@@ -42,6 +42,7 @@ function Navbar() {
         localStorage.removeItem('user');
         localStorage.removeItem('accessToken');
         toast.success('Logged out successfully!');
+        handleMenuClose();
         navigate('/login');
     };
 
@@ -59,6 +60,11 @@ function Navbar() {
 
     const toggleDrawer = () => {
         setDrawerOpen(!drawerOpen);
+    };
+
+    const handleNavigate = (link) => {
+        navigate(link);
+        handleMenuClose();
     };
 
     return (
@@ -178,7 +184,9 @@ function Navbar() {
                                         }}
                                     >
                                         <MenuItem
-                                            onClick={() => navigate('/account')}
+                                            onClick={() =>
+                                                handleNavigate('/account')
+                                            }
                                         >
                                             Account
                                         </MenuItem>

@@ -48,6 +48,9 @@ namespace EcotureAPI.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime(6)");
 
+                    b.Property<string>("Data")
+                        .HasColumnType("longtext");
+
                     b.Property<DateTime>("ExpirationDate")
                         .HasColumnType("datetime(6)");
 

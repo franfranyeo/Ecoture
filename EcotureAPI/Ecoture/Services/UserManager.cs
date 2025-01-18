@@ -331,30 +331,93 @@ namespace EcotureAPI.Services
 
 
         // EDIT USER PROFILE
-        public async Task<(bool IsSuccess, string? ErrorMessage)> EditProfileAsync(int userId, EditProfileRequest request)
+        public async Task<(bool IsSuccess, string? ErrorMessage, User? UpdatedUser)> EditProfileAsync(int userId, EditProfileRequest request)
         {
             var user = await _context.Users.FindAsync(userId);
-            if (user == null) return (false, "User not found.");
+            if (user == null) return (false, "User not found.", null);
 
-            // Validate for unique email
-            if (user.Email != request.Email)
+            try
             {
-                var emailExists = await _context.Users.AnyAsync(u => u.Email == request.Email && u.UserId != userId);
-                if (emailExists) return (false, "Email is already taken.");
+                // Handle email update
+                if (request.Email != null)
+                {
+                    var email = request.Email.Trim().ToLower();
+                    if (user.Email != email)
+                    {
+                        var emailExists = await _context.Users
+                            .AnyAsync(u => u.Email == email && u.UserId != userId);
+                        if (emailExists) return (false, "Email is already taken.", null);
+                        user.Email = email;
+                    }
+                }
+
+                // Handle phone number update
+                if (request.MobileNo != null)
+                {
+                    var phoneNumber = request.MobileNo.Trim();
+                    if (!string.IsNullOrEmpty(phoneNumber))
+                    {
+                        if (!phoneNumber.StartsWith("+65 ") || phoneNumber.Length != 13)
+                        {
+                            return (false, "Invalid phone number format. Must start with '+65 ' and be 8 digits.", null);
+                        }
+                        user.MobileNo = phoneNumber;
+                    }
+                }
+
+                // Handle basic profile updates
+                if (request.FirstName != null)
+                {
+                    user.FirstName = request.FirstName.Trim();
+                }
+
+                if (request.LastName != null)
+                {
+                    user.LastName = request.LastName.Trim();
+                }
+
+                user.DateofBirth = request.DateofBirth;
+
+                if (request.PfpURL != null)
+                {
+                    user.PfpURL = request.PfpURL;
+                }
+
+                // Handle 2FA related updates
+                if (request.Is2FAEnabled.HasValue)
+                {
+                    user.Is2FAEnabled = request.Is2FAEnabled.Value;
+                }
+
+                if (request.IsEmailVerified.HasValue)
+                {
+                    user.IsEmailVerified = request.IsEmailVerified.Value;
+                }
+
+                if (request.IsPhoneVerified.HasValue)
+                {
+                    user.IsPhoneVerified = request.IsPhoneVerified.Value;
+                }
+
+                // Update MFA methods if provided
+                if (request.MFAMethods != null)
+                {
+                    System.Diagnostics.Debug.WriteLine(user.Is2FAEnabled);
+                    await UpdateUserMFAMethodsAsync(userId, request.MFAMethods);
+                }
+
+                user.UpdatedAt = DateTime.UtcNow;
+                await _context.SaveChangesAsync();
+
+                return (true, null, user);
             }
-
-            // Update fields
-            user.FirstName = request.FirstName?.Trim();
-            user.LastName = request.LastName?.Trim();
-            user.Email = request.Email?.Trim();
-            user.MobileNo = request.MobileNo?.Trim();
-            user.DateofBirth = request.DateofBirth;
-            user.UpdatedAt = DateTime.UtcNow;
-
-            await _context.SaveChangesAsync();
-            return (true, null);
-
+            catch (Exception ex)
+            {
+                // Log the exception
+                return (false, "An error occurred while updating the profile.", null);
+            }
         }
+
 
         // CHNAGE PASSWORD
         public async Task<(bool IsSuccess, string? ErrorMessage)> ChangePasswordAsync(int userId, ChangePasswordRequest request)
@@ -375,7 +438,46 @@ namespace EcotureAPI.Services
         }
 
 
+        private async Task UpdateUserMFAMethodsAsync(int userId, List<string> methods)
+        {
+            // Get existing MFA response for the user
+            var mfaResponse = await _context.MfaResponses
+                .FirstOrDefaultAsync(m => m.UserId == userId);
 
+            if (mfaResponse == null)
+            {
+                // If no MFA response exists, create a new one
+                mfaResponse = new MfaResponse
+                {
+                    UserId = userId
+                };
+                _context.MfaResponses.Add(mfaResponse);
+            }
+
+            // Reset all methods to false
+            mfaResponse.Email = false;
+            mfaResponse.Sms = false;
+            mfaResponse.Authenticator = false;
+
+            // Enable only the selected methods
+            foreach (var method in methods)
+            {
+                switch (method.ToLower())
+                {
+                    case "email":
+                        mfaResponse.Email = true;
+                        break;
+                    case "sms":
+                        mfaResponse.Sms = true;
+                        break;
+                    case "authenticator":
+                        mfaResponse.Authenticator = true;
+                        break;
+                }
+            }
+
+            await _context.SaveChangesAsync();
+        }
     }
 
     public interface IUserManager
@@ -389,7 +491,7 @@ namespace EcotureAPI.Services
         Task<bool> VerifyOtpAsync(int userId, string otp);
         Task<(bool IsSuccess, int StatusCode, string Message)> RequestAccountDeletionAsync(int userId, ClaimsPrincipal userPrincipal);
         Task<(bool IsSuccess, int StatusCode, string Message)> PermanentlyDeleteAccountAsync(int userId, ClaimsPrincipal userPrincipal);
-        Task<(bool IsSuccess, string? ErrorMessage)> EditProfileAsync(int userId, EditProfileRequest request);
+        Task<(bool IsSuccess, string? ErrorMessage, User? UpdatedUser)> EditProfileAsync(int userId, EditProfileRequest request);
         Task<(bool IsSuccess, string? ErrorMessage)> ChangePasswordAsync(int userId, ChangePasswordRequest request);
     }
 

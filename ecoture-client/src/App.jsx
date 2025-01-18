@@ -1,12 +1,5 @@
-import {
-    Container,
-    AppBar,
-    Toolbar,
-    Typography,
-    ThemeProvider,
-    Box
-} from '@mui/material';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { ThemeProvider, Box } from '@mui/material';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import theme from './themes/MyTheme';
 import './App.css';
 import Login from './pages/customer/user/Login';
@@ -22,9 +15,7 @@ import Account from './pages/customer/user/Account';
 import Navbar from 'components/Navbar';
 import ResetPassword from './pages/customer/user/ResetPassword';
 import ForgotPassword from './pages/customer/user/ForgotPassword';
-import EditProfile from './components/user/EditProfileTab';
 import http from 'utils/http';
-import { Edit } from '@mui/icons-material';
 
 function App() {
     // update in the user context too
@@ -43,22 +34,51 @@ function App() {
         }
     }, []);
 
-    // Persist user data in localStorage whenever user state changes
     useEffect(() => {
         if (user) {
             localStorage.setItem('user', JSON.stringify(user));
+
             if (isFirstLoad.current) {
                 isFirstLoad.current = false; // Skip the first load call
                 return; // Don't call the API for the first user set
             }
+
             try {
                 const updateUser = async () => {
-                    const res = await http.post(`/user/${user.userId}`, user);
-                    console.log(res.data);
+                    // Only send the changeable fields to avoid unnecessary updates
+                    const updateData = {
+                        firstName: user.firstName,
+                        lastName: user.lastName,
+                        email: user.email,
+                        mobileNo: user.mobileNo,
+                        dateOfBirth: user.dateOfBirth,
+                        pfpURL: user.pfpURL,
+                        is2FAEnabled: user.is2FAEnabled,
+                        isEmailVerified: user.isEmailVerified,
+                        isPhoneVerified: user.isPhoneVerified,
+                        mfaMethods: user.mfaMethods // If you're tracking MFA methods in the user object
+                    };
+
+                    const res = await http.post(
+                        `/user/edit-profile`,
+                        updateData
+                    );
+
+                    if (res.data.user) {
+                        // Update localStorage with the returned user data
+                        const updatedUser = {
+                            ...user,
+                            ...res.data.user
+                        };
+                        localStorage.setItem(
+                            'user',
+                            JSON.stringify(updatedUser)
+                        );
+                    }
                 };
                 updateUser();
             } catch (err) {
-                console.error(err);
+                console.error('Failed to update user profile:', err);
             }
         } else {
             localStorage.removeItem('user');
@@ -115,13 +135,6 @@ function App() {
                                     <Route
                                         path="/privacy-policy"
                                         element={<PrivacyPolicy />}
-                                    />
-
-                                    <Route
-                                        path="/edit-profile"
-                                        element={
-                                            <EditProfile user={user} />
-                                        }
                                     />
                                 </Routes>
                             </Box>

@@ -14,6 +14,7 @@ using Microsoft.EntityFrameworkCore;
 using EcotureAPI.Models.Entity;
 using EcotureAPI.Services;
 using EcotureAPI.Models.DataTransferObjects;
+using Org.BouncyCastle.Crypto;
 
 
 namespace Ecoture.Controllers
@@ -165,7 +166,6 @@ namespace Ecoture.Controllers
             }
         }
 
-
         // CREATE STAFF WITH ADMIN ROLE
         [HttpPost("create-staff"), Authorize]
         public async Task<IActionResult> CreateStaff(CreateStaffRequest request)
@@ -270,17 +270,38 @@ namespace Ecoture.Controllers
 
 
         // EDIT PROFILE
-        [HttpPost("edit-profile"), Authorize]
+        [HttpPost("edit-profile")]
+        [Authorize]
         public async Task<IActionResult> EditProfile([FromBody] EditProfileRequest request)
         {
             var userId = Convert.ToInt32(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
             if (userId <= 0) return Unauthorized();
 
             var result = await _userManager.EditProfileAsync(userId, request);
-            if (!result.IsSuccess) return BadRequest(new { message = result.ErrorMessage });
+            if (!result.IsSuccess)
+            {
+                return BadRequest(new { message = result.ErrorMessage });
+            }
 
-            return Ok(new { message = "Profile updated successfully." });
-
+            // Return the updated user data without sensitive information
+            return Ok(new
+            {
+                message = "Profile updated successfully.",
+                user = new
+                {
+                    result.UpdatedUser.UserId,
+                    result.UpdatedUser.FirstName,
+                    result.UpdatedUser.LastName,
+                    result.UpdatedUser.Email,
+                    result.UpdatedUser.MobileNo,
+                    result.UpdatedUser.DateofBirth,
+                    result.UpdatedUser.PfpURL,
+                    result.UpdatedUser.Is2FAEnabled,
+                    result.UpdatedUser.IsEmailVerified,
+                    result.UpdatedUser.IsPhoneVerified,
+                    result.UpdatedUser.UpdatedAt
+                }
+            });
         }
 
 

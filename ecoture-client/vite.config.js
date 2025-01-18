@@ -11,6 +11,7 @@ export default defineConfig({
       'contexts': path.resolve('src/contexts'),
       'assets': path.resolve('src/assets'),
       'components': path.resolve('src/components'),
+      'services': path.resolve('src/services'),
     }
   }
 })

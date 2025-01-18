@@ -26,70 +26,174 @@ import http from 'utils/http';
 import { toast } from 'react-toastify';
 
 const SecurityTab = () => {
+    // Context
     const { user, setUser } = useContext(UserContext);
-    const [is2FAEnabled, setIs2FAEnabled] = useState(user.is2FAEnabled);
-    const [authMethods, setAuthMethods] = useState([]);
-    const [modalConfig, setModalConfig] = useState({
+
+    // Constants
+    const AVAILABLE_METHODS = ['SMS', 'Email', 'Authenticator'];
+
+    // State
+    const [securityState, setSecurityState] = useState({
+        is2FAEnabled: user.is2FAEnabled,
+        authMethods: [],
+        isEditing: false,
+        error: null,
+        tempUser: { ...user }
+    });
+
+    const [modalState, setModalState] = useState({
         open: false,
-        type: '', // 'phone' or 'email'
+        type: '',
         otpSent: false,
         loading: false,
         otp: '',
         isChange: false
     });
-    const [tempIs2FAEnabled, setTempIs2FAEnabled] = useState(is2FAEnabled);
-    const [tempAuthMethods, setTempAuthMethods] = useState(authMethods);
-    const [tempUser, setTempUser] = useState({ ...user });
-    const [isEditing, setIsEditing] = useState(false);
-    const [error, setError] = useState(null);
+
     const [phoneNumber, setPhoneNumber] = useState('+65 ');
-    const availableMethods = ['SMS', 'Email', 'Authenticator'];
     const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
 
+    // Effects
     useEffect(() => {
-        if (user && user.userId && authMethods.length === 0) {
-            const getAuthMethods = async () => {
-                try {
-                    const res = await http.post('/user/get-mfa', {
-                        userId: user.userId
-                    });
-                    if (res.data) {
-                        const mfaMethods = res.data;
-                        const activeMfaMethods = Object.keys(mfaMethods).filter(
-                            (key) => mfaMethods[key] && key !== 'userId'
-                        );
-                        setTempAuthMethods(activeMfaMethods);
-                        setAuthMethods(activeMfaMethods);
-                    }
-                } catch (error) {
-                    console.error(error);
-                }
-            };
-            getAuthMethods();
+        if (user?.userId && securityState.authMethods.length === 0) {
+            fetchAuthMethods();
         }
-    }, [user, authMethods.length]);
+    }, [user]);
 
-    const handleToggle2FA = () => {
-        setTempIs2FAEnabled(!tempIs2FAEnabled);
-        if (!isEditing) setTempAuthMethods([]);
+    // API Calls
+    const fetchAuthMethods = async () => {
+        try {
+            const res = await http.post('/user/get-mfa', {
+                userId: user.userId
+            });
+            if (res.data) {
+                const activeMethods = Object.keys(res.data).filter(
+                    (key) => res.data[key] && key !== 'userId'
+                );
+                updateSecurityState({ authMethods: activeMethods });
+            }
+        } catch (error) {
+            toast.error('Failed to fetch authentication methods');
+        }
     };
 
-    const handleOpenModal = (type, isChange = false) => {
-        setModalConfig({
-            open: true,
-            type,
-            otpSent: false,
-            loading: false,
-            otp: '',
-            isChange
+    const updateUserSettings = async () => {
+        const payload = {
+            userId: securityState.tempUser.userId,
+            is2FAEnabled: securityState.is2FAEnabled,
+            mfaMethods: securityState.authMethods,
+            mobileNo: securityState.tempUser.mobileNo,
+            isEmailVerified: securityState.tempUser.isEmailVerified,
+            isPhoneVerified: securityState.tempUser.isPhoneVerified
+        };
+
+        return await http.post('/user/edit-profile', payload);
+    };
+
+    // Helper Functions
+    const updateSecurityState = (newState) => {
+        setSecurityState((prev) => ({ ...prev, ...newState }));
+    };
+
+    const updateModalState = (newState) => {
+        setModalState((prev) => ({ ...prev, ...newState }));
+    };
+
+    const checkMethodVerification = () => {
+        for (const method of securityState.authMethods) {
+            if (
+                (method === 'sms' && !securityState.tempUser.isPhoneVerified) ||
+                (method === 'email' && !securityState.tempUser.isEmailVerified)
+            ) {
+                return {
+                    isValid: false,
+                    message: `Please verify your ${method} to enable it.`
+                };
+            }
+        }
+        return { isValid: true };
+    };
+
+    const handleError = (message) => {
+        toast.error(message);
+        updateSecurityState({ error: message });
+    };
+
+    // Event Handlers
+    const handleToggle2FA = () => {
+        updateSecurityState({
+            is2FAEnabled: !securityState.is2FAEnabled,
+            tempUser: {
+                ...securityState.tempUser,
+                is2FAEnabled: !securityState.is2FAEnabled
+            },
+            authMethods: !securityState.is2FAEnabled
+                ? []
+                : securityState.authMethods
         });
     };
 
-    const handleCloseModal = () => {
-        setModalConfig((prevState) => ({ ...prevState, open: false }));
+    const handleEditClick = () => {
+        updateSecurityState({ isEditing: true });
     };
 
-    const handlePhoneNoChange = (e) => {
+    const handleCancelClick = () => {
+        updateSecurityState({
+            is2FAEnabled: user.is2FAEnabled,
+            authMethods: securityState.authMethods,
+            tempUser: { ...user },
+            error: null,
+            isEditing: false
+        });
+    };
+
+    const handleSaveClick = async () => {
+        if (
+            securityState.is2FAEnabled &&
+            securityState.authMethods.length === 0
+        ) {
+            updateSecurityState({
+                error: 'You must select at least one authentication method.'
+            });
+            return;
+        }
+
+        const verificationCheck = checkMethodVerification();
+        if (!verificationCheck.isValid) {
+            toast.error(verificationCheck.message);
+            return;
+        }
+
+        try {
+            const response = await updateUserSettings();
+            if (response.data) {
+                console.log('hello', response.data);
+                console.log('security', securityState);
+                setUser({
+                    ...user,
+                    is2FAEnabled: securityState.is2FAEnabled,
+                    ...securityState.tempUser
+                });
+                updateSecurityState({
+                    error: null,
+                    isEditing: false
+                });
+                toast.success('Settings updated successfully');
+            }
+        } catch (error) {
+            handleError('Failed to update settings');
+        }
+    };
+
+    const handleMethodToggle = (method) => {
+        const updatedMethods = securityState.authMethods.includes(method)
+            ? securityState.authMethods.filter((m) => m !== method)
+            : [...securityState.authMethods, method];
+        updateSecurityState({ authMethods: updatedMethods });
+    };
+
+    // Phone and Email Verification Handlers
+    const handlePhoneNumberChange = (e) => {
         let { value } = e.target;
         if (!value.startsWith('+65 ')) {
             value = '+65 ' + value.slice(4);
@@ -102,161 +206,87 @@ const SecurityTab = () => {
         setPhoneNumber('+65 ' + numericValue);
     };
 
-    const handlePhoneOtpSend = async () => {
-        if (
-            phoneNumber.length !== 13 ||
-            (!phoneNumber.startsWith('+65 9') &&
-                !phoneNumber.startsWith('+65 8'))
-        ) {
-            toast.error('Invalid phone number.');
-            return;
-        }
-        setModalConfig((prevState) => ({ ...prevState, loading: true }));
+    const handleOpenModal = (type, isChange = false) => {
+        updateModalState({
+            open: true,
+            type,
+            otpSent: false,
+            loading: false,
+            otp: '',
+            isChange
+        });
+    };
+
+    const handleCloseModal = () => {
+        updateModalState({ open: false });
+    };
+
+    const handleOtpSend = async (type) => {
+        updateModalState({ loading: true });
         try {
-            const updatedPhoneNo = phoneNumber.replaceAll(' ', '').trim();
-            const res = await http.post('/verify/phone', {
+            const endpoint =
+                type === 'email' ? '/verify/email' : '/verify/phone';
+            const payload = {
                 email: user.email,
-                phoneNo: updatedPhoneNo
-            });
-            console.log(res);
-            setModalConfig((prevState) => ({ ...prevState, otpSent: true }));
-            toast.success(res.data);
+                ...(type === 'phone' && {
+                    phoneNo: phoneNumber.replaceAll(' ', '').trim()
+                })
+            };
+
+            const res = await http.post(endpoint, payload);
+            updateModalState({ otpSent: true });
+            toast.success('OTP sent successfully');
         } catch (error) {
-            toast.error('Error while sending OTP.');
+            handleError('Failed to send OTP');
         } finally {
-            setModalConfig((prevState) => ({ ...prevState, loading: false }));
+            updateModalState({ loading: false });
         }
     };
 
-    const handleVerifyPhoneOtp = async () => {
-        setModalConfig((prevState) => ({ ...prevState, loading: true }));
+    const handleOtpVerify = async (type) => {
+        updateModalState({ loading: true });
         try {
-            const updatedPhoneNo = phoneNumber.replaceAll(' ', '').trim();
-            const res = await http.post('/verify/phone-otp', {
+            const endpoint =
+                type === 'email' ? '/verify/email-otp' : '/verify/phone-otp';
+            const payload = {
                 email: user.email,
-                phoneNo: updatedPhoneNo,
-                otp: modalConfig.otp
-            });
-            setTempUser({
-                ...tempUser,
-                isPhoneVerified: true,
-                mobileNo: phoneNumber
-            });
-            setUser({ ...user, isPhoneVerified: true, mobileNo: phoneNumber });
-            toast.success(res.data);
-            handleCloseModal();
-        } catch (error) {
-            toast.error('Error while verifying OTP.');
-        } finally {
-            setModalConfig((prevState) => ({ ...prevState, loading: false }));
-        }
-    };
+                otp: modalState.otp,
+                ...(type === 'phone' && {
+                    phoneNo: phoneNumber.replaceAll(' ', '').trim()
+                })
+            };
 
-    const handleEmailOtpSend = async () => {
-        setModalConfig((prevState) => ({ ...prevState, loading: true }));
-        try {
-            const res = await http.post('/verify/email', {
-                email: user.email
-            });
-            setModalConfig((prevState) => ({ ...prevState, otpSent: true }));
-            toast.success(res.data);
-        } catch (error) {
-            toast.error('Error while sending OTP.');
-        } finally {
-            setModalConfig((prevState) => ({ ...prevState, loading: false }));
-        }
-    };
+            const res = await http.post(endpoint, payload);
+            if (res.data) {
+                const updates =
+                    type === 'email'
+                        ? { isEmailVerified: true }
+                        : { isPhoneVerified: true, mobileNo: phoneNumber };
 
-    const handleVerifyEmailOtp = async () => {
-        setModalConfig((prevState) => ({ ...prevState, loading: true }));
-        try {
-            const res = await http.post('/verify/email-otp', {
-                email: user.email,
-                otp: modalConfig.otp
-            });
-            setTempUser({ ...tempUser, isEmailVerified: true });
-            setUser({ ...user, isEmailVerified: true });
-            toast.success(res.data);
-            handleCloseModal();
-        } catch (error) {
-            toast.error('Error while verifying OTP.');
-        } finally {
-            setModalConfig((prevState) => ({ ...prevState, loading: false }));
-        }
-    };
-
-    const handleEditClick = () => setIsEditing(true);
-
-    const handleCancelClick = () => {
-        setTempIs2FAEnabled(is2FAEnabled);
-        setTempAuthMethods(authMethods);
-        setTempUser({ ...user });
-        setError(null);
-        setIsEditing(false);
-    };
-
-    const handleSaveClick = async () => {
-        if (tempIs2FAEnabled && tempAuthMethods.length === 0) {
-            setError('You must select at least one authentication method.');
-            return;
-        }
-
-        // Ensure verification before letting users save a method
-        for (const method of tempAuthMethods) {
-            if (
-                (method === 'sms' && !tempUser.isPhoneVerified) ||
-                (method === 'email' && !tempUser.isEmailVerified)
-            ) {
-                toast.error(`Please verify your ${method} to enable it.`);
-                return;
+                setUser({ ...user, ...updates });
+                updateSecurityState({
+                    tempUser: { ...securityState.tempUser, ...updates }
+                });
+                handleCloseModal();
+                toast.success('Verification successful');
             }
-        }
-
-        const payload = {
-            userId: tempUser.userId,
-            mfaTypes: tempAuthMethods.map((method) => method.toLowerCase()),
-            enable: tempIs2FAEnabled
-        };
-        try {
-            const res = await http.post('/user/update-mfa', payload);
-            if (!res.data) {
-                toast.error('Failed to update MFA settings.');
-                throw new Error('Failed to update MFA settings.');
-            }
-            setIs2FAEnabled(tempIs2FAEnabled);
-            setAuthMethods(tempAuthMethods);
-            setUser({ ...tempUser, is2FAEnabled: tempIs2FAEnabled });
-            setError(null);
-            setIsEditing(false);
         } catch (error) {
-            console.error(error);
-            setError(
-                'An error occurred while updating MFA settings. Please try again.'
-            );
+            handleError('Failed to verify OTP');
+        } finally {
+            updateModalState({ loading: false });
         }
     };
 
-    const toggleAuthMethod = (method) => {
-        if (tempAuthMethods.includes(method)) {
-            setTempAuthMethods(tempAuthMethods.filter((m) => m !== method));
-        } else {
-            setTempAuthMethods([...tempAuthMethods, method]);
-        }
+    // Account Deletion Handlers
+    const handleOpenDeleteDialog = () => {
+        setOpenDeleteDialog(true);
     };
 
-    const handleSetUpEmail = () => {
-        const newEmail = prompt('Enter your email:');
-        if (newEmail) {
-            setTempUser({
-                ...tempUser,
-                email: newEmail,
-                isEmailVerified: false
-            });
-        }
+    const handleCloseDeleteDialog = () => {
+        setOpenDeleteDialog(false);
     };
 
     const handleAccountDeletion = async () => {
-        // Added account deletion logic
         try {
             await http.post(`/user/${user.userId}/delete-request`);
             toast.success(
@@ -266,22 +296,129 @@ const SecurityTab = () => {
             setUser(null);
             window.location.href = '/';
         } catch (error) {
-            console.error('Error requesting account deletion:', error);
             toast.error('Error requesting account deletion.');
         } finally {
-            setOpenDeleteDialog(false); // Close the dialog
+            setOpenDeleteDialog(false);
         }
     };
 
-    const handleOpenDeleteDialog = () => {
-        // Added dialog open handler
-        setOpenDeleteDialog(true);
-    };
+    // Render Methods
+    const renderVerificationModal = () => (
+        <Modal open={modalState.open} onClose={handleCloseModal}>
+            <Box
+                sx={{
+                    width: 400,
+                    margin: 'auto',
+                    padding: 4,
+                    backgroundColor: 'white',
+                    borderRadius: 2
+                }}
+            >
+                <Typography variant="h6" sx={{ marginBottom: 2 }}>
+                    {modalState.isChange
+                        ? `Change ${
+                              modalState.type.charAt(0).toUpperCase() +
+                              modalState.type.slice(1)
+                          }`
+                        : `Verify ${
+                              modalState.type.charAt(0).toUpperCase() +
+                              modalState.type.slice(1)
+                          }`}
+                </Typography>
 
-    const handleCloseDeleteDialog = () => {
-        // Added dialog close handler
-        setOpenDeleteDialog(false);
-    };
+                {modalState.type === 'phone' && (
+                    <Box sx={{ marginBottom: 2 }}>
+                        <FormControl fullWidth>
+                            <TextField
+                                label="Phone Number"
+                                variant="outlined"
+                                value={phoneNumber}
+                                helperText="Enter your 8-digit phone number (e.g. +65 9123 4567)"
+                                inputProps={{ maxLength: 13 }}
+                                onChange={handlePhoneNumberChange}
+                                fullWidth
+                                disabled={
+                                    modalState.loading || modalState.otpSent
+                                }
+                            />
+                        </FormControl>
+                    </Box>
+                )}
+
+                {modalState.otpSent && (
+                    <Box sx={{ marginBottom: 2 }}>
+                        <TextField
+                            label={`${modalState.type.toUpperCase()} OTP`}
+                            variant="outlined"
+                            value={modalState.otp}
+                            onChange={(e) =>
+                                updateModalState({ otp: e.target.value })
+                            }
+                            fullWidth
+                        />
+                    </Box>
+                )}
+
+                {!modalState.otpSent ? (
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        fullWidth
+                        onClick={() => handleOtpSend(modalState.type)}
+                        disabled={modalState.loading}
+                    >
+                        {modalState.loading ? (
+                            <CircularProgress size={24} color="inherit" />
+                        ) : (
+                            `Send OTP to ${
+                                modalState.type === 'email' ? 'Email' : 'Phone'
+                            }`
+                        )}
+                    </Button>
+                ) : (
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        fullWidth
+                        onClick={() => handleOtpVerify(modalState.type)}
+                        disabled={modalState.loading}
+                    >
+                        {modalState.loading ? (
+                            <CircularProgress size={24} color="inherit" />
+                        ) : (
+                            'Verify OTP'
+                        )}
+                    </Button>
+                )}
+            </Box>
+        </Modal>
+    );
+
+    const renderDeleteDialog = () => (
+        <Dialog open={openDeleteDialog} onClose={handleCloseDeleteDialog}>
+            <DialogTitle>Delete Account?</DialogTitle>
+            <DialogContent>
+                <DialogContentText>
+                    Are you sure you want to delete your account? This action
+                    will disable your account for 30 days. You can undo this
+                    action by logging in again within this period. After 30
+                    days, your account will be permanently deleted.
+                </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+                <Button onClick={handleCloseDeleteDialog} color="primary">
+                    Cancel
+                </Button>
+                <Button
+                    onClick={handleAccountDeletion}
+                    color="error"
+                    variant="contained"
+                >
+                    Delete My Account
+                </Button>
+            </DialogActions>
+        </Dialog>
+    );
 
     return (
         <Box sx={{ flex: 1 }}>
@@ -293,7 +430,7 @@ const SecurityTab = () => {
                     marginBottom={3}
                 >
                     <Typography variant="h5">Security</Typography>
-                    {!isEditing ? (
+                    {!securityState.isEditing ? (
                         <IconButton onClick={handleEditClick}>
                             <EditIcon />
                         </IconButton>
@@ -335,49 +472,51 @@ const SecurityTab = () => {
                         mt={1}
                     >
                         <Typography>
-                            {tempIs2FAEnabled ? 'Enabled' : 'Disabled'}
+                            {securityState.is2FAEnabled
+                                ? 'Enabled'
+                                : 'Disabled'}
                         </Typography>
-                        {isEditing && (
+                        {securityState.isEditing && (
                             <Switch
-                                checked={tempIs2FAEnabled}
+                                checked={securityState.is2FAEnabled}
                                 onChange={handleToggle2FA}
                             />
                         )}
                     </Box>
                 </Box>
 
-                {error && (
+                {securityState.error && (
                     <Typography color="error" marginBottom={2}>
-                        {error}
+                        {securityState.error}
                     </Typography>
                 )}
 
                 <Divider />
 
-                {tempIs2FAEnabled && (
+                {securityState.is2FAEnabled && (
                     <Box marginY={3}>
                         <Typography variant="h6">
                             Authentication Methods
                         </Typography>
                         <Box display="flex" gap={1} flexWrap="wrap" mt={2}>
-                            {availableMethods.map((method) => (
+                            {AVAILABLE_METHODS.map((method) => (
                                 <Chip
                                     key={method}
                                     label={method}
                                     color={
-                                        tempAuthMethods.includes(
+                                        securityState.authMethods.includes(
                                             method.toLowerCase()
                                         )
                                             ? 'primary'
                                             : 'default'
                                     }
                                     onClick={() =>
-                                        isEditing &&
-                                        toggleAuthMethod(method.toLowerCase())
+                                        securityState.isEditing &&
+                                        handleMethodToggle(method.toLowerCase())
                                     }
-                                    clickable={isEditing}
+                                    clickable={securityState.isEditing}
                                     variant={
-                                        tempAuthMethods.includes(
+                                        securityState.authMethods.includes(
                                             method.toLowerCase()
                                         )
                                             ? 'filled'
@@ -388,7 +527,7 @@ const SecurityTab = () => {
                         </Box>
 
                         <Box mt={3}>
-                            {tempAuthMethods.includes('sms') && (
+                            {securityState.authMethods.includes('sms') && (
                                 <Box mb={2}>
                                     <Typography
                                         variant="subtitle1"
@@ -396,43 +535,51 @@ const SecurityTab = () => {
                                     >
                                         SMS
                                     </Typography>
-                                    {tempUser.mobileNo ? (
+                                    {securityState.tempUser.mobileNo ? (
                                         <Box
                                             display="flex"
                                             alignItems="center"
                                             gap={1}
                                         >
                                             <Typography>
-                                                {tempUser.mobileNo} (
-                                                {tempUser.isPhoneVerified
+                                                {
+                                                    securityState.tempUser
+                                                        .mobileNo
+                                                }
+                                                (
+                                                {securityState.tempUser
+                                                    .isPhoneVerified
                                                     ? 'Verified'
                                                     : 'Unverified'}
                                                 )
                                             </Typography>
-                                            {isEditing && (
+                                            {securityState.isEditing && (
                                                 <Link
                                                     component="button"
                                                     onClick={() =>
                                                         handleOpenModal(
                                                             'phone',
-                                                            tempUser.isPhoneVerified
+                                                            securityState
+                                                                .tempUser
+                                                                .isPhoneVerified
                                                         )
                                                     }
                                                     sx={{
                                                         textDecoration: 'none',
                                                         color: 'primary.main',
                                                         fontWeight: 'bold',
-                                                        fontSize: '0.875rem', // Slightly smaller font for elegance
+                                                        fontSize: '0.875rem',
                                                         transition:
-                                                            'color 0.2s ease-in-out', // Smooth color transition
+                                                            'color 0.2s ease-in-out',
                                                         '&:hover': {
-                                                            color: 'primary.light', // Slightly darker color on hover
+                                                            color: 'primary.light',
                                                             textDecoration:
-                                                                'underline' // Add underline on hover
+                                                                'underline'
                                                         }
                                                     }}
                                                 >
-                                                    {tempUser.isPhoneVerified
+                                                    {securityState.tempUser
+                                                        .isPhoneVerified
                                                         ? 'Change'
                                                         : 'Verify'}
                                                 </Link>
@@ -446,7 +593,8 @@ const SecurityTab = () => {
                                                     handleOpenModal('phone')
                                                 }
                                                 sx={{
-                                                    textDecoration: 'none'
+                                                    textDecoration: 'none',
+                                                    cursor: 'pointer'
                                                 }}
                                             >
                                                 Set up
@@ -456,7 +604,7 @@ const SecurityTab = () => {
                                 </Box>
                             )}
 
-                            {tempAuthMethods.includes('email') && (
+                            {securityState.authMethods.includes('email') && (
                                 <Box mb={2}>
                                     <Typography
                                         variant="subtitle1"
@@ -464,43 +612,47 @@ const SecurityTab = () => {
                                     >
                                         Email
                                     </Typography>
-                                    {tempUser.email ? (
+                                    {securityState.tempUser.email ? (
                                         <Box
                                             display="flex"
                                             alignItems="center"
                                             gap={1}
                                         >
                                             <Typography>
-                                                {tempUser.email} (
-                                                {tempUser.isEmailVerified
+                                                {securityState.tempUser.email}(
+                                                {securityState.tempUser
+                                                    .isEmailVerified
                                                     ? 'Verified'
                                                     : 'Unverified'}
                                                 )
                                             </Typography>
-                                            {isEditing && (
+                                            {securityState.isEditing && (
                                                 <Link
                                                     component="button"
                                                     onClick={() =>
                                                         handleOpenModal(
                                                             'email',
-                                                            tempUser.isEmailVerified
+                                                            securityState
+                                                                .tempUser
+                                                                .isEmailVerified
                                                         )
                                                     }
                                                     sx={{
                                                         textDecoration: 'none',
                                                         color: 'primary.main',
                                                         fontWeight: 'bold',
-                                                        fontSize: '0.875rem', // Slightly smaller font for elegance
+                                                        fontSize: '0.875rem',
                                                         transition:
-                                                            'color 0.2s ease-in-out', // Smooth color transition
+                                                            'color 0.2s ease-in-out',
                                                         '&:hover': {
-                                                            color: 'primary.light', // Slightly darker color on hover
+                                                            color: 'primary.light',
                                                             textDecoration:
-                                                                'underline' // Add underline on hover
+                                                                'underline'
                                                         }
                                                     }}
                                                 >
-                                                    {tempUser.isEmailVerified
+                                                    {securityState.tempUser
+                                                        .isEmailVerified
                                                         ? 'Change'
                                                         : 'Verify'}
                                                 </Link>
@@ -508,31 +660,9 @@ const SecurityTab = () => {
                                         </Box>
                                     ) : (
                                         <Typography color="error">
-                                            No email set.{' '}
-                                            <Link onClick={handleSetUpEmail}>
-                                                Set up
-                                            </Link>
+                                            No email set.
                                         </Typography>
                                     )}
-                                </Box>
-                            )}
-
-                            {tempAuthMethods.includes('authenticator') && (
-                                <Box mb={2}>
-                                    <Typography
-                                        variant="subtitle1"
-                                        sx={{ fontWeight: '600' }}
-                                    >
-                                        Authenticator App
-                                    </Typography>
-                                    <Typography
-                                        variant="body2"
-                                        color="textSecondary"
-                                    >
-                                        Use an authenticator app like Google
-                                        Authenticator or Authy. Setup
-                                        instructions will be provided here.
-                                    </Typography>
                                 </Box>
                             )}
                         </Box>
@@ -561,196 +691,8 @@ const SecurityTab = () => {
                 </Box>
             </Paper>
 
-            {/* Confirmation Dialog */}
-            <Dialog
-                open={openDeleteDialog}
-                onClose={handleCloseDeleteDialog}
-                aria-labelledby="delete-account-dialog-title"
-                aria-describedby="delete-account-dialog-description"
-            >
-                <DialogTitle id="delete-account-dialog-title">
-                    Delete Account?
-                </DialogTitle>
-                <DialogContent>
-                    <DialogContentText id="delete-account-dialog-description">
-                        Are you sure you want to delete your account? This
-                        action will disable your account for 30 days. You can
-                        undo this action by logging in again within this period.
-                        After 30 days, your account will be permanently deleted.
-                    </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={handleCloseDeleteDialog} color="primary">
-                        Cancel
-                    </Button>
-                    <Button
-                        onClick={handleAccountDeletion}
-                        color="error"
-                        variant="contained"
-                    >
-                        Delete My Account
-                    </Button>
-                </DialogActions>
-            </Dialog>
-
-            <Modal open={modalConfig.open} onClose={handleCloseModal}>
-                <Box
-                    sx={{
-                        width: 400,
-                        margin: 'auto',
-                        padding: 4,
-                        backgroundColor: 'white',
-                        borderRadius: 2
-                    }}
-                >
-                    <Typography variant="h6" sx={{ marginBottom: 2 }}>
-                        {modalConfig.isChange
-                            ? `Change ${
-                                  modalConfig.type.charAt(0).toUpperCase() +
-                                  modalConfig.type.slice(1)
-                              }`
-                            : `Verify ${
-                                  modalConfig.type.charAt(0).toUpperCase() +
-                                  modalConfig.type.slice(1)
-                              }`}
-                    </Typography>
-
-                    {modalConfig.type === 'phone' && (
-                        <Box sx={{ marginBottom: 2 }}>
-                            <FormControl fullWidth>
-                                <TextField
-                                    label="Phone Number"
-                                    variant="outlined"
-                                    value={phoneNumber}
-                                    helperText="Enter your 8-digit phone number (e.g. +65 9123 4567)"
-                                    inputProps={{
-                                        maxLength: 13
-                                    }}
-                                    onChange={handlePhoneNoChange}
-                                    fullWidth
-                                    // Allow editing regardless of the verification status
-                                    disabled={modalConfig.loading}
-                                />
-                            </FormControl>
-                        </Box>
-                    )}
-                    {modalConfig.otpSent &&
-                        modalConfig.type === 'phone' &&
-                        !user.isPhoneVerified && (
-                            <Box sx={{ marginBottom: 2 }}>
-                                <TextField
-                                    label="SMS"
-                                    variant="outlined"
-                                    value={modalConfig.otp}
-                                    onChange={(e) =>
-                                        setModalConfig((prev) => ({
-                                            ...prev,
-                                            otp: e.target.value
-                                        }))
-                                    }
-                                    fullWidth
-                                />
-                            </Box>
-                        )}
-
-                    {!modalConfig.otpSent && modalConfig.type === 'phone' && (
-                        <Button
-                            variant="contained"
-                            color="primary"
-                            fullWidth
-                            onClick={handlePhoneOtpSend}
-                            disabled={modalConfig.loading}
-                        >
-                            {modalConfig.loading ? (
-                                <CircularProgress size={24} color="inherit" />
-                            ) : (
-                                'Send OTP to Phone'
-                            )}
-                        </Button>
-                    )}
-
-                    {modalConfig.otpSent && modalConfig.type === 'phone' && (
-                        <Button
-                            variant="contained"
-                            color="primary"
-                            fullWidth
-                            onClick={handleVerifyPhoneOtp}
-                            disabled={modalConfig.loading}
-                            sx={{ marginTop: 2 }}
-                        >
-                            {modalConfig.loading ? (
-                                <CircularProgress size={24} color="inherit" />
-                            ) : (
-                                'Verify Phone OTP'
-                            )}
-                        </Button>
-                    )}
-
-                    {modalConfig.type === 'email' && !user.isEmailVerified && (
-                        <>
-                            {!modalConfig.otpSent ? (
-                                <Box sx={{ marginTop: 2 }}>
-                                    <Typography sx={{ color: 'grey', mb: 2 }}>
-                                        {user.email}
-                                    </Typography>
-
-                                    <Button
-                                        variant="contained"
-                                        color="primary"
-                                        fullWidth
-                                        onClick={handleEmailOtpSend}
-                                        disabled={modalConfig.loading}
-                                    >
-                                        {modalConfig.loading ? (
-                                            <CircularProgress
-                                                size={24}
-                                                color="inherit"
-                                            />
-                                        ) : (
-                                            'Send OTP to Email'
-                                        )}
-                                    </Button>
-                                </Box>
-                            ) : (
-                                <Box sx={{ marginTop: 2 }}>
-                                    <TextField
-                                        label="Email OTP"
-                                        variant="outlined"
-                                        value={modalConfig.otp}
-                                        onChange={(e) =>
-                                            setModalConfig((prev) => ({
-                                                ...prev,
-                                                otp: e.target.value
-                                            }))
-                                        }
-                                        fullWidth
-                                    />
-                                </Box>
-                            )}
-
-                            {modalConfig.otpSent && (
-                                <Button
-                                    variant="contained"
-                                    color="primary"
-                                    fullWidth
-                                    onClick={handleVerifyEmailOtp}
-                                    disabled={modalConfig.loading}
-                                    sx={{ marginTop: 2 }}
-                                >
-                                    {modalConfig.loading ? (
-                                        <CircularProgress
-                                            size={24}
-                                            color="inherit"
-                                        />
-                                    ) : (
-                                        'Verify Email OTP'
-                                    )}
-                                </Button>
-                            )}
-                        </>
-                    )}
-                </Box>
-            </Modal>
+            {renderVerificationModal()}
+            {renderDeleteDialog()}
         </Box>
     );
 };

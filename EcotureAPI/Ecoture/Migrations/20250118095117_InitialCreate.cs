@@ -165,7 +165,8 @@ namespace EcotureAPI.Migrations
                     OtpType = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
                     ExpirationDate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    IsVerified = table.Column<bool>(type: "tinyint(1)", nullable: false)
+                    IsVerified = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    Data = table.Column<string>(type: "longtext", nullable: true)
                 },
                 constraints: table =>
                 {
