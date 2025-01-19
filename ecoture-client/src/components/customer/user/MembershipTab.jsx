@@ -17,7 +17,7 @@ import {
 import { useState } from 'react';
 import ShareIcon from '@mui/icons-material/Share';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
-import DataTable from '../DataTable';
+import DataTable from '../../DataTable';
 
 const MembershipTab = () => {
     const [vouchers, setVouchers] = useState([

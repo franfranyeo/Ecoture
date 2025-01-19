@@ -19,7 +19,7 @@ import * as yup from 'yup';
 import http from 'utils/http';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import AuthLayout from '../../../components/user/AuthLayout';
+import AuthLayout from 'components/customer/user/AuthLayout';
 import { useNavigate } from 'react-router-dom';
 
 function ForgotPassword() {

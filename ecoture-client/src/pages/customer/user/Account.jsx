@@ -1,11 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Typography, Box } from '@mui/material';
 import UserContext from 'contexts/UserContext';
-import ProfileTab from 'components/user/ProfileTab';
-import MembershipTab from 'components/user/MembershipTab';
+import ProfileTab from 'components/customer/user/ProfileTab';
+import MembershipTab from 'components/customer/user/MembershipTab';
 import LoadingContainer from 'components/LoadingScreen';
-import AccountSidePanel from 'components/user/AccountSidePanel';
-import SecurityTab from 'components/user/SecurityTab';
+import AccountSidePanel from 'components/customer/user/AccountSidePanel';
+import SecurityTab from 'components/customer/user/SecurityTab';
 
 const Account = () => {
     const { user, setUser } = useContext(UserContext);

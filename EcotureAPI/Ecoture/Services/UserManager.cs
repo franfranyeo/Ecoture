@@ -478,6 +478,22 @@ namespace EcotureAPI.Services
 
             await _context.SaveChangesAsync();
         }
+
+        public async Task EditUserAsync(int userId, string firstName, string lastName, string email, DateTime? dateOfBirth, UserRole role, string pfpUrl)
+        {
+            var user = await _context.Users.FindAsync(userId);
+            if (user != null)
+            {
+                user.FirstName = firstName;
+                user.LastName = lastName;
+                user.Email = email;
+                user.DateofBirth = dateOfBirth;
+                user.Role = role;
+                user.PfpURL = pfpUrl;
+
+                await _context.SaveChangesAsync();
+            }
+        }
     }
 
     public interface IUserManager
@@ -493,6 +509,8 @@ namespace EcotureAPI.Services
         Task<(bool IsSuccess, int StatusCode, string Message)> PermanentlyDeleteAccountAsync(int userId, ClaimsPrincipal userPrincipal);
         Task<(bool IsSuccess, string? ErrorMessage, User? UpdatedUser)> EditProfileAsync(int userId, EditProfileRequest request);
         Task<(bool IsSuccess, string? ErrorMessage)> ChangePasswordAsync(int userId, ChangePasswordRequest request);
+
+        Task EditUserAsync(int userId, string firstName, string lastName, string email, DateTime? dateOfBirth, UserRole role, string pfpUrl);
     }
 
 }

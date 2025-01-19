@@ -1,5 +1,10 @@
 import { ThemeProvider, Box } from '@mui/material';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import {
+    BrowserRouter as Router,
+    Routes,
+    Route,
+    Navigate
+} from 'react-router-dom';
 import theme from './themes/MyTheme';
 import './App.css';
 import Login from './pages/customer/user/Login';
@@ -16,10 +21,16 @@ import Navbar from 'components/Navbar';
 import ResetPassword from './pages/customer/user/ResetPassword';
 import ForgotPassword from './pages/customer/user/ForgotPassword';
 import http from 'utils/http';
+import Dashboard from './pages/admin/Dashboard';
+import ProtectedRoute from './components/admin/ProtectedRoute';
+import Users from './pages/admin/user/Users';
+import EditUser from './pages/admin/user/EditUser';
+import ViewUser from './pages/admin/user/ViewUser';
 
 function App() {
     // update in the user context too
     const [user, setUser] = useState(null);
+    const [loading, setLoading] = useState(true);
     const isFirstLoad = useRef(true); // tracks first load to avoid API call
 
     // Retrieve user data from localStorage (if available)
@@ -31,6 +42,7 @@ function App() {
                 .map((name) => name.charAt(0).toUpperCase() + name.slice(1))
                 .join(' ');
             setUser(storedUser);
+            setLoading(false);
         }
     }, []);
 
@@ -41,6 +53,13 @@ function App() {
             if (isFirstLoad.current) {
                 isFirstLoad.current = false; // Skip the first load call
                 return; // Don't call the API for the first user set
+            }
+
+            // Detect if a new login occurred
+            const storedUser = JSON.parse(localStorage.getItem('user'));
+            if (storedUser?.userId !== user.userId) {
+                isFirstLoad.current = true; // Treat this as a new "first load"
+                return; // Skip API call for the new login
             }
 
             try {
@@ -74,6 +93,7 @@ function App() {
                             'user',
                             JSON.stringify(updatedUser)
                         );
+                        setLoading(false);
                     }
                 };
                 updateUser();
@@ -82,11 +102,66 @@ function App() {
             }
         } else {
             localStorage.removeItem('user');
+            isFirstLoad.current = true; // Reset the first load tracker
         }
     }, [user]);
 
     // Use memoization to avoid unnecessary re-renders
-    const value = useMemo(() => ({ user, setUser }), [user]);
+    const value = useMemo(() => ({ user, setUser, loading }), [user]);
+
+    const sharedRoutes = [
+        {
+            url: '/login',
+            component: <Login />
+        },
+        {
+            url: '/register',
+            component: <Register />
+        },
+        {
+            url: '/reset-password',
+            component: <ResetPassword />
+        },
+        {
+            url: '/forgot-password',
+            component: <ForgotPassword />
+        },
+        {
+            url: '/terms-of-use',
+            component: <TermsOfUse />
+        },
+        {
+            url: '/account',
+            component: <Account />
+        },
+        {
+            url: '/privacy-policy',
+            component: <PrivacyPolicy />
+        },
+        {
+            url: '/unauthorized',
+            component: <h1>Unauthorized</h1>
+        }
+    ];
+
+    const adminRoutes = [
+        {
+            url: '/admin/dashboard',
+            component: Dashboard
+        },
+        {
+            url: '/admin/users',
+            component: Users
+        },
+        {
+            url: '/admin/users/:id/view',
+            component: ViewUser
+        },
+        {
+            url: '/admin/users/:id/edit',
+            component: EditUser
+        }
+    ];
 
     return (
         <GoogleOAuthProvider clientId="455480585598-3f0qgcm01cbr2qp4rm9or035u1g75ur8.apps.googleusercontent.com">
@@ -111,31 +186,30 @@ function App() {
                             >
                                 <Routes>
                                     <Route path="/" element={<Home />} />
-                                    <Route path="/login" element={<Login />} />
+                                    {sharedRoutes.map((route, index) => (
+                                        <Route
+                                            key={index}
+                                            path={route.url}
+                                            element={route.component}
+                                        />
+                                    ))}
                                     <Route
-                                        path="/register"
-                                        element={<Register />}
+                                        path="/admin"
+                                        element={
+                                            <Navigate to="/admin/dashboard" />
+                                        }
                                     />
-                                    <Route
-                                        path="/reset-password"
-                                        element={<ResetPassword />}
-                                    />
-                                    <Route
-                                        path="/forgot-password"
-                                        element={<ForgotPassword />}
-                                    />
-                                    <Route
-                                        path="/terms-of-use"
-                                        element={<TermsOfUse />}
-                                    />
-                                    <Route
-                                        path="/account"
-                                        element={<Account />}
-                                    />
-                                    <Route
-                                        path="/privacy-policy"
-                                        element={<PrivacyPolicy />}
-                                    />
+                                    {adminRoutes.map((route, index) => (
+                                        <Route
+                                            key={index}
+                                            path={route.url}
+                                            element={
+                                                <ProtectedRoute
+                                                    element={route.component}
+                                                />
+                                            }
+                                        />
+                                    ))}
                                 </Routes>
                             </Box>
                         </Box>

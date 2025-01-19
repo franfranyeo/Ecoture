@@ -27,8 +27,9 @@ function Navbar() {
     const [anchorEl, setAnchorEl] = useState(null);
     const [drawerOpen, setDrawerOpen] = useState(false);
     const navigate = useNavigate();
+    const adminRoles = [0, 1];
 
-    const navItems = [
+    const customerNavItems = [
         { text: 'New Arrivals', link: '/new-arrivals' },
         { text: 'Trending', link: '/trending' },
         { text: 'Women', link: '/women' },
@@ -67,6 +68,8 @@ function Navbar() {
         handleMenuClose();
     };
 
+    const navItems = adminRoles.includes(user?.role) ? [] : customerNavItems;
+
     return (
         <AppBar position="relative" sx={{ bgcolor: 'white', boxShadow: 2 }}>
             <Container>
@@ -85,7 +88,7 @@ function Navbar() {
                         <img
                             src={EcoTureLogo}
                             alt="EcoTure Logo"
-                            style={{ width: '120px' }}
+                            style={{ width: '90px' }}
                         />
                     </Link>
 
@@ -137,7 +140,7 @@ function Navbar() {
                             gap: '16px'
                         }}
                     >
-                        {user && (
+                        {user && !adminRoles.includes(user?.role) && (
                             <Link to="/cart" className="nav-link">
                                 <ShoppingCartOutlinedIcon />
                             </Link>
@@ -190,6 +193,17 @@ function Navbar() {
                                         >
                                             Account
                                         </MenuItem>
+                                        {adminRoles.includes(user?.role) && (
+                                            <MenuItem
+                                                onClick={() =>
+                                                    handleNavigate(
+                                                        '/admin/settings'
+                                                    )
+                                                }
+                                            >
+                                                Admin Settings
+                                            </MenuItem>
+                                        )}
                                         <MenuItem onClick={handleLogout}>
                                             Logout
                                         </MenuItem>

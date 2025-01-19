@@ -14,7 +14,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
-import AuthLayout from 'components/user/AuthLayout';
+import AuthLayout from 'components/customer/user/AuthLayout';
 
 function ResetPassword() {
     const { search } = useLocation();

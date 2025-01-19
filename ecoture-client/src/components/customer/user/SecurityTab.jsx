@@ -26,13 +26,9 @@ import http from 'utils/http';
 import { toast } from 'react-toastify';
 
 const SecurityTab = () => {
-    // Context
+    const AVAILABLE_METHODS = ['SMS', 'Email', 'Authenticator'];
     const { user, setUser } = useContext(UserContext);
 
-    // Constants
-    const AVAILABLE_METHODS = ['SMS', 'Email', 'Authenticator'];
-
-    // State
     const [securityState, setSecurityState] = useState({
         is2FAEnabled: user.is2FAEnabled,
         authMethods: [],
@@ -52,6 +48,16 @@ const SecurityTab = () => {
 
     const [phoneNumber, setPhoneNumber] = useState('+65 ');
     const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
+    const [countdown, setCountdown] = useState(30);
+    const [canResend, setCanResend] = useState(false);
+
+    const handleResend = () => {
+        if (canResend) {
+            handleOtpSend();
+            setCountdown(30);
+            setCanResend(false);
+        }
+    };
 
     // Effects
     useEffect(() => {
@@ -59,6 +65,23 @@ const SecurityTab = () => {
             fetchAuthMethods();
         }
     }, [user]);
+
+    useEffect(() => {
+        let timer;
+        if (modalState.otpSent && countdown > 0) {
+            timer = setInterval(() => {
+                setCountdown((prev) => prev - 1);
+            }, 1000);
+        }
+
+        if (countdown === 0) {
+            setCanResend(true);
+        }
+
+        return () => {
+            if (timer) clearInterval(timer);
+        };
+    }, [countdown, modalState.otpSent]);
 
     // API Calls
     const fetchAuthMethods = async () => {
@@ -356,6 +379,41 @@ const SecurityTab = () => {
                             }
                             fullWidth
                         />
+                        <Box
+                            sx={{
+                                display: 'flex',
+                                justifyContent: 'flex-end',
+                                mt: 1,
+                                mb: 2
+                            }}
+                        >
+                            {countdown > 0 ? (
+                                <Typography
+                                    variant="body2"
+                                    color="text.secondary"
+                                >
+                                    Resend code in {countdown}s
+                                </Typography>
+                            ) : (
+                                <Typography
+                                    variant="body2"
+                                    color="primary"
+                                    sx={{
+                                        cursor: canResend
+                                            ? 'pointer'
+                                            : 'default',
+                                        '&:hover': canResend
+                                            ? {
+                                                  textDecoration: 'underline'
+                                              }
+                                            : {}
+                                    }}
+                                    onClick={handleResend}
+                                >
+                                    Resend code
+                                </Typography>
+                            )}
+                        </Box>
                     </Box>
                 )}
 

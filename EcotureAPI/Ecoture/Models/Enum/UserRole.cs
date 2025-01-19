@@ -1,10 +1,10 @@
 ﻿namespace Ecoture.Models.Enum
 {
-    public enum UserRole
-    {
-        Admin,
-        Staff,
-        Customer
-    }
+        public enum UserRole
+        {
+            Admin,
+            Staff,
+            Customer
+        }
 
 }

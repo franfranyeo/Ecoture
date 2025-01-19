@@ -1,9 +1,9 @@
 // components/Login.jsx
 import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import LoginForm from 'components/user/LoginForm';
-import MFAVerification from 'components/user/MFAVerification';
-import AuthLayout from 'components/user/AuthLayout';
+import LoginForm from 'components/customer/user/LoginForm';
+import MFAVerification from 'components/customer/user/MFAVerification';
+import AuthLayout from 'components/customer/user/AuthLayout';
 import { authService } from 'services/auth.service';
 import { toast } from 'react-toastify';
 import UserContext from 'contexts/UserContext';
@@ -25,7 +25,12 @@ function Login() {
         localStorage.setItem('accessToken', accessToken);
 
         toast.success('Logged in successfully');
-        navigate('/');
+        if (user.role === 0 || user.role === 1) {
+            // staff or admin role
+            navigate('/admin/dashboard');
+        } else {
+            navigate('/');
+        }
     };
 
     const handleLoginSubmit = async (credentials) => {

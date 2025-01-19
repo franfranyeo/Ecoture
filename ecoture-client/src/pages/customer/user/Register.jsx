@@ -12,11 +12,11 @@ import {
 import { Link, useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import GoogleLoginButton from 'components/user/GoogleLoginButton'; // Ensure you have this package installed
+import GoogleLoginButton from 'components/customer/user/GoogleLoginButton'; // Ensure you have this package installed
 import http from 'utils/http';
 import { toast } from 'react-toastify';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
-import AuthLayout from 'components/user/AuthLayout';
+import AuthLayout from 'components/customer/user/AuthLayout';
 
 const Register = () => {
     const [showPassword, setShowPassword] = React.useState(false);

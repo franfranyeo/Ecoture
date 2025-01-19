@@ -429,7 +429,72 @@ namespace Ecoture.Controllers
             return Ok(new { message = "User account deleted successfully." });
         }
 
+        [HttpGet, Authorize]
+        public async Task<IActionResult> GetUsers()
+        {
+            var users = await _context.Users.ToListAsync();
+            return Ok(users);
+        }
 
+        // GET: api/Users/5 (Get user by ID)
+        [HttpGet("{id}")]
+        public async Task<ActionResult<User>> GetUser(int id)
+        {
+            var user = await _context.Users
+                .FirstOrDefaultAsync(u => u.UserId == id);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return user;
+        }
+
+        // POST: api/Users (Create a new user)
+        [HttpPost]
+        public async Task<ActionResult<User>> CreateUser(User user)
+        {
+            _context.Users.Add(user);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction(nameof(GetUser), new { id = user.UserId }, user);
+        }
+
+        // PUT /users/{UserId}
+        [HttpPut("{UserId}")]
+        public async Task<IActionResult> EditUser(EditUserRequest request, int UserId)
+        {
+            await _userManager.EditUserAsync(UserId, request.FirstName, request.LastName, request.Email, request.DateofBirth, request.Role, request.PfpURL);
+
+            return Ok(new EditUserResponse
+            {
+                UserId = UserId,
+                FirstName = request.FirstName,
+                LastName = request.LastName,
+                Email = request.Email,
+                DateofBirth = request.DateofBirth,
+                Role = request.Role,
+                PfpURL = request.PfpURL
+            });
+        }
+
+
+        // DELETE: api/Users/5 (Delete a user)
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteUser(int id)
+        {
+            var user = await _context.Users.FindAsync(id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            _context.Users.Remove(user);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
 
     }
 }
