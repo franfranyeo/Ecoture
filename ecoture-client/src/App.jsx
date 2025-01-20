@@ -49,7 +49,6 @@ function App() {
     useEffect(() => {
         if (user) {
             localStorage.setItem('user', JSON.stringify(user));
-
             if (isFirstLoad.current) {
                 isFirstLoad.current = false; // Skip the first load call
                 return; // Don't call the API for the first user set
@@ -65,12 +64,13 @@ function App() {
             try {
                 const updateUser = async () => {
                     // Only send the changeable fields to avoid unnecessary updates
+
                     const updateData = {
                         firstName: user.firstName,
                         lastName: user.lastName,
                         email: user.email,
                         mobileNo: user.mobileNo,
-                        dateOfBirth: user.dateOfBirth,
+                        dateofBirth: user.dateofBirth,
                         pfpURL: user.pfpURL,
                         is2FAEnabled: user.is2FAEnabled,
                         isEmailVerified: user.isEmailVerified,
