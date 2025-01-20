@@ -9,7 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import googleIcon from 'assets/images/google-logo.svg';
 
 function GoogleLoginButton() {
-    const { navigate } = useNavigate();
+    const navigate = useNavigate();
     const { setUser } = React.useContext(UserContext);
     const currentUrl = window.location.pathname;
     const handleGoogleLogin = useGoogleLogin({

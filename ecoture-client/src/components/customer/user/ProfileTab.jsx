@@ -90,6 +90,11 @@ const ProfileTab = ({ user }) => {
         validationSchema: yup.object({
             currentPassword: yup
                 .string()
+                .min(8, 'Password must be at least 8 characters')
+                .matches(
+                    /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-])/,
+                    'Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character'
+                )
                 .required('Current password is required'),
             newPassword: yup
                 .string()
