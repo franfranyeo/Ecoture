@@ -14,7 +14,8 @@ import {
     FormHelperText,
     Grid,
     Avatar,
-    IconButton
+    IconButton,
+    Divider
 } from '@mui/material';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
@@ -200,22 +201,6 @@ function EditUser() {
                     position: 'relative'
                 }}
             >
-                {/* <Tooltip title="Cancel">
-          <IconButton
-            color="secondary"
-            sx={{
-              position: "absolute",
-              top: 8,
-              right: 8,
-              bgcolor: "rgba(255,255,255,0.8)",
-              borderRadius: "50%",
-            }}
-            onClick={handleCancel}
-          >
-            <Close />
-          </IconButton>
-        </Tooltip> */}
-
                 <Box component="form" onSubmit={formik.handleSubmit}>
                     <Box
                         sx={{
@@ -229,8 +214,7 @@ function EditUser() {
                         <Avatar
                             sx={{
                                 width: 100,
-                                height: 100,
-                                boxShadow: 3
+                                height: 100
                             }}
                             src={user.pfpURL || ''}
                             alt={`${user.firstName} ${user.lastName}`}
@@ -239,8 +223,9 @@ function EditUser() {
                             {user.firstName} {user.lastName}
                         </Typography>
                     </Box>
+                    <Divider sx={{ my: 2 }} />
                     <Typography variant="h6" gutterBottom>
-                        Basic Information
+                        Personal Information
                     </Typography>
 
                     {user.role === 'Customer' && (

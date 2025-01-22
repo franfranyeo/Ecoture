@@ -58,7 +58,13 @@ const validationSchema = yup.object({
             'Phone number must be in format: +65 XXXX XXXX'
         )
         .nullable(),
-    dateofBirth: yup.date().nullable()
+    dateofBirth: yup
+        .date()
+        .nullable()
+        .test('futureDate', 'Date of birth must be before today', (value) => {
+            if (!value) return true;
+            return new Date(value).getTime() < new Date().setHours(0, 0, 0, 0);
+        })
 });
 
 const ProfileTab = ({ user }) => {
@@ -200,9 +206,15 @@ const ProfileTab = ({ user }) => {
                 );
 
                 if (response.data.user) {
+                    const fullName =
+                        `${response.data.user.firstName} ${response.data.user.lastName}`
+                            .replace('Empty', '')
+                            .trim();
+
                     const updatedUser = {
                         ...user,
-                        ...response.data.user
+                        ...response.data.user,
+                        fullName
                     };
                     setUser(updatedUser);
                     localStorage.setItem('user', JSON.stringify(updatedUser));
@@ -293,9 +305,16 @@ const ProfileTab = ({ user }) => {
                 );
 
                 if (updateResponse.data.user) {
+                    // Add fullName construction here
+                    const fullName =
+                        `${updateResponse.data.user.firstName} ${updateResponse.data.user.lastName}`
+                            .replace('Empty', '')
+                            .trim();
+
                     const updatedUser = {
                         ...user,
-                        ...updateResponse.data.user
+                        ...updateResponse.data.user,
+                        fullName
                     };
                     setUser(updatedUser);
                     localStorage.setItem('user', JSON.stringify(updatedUser));

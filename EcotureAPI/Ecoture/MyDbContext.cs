@@ -105,56 +105,73 @@ namespace Ecoture
                 // Ensure the database is created and migrations are applied
                 await context.Database.MigrateAsync();
 
-                // Check if admin user exists
+                // Get admin credentials from configuration
                 string adminEmail = configuration["AdminSettings:AdminEmail"];
                 string adminPassword = configuration["AdminSettings:AdminPassword"];
 
                 if (string.IsNullOrEmpty(adminEmail) || string.IsNullOrEmpty(adminPassword))
                 {
-                    Console.WriteLine("Admin email or password is not configured.");
-                    return;
+                    throw new InvalidOperationException("Admin email or password is not configured.");
                 }
 
-                var adminUser = await context.Users.FirstOrDefaultAsync(u => u.Email == adminEmail);
-                if (adminUser != null)
+                // Check if any users exist in the database
+                if (!await context.Users.AnyAsync())
                 {
-                    Console.WriteLine("Admin user already exists.");
-                    return;
+                    // Database is empty, we can safely create admin with ID 1
+                    string hashedPassword = BCrypt.Net.BCrypt.HashPassword(adminPassword);
+
+                    var adminUser = new User
+                    {
+                        UserId = 1,
+                        FirstName = "Admin",
+                        LastName = "User",
+                        Email = adminEmail,
+                        Password = hashedPassword,
+                        Role = UserRole.Admin,
+                        CreatedAt = DateTime.UtcNow,
+                        UpdatedAt = DateTime.UtcNow
+                    };
+
+                    context.Users.Add(adminUser);
+                    await context.SaveChangesAsync();
+
+                    Console.WriteLine("Admin user successfully created with ID 1.");
                 }
-
-                // Hash the password
-                string hashedPassword = BCrypt.Net.BCrypt.HashPassword(adminPassword);
-
-                // Temporarily disable auto-increment
-                await context.Database.ExecuteSqlRawAsync("SET @OLD_AUTO_INCREMENT = (SELECT AUTO_INCREMENT FROM information_schema.TABLES WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = 'Users');");
-                await context.Database.ExecuteSqlRawAsync("SET FOREIGN_KEY_CHECKS = 0;");
-                await context.Database.ExecuteSqlRawAsync("ALTER TABLE Users AUTO_INCREMENT = 1;");
-
-                // Create Admin User
-                context.Users.Add(new User
+                else
                 {
-                    UserId = 1,
-                    FirstName = "Admin",
-                    LastName = "User",
-                    Email = adminEmail,
-                    Password = hashedPassword,
-                    Role = UserRole.Admin,
-                    CreatedAt = DateTime.UtcNow,
-                    UpdatedAt = DateTime.UtcNow
-                });
+                    // Check if admin exists
+                    var adminExists = await context.Users.AnyAsync(u => u.Email == adminEmail);
+                    if (!adminExists)
+                    {
+                        // Create admin user with next available ID
+                        string hashedPassword = BCrypt.Net.BCrypt.HashPassword(adminPassword);
 
-                await context.SaveChangesAsync();
+                        var adminUser = new User
+                        {
+                            FirstName = "Admin",
+                            LastName = "User",
+                            Email = adminEmail,
+                            Password = hashedPassword,
+                            Role = UserRole.Admin,
+                            CreatedAt = DateTime.UtcNow,
+                            UpdatedAt = DateTime.UtcNow
+                        };
 
-                // Reset auto-increment to continue from the next available ID
-                await context.Database.ExecuteSqlRawAsync("SET @NEW_AUTO_INCREMENT = (SELECT MAX(userId) + 1 FROM Users);");
-                await context.Database.ExecuteSqlRawAsync("ALTER TABLE Users AUTO_INCREMENT = @NEW_AUTO_INCREMENT;");
-                await context.Database.ExecuteSqlRawAsync("SET FOREIGN_KEY_CHECKS = 1;");
+                        context.Users.Add(adminUser);
+                        await context.SaveChangesAsync();
 
-                Console.WriteLine("Admin user is successfully created.");
+                        Console.WriteLine($"Admin user successfully created with next available ID.");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Admin user already exists.");
+                    }
+                }
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Error seeding admin user: {ex.Message}");
+                throw; // Rethrow to ensure the application startup fails if seeding fails
             }
         }
     }

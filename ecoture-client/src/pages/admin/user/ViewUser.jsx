@@ -16,7 +16,7 @@ import {
     DialogContentText,
     DialogActions
 } from '@mui/material';
-import { ArrowBack, Edit } from '@mui/icons-material';
+import { ArrowBack, Edit, Lock } from '@mui/icons-material';
 import 'react-toastify/dist/ReactToastify.css';
 import { toast } from 'react-toastify';
 
@@ -127,18 +127,30 @@ function ViewUser() {
                 elevation={3}
                 sx={{
                     p: 4,
-                    borderRadius: '16px',
+                    borderRadius: 3,
                     position: 'relative'
                 }}
             >
-                <Button
+                {/* <Button
                     variant="contained"
                     color="primary"
                     sx={{ ml: 2, position: 'absolute', top: 16, right: 16 }}
                     onClick={handleResetPassword}
                 >
                     Reset Password
-                </Button>
+                </Button> */}
+
+                {/* Edit Icon in Top Right Corner */}
+                <IconButton
+                    onClick={handleEdit}
+                    sx={{
+                        position: 'absolute',
+                        top: 16,
+                        right: 16
+                    }}
+                >
+                    <Edit />
+                </IconButton>
 
                 {!loading && user && (
                     <>
@@ -152,33 +164,37 @@ function ViewUser() {
                             <Avatar
                                 sx={{
                                     width: 120,
-                                    height: 120,
-                                    boxShadow: 3
+                                    height: 120
                                 }}
                                 src={user.pfpURL || ''}
                                 alt={`${user.firstName} ${user.lastName}`}
                             />
-                            <Typography
-                                variant="h4"
-                                sx={{
-                                    ml: 3,
-                                    color: '#333',
-                                    fontWeight: '500'
-                                }}
-                            >
-                                {user.firstName} {user.lastName}
-                            </Typography>
+                            <Box>
+                                <Typography
+                                    variant="h4"
+                                    sx={{
+                                        ml: 3,
+                                        color: '#333',
+                                        fontWeight: '500'
+                                    }}
+                                >
+                                    {user.fullName}
+                                </Typography>
+                                <Typography
+                                    variant="body3"
+                                    color="textSecondary"
+                                    sx={{ ml: 3 }}
+                                >
+                                    {user.role}
+                                </Typography>
+                            </Box>
                         </Box>
 
                         <Divider sx={{ mb: 3 }} />
 
                         <Box>
-                            <Typography
-                                variant="h6"
-                                gutterBottom
-                                sx={{ color: '#555' }}
-                            >
-                                Basic Information
+                            <Typography variant="h6" gutterBottom>
+                                Personal Information
                             </Typography>
                             <Grid container spacing={3}>
                                 <Grid item xs={12} sm={6}>
@@ -218,47 +234,21 @@ function ViewUser() {
                                 )}
                                 <Grid item xs={12} sm={6}>
                                     <Typography variant="body1">
-                                        <strong>2FA Enabled:</strong>{' '}
-                                        {user.is2FAEnabled ? 'Yes' : 'No'}
-                                    </Typography>
-                                </Grid>
-                                <Grid item xs={12} sm={6}>
-                                    <Typography variant="body1">
-                                        <strong>Email Verified:</strong>{' '}
-                                        {user.isEmailVerified ? 'Yes' : 'No'}
-                                    </Typography>
-                                </Grid>
-                                <Grid item xs={12} sm={6}>
-                                    <Typography variant="body1">
-                                        <strong>Phone Verified:</strong>{' '}
-                                        {user.isPhoneVerified ? 'Yes' : 'No'}
-                                    </Typography>
-                                </Grid>
-                                <Grid item xs={12} sm={6}>
-                                    <Typography variant="body1">
                                         <strong>Referral Code:</strong>{' '}
                                         {user.referralCode
                                             ? user.referralCode
                                             : 'N/A'}
                                     </Typography>
                                 </Grid>
-                                <Grid item xs={12} sm={6}>
-                                    <Typography variant="body1">
-                                        <strong>Role:</strong> {user.role}
-                                    </Typography>
-                                </Grid>
-                                <Grid item xs={12} sm={6}>
-                                    <Typography variant="body1">
-                                        <strong>Creation Date:</strong>{' '}
-                                        {user.createdAt}
-                                    </Typography>
-                                </Grid>
-                                <Grid item xs={12} sm={6}>
-                                    <Typography variant="body1">
-                                        <strong>Last updated:</strong>{' '}
-                                        {user.updatedAt}
-                                    </Typography>
-                                </Grid>
+                            </Grid>
+                            <Grid item xs={6}>
+                                <Button
+                                    startIcon={<Lock />}
+                                    onClick={handleResetPassword}
+                                    sx={{ mt: 2 }}
+                                >
+                                    Reset Password
+                                </Button>
                             </Grid>
 
                             {/* {user.role === 'Customer' && (
@@ -298,7 +288,85 @@ function ViewUser() {
                                     </Grid>
                                 </>
                             )} */}
-                            <Box
+
+                            <Divider sx={{ my: 3 }} />
+
+                            {/* Security Section */}
+                            <Typography variant="h6" gutterBottom>
+                                Security
+                            </Typography>
+                            <Grid container spacing={2}>
+                                <Grid item xs={12} sm={6}>
+                                    <Typography variant="body1">
+                                        <strong>2FA Enabled:</strong>{' '}
+                                        {user.is2FAEnabled ? 'Yes' : 'No'}
+                                    </Typography>
+                                </Grid>
+                                <Grid item xs={12} sm={6}>
+                                    <Typography variant="body1">
+                                        <strong>Email Verified:</strong>{' '}
+                                        {user.isEmailVerified ? 'Yes' : 'No'}
+                                    </Typography>
+                                </Grid>
+                                <Grid item xs={12} sm={6}>
+                                    <Typography variant="body1">
+                                        <strong>Phone Verified:</strong>{' '}
+                                        {user.isPhoneVerified ? 'Yes' : 'No'}
+                                    </Typography>
+                                </Grid>
+                                <Grid item xs={12} sm={6}>
+                                    <Typography variant="body1">
+                                        <strong>Referral Code:</strong>{' '}
+                                        {user.referralCode || 'N/A'}
+                                    </Typography>
+                                </Grid>
+                            </Grid>
+
+                            <Divider sx={{ my: 3 }} />
+
+                            {/* Account Activity Section */}
+                            <Typography variant="h6" gutterBottom>
+                                Account Activity
+                            </Typography>
+                            <Grid container spacing={2}>
+                                <Grid item xs={12} sm={6}>
+                                    <Typography variant="body1">
+                                        <strong>Created At:</strong>{' '}
+                                        {user.createdAt}
+                                    </Typography>
+                                </Grid>
+                                <Grid item xs={12} sm={6}>
+                                    <Typography variant="body1">
+                                        <strong>Updated At:</strong>{' '}
+                                        {user.updatedAt}
+                                    </Typography>
+                                </Grid>
+                            </Grid>
+
+                            <Divider sx={{ my: 3 }} />
+                            <Box marginTop={3}>
+                                <Typography variant="h6" color="error">
+                                    Delete Account
+                                </Typography>
+                                <Typography
+                                    variant="body2"
+                                    color="textSecondary"
+                                    mt={1}
+                                >
+                                    Deleting this account will not delete any of
+                                    the user data.
+                                </Typography>
+                                <Button
+                                    variant="contained"
+                                    color="error"
+                                    sx={{ mt: 2 }}
+                                    onClick={() => handleDelete(user._id)}
+                                >
+                                    Delete Account
+                                </Button>
+                            </Box>
+
+                            {/* <Box
                                 sx={{
                                     display: 'flex',
                                     justifyContent: 'flex-end',
@@ -306,14 +374,6 @@ function ViewUser() {
                                     gap: 2
                                 }}
                             >
-                                {/* // add buttons here */}
-                                <Button
-                                    variant="contained"
-                                    color="primary"
-                                    onClick={handleEdit}
-                                >
-                                    Edit
-                                </Button>
                                 {user.role !== 'Admin' && (
                                     <Button
                                         variant="contained"
@@ -323,7 +383,7 @@ function ViewUser() {
                                         Delete
                                     </Button>
                                 )}
-                            </Box>
+                            </Box> */}
                         </Box>
                     </>
                 )}
@@ -338,7 +398,7 @@ function ViewUser() {
                     id="alert-dialog-title"
                     sx={{ color: '#e2160f', fontWeight: 'bold' }}
                 >
-                    {'Confirm Delete'}
+                    {'Delete Account?'}
                 </DialogTitle>
                 <DialogContent>
                     <DialogContentText
@@ -350,11 +410,7 @@ function ViewUser() {
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                    <Button
-                        onClick={handleClose}
-                        color="primary"
-                        variant="outlined"
-                    >
+                    <Button onClick={handleClose} color="primary">
                         Cancel
                     </Button>
                     <Button

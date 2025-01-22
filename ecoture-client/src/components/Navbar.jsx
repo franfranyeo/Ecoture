@@ -81,16 +81,28 @@ function Navbar() {
                     }}
                 >
                     {/* EcoTure Logo */}
-                    <Link
-                        to="/"
-                        style={{ display: 'flex', alignItems: 'center' }}
+                    <Box
+                        onClick={() => {
+                            if (user?.role === 0 || user?.role === 1) {
+                                // Staff or Admin
+                                navigate('/admin/dashboard');
+                            } else {
+                                // Customer
+                                navigate('/');
+                            }
+                        }}
+                        style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            cursor: 'pointer'
+                        }}
                     >
                         <img
                             src={EcoTureLogo}
                             alt="EcoTure Logo"
                             style={{ width: '90px' }}
                         />
-                    </Link>
+                    </Box>
 
                     {/* Navigation Links for Desktop */}
                     <Box
@@ -177,6 +189,19 @@ function Navbar() {
                                             onClick={handleMenuOpen}
                                         />
                                     )}
+                                    <Typography
+                                        variant="body1"
+                                        sx={{
+                                            fontWeight: '500',
+                                            color: 'text.primary',
+                                            cursor: 'pointer',
+                                            textTransform: 'capitalize'
+                                        }}
+                                        onClick={handleMenuOpen}
+                                    >
+                                        {user.fullName}
+                                    </Typography>
+
                                     {/* Dropdown Menu */}
                                     <Menu
                                         anchorEl={anchorEl}
@@ -184,6 +209,17 @@ function Navbar() {
                                         onClose={handleMenuClose}
                                         MenuListProps={{
                                             'aria-labelledby': 'basic-button'
+                                        }}
+                                        PaperProps={{
+                                            elevation: 3,
+                                            sx: {
+                                                borderRadius: 2,
+                                                minWidth: 200,
+                                                padding: '8px',
+                                                bgcolor: 'background.paper',
+                                                boxShadow:
+                                                    '0 4px 12px rgba(0, 0, 0, 0.1)'
+                                            }
                                         }}
                                     >
                                         <MenuItem

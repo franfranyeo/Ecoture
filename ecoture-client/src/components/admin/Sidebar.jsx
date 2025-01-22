@@ -108,12 +108,20 @@ function Sidebar() {
                             }
                             sx={{
                                 my: 1,
-                                borderRadius: 2,
+                                borderRadius: 1,
                                 backgroundColor:
                                     isActive(option.path) ||
                                     isParentActive(option.subOptions)
-                                        ? '#e2160f'
-                                        : '#FFF'
+                                        ? 'primary.main'
+                                        : 'transparent',
+                                '&:hover': {
+                                    backgroundColor: 'primary.light',
+                                    cursor: 'pointer',
+                                    '& .MuiTypography-root, a, img': {
+                                        color: 'white',
+                                        filter: 'brightness(0) invert(1)'
+                                    }
+                                }
                             }}
                         >
                             {!option.subOptions ? (
@@ -123,7 +131,9 @@ function Sidebar() {
                                         textDecoration: 'none',
                                         display: 'flex',
                                         gap: '30px',
-                                        color: 'black',
+                                        color: isActive(option.path)
+                                            ? 'white'
+                                            : 'black',
                                         width: '100%',
                                         alignItems: 'center',
                                         whiteSpace: 'nowrap'
@@ -139,11 +149,21 @@ function Sidebar() {
                                         }}
                                     >
                                         <Tooltip title={option.name}>
-                                            <img
+                                            <Box
+                                                component="img"
                                                 src={option.icon}
                                                 alt={option.name}
                                                 width={26}
                                                 height={26}
+                                                sx={{
+                                                    filter: isActive(
+                                                        option.path
+                                                    )
+                                                        ? 'brightness(0) invert(1)'
+                                                        : 'none',
+                                                    transition:
+                                                        'filter 0.3s ease'
+                                                }}
                                             />
                                         </Tooltip>
                                         <ListItemText
@@ -154,7 +174,12 @@ function Sidebar() {
                                                     ? 'hidden'
                                                     : 'visible',
                                                 transition:
-                                                    'opacity 0.1s ease-in-out, visibility 0s linear 0.1s'
+                                                    'opacity 0.1s ease-in-out, visibility 0s linear 0.1s',
+                                                '& .MuiTypography-root': {
+                                                    color: isActive(option.path)
+                                                        ? 'white'
+                                                        : 'inherit'
+                                                }
                                             }}
                                         />
                                     </Box>
@@ -171,11 +196,20 @@ function Sidebar() {
                                     }}
                                 >
                                     <Tooltip title={option.name}>
-                                        <img
+                                        <Box
+                                            component="img"
                                             src={option.icon}
                                             alt={option.name}
                                             width={26}
                                             height={26}
+                                            sx={{
+                                                filter: isParentActive(
+                                                    option.subOptions
+                                                )
+                                                    ? 'brightness(0) invert(1)'
+                                                    : 'none',
+                                                transition: 'filter 0.3s ease'
+                                            }}
                                         />
                                     </Tooltip>
                                     <ListItemText
@@ -186,16 +220,33 @@ function Sidebar() {
                                                 ? 'hidden'
                                                 : 'visible',
                                             transition:
-                                                'opacity 0.1s ease-in-out, visibility 0s linear 0.1s'
+                                                'opacity 0.1s ease-in-out, visibility 0s linear 0.1s',
+                                            '& .MuiTypography-root': {
+                                                color: isParentActive(
+                                                    option.subOptions
+                                                )
+                                                    ? 'white'
+                                                    : 'inherit'
+                                            }
                                         }}
                                     />
-                                    {option.subOptions &&
-                                        !isMinimized &&
-                                        (open[option.name] ? (
-                                            <ExpandLess />
-                                        ) : (
-                                            <ExpandMore />
-                                        ))}
+                                    {option.subOptions && !isMinimized && (
+                                        <Box
+                                            sx={{
+                                                color: isParentActive(
+                                                    option.subOptions
+                                                )
+                                                    ? 'white'
+                                                    : 'inherit'
+                                            }}
+                                        >
+                                            {open[option.name] ? (
+                                                <ExpandLess />
+                                            ) : (
+                                                <ExpandMore />
+                                            )}
+                                        </Box>
+                                    )}
                                 </Box>
                             )}
                         </ListItem>
@@ -218,12 +269,21 @@ function Sidebar() {
                                                 sx={{
                                                     pl: 4,
                                                     my: 1,
-                                                    borderRadius: 2,
+                                                    borderRadius: 1,
                                                     backgroundColor: isActive(
                                                         subOption.path
                                                     )
-                                                        ? '#e2160f'
-                                                        : '#FFF'
+                                                        ? 'primary.main'
+                                                        : 'transparent',
+                                                    '&:hover': {
+                                                        backgroundColor:
+                                                            'primary.light',
+                                                        cursor: 'pointer',
+                                                        '& .MuiTypography-root, a':
+                                                            {
+                                                                color: 'white'
+                                                            }
+                                                    }
                                                 }}
                                             >
                                                 <Link
@@ -232,7 +292,11 @@ function Sidebar() {
                                                         textDecoration: 'none',
                                                         display: 'flex',
                                                         gap: '30px',
-                                                        color: 'black',
+                                                        color: isActive(
+                                                            subOption.path
+                                                        )
+                                                            ? 'white'
+                                                            : 'black',
                                                         width: '100%',
                                                         alignItems: 'center',
                                                         whiteSpace: 'nowrap'
@@ -249,7 +313,15 @@ function Sidebar() {
                                                                     ? 'hidden'
                                                                     : 'visible',
                                                             transition:
-                                                                'opacity 0.1s ease-in-out, visibility 0s linear 0.1s'
+                                                                'opacity 0.1s ease-in-out, visibility 0s linear 0.1s',
+                                                            '& .MuiTypography-root':
+                                                                {
+                                                                    color: isActive(
+                                                                        subOption.path
+                                                                    )
+                                                                        ? 'white'
+                                                                        : 'inherit'
+                                                                }
                                                         }}
                                                     />
                                                 </Link>

@@ -3,7 +3,6 @@ using EcotureAPI.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using System.Configuration;
 using System.Text;
 
 
@@ -64,22 +63,19 @@ var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
-
     try
     {
-        // Get DbContext and Configuration
         var context = services.GetRequiredService<MyDbContext>();
         var configuration = services.GetRequiredService<IConfiguration>();
 
-        // Apply migrations
-        await context.Database.MigrateAsync();
-
-        // Seed admin user
+        // Apply migrations and seed admin user
         await SeedData.InitializeAsync(context, configuration);
     }
     catch (Exception ex)
     {
         Console.WriteLine($"An error occurred during database seeding: {ex.Message}");
+        // Consider whether you want to rethrow the exception to prevent the application from starting
+        // throw;
     }
 }
 

@@ -454,7 +454,9 @@ const SecurityTab = () => {
 
     const renderDeleteDialog = () => (
         <Dialog open={openDeleteDialog} onClose={handleCloseDeleteDialog}>
-            <DialogTitle>Delete Account?</DialogTitle>
+            <DialogTitle sx={{ color: '#e2160f', fontWeight: 'bold' }}>
+                Delete Account?
+            </DialogTitle>
             <DialogContent>
                 <DialogContentText>
                     Are you sure you want to delete your account? This action
