@@ -1,0 +1,52 @@
+/* Navbar Container */
+.AppBar {
+    z-index: 10; /* Ensure navbar is above all other elements */
+    position: fixed; /* Navbar stays fixed at the top */
+    top: 0; /* Stick to the top of the viewport */
+    width: 100%; /* Span the entire width of the viewport */
+    background-color: #f5f5dc !important; /* Cream color background */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    font-family: "Outfit", sans-serif; /* Ensure the Outfit font is used */
+    min-height: 50px; /* Reduced height for the navbar */
+    display: flex; /* Flex layout for alignment */
+    align-items: center; /* Vertically align items */
+    padding: 0 15px; /* Reduced horizontal padding */
+}
+
+/* Logo Styling */
+.nav-logo {
+    width: 120px; /* Reduced width for the logo */
+    height: auto; /* Maintain aspect ratio */
+    cursor: pointer; /* Make the logo clickable */
+}
+
+/* Navigation Links Container */
+.nav-links-container {
+    display: flex; /* Arrange links horizontally */
+    justify-content: center; /* Center the links */
+    align-items: center; /* Vertically align links */
+    gap: 20px; /* Space between links */
+}
+
+/* Individual Navigation Link */
+.nav-link {
+    text-decoration: none; /* Remove underline from links */
+    color: #000 !important; /* Black text */
+    margin: 0 10px; /* Reduced spacing between links */
+    font-size: 14px; /* Reduced font size for links */
+    font-weight: bold; /* Make links bold */
+    transition: color 0.3s ease; /* Smooth color transition */
+}
+
+/* Navigation Link Hover Effect */
+.nav-link:hover {
+    color: #ff4500 !important; /* Orange hover effect */
+}
+
+/* Icons (Profile and Cart) */
+.nav-icon {
+    width: 24px; /* Reduced width for icons */
+    height: 24px; /* Reduced height for icons */
+    transition: transform 0.2s ease; /* Smooth scaling effect */
+    vertical-align: middle; /* Align icons to the middle */
+}

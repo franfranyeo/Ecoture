@@ -1,0 +1,39 @@
+{
+  "Version": 1,
+  "Hash": "iOgX2lMrfWtmyk2wdH7dWKwOFzsr5WA8eTOt+P3QZAg=",
+  "Source": "Ecoture",
+  "BasePath": "_content/Ecoture",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "Ecoture\\wwwroot",
+      "Source": "Ecoture",
+      "ContentRoot": "C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Ecoture\\wwwroot\\",
+      "BasePath": "_content/Ecoture",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Ecoture\\wwwroot\\uploads\\VTjBVCaMRH.png",
+      "SourceId": "Ecoture",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Ecoture\\wwwroot\\",
+      "BasePath": "_content/Ecoture",
+      "RelativePath": "uploads/VTjBVCaMRH.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\VTjBVCaMRH.png"
+    }
+  ]
+}

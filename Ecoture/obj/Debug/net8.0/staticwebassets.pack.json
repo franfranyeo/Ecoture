@@ -1,0 +1,25 @@
+{
+  "Files": [
+    {
+      "Id": "C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Ecoture\\wwwroot\\uploads\\VTjBVCaMRH.png",
+      "PackagePath": "staticwebassets\\uploads\\VTjBVCaMRH.png"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.Ecoture.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.build.Ecoture.props",
+      "PackagePath": "build\\Ecoture.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildMultiTargeting.Ecoture.props",
+      "PackagePath": "buildMultiTargeting\\Ecoture.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildTransitive.Ecoture.props",
+      "PackagePath": "buildTransitive\\Ecoture.props"
+    }
+  ],
+  "ElementsToRemove": []
+}
