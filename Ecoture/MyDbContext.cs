@@ -47,7 +47,85 @@ namespace Ecoture
 				.WithMany(e => e.Responses)
 				.HasForeignKey(r => r.enquiryId)
 				.OnDelete(DeleteBehavior.Cascade);
-		}
+
+            //  Configure many-to-many relationship: Products ↔ Sizes
+            modelBuilder.Entity<ProductSize>()
+                .HasKey(ps => ps.Id); // Define primary key
+
+            modelBuilder.Entity<ProductSize>()
+                .HasOne(ps => ps.Product)
+                .WithMany(p => p.ProductSizes)
+                .HasForeignKey(ps => ps.ProductId)
+                .OnDelete(DeleteBehavior.Cascade) //  Delete sizes when product is deleted
+                .IsRequired();
+
+            modelBuilder.Entity<ProductSize>()
+                .HasOne(ps => ps.Size)
+                .WithMany(s => s.ProductSizes)
+                .HasForeignKey(ps => ps.SizeId)
+                .OnDelete(DeleteBehavior.Restrict) //  Prevent deleting sizes if linked to a product
+                .IsRequired();
+
+            //  Configure many-to-many relationship: Products ↔ Colors
+            modelBuilder.Entity<ProductColor>()
+                .HasKey(pc => pc.Id); // Define primary key
+
+            modelBuilder.Entity<ProductColor>()
+                .HasOne(pc => pc.Product)
+                .WithMany(p => p.ProductColors)
+                .HasForeignKey(pc => pc.ProductId)
+                .OnDelete(DeleteBehavior.Cascade) //  Delete colors when product is deleted
+                .IsRequired();
+
+            modelBuilder.Entity<ProductColor>()
+                .HasOne(pc => pc.Color)
+                .WithMany(c => c.ProductColors)
+                .HasForeignKey(pc => pc.ColorId)
+                .OnDelete(DeleteBehavior.Restrict) //  Prevent deleting colors if linked to a product
+                .IsRequired();
+
+            //  Configure one-to-many relationship: Products ↔ Reviews
+            modelBuilder.Entity<Review>()
+                .HasOne(r => r.Product)
+                .WithMany(p => p.Reviews)
+                .HasForeignKey(r => r.ProductId)
+                .OnDelete(DeleteBehavior.Cascade) //  Delete reviews when product is deleted
+                .IsRequired();
+
+            //  Configure one-to-many relationship: Users ↔ Reviews
+            modelBuilder.Entity<Review>()
+                .HasOne(r => r.User)
+                .WithMany()
+                .HasForeignKey(r => r.UserId)
+                .OnDelete(DeleteBehavior.Restrict) //  Prevent deleting users if they have reviews
+                .IsRequired();
+
+            //  Configure decimal precision for Product Price
+            modelBuilder.Entity<Product>()
+                .Property(p => p.Price)
+                .HasColumnType("decimal(10,2)");
+
+            //  Configure timestamps with default values
+            modelBuilder.Entity<Product>()
+                .Property(p => p.CreatedAt)
+                .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+            modelBuilder.Entity<Product>()
+                .Property(p => p.UpdatedAt)
+                .HasDefaultValueSql("CURRENT_TIMESTAMP")
+                .ValueGeneratedOnAddOrUpdate(); //  Ensure `UpdatedAt` updates when modified
+
+            //  Configure indexes for performance optimization
+            modelBuilder.Entity<Product>()
+                .HasIndex(p => p.Title)
+                .HasDatabaseName("IX_Product_Title");
+
+            modelBuilder.Entity<Product>()
+                .HasIndex(p => p.Description)
+                .HasDatabaseName("IX_Product_Description");
+
+            base.OnModelCreating(modelBuilder);
+        }
 
 	}
 }

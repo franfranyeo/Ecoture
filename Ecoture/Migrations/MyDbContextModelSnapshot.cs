@@ -157,7 +157,9 @@ namespace Ecoture.Migrations
                         .HasColumnType("varchar(50)");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime")
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -170,8 +172,8 @@ namespace Ecoture.Migrations
                         .HasColumnType("varchar(30)");
 
                     b.Property<string>("ImageFile")
-                        .HasMaxLength(20)
-                        .HasColumnType("varchar(20)");
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)");
 
                     b.Property<string>("LongDescription")
                         .IsRequired()
@@ -179,7 +181,7 @@ namespace Ecoture.Migrations
                         .HasColumnType("varchar(1000)");
 
                     b.Property<decimal>("Price")
-                        .HasColumnType("decimal(10, 2)");
+                        .HasColumnType("decimal(10,2)");
 
                     b.Property<int>("PriceRange")
                         .HasColumnType("int");
@@ -193,12 +195,20 @@ namespace Ecoture.Migrations
                         .HasColumnType("varchar(100)");
 
                     b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime");
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("datetime")
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Description")
+                        .HasDatabaseName("IX_Product_Description");
+
+                    b.HasIndex("Title")
+                        .HasDatabaseName("IX_Product_Title");
 
                     b.HasIndex("UserId");
 
@@ -393,7 +403,7 @@ namespace Ecoture.Migrations
                     b.HasOne("Ecoture.Models.Entity.Color", "Color")
                         .WithMany("ProductColors")
                         .HasForeignKey("ColorId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Ecoture.Models.Entity.Product", "Product")
@@ -418,7 +428,7 @@ namespace Ecoture.Migrations
                     b.HasOne("Ecoture.Models.Entity.Size", "Size")
                         .WithMany("ProductSizes")
                         .HasForeignKey("SizeId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Product");
@@ -448,7 +458,7 @@ namespace Ecoture.Migrations
                     b.HasOne("Ecoture.Models.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Product");

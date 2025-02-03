@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Ecoture\\Ecoture.csproj": {}
+    "C:\\Users\\ajmal\\Desktop\\EDP\\Integrated\\Ecoture\\Ecoture\\Ecoture.csproj": {}
   },
   "projects": {
-    "C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Ecoture\\Ecoture.csproj": {
+    "C:\\Users\\ajmal\\Desktop\\EDP\\Integrated\\Ecoture\\Ecoture\\Ecoture.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Ecoture\\Ecoture.csproj",
+        "projectUniqueName": "C:\\Users\\ajmal\\Desktop\\EDP\\Integrated\\Ecoture\\Ecoture\\Ecoture.csproj",
         "projectName": "Ecoture",
-        "projectPath": "C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Ecoture\\Ecoture.csproj",
-        "packagesPath": "C:\\Users\\jiaxi\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Ecoture\\obj\\",
+        "projectPath": "C:\\Users\\ajmal\\Desktop\\EDP\\Integrated\\Ecoture\\Ecoture\\Ecoture.csproj",
+        "packagesPath": "C:\\Users\\ajmal\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\ajmal\\Desktop\\EDP\\Integrated\\Ecoture\\Ecoture\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\jiaxi\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\ajmal\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
