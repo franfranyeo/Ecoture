@@ -5,13 +5,14 @@ import { ArrowBack } from "@mui/icons-material";
 import http from "../http";
 
 function ProductDetail() {
-  const { id } = useParams(); // Extract the product ID from the URL
-  const [product, setProduct] = useState(null); // State to store product details
-  const [loading, setLoading] = useState(true); // Loading state
-  const [error, setError] = useState(null); // Error state
-  const navigate = useNavigate(); // Hook for navigation
+  const { id } = useParams();
+  const [product, setProduct] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [selectedColor, setSelectedColor] = useState(null);
+  const [selectedSize, setSelectedSize] = useState(null);
+  const navigate = useNavigate();
 
-  // Price Range mapping
   const priceRangeLabels = {
     1: "$10-$20",
     2: "$20-$30",
@@ -20,11 +21,6 @@ function ProductDetail() {
     5: "$50+",
   };
 
-  // Function to get readable price range label
-  const getPriceRangeLabel = (priceRange) =>
-    priceRangeLabels[priceRange] || "N/A";
-
-  // Fetch product details from the backend
   useEffect(() => {
     setLoading(true);
     http
@@ -40,7 +36,6 @@ function ProductDetail() {
       });
   }, [id]);
 
-  // Render loading or error state
   if (loading) return <Typography>Loading...</Typography>;
   if (error) return <Typography color="error">{error}</Typography>;
 
@@ -85,10 +80,7 @@ function ProductDetail() {
               <Typography variant="body1" sx={{ fontWeight: "bold" }}>
                 Detailed Description:
               </Typography>
-              <Typography
-                variant="body2"
-                sx={{ whiteSpace: "pre-wrap", marginTop: 1 }}
-              >
+              <Typography variant="body2" sx={{ whiteSpace: "pre-wrap", marginTop: 1 }}>
                 {product.longDescription}
               </Typography>
             </Box>
@@ -111,42 +103,52 @@ function ProductDetail() {
           <Typography variant="body2" sx={{ marginBottom: 2 }}>
             <strong>Fit:</strong> {product.fit}
           </Typography>
+          <Typography variant="body2" sx={{ marginBottom: 2 }}>
+            <strong>Price Range:</strong> {priceRangeLabels[product.priceRange] || "N/A"}
+          </Typography>
+
           <Box sx={{ marginBottom: 2 }}>
-            <Typography
-              variant="body2"
-              sx={{ fontWeight: "bold", marginBottom: 1 }}
-            >
-              Colors:
+            <Typography variant="body2" sx={{ fontWeight: "bold", marginBottom: 1 }}>
+              Select Color:
             </Typography>
             {product.colors && product.colors.length > 0 ? (
               <Box sx={{ display: "flex", gap: 1, flexWrap: "wrap" }}>
                 {product.colors.map((color, index) => (
-                  <Chip key={index} label={color.colorName} color="primary" />
+                  <Chip
+                    key={index}
+                    label={color.colorName}
+                    color={selectedColor === color.colorName ? "secondary" : "primary"}
+                    onClick={() => setSelectedColor(color.colorName)}
+                    sx={{ cursor: "pointer" }}
+                  />
                 ))}
               </Box>
             ) : (
               <Typography variant="body2">No colors available</Typography>
             )}
           </Box>
-          <Typography variant="body2" sx={{ marginBottom: 2 }}>
-            <strong>Price Range:</strong>{" "}
-            {priceRangeLabels[product.priceRange] || "N/A"}
-          </Typography>
 
           <Box sx={{ marginBottom: 2 }}>
             <Typography variant="body2" sx={{ fontWeight: "bold" }}>
-              Sizes and Stock Quantities:
+              Select Size:
             </Typography>
             {product.sizes && product.sizes.length > 0 ? (
-              product.sizes.map((size, index) => (
-                <Typography key={index} variant="body2">
-                  {`${size.sizeName}: ${size.stockQuantity} in stock`}
-                </Typography>
-              ))
+              <Box sx={{ display: "flex", gap: 1, flexWrap: "wrap" }}>
+                {product.sizes.map((size, index) => (
+                  <Chip
+                    key={index}
+                    label={`${size.sizeName} (${size.stockQuantity} in stock)`}
+                    color={selectedSize === size.sizeName ? "secondary" : "primary"}
+                    onClick={() => setSelectedSize(size.sizeName)}
+                    sx={{ cursor: "pointer" }}
+                  />
+                ))}
+              </Box>
             ) : (
               <Typography variant="body2">No sizes available</Typography>
             )}
           </Box>
+          
           <Button
             variant="contained"
             color="success"
@@ -156,6 +158,7 @@ function ProductDetail() {
               fontWeight: "bold",
               borderRadius: "8px",
             }}
+            disabled={!selectedColor || !selectedSize}
           >
             Add to Cart
           </Button>
