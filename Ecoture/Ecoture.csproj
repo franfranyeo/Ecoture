@@ -24,8 +24,6 @@
 
   <ItemGroup>
     <Folder Include="Model\Enum\" />
-    <Folder Include="Model\Entity\" />
-    <Folder Include="Model\DTO\" />
     <Folder Include="Model\Request\" />
     <Folder Include="wwwroot\uploads\" />
   </ItemGroup>

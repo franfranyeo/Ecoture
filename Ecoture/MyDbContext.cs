@@ -48,6 +48,8 @@ namespace Ecoture
 				.HasForeignKey(r => r.enquiryId)
 				.OnDelete(DeleteBehavior.Cascade);
 
+
+
             //  Configure many-to-many relationship: Products ↔ Sizes
             modelBuilder.Entity<ProductSize>()
                 .HasKey(ps => ps.Id); // Define primary key
