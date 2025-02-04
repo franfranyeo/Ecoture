@@ -1,9 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Ecoture.Models.Entity;
-using Ecoture.Models.Request;
 using Ecoture.Models.Enum;
-using Ecoture.Models.DTO;
 
 namespace Ecoture.Models.Entity
 {
@@ -35,28 +33,30 @@ namespace Ecoture.Models.Entity
         [Required(ErrorMessage = "Price Range is required.")]
         public PriceRange PriceRange { get; set; } // Enum for Price Range
 
-        [MaxLength(20)]
-        public string? ImageFile { get; set; }
+        [MaxLength(255)]
+        public string? ImageFile { get; set; }  // Increased length to store full image URLs if needed
 
         [Column(TypeName = "datetime")]
-        public DateTime CreatedAt { get; set; }
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow; // Auto-assign default value
 
         [Column(TypeName = "datetime")]
-        public DateTime UpdatedAt { get; set; }
+        public DateTime UpdatedAt { get; set; } = DateTime.UtcNow; // Auto-assign default value
 
         // Foreign key property for User
         public int UserId { get; set; }
 
         // Navigation property to represent the one-to-many relationship with User
-        public User? User { get; set; }
+        public virtual User? User { get; set; }
 
         // Navigation property for the many-to-many relationship with Sizes
-        public List<ProductSize> ProductSizes { get; set; } = new();
+        public virtual List<ProductSize> ProductSizes { get; set; } = new();
 
         // Navigation property for the many-to-many relationship with Colors
-        public List<ProductColor> ProductColors { get; set; } = new();
+        public virtual List<ProductColor> ProductColors { get; set; } = new();
 
         // New Navigation Property: One-to-Many relationship with Reviews
-        public List<Review> Reviews { get; set; } = new();
+        public virtual List<Review> Reviews { get; set; } = new();
     }
 }
+
+

@@ -106,13 +106,12 @@ namespace Ecoture.Controllers
                 });
             }
         }
-
         [HttpPost, Authorize]
         [ProducesResponseType(typeof(ProductDTO), StatusCodes.Status200OK)]
         public async Task<IActionResult> AddProduct([FromBody] AddProductRequest product)
         {
-            try
-            {
+            //try
+            //{
                 if (product.Sizes == null || !product.Sizes.Any())
                 {
                     return BadRequest("At least one size must be provided.");
@@ -139,15 +138,61 @@ namespace Ecoture.Controllers
                     StockQuantity = product.Sizes.Sum(s => s.StockQuantity),
                     CategoryName = product.CategoryName.Trim(),
                     Fit = product.Fit.Trim(),
-                    PriceRange = calculatedPriceRange, // Automatically assign Price Range
+                    PriceRange = calculatedPriceRange,
                     ImageFile = product.ImageFile ?? string.Empty,
                     CreatedAt = now,
                     UpdatedAt = now,
                     UserId = userId
                 };
 
+                // **Step 1: Save Product First**
                 await _context.Products.AddAsync(myProduct);
-                await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync(); // Ensures Product ID is generated
+
+                // **Step 2: Add Sizes**
+                foreach (var sizeRequest in product.Sizes)
+                {
+                    var size = await _context.Sizes.FirstOrDefaultAsync(s => s.Name == sizeRequest.SizeName)
+                                ?? new Size { Name = sizeRequest.SizeName };
+
+                    if (size.Id == 0)
+                    {
+                        _context.Sizes.Add(size);
+                        await _context.SaveChangesAsync(); // Save new size if it was added
+                    }
+
+                    var newProductSize = new ProductSize
+                    {
+                        ProductId = myProduct.Id,
+                        SizeId = size.Id,
+                        StockQuantity = sizeRequest.StockQuantity
+                    };
+
+                    _context.ProductSizes.Add(newProductSize);
+                }
+
+                // **Step 3: Add Colors**
+                foreach (var colorName in product.Colors)
+                {
+                    var color = await _context.Colors.FirstOrDefaultAsync(c => c.Name == colorName)
+                                ?? new Color { Name = colorName };
+
+                    if (color.Id == 0)
+                    {
+                        _context.Colors.Add(color);
+                        await _context.SaveChangesAsync(); // Save new color if it was added
+                    }
+
+                    var newProductColor = new ProductColor
+                    {
+                        ProductId = myProduct.Id,
+                        ColorId = color.Id
+                    };
+
+                    _context.ProductColors.Add(newProductColor);
+                }
+
+                await _context.SaveChangesAsync(); // Final save for sizes and colors
 
                 var newProduct = await _context.Products
                     .Include(p => p.User)
@@ -157,12 +202,12 @@ namespace Ecoture.Controllers
 
                 var productDTO = _mapper.Map<ProductDTO>(newProduct);
                 return Ok(productDTO);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error when adding product: {@Product}", product);
-                return StatusCode(500, new { Message = "An error occurred while adding the product.", Error = ex.Message });
-            }
+            //}
+            //catch (Exception ex)
+            //{
+            //    _logger.LogError(ex, "Error when adding product: {@Product}", product);
+            //    return StatusCode(500, new { Message = "An error occurred while adding the product.", Error = ex.Message });
+            //}
         }
 
 
@@ -172,10 +217,8 @@ namespace Ecoture.Controllers
             try
             {
                 var myProduct = await _context.Products
-                    .Include(p => p.ProductSizes)
-                        .ThenInclude(ps => ps.Size)
-                    .Include(p => p.ProductColors)
-                        .ThenInclude(pc => pc.Color)
+                    .Include(p => p.ProductSizes).ThenInclude(ps => ps.Size)
+                    .Include(p => p.ProductColors).ThenInclude(pc => pc.Color)
                     .FirstOrDefaultAsync(p => p.Id == id);
 
                 if (myProduct == null)
@@ -199,7 +242,7 @@ namespace Ecoture.Controllers
                 if (product.Price.HasValue) myProduct.PriceRange = DeterminePriceRange(product.Price.Value);
                 if (!string.IsNullOrWhiteSpace(product.ImageFile)) myProduct.ImageFile = product.ImageFile;
 
-                // Update sizes if provided
+                // **Update Sizes**
                 if (product.Sizes != null && product.Sizes.Any())
                 {
                     // Remove sizes that are no longer associated
@@ -208,8 +251,18 @@ namespace Ecoture.Controllers
                         .ToList();
                     _context.ProductSizes.RemoveRange(sizesToRemove);
 
+                    // Add new sizes and update stock quantities
                     foreach (var sizeRequest in product.Sizes)
                     {
+                        var size = await _context.Sizes.FirstOrDefaultAsync(s => s.Name == sizeRequest.SizeName)
+                                    ?? new Size { Name = sizeRequest.SizeName };
+
+                        if (size.Id == 0)
+                        {
+                            _context.Sizes.Add(size);
+                            await _context.SaveChangesAsync(); // Save new size if added
+                        }
+
                         var existingSize = myProduct.ProductSizes
                             .FirstOrDefault(ps => ps.Size.Name == sizeRequest.SizeName);
 
@@ -219,15 +272,6 @@ namespace Ecoture.Controllers
                         }
                         else
                         {
-                            var size = await _context.Sizes.FirstOrDefaultAsync(s => s.Name == sizeRequest.SizeName)
-                                       ?? new Size { Name = sizeRequest.SizeName };
-
-                            if (size.Id == 0)
-                            {
-                                await _context.Sizes.AddAsync(size);
-                                await _context.SaveChangesAsync();
-                            }
-
                             var newProductSize = new ProductSize
                             {
                                 ProductId = myProduct.Id,
@@ -235,12 +279,12 @@ namespace Ecoture.Controllers
                                 StockQuantity = sizeRequest.StockQuantity
                             };
 
-                            await _context.ProductSizes.AddAsync(newProductSize);
+                            _context.ProductSizes.Add(newProductSize);
                         }
                     }
                 }
 
-                // Update colors if provided
+                // **Update Colors**
                 if (product.Colors != null && product.Colors.Any())
                 {
                     var colorsToRemove = myProduct.ProductColors
@@ -250,38 +294,37 @@ namespace Ecoture.Controllers
 
                     foreach (var colorName in product.Colors)
                     {
+                        var color = await _context.Colors.FirstOrDefaultAsync(c => c.Name == colorName)
+                                    ?? new Color { Name = colorName };
+
+                        if (color.Id == 0)
+                        {
+                            _context.Colors.Add(color);
+                            await _context.SaveChangesAsync(); // Save new color if added
+                        }
+
                         var existingColor = myProduct.ProductColors
                             .FirstOrDefault(pc => pc.Color.Name == colorName);
 
                         if (existingColor == null)
                         {
-                            var color = await _context.Colors.FirstOrDefaultAsync(c => c.Name == colorName)
-                                        ?? new Color { Name = colorName };
-
-                            if (color.Id == 0)
-                            {
-                                await _context.Colors.AddAsync(color);
-                                await _context.SaveChangesAsync();
-                            }
-
                             var productColor = new ProductColor
                             {
                                 ProductId = myProduct.Id,
                                 ColorId = color.Id
                             };
 
-                            await _context.ProductColors.AddAsync(productColor);
+                            _context.ProductColors.Add(productColor);
                         }
                     }
                 }
 
-                // Recalculate total stock quantity
+                // Recalculate stock quantity and update
                 myProduct.StockQuantity = myProduct.ProductSizes.Sum(ps => ps.StockQuantity);
+                myProduct.UpdatedAt = DateTime.UtcNow;
 
-                myProduct.UpdatedAt = DateTime.Now;
                 await _context.SaveChangesAsync();
 
-                _logger.LogInformation("Product {ProductId} updated successfully by user {UserId}", id, userId);
                 return Ok(new { Message = "Product updated successfully." });
             }
             catch (Exception ex)
@@ -296,6 +339,7 @@ namespace Ecoture.Controllers
                 });
             }
         }
+
 
 
         [HttpDelete("{id}"), Authorize]
