@@ -38,10 +38,9 @@ namespace Ecoture.Models.Request
         public int? StockQuantity { get; set; }
 
         /// <summary>
-        /// Product category name (optional, must not exceed 50 characters if provided).
+        /// List of product categories (optional, at least one category if provided).
         /// </summary>
-        [MaxLength(50)]
-        public string? CategoryName { get; set; }
+        public List<string>? Categories { get; set; } // List of categories for the product
 
         /// <summary>
         /// List of product colors (optional, at least one color if provided).
@@ -49,15 +48,14 @@ namespace Ecoture.Models.Request
         public List<string>? Colors { get; set; } // List of colors for the product
 
         /// <summary>
-        /// Product fit (optional, must not exceed 30 characters if provided).
+        /// List of product fits (optional, at least one fit if provided).
         /// </summary>
-        [MaxLength(30)]
-        public string? Fit { get; set; }
+        public List<string>? Fits { get; set; } // List of fits for the product
 
         /// <summary>
-        /// Image file name (optional, must not exceed 20 characters if provided).
+        /// Image file name (optional, must not exceed 255 characters if provided).
         /// </summary>
-        [MaxLength(20)]
+        [MaxLength(255)]
         public string? ImageFile { get; set; }
 
         /// <summary>

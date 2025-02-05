@@ -20,11 +20,6 @@ namespace Ecoture.Models.DTO
 
         public int StockQuantity { get; set; } // Total stock count (across all sizes)
 
-        public string CategoryName { get; set; } = string.Empty; // Category of the product
-
-
-        public string Fit { get; set; } = string.Empty; // Product Fit (e.g., Regular, Slim)
-
         public PriceRange PriceRange { get; set; } // Enum for price range
 
         public string? ImageFile { get; set; } // URL or filename of the product image
@@ -41,7 +36,12 @@ namespace Ecoture.Models.DTO
         /// List of sizes and their stock quantities for this product.
         /// </summary>
         public List<ProductSizeDTO> Sizes { get; set; } = new(); // List of sizes associated with the product
+
         public List<ProductColorDTO> Colors { get; set; } = new(); // List of product colors
+
+        public List<FitDTO> Fits { get; set; } = new(); // List of product fits
+
+        public List<CategoryDTO> Categories { get; set; } = new(); // List of product categories
     }
 
     /// <summary>
@@ -56,5 +56,15 @@ namespace Ecoture.Models.DTO
     public class ProductColorDTO
     {
         public string ColorName { get; set; } = string.Empty;
+    }
+
+    public class FitDTO
+    {
+        public string FitName { get; set; } = string.Empty;
+    }
+
+    public class CategoryDTO
+    {
+        public string CategoryName { get; set; } = string.Empty;
     }
 }

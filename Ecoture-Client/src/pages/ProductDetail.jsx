@@ -80,7 +80,10 @@ function ProductDetail() {
               <Typography variant="body1" sx={{ fontWeight: "bold" }}>
                 Detailed Description:
               </Typography>
-              <Typography variant="body2" sx={{ whiteSpace: "pre-wrap", marginTop: 1 }}>
+              <Typography
+                variant="body2"
+                sx={{ whiteSpace: "pre-wrap", marginTop: 1 }}
+              >
                 {product.longDescription}
               </Typography>
             </Box>
@@ -98,17 +101,41 @@ function ProductDetail() {
             {product.description}
           </Typography>
           <Typography variant="body2" sx={{ marginBottom: 2 }}>
-            <strong>Category:</strong> {product.categoryName}
+            <strong>Categories:</strong>{" "}
+            {product.categories && product.categories.length > 0
+              ? product.categories.map((category, index) => (
+                  <Chip
+                    key={index}
+                    label={category.categoryName}
+                    sx={{ marginRight: 0.5 }}
+                  />
+                ))
+              : "No categories available"}
           </Typography>
+
           <Typography variant="body2" sx={{ marginBottom: 2 }}>
-            <strong>Fit:</strong> {product.fit}
+            <strong>Fits:</strong>{" "}
+            {product.fits && product.fits.length > 0
+              ? product.fits.map((fit, index) => (
+                  <Chip
+                    key={index}
+                    label={fit.fitName}
+                    sx={{ marginRight: 0.5 }}
+                  />
+                ))
+              : "No fits available"}
           </Typography>
+
           <Typography variant="body2" sx={{ marginBottom: 2 }}>
-            <strong>Price Range:</strong> {priceRangeLabels[product.priceRange] || "N/A"}
+            <strong>Price Range:</strong>{" "}
+            {priceRangeLabels[product.priceRange] || "N/A"}
           </Typography>
 
           <Box sx={{ marginBottom: 2 }}>
-            <Typography variant="body2" sx={{ fontWeight: "bold", marginBottom: 1 }}>
+            <Typography
+              variant="body2"
+              sx={{ fontWeight: "bold", marginBottom: 1 }}
+            >
               Select Color:
             </Typography>
             {product.colors && product.colors.length > 0 ? (
@@ -117,7 +144,11 @@ function ProductDetail() {
                   <Chip
                     key={index}
                     label={color.colorName}
-                    color={selectedColor === color.colorName ? "secondary" : "primary"}
+                    color={
+                      selectedColor === color.colorName
+                        ? "secondary"
+                        : "primary"
+                    }
                     onClick={() => setSelectedColor(color.colorName)}
                     sx={{ cursor: "pointer" }}
                   />
@@ -138,7 +169,9 @@ function ProductDetail() {
                   <Chip
                     key={index}
                     label={`${size.sizeName} (${size.stockQuantity} in stock)`}
-                    color={selectedSize === size.sizeName ? "secondary" : "primary"}
+                    color={
+                      selectedSize === size.sizeName ? "secondary" : "primary"
+                    }
                     onClick={() => setSelectedSize(size.sizeName)}
                     sx={{ cursor: "pointer" }}
                   />
@@ -148,7 +181,7 @@ function ProductDetail() {
               <Typography variant="body2">No sizes available</Typography>
             )}
           </Box>
-          
+
           <Button
             variant="contained"
             color="success"

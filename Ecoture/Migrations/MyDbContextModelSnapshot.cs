@@ -55,6 +55,22 @@ namespace Ecoture.Migrations
                     b.ToTable("Addresses");
                 });
 
+            modelBuilder.Entity("Ecoture.Models.Entity.Category", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Categories");
+                });
+
             modelBuilder.Entity("Ecoture.Models.Entity.Color", b =>
                 {
                     b.Property<int>("Id")
@@ -145,16 +161,27 @@ namespace Ecoture.Migrations
                     b.ToTable("Enquiries");
                 });
 
-            modelBuilder.Entity("Ecoture.Models.Entity.Product", b =>
+            modelBuilder.Entity("Ecoture.Models.Entity.Fit", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<string>("CategoryName")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("varchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Fits");
+                });
+
+            modelBuilder.Entity("Ecoture.Models.Entity.Product", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
@@ -165,11 +192,6 @@ namespace Ecoture.Migrations
                         .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("varchar(500)");
-
-                    b.Property<string>("Fit")
-                        .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("varchar(30)");
 
                     b.Property<string>("ImageFile")
                         .HasMaxLength(255)
@@ -215,6 +237,27 @@ namespace Ecoture.Migrations
                     b.ToTable("Products");
                 });
 
+            modelBuilder.Entity("Ecoture.Models.Entity.ProductCategory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("ProductCategories");
+                });
+
             modelBuilder.Entity("Ecoture.Models.Entity.ProductColor", b =>
                 {
                     b.Property<int>("Id")
@@ -234,6 +277,27 @@ namespace Ecoture.Migrations
                     b.HasIndex("ProductId");
 
                     b.ToTable("ProductColors");
+                });
+
+            modelBuilder.Entity("Ecoture.Models.Entity.ProductFit", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int>("FitId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FitId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("ProductFits");
                 });
 
             modelBuilder.Entity("Ecoture.Models.Entity.ProductSize", b =>
@@ -398,6 +462,25 @@ namespace Ecoture.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Ecoture.Models.Entity.ProductCategory", b =>
+                {
+                    b.HasOne("Ecoture.Models.Entity.Category", "Category")
+                        .WithMany("ProductCategories")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Ecoture.Models.Entity.Product", "Product")
+                        .WithMany("ProductCategories")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+
+                    b.Navigation("Product");
+                });
+
             modelBuilder.Entity("Ecoture.Models.Entity.ProductColor", b =>
                 {
                     b.HasOne("Ecoture.Models.Entity.Color", "Color")
@@ -413,6 +496,25 @@ namespace Ecoture.Migrations
                         .IsRequired();
 
                     b.Navigation("Color");
+
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("Ecoture.Models.Entity.ProductFit", b =>
+                {
+                    b.HasOne("Ecoture.Models.Entity.Fit", "Fit")
+                        .WithMany("ProductFits")
+                        .HasForeignKey("FitId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Ecoture.Models.Entity.Product", "Product")
+                        .WithMany("ProductFits")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Fit");
 
                     b.Navigation("Product");
                 });
@@ -466,6 +568,11 @@ namespace Ecoture.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Ecoture.Models.Entity.Category", b =>
+                {
+                    b.Navigation("ProductCategories");
+                });
+
             modelBuilder.Entity("Ecoture.Models.Entity.Color", b =>
                 {
                     b.Navigation("ProductColors");
@@ -476,9 +583,18 @@ namespace Ecoture.Migrations
                     b.Navigation("Responses");
                 });
 
+            modelBuilder.Entity("Ecoture.Models.Entity.Fit", b =>
+                {
+                    b.Navigation("ProductFits");
+                });
+
             modelBuilder.Entity("Ecoture.Models.Entity.Product", b =>
                 {
+                    b.Navigation("ProductCategories");
+
                     b.Navigation("ProductColors");
+
+                    b.Navigation("ProductFits");
 
                     b.Navigation("ProductSizes");
 
