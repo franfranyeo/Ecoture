@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.12.35527.113
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EcotureAPI", "Ecoture\EcotureAPI.csproj", "{3EC9D62A-C1A2-4717-89D5-8E883D220946}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EcotureAPI", "EcotureAPI\EcotureAPI.csproj", "{3EC9D62A-C1A2-4717-89D5-8E883D220946}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
