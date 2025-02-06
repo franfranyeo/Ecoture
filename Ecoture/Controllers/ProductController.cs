@@ -39,7 +39,7 @@ namespace Ecoture.Controllers
 
         [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<ProductDTO>), StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetAll(string? search)
+        public async Task<IActionResult> GetAll(string? search, string? category)
         {
             try
             {
@@ -47,16 +47,23 @@ namespace Ecoture.Controllers
                     .Include(t => t.User)
                     .Include(t => t.ProductSizes)
                         .ThenInclude(ps => ps.Size)
-                    .Include(p => p.ProductColors) // Include ProductColors
-                        .ThenInclude(pc => pc.Color) // Include related Color data
-                    .Include(p => p.ProductFits) // ✅ Include ProductFits relationship
-                        .ThenInclude(pf => pf.Fit) // ✅ Include related Fit data
-                    .Include(p => p.ProductCategories) // ✅ Include ProductCategories relationship
-                        .ThenInclude(pc => pc.Category); // ✅ Include related Category data
+                    .Include(p => p.ProductColors)
+                        .ThenInclude(pc => pc.Color)
+                    .Include(p => p.ProductFits)
+                        .ThenInclude(pf => pf.Fit)
+                    .Include(p => p.ProductCategories)
+                        .ThenInclude(pc => pc.Category);
 
+                // Apply search filtering if provided
                 if (!string.IsNullOrWhiteSpace(search))
                 {
                     query = query.Where(x => x.Title.Contains(search) || x.Description.Contains(search));
+                }
+
+                // Apply category filtering if provided
+                if (!string.IsNullOrWhiteSpace(category))
+                {
+                    query = query.Where(p => p.ProductCategories.Any(pc => pc.Category.Name == category));
                 }
 
                 var result = await query.OrderByDescending(x => x.CreatedAt).ToListAsync();
@@ -75,6 +82,7 @@ namespace Ecoture.Controllers
                 });
             }
         }
+
 
 
         [HttpGet("{id}")]

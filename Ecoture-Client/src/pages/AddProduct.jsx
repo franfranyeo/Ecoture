@@ -392,7 +392,7 @@ function AddProduct() {
                         ? formik.values.categories.filter((c) => c !== category)
                         : [...formik.values.categories, category];
 
-                      formik.setFieldValue("categories", selected);
+                      formik.setFieldValue("categories", selected); // This line updates the formik values for categories
                     }}
                     sx={{
                       borderRadius: "20px",

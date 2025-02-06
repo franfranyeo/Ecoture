@@ -100,88 +100,156 @@ function ProductDetail() {
           <Typography variant="body1" sx={{ marginBottom: 2 }}>
             {product.description}
           </Typography>
-          <Typography variant="body2" sx={{ marginBottom: 2 }}>
-            <strong>Categories:</strong>{" "}
-            {product.categories && product.categories.length > 0
-              ? product.categories.map((category, index) => (
-                  <Chip
-                    key={index}
-                    label={category.categoryName}
-                    sx={{ marginRight: 0.5 }}
-                  />
-                ))
-              : "No categories available"}
+
+          {/* Categories Section */}
+          <Typography
+            variant="body2"
+            sx={{
+              fontWeight: "bold",
+              marginBottom: 1,
+              color: "#555", // Slightly darker text to contrast with the background
+            }}
+          >
+            Categories:
+          </Typography>
+          <Box
+            sx={{ display: "flex", flexWrap: "wrap", gap: 1, marginBottom: 2 }}
+          >
+            {product.categories?.map((category, index) => (
+              <Typography
+                key={index}
+                variant="body2"
+                sx={{
+                  backgroundColor: "transparent", // No background to avoid button-like effect
+                  padding: "5px 10px", // Subtle padding for spacing
+                  borderRadius: "10px", // Slightly rounded for a more clean, soft look
+                  color: "#333", // Darker text for readability
+                  fontWeight: "normal", // Not bold to avoid button-like feel
+                  border: "1px solid #ccc", // Add subtle border for distinction
+                }}
+              >
+                {category.categoryName}
+              </Typography>
+            ))}
+          </Box>
+
+          {/* Fits Section */}
+          <Typography
+            variant="body2"
+            sx={{
+              fontWeight: "bold",
+              marginBottom: 1,
+              color: "#555",
+            }}
+          >
+            Fits:
+          </Typography>
+          <Box
+            sx={{ display: "flex", flexWrap: "wrap", gap: 1, marginBottom: 2 }}
+          >
+            {product.fits && product.fits.length > 0 ? (
+              product.fits.map((fit, index) => (
+                <Typography
+                  key={index}
+                  variant="body2"
+                  sx={{
+                    backgroundColor: "transparent", // No background
+                    padding: "5px 10px", // Subtle padding for spacing
+                    borderRadius: "10px", // Rounded corners
+                    color: "#333", // Dark text color for better readability
+                    fontWeight: "normal", // Normal weight text
+                    border: "1px solid #ccc", // Subtle border to differentiate
+                  }}
+                >
+                  {fit.fitName}
+                </Typography>
+              ))
+            ) : (
+              <Typography variant="body2">No fits available</Typography>
+            )}
+          </Box>
+
+          {/* Price Range Section */}
+          <Typography
+            variant="body2"
+            sx={{ fontWeight: "bold", marginBottom: 2 }}
+          >
+            Price Range: {priceRangeLabels[product.priceRange] || "N/A"}
           </Typography>
 
-          <Typography variant="body2" sx={{ marginBottom: 2 }}>
-            <strong>Fits:</strong>{" "}
-            {product.fits && product.fits.length > 0
-              ? product.fits.map((fit, index) => (
-                  <Chip
-                    key={index}
-                    label={fit.fitName}
-                    sx={{ marginRight: 0.5 }}
-                  />
-                ))
-              : "No fits available"}
+          {/* Color Selection */}
+          <Typography
+            variant="body2"
+            sx={{ fontWeight: "bold", marginBottom: 1 }}
+          >
+            Select Color:
           </Typography>
-
-          <Typography variant="body2" sx={{ marginBottom: 2 }}>
-            <strong>Price Range:</strong>{" "}
-            {priceRangeLabels[product.priceRange] || "N/A"}
-          </Typography>
-
-          <Box sx={{ marginBottom: 2 }}>
-            <Typography
-              variant="body2"
-              sx={{ fontWeight: "bold", marginBottom: 1 }}
-            >
-              Select Color:
-            </Typography>
+          <Box
+            sx={{ display: "flex", gap: 1, flexWrap: "wrap", marginBottom: 2 }}
+          >
             {product.colors && product.colors.length > 0 ? (
-              <Box sx={{ display: "flex", gap: 1, flexWrap: "wrap" }}>
-                {product.colors.map((color, index) => (
-                  <Chip
-                    key={index}
-                    label={color.colorName}
-                    color={
-                      selectedColor === color.colorName
-                        ? "secondary"
-                        : "primary"
-                    }
-                    onClick={() => setSelectedColor(color.colorName)}
-                    sx={{ cursor: "pointer" }}
-                  />
-                ))}
-              </Box>
+              product.colors.map((color, index) => (
+                <Chip
+                  key={index}
+                  label={color.colorName}
+                  color={
+                    selectedColor === color.colorName ? "secondary" : "default"
+                  } // Turns green when selected
+                  sx={{
+                    backgroundColor:
+                      selectedColor === color.colorName ? "green" : "#f0f0f0", // Green when selected, grey otherwise
+                    color: selectedColor === color.colorName ? "#fff" : "#555", // White text when selected, grey when not selected
+                    cursor: "pointer",
+                    "&:hover": {
+                      backgroundColor:
+                        selectedColor === color.colorName ? "green" : "#e0e0e0",
+                    },
+                  }}
+                  onClick={() => setSelectedColor(color.colorName)}
+                />
+              ))
             ) : (
               <Typography variant="body2">No colors available</Typography>
             )}
           </Box>
 
-          <Box sx={{ marginBottom: 2 }}>
-            <Typography variant="body2" sx={{ fontWeight: "bold" }}>
-              Select Size:
-            </Typography>
+          {/* Size Selection */}
+          <Typography
+            variant="body2"
+            sx={{ fontWeight: "bold", marginBottom: 1 }}
+          >
+            Select Size:
+          </Typography>
+          <Box
+            sx={{ display: "flex", gap: 1, flexWrap: "wrap", marginBottom: 2 }}
+          >
             {product.sizes && product.sizes.length > 0 ? (
-              <Box sx={{ display: "flex", gap: 1, flexWrap: "wrap" }}>
-                {product.sizes.map((size, index) => (
-                  <Chip
-                    key={index}
-                    label={`${size.sizeName} (${size.stockQuantity} in stock)`}
-                    color={
-                      selectedSize === size.sizeName ? "secondary" : "primary"
-                    }
-                    onClick={() => setSelectedSize(size.sizeName)}
-                    sx={{ cursor: "pointer" }}
-                  />
-                ))}
-              </Box>
+              product.sizes.map((size, index) => (
+                <Chip
+                  key={index}
+                  label={`${size.sizeName} (${size.stockQuantity} in stock)`}
+                  color={
+                    selectedSize === size.sizeName ? "secondary" : "default"
+                  } // Turns green when selected
+                  sx={{
+                    backgroundColor:
+                      selectedSize === size.sizeName ? "green" : "#f0f0f0", // Green when selected, grey otherwise
+                    color: selectedSize === size.sizeName ? "#fff" : "#555", // White text when selected, grey when not selected
+                    cursor: "pointer",
+                    "&:hover": {
+                      backgroundColor:
+                        selectedSize === size.sizeName ? "green" : "#e0e0e0",
+                    },
+                  }}
+                  onClick={() => setSelectedSize(size.sizeName)}
+                />
+              ))
             ) : (
               <Typography variant="body2">No sizes available</Typography>
             )}
           </Box>
 
+          {/* Add to Cart Button */}
           <Button
             variant="contained"
             color="success"

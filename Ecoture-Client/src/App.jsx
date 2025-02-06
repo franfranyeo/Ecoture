@@ -9,7 +9,8 @@ import StaffDashboard from './pages/StaffView';
 import AddProduct from './pages/AddProduct';
 import EditProduct from './pages/EditProduct';
 import ProductDetail from './pages/ProductDetail';
-import Reviews from './pages/Reviews'; // Use Reviews.jsx now instead of ProductReviews
+import Products from './pages/Products'; // Ensure Products.jsx is used for category filtering
+import Reviews from './pages/Reviews';
 import Register from './pages/Register';
 import Login from './pages/Login';
 import http from './http';
@@ -23,8 +24,8 @@ import CreditCards from './pages/CreditCards';
 import AddCreditCard from './pages/AddCreditCard';
 import EditCreditCard from './pages/EditCreditCard';
 import MyForm from './pages/MyForm';
-import Choice from './pages/Choice'; // New Page
-import Confirmation from './pages/Confirmation'; // New Page
+import Choice from './pages/Choice';
+import Confirmation from './pages/Confirmation';
 
 // Amelia Imports
 import Enquiries from './pages/Enquiries/Enquiries';
@@ -39,14 +40,19 @@ function App() {
     // Check authentication status on load
     useEffect(() => {
         if (localStorage.getItem('accessToken')) {
-            http.get('/user/auth').then((res) => {
-                setUser(res.data.user);
-            });
+            http.get('/user/auth')
+                .then((res) => {
+                    setUser(res.data.user);
+                })
+                .catch(() => {
+                    localStorage.clear();
+                });
         }
     }, []);
 
     const logout = () => {
         localStorage.clear();
+        setUser(null);
         window.location = '/';
     };
 
@@ -66,24 +72,11 @@ function App() {
                         }}
                     >
                         <Routes>
-                            {/* Default route */}
-                            <Route
-                                path="/"
-                                element={user ? <StaffDashboard /> : <CustomerLanding />}
-                            />
+                            {/* Default Route - CustomerLanding or StaffDashboard */}
+                            <Route path="/" element={user ? <StaffDashboard /> : <CustomerLanding />} />
 
                             {/* Add Product */}
-                            <Route
-                                path="/addproduct"
-                                element={
-                                    <AddProduct
-                                        onAddSuccess={() => {
-                                            // Navigate back to StaffDashboard after adding a product
-                                            window.location.href = '/';
-                                        }}
-                                    />
-                                }
-                            />
+                            <Route path="/addproduct" element={<AddProduct />} />
 
                             {/* Edit Product */}
                             <Route path="/editproduct/:id" element={<EditProduct />} />
@@ -92,31 +85,34 @@ function App() {
                             <Route path="/product/:id" element={<ProductDetail />} />
 
                             {/* Product Reviews */}
-                            <Route path="/reviews/:productId" element={<Reviews />} /> {/* Updated route for reviews */}
+                            <Route path="/reviews/:productId" element={<Reviews />} />
 
-                            {/* Register */}
+                            {/* Register & Login */}
                             <Route path="/register" element={<Register />} />
-
-                            {/* Login */}
                             <Route path="/login" element={<Login />} />
 
-                            {/* AHMED CODES */}
+                            {/* Category Routes - Products.jsx handles category filtering */}
+                            <Route path="/category/:categoryName" element={<Products />} />
+
+                            {/* Address & Payment Routes */}
                             <Route path="/addresses" element={<Addresses />} />
                             <Route path="/addaddress" element={<AddAddress />} />
                             <Route path="/editaddress/:id" element={<EditAddress />} />
                             <Route path="/creditcards" element={<CreditCards />} />
                             <Route path="/addcreditcard" element={<AddCreditCard />} />
                             <Route path="/editcreditcard/:id" element={<EditCreditCard />} />
-                            <Route path="/form" element={<MyForm />} />
-                            <Route path="/choice" element={<Choice />} /> {/* New Route */}
-                            <Route path="/confirmation" element={<Confirmation />} /> {/* New Route */}
 
+                            {/* Additional Pages */}
+                            <Route path="/form" element={<MyForm />} />
+                            <Route path="/choice" element={<Choice />} />
+                            <Route path="/confirmation" element={<Confirmation />} />
+
+                            {/* Enquiry Management */}
                             <Route path="/dashboard" element={<Dashboard />} />
                             <Route path="/enquiries" element={<Enquiries />} />
                             <Route path="/addenquiry" element={<AddEnquiry />} />
                             <Route path="/addresponse/:id" element={<AddResponse />} />
                             <Route path="/updateenquiry/:id" element={<UpdateEnquiry />} />
-
                         </Routes>
                     </div>
                 </ThemeProvider>
