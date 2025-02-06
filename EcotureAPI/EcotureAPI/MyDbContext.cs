@@ -19,20 +19,34 @@ namespace EcotureAPI
             }
         }
 
+        // Fran
         public required DbSet<User> Users { get; set; }
-
         public required DbSet<UserToken> UserTokens { get; set; }
         public required DbSet<UserOtp> UserOTPs { get; set; }
         public required DbSet<MfaResponse> MfaResponses { get; set; }
         public required DbSet<Membership> Memberships { get; set; }
-
         public required DbSet<PointsTransaction> PointsTransactions { get; set; }
-
         public required DbSet<UserRedemptions> UserRedemptions { get; set; }
-
         public required DbSet<Referral> Referrals { get; set; }
-
         public required DbSet<Voucher> Vouchers { get; set; }
+
+
+        public DbSet<Enquiry> Enquiries { get; set; }
+        public DbSet<Models.Entity.Response> Responses { get; set; }
+        public DbSet<Content> Contents { get; set; }
+        public DbSet<Newsletter> Newsletters { get; set; }
+
+
+        public required DbSet<Product> Products { get; set; }
+        public required DbSet<Size> Sizes { get; set; } // DbSet for Sizes
+        public required DbSet<ProductSize> ProductSizes { get; set; } // DbSet for ProductSizes
+        public required DbSet<Review> Reviews { get; set; } // DbSet for Reviews
+        public required DbSet<Color> Colors { get; set; } // DbSet for Colors
+        public required DbSet<ProductColor> ProductColors { get; set; } // DbSet for ProductColors
+
+        // AHMED DB CONTEXT 
+        public required DbSet<Address> Addresses { get; set; } // Addresses table
+        public required DbSet<CreditCard> CreditCards { get; set; } // New CreditCards table
 
 
 
