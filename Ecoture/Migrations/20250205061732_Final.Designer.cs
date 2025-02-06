@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Ecoture.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20250203100618_hopefullylastint")]
-    partial class hopefullylastint
+    [Migration("20250205061732_Final")]
+    partial class Final
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -21,6 +21,21 @@ namespace Ecoture.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "8.0.12")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
+
+            modelBuilder.Entity("ContentNewsletter", b =>
+                {
+                    b.Property<int>("ContentsContentId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("NewsletterIssueId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ContentsContentId", "NewsletterIssueId");
+
+                    b.HasIndex("NewsletterIssueId");
+
+                    b.ToTable("NewsletterContents", (string)null);
+                });
 
             modelBuilder.Entity("Ecoture.Models.Entity.Address", b =>
                 {
@@ -72,6 +87,27 @@ namespace Ecoture.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Colors");
+                });
+
+            modelBuilder.Entity("Ecoture.Models.Entity.Content", b =>
+                {
+                    b.Property<int>("ContentId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<bool>("Membership")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<int>("PreferencesId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ProductIds")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("ContentId");
+
+                    b.ToTable("Contents");
                 });
 
             modelBuilder.Entity("Ecoture.Models.Entity.CreditCard", b =>
@@ -148,6 +184,33 @@ namespace Ecoture.Migrations
                     b.ToTable("Enquiries");
                 });
 
+            modelBuilder.Entity("Ecoture.Models.Entity.Newsletter", b =>
+                {
+                    b.Property<int>("IssueId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int>("ContentId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("DateSent")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("IssueTitle")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("varchar(200)");
+
+                    b.Property<string>("NewsletterCategory")
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .HasColumnType("varchar(40)");
+
+                    b.HasKey("IssueId");
+
+                    b.ToTable("Newsletters");
+                });
+
             modelBuilder.Entity("Ecoture.Models.Entity.Product", b =>
                 {
                     b.Property<int>("Id")
@@ -160,7 +223,9 @@ namespace Ecoture.Migrations
                         .HasColumnType("varchar(50)");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime")
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -173,8 +238,8 @@ namespace Ecoture.Migrations
                         .HasColumnType("varchar(30)");
 
                     b.Property<string>("ImageFile")
-                        .HasMaxLength(20)
-                        .HasColumnType("varchar(20)");
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)");
 
                     b.Property<string>("LongDescription")
                         .IsRequired()
@@ -182,7 +247,7 @@ namespace Ecoture.Migrations
                         .HasColumnType("varchar(1000)");
 
                     b.Property<decimal>("Price")
-                        .HasColumnType("decimal(10, 2)");
+                        .HasColumnType("decimal(10,2)");
 
                     b.Property<int>("PriceRange")
                         .HasColumnType("int");
@@ -196,12 +261,20 @@ namespace Ecoture.Migrations
                         .HasColumnType("varchar(100)");
 
                     b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime");
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("datetime")
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Description")
+                        .HasDatabaseName("IX_Product_Description");
+
+                    b.HasIndex("Title")
+                        .HasDatabaseName("IX_Product_Title");
 
                     b.HasIndex("UserId");
 
@@ -358,6 +431,21 @@ namespace Ecoture.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("ContentNewsletter", b =>
+                {
+                    b.HasOne("Ecoture.Models.Entity.Content", null)
+                        .WithMany()
+                        .HasForeignKey("ContentsContentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Ecoture.Models.Entity.Newsletter", null)
+                        .WithMany()
+                        .HasForeignKey("NewsletterIssueId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Ecoture.Models.Entity.Address", b =>
                 {
                     b.HasOne("Ecoture.Models.User", "User")
@@ -396,7 +484,7 @@ namespace Ecoture.Migrations
                     b.HasOne("Ecoture.Models.Entity.Color", "Color")
                         .WithMany("ProductColors")
                         .HasForeignKey("ColorId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Ecoture.Models.Entity.Product", "Product")
@@ -421,7 +509,7 @@ namespace Ecoture.Migrations
                     b.HasOne("Ecoture.Models.Entity.Size", "Size")
                         .WithMany("ProductSizes")
                         .HasForeignKey("SizeId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Product");
@@ -451,7 +539,7 @@ namespace Ecoture.Migrations
                     b.HasOne("Ecoture.Models.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Product");

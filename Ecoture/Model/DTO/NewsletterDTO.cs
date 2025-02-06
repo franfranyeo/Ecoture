@@ -1,4 +1,6 @@
-﻿namespace Ecoture.Models.DTO
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Ecoture.Models.DTO
 {
 	public class NewsletterDto
 	{
@@ -7,5 +9,8 @@
 		public int ContentId { get; set; }
 		public DateTime DateSent { get; set; }
 		public string NewsletterCategory { get; set; } = string.Empty;
+		
+		[MinLength(1)]
+		public List<int> ContentIds { get; set; } = new();
 	}
 }

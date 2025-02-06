@@ -111,7 +111,7 @@ app.UseHttpsRedirection();
 app.UseCors();
 app.UseStaticFiles();
 app.UseAuthentication();
-app.UseAuthorization(); // Now works because AddAuthorization() was added
+app.UseAuthorization(); 
 
 app.MapControllers();
 app.Run();

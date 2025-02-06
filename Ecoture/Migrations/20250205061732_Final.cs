@@ -7,7 +7,7 @@ using MySql.EntityFrameworkCore.Metadata;
 namespace Ecoture.Migrations
 {
     /// <inheritdoc />
-    public partial class hopefullylastint : Migration
+    public partial class Final : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -30,6 +30,22 @@ namespace Ecoture.Migrations
                 .Annotation("MySQL:Charset", "utf8mb4");
 
             migrationBuilder.CreateTable(
+                name: "Contents",
+                columns: table => new
+                {
+                    ContentId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    PreferencesId = table.Column<int>(type: "int", nullable: false),
+                    Membership = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    ProductIds = table.Column<string>(type: "longtext", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Contents", x => x.ContentId);
+                })
+                .Annotation("MySQL:Charset", "utf8mb4");
+
+            migrationBuilder.CreateTable(
                 name: "Enquiries",
                 columns: table => new
                 {
@@ -46,6 +62,23 @@ namespace Ecoture.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Enquiries", x => x.enquiryId);
+                })
+                .Annotation("MySQL:Charset", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "Newsletters",
+                columns: table => new
+                {
+                    IssueId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    IssueTitle = table.Column<string>(type: "varchar(200)", maxLength: 200, nullable: false),
+                    ContentId = table.Column<int>(type: "int", nullable: false),
+                    DateSent = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    NewsletterCategory = table.Column<string>(type: "varchar(40)", maxLength: 40, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Newsletters", x => x.IssueId);
                 })
                 .Annotation("MySQL:Charset", "utf8mb4");
 
@@ -100,6 +133,31 @@ namespace Ecoture.Migrations
                         column: x => x.enquiryId,
                         principalTable: "Enquiries",
                         principalColumn: "enquiryId",
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySQL:Charset", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "NewsletterContents",
+                columns: table => new
+                {
+                    ContentsContentId = table.Column<int>(type: "int", nullable: false),
+                    NewsletterIssueId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_NewsletterContents", x => new { x.ContentsContentId, x.NewsletterIssueId });
+                    table.ForeignKey(
+                        name: "FK_NewsletterContents_Contents_ContentsContentId",
+                        column: x => x.ContentsContentId,
+                        principalTable: "Contents",
+                        principalColumn: "ContentId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_NewsletterContents_Newsletters_NewsletterIssueId",
+                        column: x => x.NewsletterIssueId,
+                        principalTable: "Newsletters",
+                        principalColumn: "IssueId",
                         onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySQL:Charset", "utf8mb4");
@@ -168,9 +226,9 @@ namespace Ecoture.Migrations
                     CategoryName = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
                     Fit = table.Column<string>(type: "varchar(30)", maxLength: 30, nullable: false),
                     PriceRange = table.Column<int>(type: "int", nullable: false),
-                    ImageFile = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: true),
-                    CreatedAt = table.Column<DateTime>(type: "datetime", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime", nullable: false),
+                    ImageFile = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: true),
+                    CreatedAt = table.Column<DateTime>(type: "datetime", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP"),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP"),
                     UserId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -202,7 +260,7 @@ namespace Ecoture.Migrations
                         column: x => x.ColorId,
                         principalTable: "Colors",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_ProductColors_Products_ProductId",
                         column: x => x.ProductId,
@@ -236,7 +294,7 @@ namespace Ecoture.Migrations
                         column: x => x.SizeId,
                         principalTable: "Sizes",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 })
                 .Annotation("MySQL:Charset", "utf8mb4");
 
@@ -266,7 +324,7 @@ namespace Ecoture.Migrations
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 })
                 .Annotation("MySQL:Charset", "utf8mb4");
 
@@ -281,6 +339,11 @@ namespace Ecoture.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_NewsletterContents_NewsletterIssueId",
+                table: "NewsletterContents",
+                column: "NewsletterIssueId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ProductColors_ColorId",
                 table: "ProductColors",
                 column: "ColorId");
@@ -289,6 +352,16 @@ namespace Ecoture.Migrations
                 name: "IX_ProductColors_ProductId",
                 table: "ProductColors",
                 column: "ProductId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Product_Description",
+                table: "Products",
+                column: "Description");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Product_Title",
+                table: "Products",
+                column: "Title");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Products_UserId",
@@ -331,6 +404,9 @@ namespace Ecoture.Migrations
                 name: "CreditCards");
 
             migrationBuilder.DropTable(
+                name: "NewsletterContents");
+
+            migrationBuilder.DropTable(
                 name: "ProductColors");
 
             migrationBuilder.DropTable(
@@ -341,6 +417,12 @@ namespace Ecoture.Migrations
 
             migrationBuilder.DropTable(
                 name: "Reviews");
+
+            migrationBuilder.DropTable(
+                name: "Contents");
+
+            migrationBuilder.DropTable(
+                name: "Newsletters");
 
             migrationBuilder.DropTable(
                 name: "Colors");

@@ -6,21 +6,20 @@ namespace Ecoture.Models.Entity
 {
 	public class Response
 	{
-		public int responseId { get; set; } // Primary Key
+		public int responseId { get; set; } 
 
-		[ForeignKey("Enquiry")]
-		public int enquiryId { get; set; } // Foreign Key referencing Enquiry
+		public int enquiryId { get; set; } 
 
 		[Required]
-		public int csoId { get; set; } // ID of the Customer Service Officer who responded
+		public int csoId { get; set; } 
 
 		[JsonIgnore]
-		public Enquiry? Enquiry { get; set; } // Navigation property to Enquiry
+		public Enquiry? Enquiry { get; set; } 
 
 		[Required]
-		public string message { get; set; } = string.Empty; // Message content of the response
+		public string message { get; set; } = string.Empty; 
 
 		[Column(TypeName = "datetime")]
-		public DateTime responseDate { get; set; } // Date and time of the response
+		public DateTime responseDate { get; set; } 
 	}
 }

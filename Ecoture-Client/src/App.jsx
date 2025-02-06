@@ -60,9 +60,9 @@ function App() {
                     {/* Main Content Wrapper */}
                     <div
                         style={{
-                            marginTop: '126px', // Push content below Navbar
-                            height: 'calc(100vh - 126px)', // Use remaining height
-                            overflowY: 'auto', // Enable scrolling for the main content
+                            marginTop: '126px', 
+                            height: 'calc(100vh - 126px)', 
+                            overflowY: 'auto', 
                         }}
                     >
                         <Routes>

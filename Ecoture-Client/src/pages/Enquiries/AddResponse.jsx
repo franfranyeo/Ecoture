@@ -12,7 +12,7 @@ const validationSchema = Yup.object({
 
 function AddResponse() {
   const navigate = useNavigate();
-  const { id } = useParams(); 
+  const { id } = useParams();
 
   const handleSubmit = (values, { resetForm }) => {
     const newResponse = { message: values.message, enquiryId: id };
@@ -20,7 +20,7 @@ function AddResponse() {
       .then(() => {
         alert('Response added successfully!');
         resetForm();
-        navigate('/enquiries'); 
+        navigate('/enquiries');
       })
       .catch((error) => {
         console.error('Error adding response:', error);
@@ -75,7 +75,7 @@ function AddResponse() {
                 <ErrorMessage name="message" component="div" style={{ color: 'red', marginTop: '5px' }} />
               </Box>
 
-              
+
               <Box sx={{ display: 'flex', justifyContent: 'space-between', gap: '10px' }}>
                 <Button
                   type="submit"
@@ -98,17 +98,17 @@ function AddResponse() {
                 <Button
                   type="button"
                   variant="outlined"
-                color="primary"
-                sx={{
-                  textTransform: 'none',
-                  fontSize: '1rem',
-                  borderColor: 'black',
-                  color: 'red',
-                  ':hover': {
-                    backgroundColor: 'rgba(0, 0, 0, 0.04)',
+                  color="primary"
+                  sx={{
+                    textTransform: 'none',
+                    fontSize: '1rem',
                     borderColor: 'black',
-                  },
-                }}
+                    color: 'red',
+                    ':hover': {
+                      backgroundColor: 'rgba(0, 0, 0, 0.04)',
+                      borderColor: 'black',
+                    },
+                  }}
                   onClick={() => navigate('/enquiries')}
                 >
                   Cancel

@@ -87,45 +87,45 @@ function AddEnquiry() {
             </Box>
 
             <Box sx={{ display: 'flex', justifyContent: 'space-between', gap: '10px' }}>
-            <Button
-              type="submit"
-              variant="outlined"
-              color="primary"
-              sx={{
-                textTransform: 'none',
-                fontSize: '1rem',
-                borderColor: 'green',
-                color: 'black',
-                ':hover': {
-                  backgroundColor: 'rgba(0, 0, 0, 0.04)',
+              <Button
+                type="submit"
+                variant="outlined"
+                color="primary"
+                sx={{
+                  textTransform: 'none',
+                  fontSize: '1rem',
+                  borderColor: 'green',
+                  color: 'black',
+                  ':hover': {
+                    backgroundColor: 'rgba(0, 0, 0, 0.04)',
+                    borderColor: 'black',
+                  },
+                }}
+                disabled={isSubmitting}
+              >
+                Submit
+              </Button>
+              <Button
+                type="button"
+                variant="outlined"
+                color="primary"
+                sx={{
+                  textTransform: 'none',
+                  fontSize: '1rem',
                   borderColor: 'black',
-                },
-              }}
-              disabled={isSubmitting}
-            >
-              Submit
-            </Button>
-            <Button
-              type="button"
-              variant="outlined"
-              color="primary"
-              sx={{
-                textTransform: 'none',
-                fontSize: '1rem',
-                borderColor: 'black',
-                color: 'red',
-                ':hover': {
-                  backgroundColor: 'rgba(0, 0, 0, 0.04)',
-                  borderColor: 'black',
-                },
-              }}
-              onClick={() => navigate('/')}>
-              Cancel
-            </Button>
-          </Box>
+                  color: 'red',
+                  ':hover': {
+                    backgroundColor: 'rgba(0, 0, 0, 0.04)',
+                    borderColor: 'black',
+                  },
+                }}
+                onClick={() => navigate('/')}>
+                Cancel
+              </Button>
+            </Box>
           </Form>
         )}
-    </Formik>
+      </Formik>
     </Box >
   );
 }

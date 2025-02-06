@@ -56,7 +56,7 @@ namespace Ecoture.Models.Entity
 
         // New Navigation Property: One-to-Many relationship with Reviews
         public virtual List<Review> Reviews { get; set; } = new();
-    }
+	}
 }
 
 

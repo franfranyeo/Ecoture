@@ -157,7 +157,7 @@ function Enquiries() {
                       borderColor: 'black',
                       color: 'black',
                       ':hover': {
-                        backgroundColor: 'rgba(0, 0, 0, 0.04)', 
+                        backgroundColor: 'rgba(0, 0, 0, 0.04)',
                         borderColor: 'black',
                       },
                       marginTop: '20px',
@@ -176,7 +176,7 @@ function Enquiries() {
                       borderColor: 'black',
                       color: 'black',
                       ':hover': {
-                        backgroundColor: 'rgba(0, 0, 0, 0.04)', 
+                        backgroundColor: 'rgba(0, 0, 0, 0.04)',
                         borderColor: 'black',
                       },
                       marginTop: '20px'

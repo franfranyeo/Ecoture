@@ -6,7 +6,6 @@ namespace Ecoture.Models.Entity
 	public class Newsletter
 	{
 		[Key]
-		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		public int IssueId { get; set; }
 
 		[Required, MaxLength(200)]
@@ -18,7 +17,6 @@ namespace Ecoture.Models.Entity
 		[MaxLength(40)]
 		public string NewsletterCategory { get; set; } = string.Empty;
 
-		[ForeignKey("ContentId")]
-		public Content? Content { get; set; }
+		public ICollection<Content>? Contents { get; set; }
 	}
 }

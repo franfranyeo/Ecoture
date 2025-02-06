@@ -3,24 +3,72 @@
   "WorkspaceRootPath": "C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Integrated\\Ecoture\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Integrated\\Ecoture\\Migrations\\20250205061732_Final.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Migrations\\20250205061732_Final.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Integrated\\Ecoture\\Migrations\\20250205061711_Final.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Migrations\\20250205061711_Final.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|c:\\users\\jiaxi\\desktop\\sch\\enterprise development project\\integrated\\ecoture\\mydbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|solutionrelative:mydbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|c:\\users\\jiaxi\\desktop\\sch\\enterprise development project\\integrated\\ecoture\\model\\dto\\newsletterdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|solutionrelative:model\\dto\\newsletterdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|c:\\users\\jiaxi\\desktop\\sch\\enterprise development project\\integrated\\ecoture\\model\\dto\\contentdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|solutionrelative:model\\dto\\contentdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|c:\\users\\jiaxi\\desktop\\sch\\enterprise development project\\integrated\\ecoture\\model\\entity\\newsletter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|solutionrelative:model\\entity\\newsletter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|c:\\users\\jiaxi\\desktop\\sch\\enterprise development project\\integrated\\ecoture\\model\\entity\\content.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|solutionrelative:model\\entity\\content.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|c:\\users\\jiaxi\\desktop\\sch\\enterprise development project\\integrated\\ecoture\\mydbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|solutionrelative:mydbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|c:\\users\\jiaxi\\desktop\\sch\\enterprise development project\\integrated\\ecoture\\model\\dto\\contentdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|solutionrelative:model\\dto\\contentdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|c:\\users\\jiaxi\\desktop\\sch\\enterprise development project\\integrated\\ecoture\\controllers\\newslettercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|solutionrelative:controllers\\newslettercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|c:\\users\\jiaxi\\desktop\\sch\\enterprise development project\\integrated\\ecoture\\controllers\\contentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|solutionrelative:controllers\\contentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|c:\\users\\jiaxi\\desktop\\sch\\enterprise development project\\integrated\\ecoture\\controllers\\enquirycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|solutionrelative:controllers\\enquirycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Integrated\\Ecoture\\Migrations\\20250205054922_Latestchangeslast.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Migrations\\20250205054922_Latestchangeslast.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|c:\\users\\jiaxi\\desktop\\sch\\enterprise development project\\integrated\\ecoture\\model\\entity\\enquiry.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|solutionrelative:model\\entity\\enquiry.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|c:\\users\\jiaxi\\desktop\\sch\\enterprise development project\\integrated\\ecoture\\model\\entity\\response.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|solutionrelative:model\\entity\\response.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|c:\\users\\jiaxi\\desktop\\sch\\enterprise development project\\integrated\\ecoture\\model\\entity\\newsletter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|solutionrelative:model\\entity\\newsletter.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Integrated\\Ecoture\\Migrations\\20250205052938_Latestchanges.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Migrations\\20250205052938_Latestchanges.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Integrated\\Ecoture\\Migrations\\20250205052747_newchanges.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Migrations\\20250205052747_newchanges.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Integrated\\Ecoture\\Migrations\\20250205052139_Last.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Migrations\\20250205052139_Last.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Integrated\\Ecoture\\Migrations\\20250205051947_Last.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Migrations\\20250205051947_Last.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|c:\\users\\jiaxi\\desktop\\sch\\enterprise development project\\integrated\\ecoture\\model\\entity\\product.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -43,83 +91,240 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "20250205061732_Final.cs",
+              "DocumentMoniker": "C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Integrated\\Ecoture\\Migrations\\20250205061732_Final.cs",
+              "RelativeDocumentMoniker": "Migrations\\20250205061732_Final.cs",
+              "ToolTip": "C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Integrated\\Ecoture\\Migrations\\20250205061732_Final.cs",
+              "RelativeToolTip": "Migrations\\20250205061732_Final.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-05T06:17:33.024Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "20250205061711_Final.cs",
+              "DocumentMoniker": "C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Integrated\\Ecoture\\Migrations\\20250205061711_Final.cs",
+              "RelativeDocumentMoniker": "Migrations\\20250205061711_Final.cs",
+              "ToolTip": "C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Integrated\\Ecoture\\Migrations\\20250205061711_Final.cs",
+              "RelativeToolTip": "Migrations\\20250205061711_Final.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-05T06:17:11.421Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "NewsletterController.cs",
+              "DocumentMoniker": "C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Integrated\\Ecoture\\Controllers\\NewsletterController.cs",
+              "RelativeDocumentMoniker": "Controllers\\NewsletterController.cs",
+              "ToolTip": "C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Integrated\\Ecoture\\Controllers\\NewsletterController.cs",
+              "RelativeToolTip": "Controllers\\NewsletterController.cs",
+              "ViewState": "AgIAABYAAAAAAAAAAAAuwCsAAAAcAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-05T06:08:05.561Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "EnquiryController.cs",
+              "DocumentMoniker": "C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Integrated\\Ecoture\\Controllers\\EnquiryController.cs",
+              "RelativeDocumentMoniker": "Controllers\\EnquiryController.cs",
+              "ToolTip": "C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Integrated\\Ecoture\\Controllers\\EnquiryController.cs",
+              "RelativeToolTip": "Controllers\\EnquiryController.cs",
+              "ViewState": "AgIAAE0AAAAAAAAAAAAgwGgAAAAaAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-05T05:46:54.93Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "ContentController.cs",
+              "DocumentMoniker": "C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Integrated\\Ecoture\\Controllers\\ContentController.cs",
+              "RelativeDocumentMoniker": "Controllers\\ContentController.cs",
+              "ToolTip": "C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Integrated\\Ecoture\\Controllers\\ContentController.cs",
+              "RelativeToolTip": "Controllers\\ContentController.cs",
+              "ViewState": "AgIAABoAAAAAAAAAAAAmwDQAAAAaAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-04T16:19:29.727Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "NewsletterDTO.cs",
               "DocumentMoniker": "C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Integrated\\Ecoture\\Model\\DTO\\NewsletterDTO.cs",
               "RelativeDocumentMoniker": "Model\\DTO\\NewsletterDTO.cs",
               "ToolTip": "C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Integrated\\Ecoture\\Model\\DTO\\NewsletterDTO.cs",
               "RelativeToolTip": "Model\\DTO\\NewsletterDTO.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAACAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-02-04T15:24:50.729Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 5,
               "Title": "ContentDTO.cs",
               "DocumentMoniker": "C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Integrated\\Ecoture\\Model\\DTO\\ContentDTO.cs",
               "RelativeDocumentMoniker": "Model\\DTO\\ContentDTO.cs",
               "ToolTip": "C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Integrated\\Ecoture\\Model\\DTO\\ContentDTO.cs",
               "RelativeToolTip": "Model\\DTO\\ContentDTO.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAmAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-02-04T15:24:34.161Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Newsletter.cs",
-              "DocumentMoniker": "C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Integrated\\Ecoture\\Model\\Entity\\Newsletter.cs",
-              "RelativeDocumentMoniker": "Model\\Entity\\Newsletter.cs",
-              "ToolTip": "C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Integrated\\Ecoture\\Model\\Entity\\Newsletter.cs",
-              "RelativeToolTip": "Model\\Entity\\Newsletter.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-04T15:24:11.231Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "Content.cs",
               "DocumentMoniker": "C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Integrated\\Ecoture\\Model\\Entity\\Content.cs",
               "RelativeDocumentMoniker": "Model\\Entity\\Content.cs",
               "ToolTip": "C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Integrated\\Ecoture\\Model\\Entity\\Content.cs",
               "RelativeToolTip": "Model\\Entity\\Content.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-02-04T15:23:43.062Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 12,
+              "Title": "Newsletter.cs",
+              "DocumentMoniker": "C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Integrated\\Ecoture\\Model\\Entity\\Newsletter.cs",
+              "RelativeDocumentMoniker": "Model\\Entity\\Newsletter.cs",
+              "ToolTip": "C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Integrated\\Ecoture\\Model\\Entity\\Newsletter.cs",
+              "RelativeToolTip": "Model\\Entity\\Newsletter.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAkAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-04T15:24:11.231Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "Enquiry.cs",
+              "DocumentMoniker": "C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Integrated\\Ecoture\\Model\\Entity\\Enquiry.cs",
+              "RelativeDocumentMoniker": "Model\\Entity\\Enquiry.cs",
+              "ToolTip": "C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Integrated\\Ecoture\\Model\\Entity\\Enquiry.cs",
+              "RelativeToolTip": "Model\\Entity\\Enquiry.cs",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAAwB8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-04T16:29:31.91Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
               "Title": "MyDbContext.cs",
               "DocumentMoniker": "C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Integrated\\Ecoture\\MyDbContext.cs",
               "RelativeDocumentMoniker": "MyDbContext.cs",
               "ToolTip": "C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Integrated\\Ecoture\\MyDbContext.cs",
               "RelativeToolTip": "MyDbContext.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAADIAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAACUAAAAAAAAAAAAswB8AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-02-03T17:26:30.671Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 9,
+              "Title": "20250205054922_Latestchangeslast.cs",
+              "DocumentMoniker": "C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Integrated\\Ecoture\\Migrations\\20250205054922_Latestchangeslast.cs",
+              "RelativeDocumentMoniker": "Migrations\\20250205054922_Latestchangeslast.cs",
+              "ToolTip": "C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Integrated\\Ecoture\\Migrations\\20250205054922_Latestchangeslast.cs",
+              "RelativeToolTip": "Migrations\\20250205054922_Latestchangeslast.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-05T05:49:22.977Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "Response.cs",
+              "DocumentMoniker": "C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Integrated\\Ecoture\\Model\\Entity\\Response.cs",
+              "RelativeDocumentMoniker": "Model\\Entity\\Response.cs",
+              "ToolTip": "C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Integrated\\Ecoture\\Model\\Entity\\Response.cs",
+              "RelativeToolTip": "Model\\Entity\\Response.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAOAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-04T16:33:56.128Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "20250205052139_Last.cs",
+              "DocumentMoniker": "C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Integrated\\Ecoture\\Migrations\\20250205052139_Last.cs",
+              "RelativeDocumentMoniker": "Migrations\\20250205052139_Last.cs",
+              "ToolTip": "C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Integrated\\Ecoture\\Migrations\\20250205052139_Last.cs",
+              "RelativeToolTip": "Migrations\\20250205052139_Last.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-05T05:21:40.11Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "20250205052747_newchanges.cs",
+              "DocumentMoniker": "C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Integrated\\Ecoture\\Migrations\\20250205052747_newchanges.cs",
+              "RelativeDocumentMoniker": "Migrations\\20250205052747_newchanges.cs",
+              "ToolTip": "C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Integrated\\Ecoture\\Migrations\\20250205052747_newchanges.cs",
+              "RelativeToolTip": "Migrations\\20250205052747_newchanges.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-05T05:27:47.246Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "20250205052938_Latestchanges.cs",
+              "DocumentMoniker": "C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Integrated\\Ecoture\\Migrations\\20250205052938_Latestchanges.cs",
+              "RelativeDocumentMoniker": "Migrations\\20250205052938_Latestchanges.cs",
+              "ToolTip": "C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Integrated\\Ecoture\\Migrations\\20250205052938_Latestchanges.cs",
+              "RelativeToolTip": "Migrations\\20250205052938_Latestchanges.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-05T05:29:38.844Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "20250205051947_Last.cs",
+              "DocumentMoniker": "C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Integrated\\Ecoture\\Migrations\\20250205051947_Last.cs",
+              "RelativeDocumentMoniker": "Migrations\\20250205051947_Last.cs",
+              "ToolTip": "C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Integrated\\Ecoture\\Migrations\\20250205051947_Last.cs",
+              "RelativeToolTip": "Migrations\\20250205051947_Last.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-05T05:19:47.372Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
               "Title": "Product.cs",
               "DocumentMoniker": "C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Integrated\\Ecoture\\Model\\Entity\\Product.cs",
               "RelativeDocumentMoniker": "Model\\Entity\\Product.cs",
               "ToolTip": "C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Integrated\\Ecoture\\Model\\Entity\\Product.cs",
               "RelativeToolTip": "Model\\Entity\\Product.cs",
-              "ViewState": "AgIAABgAAAAAAAAAAAAowCkAAAAHAAAAAAAAAA==",
+              "ViewState": "AgIAACsAAAAAAAAAAAAcwDkAAABCAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-03T17:24:37.45Z"
+              "WhenOpened": "2025-02-03T17:24:37.45Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 18,
               "Title": "ProductController.cs",
               "DocumentMoniker": "C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Integrated\\Ecoture\\Controllers\\ProductController.cs",
               "RelativeDocumentMoniker": "Controllers\\ProductController.cs",
@@ -127,7 +332,8 @@
               "RelativeToolTip": "Controllers\\ProductController.cs",
               "ViewState": "AgIAAHsAAAAAAAAAAAAowI4AAAAVAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-03T17:21:10.726Z"
+              "WhenOpened": "2025-02-03T17:21:10.726Z",
+              "EditorCaption": ""
             }
           ]
         }

@@ -66,38 +66,38 @@ function UpdateEnquiry() {
         </Select>
       </FormControl>
       <Box sx={{ display: 'flex', justifyContent: 'space-between', gap: '10px' }}>
-      <Button variant="outlined"
-        color="primary"
-        sx={{
-          textTransform: 'none',
-          fontSize: '1rem',
-          borderColor: 'black',
-          color: 'black',
-          ':hover': {
-            backgroundColor: 'rgba(0, 0, 0, 0.04)',
+        <Button variant="outlined"
+          color="primary"
+          sx={{
+            textTransform: 'none',
+            fontSize: '1rem',
             borderColor: 'black',
-          },
-        }} onClick={handleUpdate}>
-        Update Status
-      </Button>
-      <Button
-        type="button"
-        variant="outlined"
-        color="primary"
-        sx={{
-          textTransform: 'none',
-          fontSize: '1rem',
-          borderColor: 'black',
-          color: 'red',
-          ':hover': {
-            backgroundColor: 'rgba(0, 0, 0, 0.04)',
+            color: 'black',
+            ':hover': {
+              backgroundColor: 'rgba(0, 0, 0, 0.04)',
+              borderColor: 'black',
+            },
+          }} onClick={handleUpdate}>
+          Update Status
+        </Button>
+        <Button
+          type="button"
+          variant="outlined"
+          color="primary"
+          sx={{
+            textTransform: 'none',
+            fontSize: '1rem',
             borderColor: 'black',
-          },
-        }}
-        onClick={() => navigate('/enquiries')}
-      >
-        Cancel
-      </Button>
+            color: 'red',
+            ':hover': {
+              backgroundColor: 'rgba(0, 0, 0, 0.04)',
+              borderColor: 'black',
+            },
+          }}
+          onClick={() => navigate('/enquiries')}
+        >
+          Cancel
+        </Button>
       </Box>
     </Box>
   );
