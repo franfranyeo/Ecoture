@@ -35,7 +35,10 @@ function Navbar() {
         { text: 'Women', link: '/women' },
         { text: 'Men', link: '/men' },
         { text: 'Girls', link: '/girls' },
-        { text: 'Boys', link: '/boys' }
+        { text: 'Boys', link: '/boys' },
+        { text: 'Addresses', link: '/addresses' },
+        { text: 'Credit Cards', link: '/creditcards' },
+        { text: 'Choice', link: '/choice' }
     ];
 
     const handleLogout = () => {
@@ -302,6 +305,15 @@ function Navbar() {
                         </ListItem>
                         <ListItem button component={Link} to="/boys">
                             <ListItemText primary="Boys" />
+                        </ListItem>
+                        <ListItem button component={Link} to="/addresses">
+                            <ListItemText primary="Addresses" />
+                        </ListItem>
+                        <ListItem button component={Link} to="/creditcards">
+                            <ListItemText primary="Credit Cards" />
+                        </ListItem>
+                        <ListItem button component={Link} to="/choice">
+                            <ListItemText primary="Choice" />
                         </ListItem>
                     </List>
                 </Box>
