@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EcotureAPI.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20250206160531_InitialCreate")]
+    [Migration("20250207051939_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />

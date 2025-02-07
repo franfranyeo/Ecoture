@@ -192,7 +192,7 @@ function Navbar() {
                                             onClick={handleMenuOpen}
                                         />
                                     )}
-                                    <Typography
+                                    {/* <Typography
                                         variant="body1"
                                         sx={{
                                             fontWeight: '500',
@@ -203,7 +203,7 @@ function Navbar() {
                                         onClick={handleMenuOpen}
                                     >
                                         {user.fullName}
-                                    </Typography>
+                                    </Typography> */}
 
                                     {/* Dropdown Menu */}
                                     <Menu
@@ -225,6 +225,55 @@ function Navbar() {
                                             }
                                         }}
                                     >
+                                        <div
+                                            style={{
+                                                display: 'flex',
+                                                alignItems: 'center',
+                                                padding: '16px',
+                                                borderBottom:
+                                                    '1px solid rgba(0, 0, 0, 0.1)'
+                                            }}
+                                        >
+                                            {/* <img
+                                                src={user.pfpURL}
+                                                alt="User Avatar"
+                                                className="nav-icon avatar-icon"
+                                                style={{
+                                                    width: '40px',
+                                                    height: '40px',
+                                                    borderRadius: '50%',
+                                                    marginRight: '8px'
+                                                }}
+                                            /> */}
+                                            {user.pfpURL ? (
+                                                <img
+                                                    src={user.pfpURL}
+                                                    alt="User Avatar"
+                                                    className="nav-icon avatar-icon"
+                                                    style={{
+                                                        width: '40px',
+                                                        height: '40px',
+                                                        borderRadius: '50%'
+                                                    }}
+                                                />
+                                            ) : (
+                                                <Avatar
+                                                    width="40px"
+                                                    height="40px"
+                                                />
+                                            )}
+                                            <div style={{ marginLeft: '8px' }}>
+                                                <div
+                                                    style={{
+                                                        fontWeight: '500'
+                                                    }}
+                                                >
+                                                    {user.fullName}
+                                                </div>
+                                                <div>{user.email}</div>
+                                            </div>
+                                        </div>
+
                                         <MenuItem
                                             onClick={() =>
                                                 handleNavigate('/account')
