@@ -27,6 +27,24 @@ import Users from './pages/admin/user/Users';
 import EditUser from './pages/admin/user/EditUser';
 import ViewUser from './pages/admin/user/ViewUser';
 
+// AHMED IMPORTS
+import Addresses from './pages/Addresses';
+import AddAddress from './pages/AddAddress';
+import EditAddress from './pages/EditAddress';
+import CreditCards from './pages/CreditCards';
+import AddCreditCard from './pages/AddCreditCard';
+import EditCreditCard from './pages/EditCreditCard';
+import MyForm from './pages/MyForm';
+import Choice from './pages/Choice'; // New Page
+import Confirmation from './pages/Confirmation'; // New Page
+
+// Amelia Imports
+import Enquiries from './pages/Enquiries/Enquiries';
+import AddEnquiry from './pages/Enquiries/AddEnquiry';
+import AddResponse from './pages/Enquiries/AddResponse';
+import UpdateEnquiry from './pages/Enquiries/UpdateEnquiry';
+import EnquiriesDashboard from './pages/Enquiries/Dashboard';
+
 function App() {
     // update in the user context too
     const [user, setUser] = useState(null);
@@ -193,6 +211,62 @@ function App() {
                                             element={route.component}
                                         />
                                     ))}
+                                    {/* AHMED CODES */}
+                                    <Route
+                                        path="/addresses"
+                                        element={<Addresses />}
+                                    />
+                                    <Route
+                                        path="/addaddress"
+                                        element={<AddAddress />}
+                                    />
+                                    <Route
+                                        path="/editaddress/:id"
+                                        element={<EditAddress />}
+                                    />
+                                    <Route
+                                        path="/creditcards"
+                                        element={<CreditCards />}
+                                    />
+                                    <Route
+                                        path="/addcreditcard"
+                                        element={<AddCreditCard />}
+                                    />
+                                    <Route
+                                        path="/editcreditcard/:id"
+                                        element={<EditCreditCard />}
+                                    />
+                                    <Route path="/form" element={<MyForm />} />
+                                    <Route
+                                        path="/choice"
+                                        element={<Choice />}
+                                    />{' '}
+                                    {/* New Route */}
+                                    <Route
+                                        path="/confirmation"
+                                        element={<Confirmation />}
+                                    />{' '}
+                                    {/* New Route */}
+                                    <Route
+                                        path="/dashboard"
+                                        element={<EnquiriesDashboard />}
+                                    />
+                                    <Route
+                                        path="/enquiries"
+                                        element={<Enquiries />}
+                                    />
+                                    <Route
+                                        path="/addenquiry"
+                                        element={<AddEnquiry />}
+                                    />
+                                    <Route
+                                        path="/addresponse/:id"
+                                        element={<AddResponse />}
+                                    />
+                                    <Route
+                                        path="/updateenquiry/:id"
+                                        element={<UpdateEnquiry />}
+                                    />
                                     <Route
                                         path="/admin"
                                         element={

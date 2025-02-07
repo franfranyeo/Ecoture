@@ -35,7 +35,10 @@ function Navbar() {
         { text: 'Women', link: '/women' },
         { text: 'Men', link: '/men' },
         { text: 'Girls', link: '/girls' },
-        { text: 'Boys', link: '/boys' }
+        { text: 'Boys', link: '/boys' },
+        { text: 'Addresses', link: '/addresses' },
+        { text: 'Credit Cards', link: '/creditcards' },
+        { text: 'Choice', link: '/choice' }
     ];
 
     const handleLogout = () => {
@@ -189,7 +192,7 @@ function Navbar() {
                                             onClick={handleMenuOpen}
                                         />
                                     )}
-                                    <Typography
+                                    {/* <Typography
                                         variant="body1"
                                         sx={{
                                             fontWeight: '500',
@@ -200,7 +203,7 @@ function Navbar() {
                                         onClick={handleMenuOpen}
                                     >
                                         {user.fullName}
-                                    </Typography>
+                                    </Typography> */}
 
                                     {/* Dropdown Menu */}
                                     <Menu
@@ -222,6 +225,55 @@ function Navbar() {
                                             }
                                         }}
                                     >
+                                        <div
+                                            style={{
+                                                display: 'flex',
+                                                alignItems: 'center',
+                                                padding: '16px',
+                                                borderBottom:
+                                                    '1px solid rgba(0, 0, 0, 0.1)'
+                                            }}
+                                        >
+                                            {/* <img
+                                                src={user.pfpURL}
+                                                alt="User Avatar"
+                                                className="nav-icon avatar-icon"
+                                                style={{
+                                                    width: '40px',
+                                                    height: '40px',
+                                                    borderRadius: '50%',
+                                                    marginRight: '8px'
+                                                }}
+                                            /> */}
+                                            {user.pfpURL ? (
+                                                <img
+                                                    src={user.pfpURL}
+                                                    alt="User Avatar"
+                                                    className="nav-icon avatar-icon"
+                                                    style={{
+                                                        width: '40px',
+                                                        height: '40px',
+                                                        borderRadius: '50%'
+                                                    }}
+                                                />
+                                            ) : (
+                                                <Avatar
+                                                    width="40px"
+                                                    height="40px"
+                                                />
+                                            )}
+                                            <div style={{ marginLeft: '8px' }}>
+                                                <div
+                                                    style={{
+                                                        fontWeight: '500'
+                                                    }}
+                                                >
+                                                    {user.fullName}
+                                                </div>
+                                                <div>{user.email}</div>
+                                            </div>
+                                        </div>
+
                                         <MenuItem
                                             onClick={() =>
                                                 handleNavigate('/account')
@@ -302,6 +354,15 @@ function Navbar() {
                         </ListItem>
                         <ListItem button component={Link} to="/boys">
                             <ListItemText primary="Boys" />
+                        </ListItem>
+                        <ListItem button component={Link} to="/addresses">
+                            <ListItemText primary="Addresses" />
+                        </ListItem>
+                        <ListItem button component={Link} to="/creditcards">
+                            <ListItemText primary="Credit Cards" />
+                        </ListItem>
+                        <ListItem button component={Link} to="/choice">
+                            <ListItemText primary="Choice" />
                         </ListItem>
                     </List>
                 </Box>
