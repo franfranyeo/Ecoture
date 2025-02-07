@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using Ecoture.Models.Entity;
-using Ecoture.Models.Request;
-using Ecoture.Models.DTO;
+using Ecoture.Model.Entity;
+using Ecoture.Model.Request;
+using Ecoture.Model.DTO;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -50,7 +50,7 @@ namespace Ecoture.Controllers
                     ProductId = r.ProductId,
                     Comment = r.Comment,
                     Rating = r.Rating,
-                    Username = r.User?.Name ?? "Unknown",
+                    Username = r.User?.FullName ?? "Unknown",
                     CreatedAt = r.CreatedAt
                 });
 
@@ -102,7 +102,7 @@ namespace Ecoture.Controllers
                     ProductId = review.ProductId,
                     Comment = review.Comment,
                     Rating = review.Rating,
-                    Username = (await _context.Users.FindAsync(userId))?.Name ?? "Unknown",
+                    Username = (await _context.Users.FindAsync(userId))?.FullName ?? "Unknown",
                     CreatedAt = review.CreatedAt
                 };
 
@@ -157,7 +157,7 @@ namespace Ecoture.Controllers
                     ProductId = review.ProductId,
                     Comment = review.Comment,
                     Rating = review.Rating,
-                    Username = (await _context.Users.FindAsync(userId))?.Name ?? "Unknown",
+                    Username = (await _context.Users.FindAsync(userId))?.FullName ?? "Unknown",
                     CreatedAt = review.CreatedAt
                 };
 

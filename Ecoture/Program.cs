@@ -1,5 +1,6 @@
 using AutoMapper;
 using Ecoture;
+using Ecoture.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -15,6 +16,7 @@ builder.Services.AddControllers();
 builder.Services.AddDbContext<MyDbContext>(options =>
     options.UseMySQL(builder.Configuration.GetConnectionString("MyConnection"))
 );
+builder.Services.AddDistributedMemoryCache();
 
 // Ensure Connection String Exists
 var connectionString = builder.Configuration.GetConnectionString("MyConnection");
@@ -98,7 +100,32 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
+// Services
+builder.Services.AddTransient<IUserManager, UserManager>();
+builder.Services.AddTransient<IEmailService, EmailService>();
+builder.Services.AddSingleton<ISmsService, SmsService>();
+
 var app = builder.Build();
+
+// Seed database with admin user
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    try
+    {
+        var context = services.GetRequiredService<MyDbContext>();
+        var configuration = services.GetRequiredService<IConfiguration>();
+
+        // Apply migrations and seed admin user
+        await SeedData.InitializeAsync(context, configuration);
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"An error occurred during database seeding: {ex.Message}");
+        // Consider whether you want to rethrow the exception to prevent the application from starting
+        // throw;
+    }
+}
 
 //  Configure Middleware
 if (app.Environment.IsDevelopment())

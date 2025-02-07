@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
-namespace Ecoture.Models.Entity
+namespace Ecoture.Model.Entity
 {
 	public class Response
 	{

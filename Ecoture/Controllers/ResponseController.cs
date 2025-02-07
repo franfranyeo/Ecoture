@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Ecoture.Models.DTO;
-using Ecoture.Models.Entity;
-using Ecoture.Models.Request;
+using Ecoture.Model.DTO;
+using Ecoture.Model.Entity;
+using Ecoture.Model.Request;
 using AutoMapper;
 
 namespace Ecoture.Controllers

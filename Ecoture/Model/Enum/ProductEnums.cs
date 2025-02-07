@@ -1,4 +1,4 @@
-﻿namespace Ecoture.Models.Enum
+﻿namespace Ecoture.Model.Enum
 {
     /// <summary>
     /// Enum to represent various price ranges for products.

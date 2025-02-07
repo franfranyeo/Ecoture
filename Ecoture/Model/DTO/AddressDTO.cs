@@ -1,4 +1,4 @@
-﻿namespace Ecoture.Models.DTO
+﻿namespace Ecoture.Model.DTO
 {
     public class AddressDTO
     {

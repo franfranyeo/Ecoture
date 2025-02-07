@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Ecoture.Models.Request
+namespace Ecoture.Model.Request
 {
     /// <summary>
     /// Model to handle updating an existing product.

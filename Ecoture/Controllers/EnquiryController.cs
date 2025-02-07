@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Ecoture.Models.DTO;
-using Ecoture.Models.Entity;
+using Ecoture.Model.DTO;
+using Ecoture.Model.Entity;
 using AutoMapper;
-using Ecoture.Models.Enum;
-using Ecoture.Models.Request;
+using Ecoture.Model.Enum;
+using Ecoture.Model.Request;
 
 namespace Ecoture.Controllers
 {
@@ -90,7 +90,7 @@ namespace Ecoture.Controllers
 					email = enquiryRequest.email.Trim(),
 					subject = enquiryRequest.subject.Trim(),
 					message = enquiryRequest.message.Trim(),
-					status = Models.Enum.EnquiryStatus.Open,
+					status = Model.Enum.EnquiryStatus.Open,
 					createdAt = now,
 					updatedAt = now
 				};

@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "OaqsJyTYJOao9CIy8Mue0cPxT4ZCOvO08Os+yrKkVtg=",
+  "Hash": "VD9lMOZaqzeDEBfmSYOQUcTCgxEbqsHjstWDA084q9E=",
   "Source": "Ecoture",
   "BasePath": "_content/Ecoture",
   "Mode": "Default",
@@ -10,448 +10,2382 @@
     {
       "Name": "Ecoture\\wwwroot",
       "Source": "Ecoture",
-      "ContentRoot": "C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Integrated\\Ecoture\\wwwroot\\",
+      "ContentRoot": "F:\\Github Repos\\Ecoture\\Ecoture\\wwwroot\\",
       "BasePath": "_content/Ecoture",
       "Pattern": "**"
     }
   ],
   "Assets": [
     {
-      "Identity": "C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Integrated\\Ecoture\\wwwroot\\uploads\\1Pf_26JCAQ.png",
+      "Identity": "F:\\Github Repos\\Ecoture\\Ecoture\\wwwroot\\uploads\\1Pf_26JCAQ.png",
       "SourceId": "Ecoture",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Integrated\\Ecoture\\wwwroot\\",
+      "ContentRoot": "F:\\Github Repos\\Ecoture\\Ecoture\\wwwroot\\",
       "BasePath": "_content/Ecoture",
-      "RelativePath": "uploads/1Pf_26JCAQ.png",
+      "RelativePath": "uploads/1Pf_26JCAQ#[.{fingerprint}]?.png",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
-      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeBehavior": "",
       "AssetMergeSource": "",
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
+      "Fingerprint": "47865rvzo2",
+      "Integrity": "AJCpvgehZ2wWtqkMGzWRNeN3D8nr0yq3GyVQwc3VDEk=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\uploads\\1Pf_26JCAQ.png"
     },
     {
-      "Identity": "C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Integrated\\Ecoture\\wwwroot\\uploads\\24yDsoio5x.PNG",
+      "Identity": "F:\\Github Repos\\Ecoture\\Ecoture\\wwwroot\\uploads\\24yDsoio5x.PNG",
       "SourceId": "Ecoture",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Integrated\\Ecoture\\wwwroot\\",
+      "ContentRoot": "F:\\Github Repos\\Ecoture\\Ecoture\\wwwroot\\",
       "BasePath": "_content/Ecoture",
-      "RelativePath": "uploads/24yDsoio5x.PNG",
+      "RelativePath": "uploads/24yDsoio5x#[.{fingerprint}]?.PNG",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
-      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeBehavior": "",
       "AssetMergeSource": "",
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
+      "Fingerprint": "f9qqjpixfv",
+      "Integrity": "c14UNEjHxZN//0rgQHHcyOOKqbfs+lehtqU3eKl/yKw=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\uploads\\24yDsoio5x.PNG"
     },
     {
-      "Identity": "C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Integrated\\Ecoture\\wwwroot\\uploads\\3NSjdc8pJJ.PNG",
+      "Identity": "F:\\Github Repos\\Ecoture\\Ecoture\\wwwroot\\uploads\\3NSjdc8pJJ.PNG",
       "SourceId": "Ecoture",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Integrated\\Ecoture\\wwwroot\\",
+      "ContentRoot": "F:\\Github Repos\\Ecoture\\Ecoture\\wwwroot\\",
       "BasePath": "_content/Ecoture",
-      "RelativePath": "uploads/3NSjdc8pJJ.PNG",
+      "RelativePath": "uploads/3NSjdc8pJJ#[.{fingerprint}]?.PNG",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
-      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeBehavior": "",
       "AssetMergeSource": "",
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
+      "Fingerprint": "mmhcs0xjgn",
+      "Integrity": "PlDyTKbqcOY7TcgRfjiSIGcH1FOIpNJ7u6Z/ZwrXRxs=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\uploads\\3NSjdc8pJJ.PNG"
     },
     {
-      "Identity": "C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Integrated\\Ecoture\\wwwroot\\uploads\\9ka8n6Ww8l.PNG",
+      "Identity": "F:\\Github Repos\\Ecoture\\Ecoture\\wwwroot\\uploads\\9ka8n6Ww8l.PNG",
       "SourceId": "Ecoture",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Integrated\\Ecoture\\wwwroot\\",
+      "ContentRoot": "F:\\Github Repos\\Ecoture\\Ecoture\\wwwroot\\",
       "BasePath": "_content/Ecoture",
-      "RelativePath": "uploads/9ka8n6Ww8l.PNG",
+      "RelativePath": "uploads/9ka8n6Ww8l#[.{fingerprint}]?.PNG",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
-      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeBehavior": "",
       "AssetMergeSource": "",
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
+      "Fingerprint": "f9qqjpixfv",
+      "Integrity": "c14UNEjHxZN//0rgQHHcyOOKqbfs+lehtqU3eKl/yKw=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\uploads\\9ka8n6Ww8l.PNG"
     },
     {
-      "Identity": "C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Integrated\\Ecoture\\wwwroot\\uploads\\avlEOWnxHv.PNG",
+      "Identity": "F:\\Github Repos\\Ecoture\\Ecoture\\wwwroot\\uploads\\avlEOWnxHv.PNG",
       "SourceId": "Ecoture",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Integrated\\Ecoture\\wwwroot\\",
+      "ContentRoot": "F:\\Github Repos\\Ecoture\\Ecoture\\wwwroot\\",
       "BasePath": "_content/Ecoture",
-      "RelativePath": "uploads/avlEOWnxHv.PNG",
+      "RelativePath": "uploads/avlEOWnxHv#[.{fingerprint}]?.PNG",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
-      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeBehavior": "",
       "AssetMergeSource": "",
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
+      "Fingerprint": "mmhcs0xjgn",
+      "Integrity": "PlDyTKbqcOY7TcgRfjiSIGcH1FOIpNJ7u6Z/ZwrXRxs=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\uploads\\avlEOWnxHv.PNG"
     },
     {
-      "Identity": "C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Integrated\\Ecoture\\wwwroot\\uploads\\bRBVDy_aP5.png",
+      "Identity": "F:\\Github Repos\\Ecoture\\Ecoture\\wwwroot\\uploads\\bRBVDy_aP5.png",
       "SourceId": "Ecoture",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Integrated\\Ecoture\\wwwroot\\",
+      "ContentRoot": "F:\\Github Repos\\Ecoture\\Ecoture\\wwwroot\\",
       "BasePath": "_content/Ecoture",
-      "RelativePath": "uploads/bRBVDy_aP5.png",
+      "RelativePath": "uploads/bRBVDy_aP5#[.{fingerprint}]?.png",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
-      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeBehavior": "",
       "AssetMergeSource": "",
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
+      "Fingerprint": "47865rvzo2",
+      "Integrity": "AJCpvgehZ2wWtqkMGzWRNeN3D8nr0yq3GyVQwc3VDEk=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\uploads\\bRBVDy_aP5.png"
     },
     {
-      "Identity": "C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Integrated\\Ecoture\\wwwroot\\uploads\\CbO0pFdacf.PNG",
+      "Identity": "F:\\Github Repos\\Ecoture\\Ecoture\\wwwroot\\uploads\\CbO0pFdacf.PNG",
       "SourceId": "Ecoture",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Integrated\\Ecoture\\wwwroot\\",
+      "ContentRoot": "F:\\Github Repos\\Ecoture\\Ecoture\\wwwroot\\",
       "BasePath": "_content/Ecoture",
-      "RelativePath": "uploads/CbO0pFdacf.PNG",
+      "RelativePath": "uploads/CbO0pFdacf#[.{fingerprint}]?.PNG",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
-      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeBehavior": "",
       "AssetMergeSource": "",
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
+      "Fingerprint": "f9qqjpixfv",
+      "Integrity": "c14UNEjHxZN//0rgQHHcyOOKqbfs+lehtqU3eKl/yKw=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\uploads\\CbO0pFdacf.PNG"
     },
     {
-      "Identity": "C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Integrated\\Ecoture\\wwwroot\\uploads\\CSWLili4nz.png",
+      "Identity": "F:\\Github Repos\\Ecoture\\Ecoture\\wwwroot\\uploads\\CSWLili4nz.png",
       "SourceId": "Ecoture",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Integrated\\Ecoture\\wwwroot\\",
+      "ContentRoot": "F:\\Github Repos\\Ecoture\\Ecoture\\wwwroot\\",
       "BasePath": "_content/Ecoture",
-      "RelativePath": "uploads/CSWLili4nz.png",
+      "RelativePath": "uploads/CSWLili4nz#[.{fingerprint}]?.png",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
-      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeBehavior": "",
       "AssetMergeSource": "",
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
+      "Fingerprint": "71knoqosj9",
+      "Integrity": "1fpjNTAflJL46pPb3WDKhWqKAXh06mE83eFomE6ZiUY=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\uploads\\CSWLili4nz.png"
     },
     {
-      "Identity": "C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Integrated\\Ecoture\\wwwroot\\uploads\\cVyRnDP97T.PNG",
+      "Identity": "F:\\Github Repos\\Ecoture\\Ecoture\\wwwroot\\uploads\\cVyRnDP97T.PNG",
       "SourceId": "Ecoture",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Integrated\\Ecoture\\wwwroot\\",
+      "ContentRoot": "F:\\Github Repos\\Ecoture\\Ecoture\\wwwroot\\",
       "BasePath": "_content/Ecoture",
-      "RelativePath": "uploads/cVyRnDP97T.PNG",
+      "RelativePath": "uploads/cVyRnDP97T#[.{fingerprint}]?.PNG",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
-      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeBehavior": "",
       "AssetMergeSource": "",
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
+      "Fingerprint": "5c3n0ujyc2",
+      "Integrity": "pVhGRmVIw8h8m5GFA6cMX1MwcM3dIAdA4O+eYOdbZyk=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\uploads\\cVyRnDP97T.PNG"
     },
     {
-      "Identity": "C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Integrated\\Ecoture\\wwwroot\\uploads\\d8Pn9hLWje.PNG",
+      "Identity": "F:\\Github Repos\\Ecoture\\Ecoture\\wwwroot\\uploads\\d8Pn9hLWje.PNG",
       "SourceId": "Ecoture",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Integrated\\Ecoture\\wwwroot\\",
+      "ContentRoot": "F:\\Github Repos\\Ecoture\\Ecoture\\wwwroot\\",
       "BasePath": "_content/Ecoture",
-      "RelativePath": "uploads/d8Pn9hLWje.PNG",
+      "RelativePath": "uploads/d8Pn9hLWje#[.{fingerprint}]?.PNG",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
-      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeBehavior": "",
       "AssetMergeSource": "",
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
+      "Fingerprint": "tng4d9zwsf",
+      "Integrity": "WU5fKin0cn1fzq4WakS4hZsNYYGEWhLNCaM5oSQ5UK8=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\uploads\\d8Pn9hLWje.PNG"
     },
     {
-      "Identity": "C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Integrated\\Ecoture\\wwwroot\\uploads\\dYHsBVLjvk.PNG",
+      "Identity": "F:\\Github Repos\\Ecoture\\Ecoture\\wwwroot\\uploads\\dYHsBVLjvk.PNG",
       "SourceId": "Ecoture",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Integrated\\Ecoture\\wwwroot\\",
+      "ContentRoot": "F:\\Github Repos\\Ecoture\\Ecoture\\wwwroot\\",
       "BasePath": "_content/Ecoture",
-      "RelativePath": "uploads/dYHsBVLjvk.PNG",
+      "RelativePath": "uploads/dYHsBVLjvk#[.{fingerprint}]?.PNG",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
-      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeBehavior": "",
       "AssetMergeSource": "",
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
+      "Fingerprint": "mmhcs0xjgn",
+      "Integrity": "PlDyTKbqcOY7TcgRfjiSIGcH1FOIpNJ7u6Z/ZwrXRxs=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\uploads\\dYHsBVLjvk.PNG"
     },
     {
-      "Identity": "C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Integrated\\Ecoture\\wwwroot\\uploads\\e0Nw025KTX.PNG",
+      "Identity": "F:\\Github Repos\\Ecoture\\Ecoture\\wwwroot\\uploads\\e0Nw025KTX.PNG",
       "SourceId": "Ecoture",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Integrated\\Ecoture\\wwwroot\\",
+      "ContentRoot": "F:\\Github Repos\\Ecoture\\Ecoture\\wwwroot\\",
       "BasePath": "_content/Ecoture",
-      "RelativePath": "uploads/e0Nw025KTX.PNG",
+      "RelativePath": "uploads/e0Nw025KTX#[.{fingerprint}]?.PNG",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
-      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeBehavior": "",
       "AssetMergeSource": "",
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
+      "Fingerprint": "mmhcs0xjgn",
+      "Integrity": "PlDyTKbqcOY7TcgRfjiSIGcH1FOIpNJ7u6Z/ZwrXRxs=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\uploads\\e0Nw025KTX.PNG"
     },
     {
-      "Identity": "C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Integrated\\Ecoture\\wwwroot\\uploads\\euJeKyLkPR.PNG",
+      "Identity": "F:\\Github Repos\\Ecoture\\Ecoture\\wwwroot\\uploads\\euJeKyLkPR.PNG",
       "SourceId": "Ecoture",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Integrated\\Ecoture\\wwwroot\\",
+      "ContentRoot": "F:\\Github Repos\\Ecoture\\Ecoture\\wwwroot\\",
       "BasePath": "_content/Ecoture",
-      "RelativePath": "uploads/euJeKyLkPR.PNG",
+      "RelativePath": "uploads/euJeKyLkPR#[.{fingerprint}]?.PNG",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
-      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeBehavior": "",
       "AssetMergeSource": "",
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
+      "Fingerprint": "tng4d9zwsf",
+      "Integrity": "WU5fKin0cn1fzq4WakS4hZsNYYGEWhLNCaM5oSQ5UK8=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\uploads\\euJeKyLkPR.PNG"
     },
     {
-      "Identity": "C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Integrated\\Ecoture\\wwwroot\\uploads\\EzN3rL4GCp.PNG",
+      "Identity": "F:\\Github Repos\\Ecoture\\Ecoture\\wwwroot\\uploads\\EzN3rL4GCp.PNG",
       "SourceId": "Ecoture",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Integrated\\Ecoture\\wwwroot\\",
+      "ContentRoot": "F:\\Github Repos\\Ecoture\\Ecoture\\wwwroot\\",
       "BasePath": "_content/Ecoture",
-      "RelativePath": "uploads/EzN3rL4GCp.PNG",
+      "RelativePath": "uploads/EzN3rL4GCp#[.{fingerprint}]?.PNG",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
-      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeBehavior": "",
       "AssetMergeSource": "",
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
+      "Fingerprint": "tng4d9zwsf",
+      "Integrity": "WU5fKin0cn1fzq4WakS4hZsNYYGEWhLNCaM5oSQ5UK8=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\uploads\\EzN3rL4GCp.PNG"
     },
     {
-      "Identity": "C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Integrated\\Ecoture\\wwwroot\\uploads\\GiQKmelAYY.png",
+      "Identity": "F:\\Github Repos\\Ecoture\\Ecoture\\wwwroot\\uploads\\GiQKmelAYY.png",
       "SourceId": "Ecoture",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Integrated\\Ecoture\\wwwroot\\",
+      "ContentRoot": "F:\\Github Repos\\Ecoture\\Ecoture\\wwwroot\\",
       "BasePath": "_content/Ecoture",
-      "RelativePath": "uploads/GiQKmelAYY.png",
+      "RelativePath": "uploads/GiQKmelAYY#[.{fingerprint}]?.png",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
-      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeBehavior": "",
       "AssetMergeSource": "",
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
+      "Fingerprint": "47865rvzo2",
+      "Integrity": "AJCpvgehZ2wWtqkMGzWRNeN3D8nr0yq3GyVQwc3VDEk=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\uploads\\GiQKmelAYY.png"
     },
     {
-      "Identity": "C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Integrated\\Ecoture\\wwwroot\\uploads\\hMYTDIbSau.PNG",
+      "Identity": "F:\\Github Repos\\Ecoture\\Ecoture\\wwwroot\\uploads\\hMYTDIbSau.PNG",
       "SourceId": "Ecoture",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Integrated\\Ecoture\\wwwroot\\",
+      "ContentRoot": "F:\\Github Repos\\Ecoture\\Ecoture\\wwwroot\\",
       "BasePath": "_content/Ecoture",
-      "RelativePath": "uploads/hMYTDIbSau.PNG",
+      "RelativePath": "uploads/hMYTDIbSau#[.{fingerprint}]?.PNG",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
-      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeBehavior": "",
       "AssetMergeSource": "",
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
+      "Fingerprint": "mk1xvy70v7",
+      "Integrity": "Nj2Q+d0TonlNLbH3N47UxwyfcD+z2aBPKLfrE27Jjbc=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\uploads\\hMYTDIbSau.PNG"
     },
     {
-      "Identity": "C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Integrated\\Ecoture\\wwwroot\\uploads\\ky0LCJpz0D.PNG",
+      "Identity": "F:\\Github Repos\\Ecoture\\Ecoture\\wwwroot\\uploads\\ky0LCJpz0D.PNG",
       "SourceId": "Ecoture",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Integrated\\Ecoture\\wwwroot\\",
+      "ContentRoot": "F:\\Github Repos\\Ecoture\\Ecoture\\wwwroot\\",
       "BasePath": "_content/Ecoture",
-      "RelativePath": "uploads/ky0LCJpz0D.PNG",
+      "RelativePath": "uploads/ky0LCJpz0D#[.{fingerprint}]?.PNG",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
-      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeBehavior": "",
       "AssetMergeSource": "",
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
+      "Fingerprint": "f9qqjpixfv",
+      "Integrity": "c14UNEjHxZN//0rgQHHcyOOKqbfs+lehtqU3eKl/yKw=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\uploads\\ky0LCJpz0D.PNG"
     },
     {
-      "Identity": "C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Integrated\\Ecoture\\wwwroot\\uploads\\pjhKjMaUeo.PNG",
+      "Identity": "F:\\Github Repos\\Ecoture\\Ecoture\\wwwroot\\uploads\\pjhKjMaUeo.PNG",
       "SourceId": "Ecoture",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Integrated\\Ecoture\\wwwroot\\",
+      "ContentRoot": "F:\\Github Repos\\Ecoture\\Ecoture\\wwwroot\\",
       "BasePath": "_content/Ecoture",
-      "RelativePath": "uploads/pjhKjMaUeo.PNG",
+      "RelativePath": "uploads/pjhKjMaUeo#[.{fingerprint}]?.PNG",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
-      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeBehavior": "",
       "AssetMergeSource": "",
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
+      "Fingerprint": "242fsv801a",
+      "Integrity": "jk/s1lgBu5SGUlt8sRqzLYvdL/mcw87qX5OBcmBS5jA=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\uploads\\pjhKjMaUeo.PNG"
     },
     {
-      "Identity": "C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Integrated\\Ecoture\\wwwroot\\uploads\\qHQ6CqVfOd.PNG",
+      "Identity": "F:\\Github Repos\\Ecoture\\Ecoture\\wwwroot\\uploads\\qHQ6CqVfOd.PNG",
       "SourceId": "Ecoture",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Integrated\\Ecoture\\wwwroot\\",
+      "ContentRoot": "F:\\Github Repos\\Ecoture\\Ecoture\\wwwroot\\",
       "BasePath": "_content/Ecoture",
-      "RelativePath": "uploads/qHQ6CqVfOd.PNG",
+      "RelativePath": "uploads/qHQ6CqVfOd#[.{fingerprint}]?.PNG",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
-      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeBehavior": "",
       "AssetMergeSource": "",
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
+      "Fingerprint": "242fsv801a",
+      "Integrity": "jk/s1lgBu5SGUlt8sRqzLYvdL/mcw87qX5OBcmBS5jA=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\uploads\\qHQ6CqVfOd.PNG"
     },
     {
-      "Identity": "C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Integrated\\Ecoture\\wwwroot\\uploads\\RtKdsmee0F.PNG",
+      "Identity": "F:\\Github Repos\\Ecoture\\Ecoture\\wwwroot\\uploads\\RtKdsmee0F.PNG",
       "SourceId": "Ecoture",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Integrated\\Ecoture\\wwwroot\\",
+      "ContentRoot": "F:\\Github Repos\\Ecoture\\Ecoture\\wwwroot\\",
       "BasePath": "_content/Ecoture",
-      "RelativePath": "uploads/RtKdsmee0F.PNG",
+      "RelativePath": "uploads/RtKdsmee0F#[.{fingerprint}]?.PNG",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
-      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeBehavior": "",
       "AssetMergeSource": "",
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
+      "Fingerprint": "tng4d9zwsf",
+      "Integrity": "WU5fKin0cn1fzq4WakS4hZsNYYGEWhLNCaM5oSQ5UK8=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\uploads\\RtKdsmee0F.PNG"
     },
     {
-      "Identity": "C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Integrated\\Ecoture\\wwwroot\\uploads\\tALYAyhk1z.PNG",
+      "Identity": "F:\\Github Repos\\Ecoture\\Ecoture\\wwwroot\\uploads\\tALYAyhk1z.PNG",
       "SourceId": "Ecoture",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Integrated\\Ecoture\\wwwroot\\",
+      "ContentRoot": "F:\\Github Repos\\Ecoture\\Ecoture\\wwwroot\\",
       "BasePath": "_content/Ecoture",
-      "RelativePath": "uploads/tALYAyhk1z.PNG",
+      "RelativePath": "uploads/tALYAyhk1z#[.{fingerprint}]?.PNG",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
-      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeBehavior": "",
       "AssetMergeSource": "",
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
+      "Fingerprint": "f9qqjpixfv",
+      "Integrity": "c14UNEjHxZN//0rgQHHcyOOKqbfs+lehtqU3eKl/yKw=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\uploads\\tALYAyhk1z.PNG"
     },
     {
-      "Identity": "C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Integrated\\Ecoture\\wwwroot\\uploads\\urRDopoo2C.png",
+      "Identity": "F:\\Github Repos\\Ecoture\\Ecoture\\wwwroot\\uploads\\urRDopoo2C.png",
       "SourceId": "Ecoture",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Integrated\\Ecoture\\wwwroot\\",
+      "ContentRoot": "F:\\Github Repos\\Ecoture\\Ecoture\\wwwroot\\",
       "BasePath": "_content/Ecoture",
-      "RelativePath": "uploads/urRDopoo2C.png",
+      "RelativePath": "uploads/urRDopoo2C#[.{fingerprint}]?.png",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
-      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeBehavior": "",
       "AssetMergeSource": "",
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
+      "Fingerprint": "47865rvzo2",
+      "Integrity": "AJCpvgehZ2wWtqkMGzWRNeN3D8nr0yq3GyVQwc3VDEk=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\uploads\\urRDopoo2C.png"
     },
     {
-      "Identity": "C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Integrated\\Ecoture\\wwwroot\\uploads\\VTjBVCaMRH.png",
+      "Identity": "F:\\Github Repos\\Ecoture\\Ecoture\\wwwroot\\uploads\\VTjBVCaMRH.png",
       "SourceId": "Ecoture",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Integrated\\Ecoture\\wwwroot\\",
+      "ContentRoot": "F:\\Github Repos\\Ecoture\\Ecoture\\wwwroot\\",
       "BasePath": "_content/Ecoture",
-      "RelativePath": "uploads/VTjBVCaMRH.png",
+      "RelativePath": "uploads/VTjBVCaMRH#[.{fingerprint}]?.png",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
-      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeBehavior": "",
       "AssetMergeSource": "",
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
+      "Fingerprint": "47865rvzo2",
+      "Integrity": "AJCpvgehZ2wWtqkMGzWRNeN3D8nr0yq3GyVQwc3VDEk=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\uploads\\VTjBVCaMRH.png"
+    }
+  ],
+  "Endpoints": [
+    {
+      "Route": "uploads/1Pf_26JCAQ.47865rvzo2.png",
+      "AssetFile": "F:\\Github Repos\\Ecoture\\Ecoture\\wwwroot\\uploads\\1Pf_26JCAQ.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "10483"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"AJCpvgehZ2wWtqkMGzWRNeN3D8nr0yq3GyVQwc3VDEk=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 07 Feb 2025 13:19:20 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "47865rvzo2"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/1Pf_26JCAQ.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-AJCpvgehZ2wWtqkMGzWRNeN3D8nr0yq3GyVQwc3VDEk="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/1Pf_26JCAQ.png",
+      "AssetFile": "F:\\Github Repos\\Ecoture\\Ecoture\\wwwroot\\uploads\\1Pf_26JCAQ.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "10483"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"AJCpvgehZ2wWtqkMGzWRNeN3D8nr0yq3GyVQwc3VDEk=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 07 Feb 2025 13:19:20 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-AJCpvgehZ2wWtqkMGzWRNeN3D8nr0yq3GyVQwc3VDEk="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/24yDsoio5x.f9qqjpixfv.PNG",
+      "AssetFile": "F:\\Github Repos\\Ecoture\\Ecoture\\wwwroot\\uploads\\24yDsoio5x.PNG",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "61829"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"c14UNEjHxZN//0rgQHHcyOOKqbfs+lehtqU3eKl/yKw=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 07 Feb 2025 13:19:20 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "f9qqjpixfv"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/24yDsoio5x.PNG"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-c14UNEjHxZN//0rgQHHcyOOKqbfs+lehtqU3eKl/yKw="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/24yDsoio5x.PNG",
+      "AssetFile": "F:\\Github Repos\\Ecoture\\Ecoture\\wwwroot\\uploads\\24yDsoio5x.PNG",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "61829"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"c14UNEjHxZN//0rgQHHcyOOKqbfs+lehtqU3eKl/yKw=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 07 Feb 2025 13:19:20 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-c14UNEjHxZN//0rgQHHcyOOKqbfs+lehtqU3eKl/yKw="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/3NSjdc8pJJ.mmhcs0xjgn.PNG",
+      "AssetFile": "F:\\Github Repos\\Ecoture\\Ecoture\\wwwroot\\uploads\\3NSjdc8pJJ.PNG",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "38434"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"PlDyTKbqcOY7TcgRfjiSIGcH1FOIpNJ7u6Z/ZwrXRxs=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 07 Feb 2025 13:19:20 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "mmhcs0xjgn"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/3NSjdc8pJJ.PNG"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-PlDyTKbqcOY7TcgRfjiSIGcH1FOIpNJ7u6Z/ZwrXRxs="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/3NSjdc8pJJ.PNG",
+      "AssetFile": "F:\\Github Repos\\Ecoture\\Ecoture\\wwwroot\\uploads\\3NSjdc8pJJ.PNG",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "38434"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"PlDyTKbqcOY7TcgRfjiSIGcH1FOIpNJ7u6Z/ZwrXRxs=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 07 Feb 2025 13:19:20 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-PlDyTKbqcOY7TcgRfjiSIGcH1FOIpNJ7u6Z/ZwrXRxs="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/9ka8n6Ww8l.f9qqjpixfv.PNG",
+      "AssetFile": "F:\\Github Repos\\Ecoture\\Ecoture\\wwwroot\\uploads\\9ka8n6Ww8l.PNG",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "61829"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"c14UNEjHxZN//0rgQHHcyOOKqbfs+lehtqU3eKl/yKw=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 07 Feb 2025 13:19:20 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "f9qqjpixfv"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/9ka8n6Ww8l.PNG"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-c14UNEjHxZN//0rgQHHcyOOKqbfs+lehtqU3eKl/yKw="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/9ka8n6Ww8l.PNG",
+      "AssetFile": "F:\\Github Repos\\Ecoture\\Ecoture\\wwwroot\\uploads\\9ka8n6Ww8l.PNG",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "61829"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"c14UNEjHxZN//0rgQHHcyOOKqbfs+lehtqU3eKl/yKw=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 07 Feb 2025 13:19:20 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-c14UNEjHxZN//0rgQHHcyOOKqbfs+lehtqU3eKl/yKw="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/avlEOWnxHv.mmhcs0xjgn.PNG",
+      "AssetFile": "F:\\Github Repos\\Ecoture\\Ecoture\\wwwroot\\uploads\\avlEOWnxHv.PNG",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "38434"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"PlDyTKbqcOY7TcgRfjiSIGcH1FOIpNJ7u6Z/ZwrXRxs=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 07 Feb 2025 13:19:20 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "mmhcs0xjgn"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/avlEOWnxHv.PNG"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-PlDyTKbqcOY7TcgRfjiSIGcH1FOIpNJ7u6Z/ZwrXRxs="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/avlEOWnxHv.PNG",
+      "AssetFile": "F:\\Github Repos\\Ecoture\\Ecoture\\wwwroot\\uploads\\avlEOWnxHv.PNG",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "38434"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"PlDyTKbqcOY7TcgRfjiSIGcH1FOIpNJ7u6Z/ZwrXRxs=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 07 Feb 2025 13:19:20 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-PlDyTKbqcOY7TcgRfjiSIGcH1FOIpNJ7u6Z/ZwrXRxs="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/bRBVDy_aP5.47865rvzo2.png",
+      "AssetFile": "F:\\Github Repos\\Ecoture\\Ecoture\\wwwroot\\uploads\\bRBVDy_aP5.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "10483"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"AJCpvgehZ2wWtqkMGzWRNeN3D8nr0yq3GyVQwc3VDEk=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 07 Feb 2025 13:19:20 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "47865rvzo2"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/bRBVDy_aP5.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-AJCpvgehZ2wWtqkMGzWRNeN3D8nr0yq3GyVQwc3VDEk="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/bRBVDy_aP5.png",
+      "AssetFile": "F:\\Github Repos\\Ecoture\\Ecoture\\wwwroot\\uploads\\bRBVDy_aP5.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "10483"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"AJCpvgehZ2wWtqkMGzWRNeN3D8nr0yq3GyVQwc3VDEk=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 07 Feb 2025 13:19:20 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-AJCpvgehZ2wWtqkMGzWRNeN3D8nr0yq3GyVQwc3VDEk="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/CbO0pFdacf.f9qqjpixfv.PNG",
+      "AssetFile": "F:\\Github Repos\\Ecoture\\Ecoture\\wwwroot\\uploads\\CbO0pFdacf.PNG",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "61829"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"c14UNEjHxZN//0rgQHHcyOOKqbfs+lehtqU3eKl/yKw=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 07 Feb 2025 13:19:20 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "f9qqjpixfv"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/CbO0pFdacf.PNG"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-c14UNEjHxZN//0rgQHHcyOOKqbfs+lehtqU3eKl/yKw="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/CbO0pFdacf.PNG",
+      "AssetFile": "F:\\Github Repos\\Ecoture\\Ecoture\\wwwroot\\uploads\\CbO0pFdacf.PNG",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "61829"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"c14UNEjHxZN//0rgQHHcyOOKqbfs+lehtqU3eKl/yKw=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 07 Feb 2025 13:19:20 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-c14UNEjHxZN//0rgQHHcyOOKqbfs+lehtqU3eKl/yKw="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/CSWLili4nz.71knoqosj9.png",
+      "AssetFile": "F:\\Github Repos\\Ecoture\\Ecoture\\wwwroot\\uploads\\CSWLili4nz.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "28181"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"1fpjNTAflJL46pPb3WDKhWqKAXh06mE83eFomE6ZiUY=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 07 Feb 2025 13:19:20 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "71knoqosj9"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/CSWLili4nz.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-1fpjNTAflJL46pPb3WDKhWqKAXh06mE83eFomE6ZiUY="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/CSWLili4nz.png",
+      "AssetFile": "F:\\Github Repos\\Ecoture\\Ecoture\\wwwroot\\uploads\\CSWLili4nz.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "28181"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"1fpjNTAflJL46pPb3WDKhWqKAXh06mE83eFomE6ZiUY=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 07 Feb 2025 13:19:20 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-1fpjNTAflJL46pPb3WDKhWqKAXh06mE83eFomE6ZiUY="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/cVyRnDP97T.5c3n0ujyc2.PNG",
+      "AssetFile": "F:\\Github Repos\\Ecoture\\Ecoture\\wwwroot\\uploads\\cVyRnDP97T.PNG",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "150598"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"pVhGRmVIw8h8m5GFA6cMX1MwcM3dIAdA4O+eYOdbZyk=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 07 Feb 2025 13:19:20 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "5c3n0ujyc2"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/cVyRnDP97T.PNG"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-pVhGRmVIw8h8m5GFA6cMX1MwcM3dIAdA4O+eYOdbZyk="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/cVyRnDP97T.PNG",
+      "AssetFile": "F:\\Github Repos\\Ecoture\\Ecoture\\wwwroot\\uploads\\cVyRnDP97T.PNG",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "150598"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"pVhGRmVIw8h8m5GFA6cMX1MwcM3dIAdA4O+eYOdbZyk=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 07 Feb 2025 13:19:20 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-pVhGRmVIw8h8m5GFA6cMX1MwcM3dIAdA4O+eYOdbZyk="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/d8Pn9hLWje.PNG",
+      "AssetFile": "F:\\Github Repos\\Ecoture\\Ecoture\\wwwroot\\uploads\\d8Pn9hLWje.PNG",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "37989"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"WU5fKin0cn1fzq4WakS4hZsNYYGEWhLNCaM5oSQ5UK8=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 07 Feb 2025 13:19:20 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-WU5fKin0cn1fzq4WakS4hZsNYYGEWhLNCaM5oSQ5UK8="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/d8Pn9hLWje.tng4d9zwsf.PNG",
+      "AssetFile": "F:\\Github Repos\\Ecoture\\Ecoture\\wwwroot\\uploads\\d8Pn9hLWje.PNG",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "37989"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"WU5fKin0cn1fzq4WakS4hZsNYYGEWhLNCaM5oSQ5UK8=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 07 Feb 2025 13:19:20 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "tng4d9zwsf"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/d8Pn9hLWje.PNG"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-WU5fKin0cn1fzq4WakS4hZsNYYGEWhLNCaM5oSQ5UK8="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/dYHsBVLjvk.mmhcs0xjgn.PNG",
+      "AssetFile": "F:\\Github Repos\\Ecoture\\Ecoture\\wwwroot\\uploads\\dYHsBVLjvk.PNG",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "38434"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"PlDyTKbqcOY7TcgRfjiSIGcH1FOIpNJ7u6Z/ZwrXRxs=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 07 Feb 2025 13:19:20 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "mmhcs0xjgn"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/dYHsBVLjvk.PNG"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-PlDyTKbqcOY7TcgRfjiSIGcH1FOIpNJ7u6Z/ZwrXRxs="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/dYHsBVLjvk.PNG",
+      "AssetFile": "F:\\Github Repos\\Ecoture\\Ecoture\\wwwroot\\uploads\\dYHsBVLjvk.PNG",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "38434"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"PlDyTKbqcOY7TcgRfjiSIGcH1FOIpNJ7u6Z/ZwrXRxs=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 07 Feb 2025 13:19:20 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-PlDyTKbqcOY7TcgRfjiSIGcH1FOIpNJ7u6Z/ZwrXRxs="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/e0Nw025KTX.mmhcs0xjgn.PNG",
+      "AssetFile": "F:\\Github Repos\\Ecoture\\Ecoture\\wwwroot\\uploads\\e0Nw025KTX.PNG",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "38434"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"PlDyTKbqcOY7TcgRfjiSIGcH1FOIpNJ7u6Z/ZwrXRxs=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 07 Feb 2025 13:19:20 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "mmhcs0xjgn"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/e0Nw025KTX.PNG"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-PlDyTKbqcOY7TcgRfjiSIGcH1FOIpNJ7u6Z/ZwrXRxs="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/e0Nw025KTX.PNG",
+      "AssetFile": "F:\\Github Repos\\Ecoture\\Ecoture\\wwwroot\\uploads\\e0Nw025KTX.PNG",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "38434"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"PlDyTKbqcOY7TcgRfjiSIGcH1FOIpNJ7u6Z/ZwrXRxs=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 07 Feb 2025 13:19:20 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-PlDyTKbqcOY7TcgRfjiSIGcH1FOIpNJ7u6Z/ZwrXRxs="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/euJeKyLkPR.PNG",
+      "AssetFile": "F:\\Github Repos\\Ecoture\\Ecoture\\wwwroot\\uploads\\euJeKyLkPR.PNG",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "37989"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"WU5fKin0cn1fzq4WakS4hZsNYYGEWhLNCaM5oSQ5UK8=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 07 Feb 2025 13:19:20 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-WU5fKin0cn1fzq4WakS4hZsNYYGEWhLNCaM5oSQ5UK8="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/euJeKyLkPR.tng4d9zwsf.PNG",
+      "AssetFile": "F:\\Github Repos\\Ecoture\\Ecoture\\wwwroot\\uploads\\euJeKyLkPR.PNG",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "37989"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"WU5fKin0cn1fzq4WakS4hZsNYYGEWhLNCaM5oSQ5UK8=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 07 Feb 2025 13:19:20 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "tng4d9zwsf"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/euJeKyLkPR.PNG"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-WU5fKin0cn1fzq4WakS4hZsNYYGEWhLNCaM5oSQ5UK8="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/EzN3rL4GCp.PNG",
+      "AssetFile": "F:\\Github Repos\\Ecoture\\Ecoture\\wwwroot\\uploads\\EzN3rL4GCp.PNG",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "37989"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"WU5fKin0cn1fzq4WakS4hZsNYYGEWhLNCaM5oSQ5UK8=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 07 Feb 2025 13:19:20 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-WU5fKin0cn1fzq4WakS4hZsNYYGEWhLNCaM5oSQ5UK8="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/EzN3rL4GCp.tng4d9zwsf.PNG",
+      "AssetFile": "F:\\Github Repos\\Ecoture\\Ecoture\\wwwroot\\uploads\\EzN3rL4GCp.PNG",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "37989"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"WU5fKin0cn1fzq4WakS4hZsNYYGEWhLNCaM5oSQ5UK8=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 07 Feb 2025 13:19:20 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "tng4d9zwsf"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/EzN3rL4GCp.PNG"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-WU5fKin0cn1fzq4WakS4hZsNYYGEWhLNCaM5oSQ5UK8="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/GiQKmelAYY.47865rvzo2.png",
+      "AssetFile": "F:\\Github Repos\\Ecoture\\Ecoture\\wwwroot\\uploads\\GiQKmelAYY.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "10483"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"AJCpvgehZ2wWtqkMGzWRNeN3D8nr0yq3GyVQwc3VDEk=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 07 Feb 2025 13:19:20 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "47865rvzo2"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/GiQKmelAYY.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-AJCpvgehZ2wWtqkMGzWRNeN3D8nr0yq3GyVQwc3VDEk="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/GiQKmelAYY.png",
+      "AssetFile": "F:\\Github Repos\\Ecoture\\Ecoture\\wwwroot\\uploads\\GiQKmelAYY.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "10483"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"AJCpvgehZ2wWtqkMGzWRNeN3D8nr0yq3GyVQwc3VDEk=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 07 Feb 2025 13:19:20 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-AJCpvgehZ2wWtqkMGzWRNeN3D8nr0yq3GyVQwc3VDEk="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/hMYTDIbSau.mk1xvy70v7.PNG",
+      "AssetFile": "F:\\Github Repos\\Ecoture\\Ecoture\\wwwroot\\uploads\\hMYTDIbSau.PNG",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "26106"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Nj2Q+d0TonlNLbH3N47UxwyfcD+z2aBPKLfrE27Jjbc=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 07 Feb 2025 13:19:20 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "mk1xvy70v7"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/hMYTDIbSau.PNG"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-Nj2Q+d0TonlNLbH3N47UxwyfcD+z2aBPKLfrE27Jjbc="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/hMYTDIbSau.PNG",
+      "AssetFile": "F:\\Github Repos\\Ecoture\\Ecoture\\wwwroot\\uploads\\hMYTDIbSau.PNG",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "26106"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Nj2Q+d0TonlNLbH3N47UxwyfcD+z2aBPKLfrE27Jjbc=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 07 Feb 2025 13:19:20 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-Nj2Q+d0TonlNLbH3N47UxwyfcD+z2aBPKLfrE27Jjbc="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/ky0LCJpz0D.f9qqjpixfv.PNG",
+      "AssetFile": "F:\\Github Repos\\Ecoture\\Ecoture\\wwwroot\\uploads\\ky0LCJpz0D.PNG",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "61829"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"c14UNEjHxZN//0rgQHHcyOOKqbfs+lehtqU3eKl/yKw=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 07 Feb 2025 13:19:20 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "f9qqjpixfv"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/ky0LCJpz0D.PNG"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-c14UNEjHxZN//0rgQHHcyOOKqbfs+lehtqU3eKl/yKw="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/ky0LCJpz0D.PNG",
+      "AssetFile": "F:\\Github Repos\\Ecoture\\Ecoture\\wwwroot\\uploads\\ky0LCJpz0D.PNG",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "61829"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"c14UNEjHxZN//0rgQHHcyOOKqbfs+lehtqU3eKl/yKw=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 07 Feb 2025 13:19:20 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-c14UNEjHxZN//0rgQHHcyOOKqbfs+lehtqU3eKl/yKw="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/pjhKjMaUeo.242fsv801a.PNG",
+      "AssetFile": "F:\\Github Repos\\Ecoture\\Ecoture\\wwwroot\\uploads\\pjhKjMaUeo.PNG",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "56616"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"jk/s1lgBu5SGUlt8sRqzLYvdL/mcw87qX5OBcmBS5jA=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 07 Feb 2025 13:19:20 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "242fsv801a"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/pjhKjMaUeo.PNG"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-jk/s1lgBu5SGUlt8sRqzLYvdL/mcw87qX5OBcmBS5jA="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/pjhKjMaUeo.PNG",
+      "AssetFile": "F:\\Github Repos\\Ecoture\\Ecoture\\wwwroot\\uploads\\pjhKjMaUeo.PNG",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "56616"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"jk/s1lgBu5SGUlt8sRqzLYvdL/mcw87qX5OBcmBS5jA=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 07 Feb 2025 13:19:20 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-jk/s1lgBu5SGUlt8sRqzLYvdL/mcw87qX5OBcmBS5jA="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/qHQ6CqVfOd.242fsv801a.PNG",
+      "AssetFile": "F:\\Github Repos\\Ecoture\\Ecoture\\wwwroot\\uploads\\qHQ6CqVfOd.PNG",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "56616"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"jk/s1lgBu5SGUlt8sRqzLYvdL/mcw87qX5OBcmBS5jA=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 07 Feb 2025 13:19:20 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "242fsv801a"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/qHQ6CqVfOd.PNG"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-jk/s1lgBu5SGUlt8sRqzLYvdL/mcw87qX5OBcmBS5jA="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/qHQ6CqVfOd.PNG",
+      "AssetFile": "F:\\Github Repos\\Ecoture\\Ecoture\\wwwroot\\uploads\\qHQ6CqVfOd.PNG",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "56616"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"jk/s1lgBu5SGUlt8sRqzLYvdL/mcw87qX5OBcmBS5jA=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 07 Feb 2025 13:19:20 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-jk/s1lgBu5SGUlt8sRqzLYvdL/mcw87qX5OBcmBS5jA="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/RtKdsmee0F.PNG",
+      "AssetFile": "F:\\Github Repos\\Ecoture\\Ecoture\\wwwroot\\uploads\\RtKdsmee0F.PNG",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "37989"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"WU5fKin0cn1fzq4WakS4hZsNYYGEWhLNCaM5oSQ5UK8=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 07 Feb 2025 13:19:20 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-WU5fKin0cn1fzq4WakS4hZsNYYGEWhLNCaM5oSQ5UK8="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/RtKdsmee0F.tng4d9zwsf.PNG",
+      "AssetFile": "F:\\Github Repos\\Ecoture\\Ecoture\\wwwroot\\uploads\\RtKdsmee0F.PNG",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "37989"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"WU5fKin0cn1fzq4WakS4hZsNYYGEWhLNCaM5oSQ5UK8=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 07 Feb 2025 13:19:20 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "tng4d9zwsf"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/RtKdsmee0F.PNG"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-WU5fKin0cn1fzq4WakS4hZsNYYGEWhLNCaM5oSQ5UK8="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/tALYAyhk1z.f9qqjpixfv.PNG",
+      "AssetFile": "F:\\Github Repos\\Ecoture\\Ecoture\\wwwroot\\uploads\\tALYAyhk1z.PNG",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "61829"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"c14UNEjHxZN//0rgQHHcyOOKqbfs+lehtqU3eKl/yKw=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 07 Feb 2025 13:19:20 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "f9qqjpixfv"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/tALYAyhk1z.PNG"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-c14UNEjHxZN//0rgQHHcyOOKqbfs+lehtqU3eKl/yKw="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/tALYAyhk1z.PNG",
+      "AssetFile": "F:\\Github Repos\\Ecoture\\Ecoture\\wwwroot\\uploads\\tALYAyhk1z.PNG",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "61829"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"c14UNEjHxZN//0rgQHHcyOOKqbfs+lehtqU3eKl/yKw=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 07 Feb 2025 13:19:20 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-c14UNEjHxZN//0rgQHHcyOOKqbfs+lehtqU3eKl/yKw="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/urRDopoo2C.47865rvzo2.png",
+      "AssetFile": "F:\\Github Repos\\Ecoture\\Ecoture\\wwwroot\\uploads\\urRDopoo2C.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "10483"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"AJCpvgehZ2wWtqkMGzWRNeN3D8nr0yq3GyVQwc3VDEk=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 07 Feb 2025 13:19:20 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "47865rvzo2"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/urRDopoo2C.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-AJCpvgehZ2wWtqkMGzWRNeN3D8nr0yq3GyVQwc3VDEk="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/urRDopoo2C.png",
+      "AssetFile": "F:\\Github Repos\\Ecoture\\Ecoture\\wwwroot\\uploads\\urRDopoo2C.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "10483"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"AJCpvgehZ2wWtqkMGzWRNeN3D8nr0yq3GyVQwc3VDEk=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 07 Feb 2025 13:19:20 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-AJCpvgehZ2wWtqkMGzWRNeN3D8nr0yq3GyVQwc3VDEk="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/VTjBVCaMRH.47865rvzo2.png",
+      "AssetFile": "F:\\Github Repos\\Ecoture\\Ecoture\\wwwroot\\uploads\\VTjBVCaMRH.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "10483"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"AJCpvgehZ2wWtqkMGzWRNeN3D8nr0yq3GyVQwc3VDEk=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 07 Feb 2025 13:19:20 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "47865rvzo2"
+        },
+        {
+          "Name": "label",
+          "Value": "uploads/VTjBVCaMRH.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-AJCpvgehZ2wWtqkMGzWRNeN3D8nr0yq3GyVQwc3VDEk="
+        }
+      ]
+    },
+    {
+      "Route": "uploads/VTjBVCaMRH.png",
+      "AssetFile": "F:\\Github Repos\\Ecoture\\Ecoture\\wwwroot\\uploads\\VTjBVCaMRH.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "10483"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"AJCpvgehZ2wWtqkMGzWRNeN3D8nr0yq3GyVQwc3VDEk=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 07 Feb 2025 13:19:20 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-AJCpvgehZ2wWtqkMGzWRNeN3D8nr0yq3GyVQwc3VDEk="
+        }
+      ]
     }
   ]
 }

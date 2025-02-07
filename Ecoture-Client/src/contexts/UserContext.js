@@ -1,8 +1,11 @@
-import { createContext } from 'react';
+import { createContext } from "react"
 
 const UserContext = createContext({
-  user: null,
-  setUser: () => {}
-});
+    user: null,
+    setUser: () => {},
+    loading: true,
+    // refreshMembership: null,
+    // refreshUser: null,
+})
 
-export default UserContext;
+export default UserContext

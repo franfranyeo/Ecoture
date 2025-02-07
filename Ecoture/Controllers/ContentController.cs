@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Ecoture.Models.Entity;
-using Ecoture.Models.DTO;
+using Ecoture.Model.Entity;
+using Ecoture.Model.DTO;
 using Microsoft.EntityFrameworkCore;
 
 namespace Ecoture.Controllers

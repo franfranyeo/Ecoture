@@ -1,5 +1,5 @@
-﻿// Models/ProductColor.cs
-namespace Ecoture.Models.Entity
+﻿// Model/ProductColor.cs
+namespace Ecoture.Model.Entity
 {
     public class ProductColor
     {

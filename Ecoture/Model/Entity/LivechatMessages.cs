@@ -1,4 +1,4 @@
-﻿namespace Ecoture.Models.Entity
+﻿namespace Ecoture.Model.Entity
 {
 	public class LivechatMessages
 	{

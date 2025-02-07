@@ -15,7 +15,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.IEnumerable\u00601[[Ecoture.Models.DTO.AddressDTO, Ecoture, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[Ecoture.Model.DTO.AddressDTO, Ecoture, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -35,13 +35,13 @@
     "Parameters": [
       {
         "Name": "address",
-        "Type": "Ecoture.Models.Request.AddAddressRequest",
+        "Type": "Ecoture.Model.Request.AddAddressRequest",
         "IsRequired": true
       }
     ],
     "ReturnTypes": [
       {
-        "Type": "Ecoture.Models.DTO.AddressDTO",
+        "Type": "Ecoture.Model.DTO.AddressDTO",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -67,7 +67,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "Ecoture.Models.DTO.AddressDTO",
+        "Type": "Ecoture.Model.DTO.AddressDTO",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -92,7 +92,7 @@
       },
       {
         "Name": "address",
-        "Type": "Ecoture.Models.Request.UpdateAddressRequest",
+        "Type": "Ecoture.Model.Request.UpdateAddressRequest",
         "IsRequired": true
       }
     ],
@@ -124,13 +124,13 @@
     "Parameters": [
       {
         "Name": "contentDto",
-        "Type": "Ecoture.Models.DTO.ContentDto",
+        "Type": "Ecoture.Model.DTO.ContentDto",
         "IsRequired": true
       }
     ],
     "ReturnTypes": [
       {
-        "Type": "Ecoture.Models.DTO.ContentDto",
+        "Type": "Ecoture.Model.DTO.ContentDto",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -171,7 +171,7 @@
       },
       {
         "Name": "contentDto",
-        "Type": "Ecoture.Models.DTO.ContentDto",
+        "Type": "Ecoture.Model.DTO.ContentDto",
         "IsRequired": true
       }
     ],
@@ -213,7 +213,7 @@
     "Parameters": [
       {
         "Name": "request",
-        "Type": "Ecoture.Models.Request.AddCreditCardRequest",
+        "Type": "Ecoture.Model.Request.AddCreditCardRequest",
         "IsRequired": true
       }
     ],
@@ -250,7 +250,7 @@
       },
       {
         "Name": "request",
-        "Type": "Ecoture.Models.Request.UpdateCreditCardRequest",
+        "Type": "Ecoture.Model.Request.UpdateCreditCardRequest",
         "IsRequired": true
       }
     ],
@@ -288,7 +288,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "Ecoture.Models.DTO.EnquiryDTO",
+        "Type": "Ecoture.Model.DTO.EnquiryDTO",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -308,13 +308,13 @@
     "Parameters": [
       {
         "Name": "enquiryRequest",
-        "Type": "Ecoture.Models.Entity.Enquiry",
+        "Type": "Ecoture.Model.Entity.Enquiry",
         "IsRequired": true
       }
     ],
     "ReturnTypes": [
       {
-        "Type": "Ecoture.Models.DTO.EnquiryDTO",
+        "Type": "Ecoture.Model.DTO.EnquiryDTO",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -340,7 +340,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "Ecoture.Models.DTO.EnquiryDTO",
+        "Type": "Ecoture.Model.DTO.EnquiryDTO",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -365,7 +365,7 @@
       },
       {
         "Name": "updatedEnquiry",
-        "Type": "Ecoture.Models.Request.UpdateEnquiryRequest",
+        "Type": "Ecoture.Model.Request.UpdateEnquiryRequest",
         "IsRequired": true
       }
     ],
@@ -413,7 +413,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "Ecoture.Models.UploadResponse",
+        "Type": "Ecoture.Model.Response.UploadResponse",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -433,7 +433,7 @@
     "Parameters": [
       {
         "Name": "newsletterDto",
-        "Type": "Ecoture.Models.DTO.NewsletterDto",
+        "Type": "Ecoture.Model.DTO.NewsletterDto",
         "IsRequired": true
       }
     ],
@@ -470,7 +470,7 @@
       },
       {
         "Name": "newsletterDto",
-        "Type": "Ecoture.Models.DTO.NewsletterDto",
+        "Type": "Ecoture.Model.DTO.NewsletterDto",
         "IsRequired": true
       }
     ],
@@ -508,7 +508,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.IEnumerable\u00601[[Ecoture.Models.DTO.ProductDTO, Ecoture, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[Ecoture.Model.DTO.ProductDTO, Ecoture, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -528,13 +528,13 @@
     "Parameters": [
       {
         "Name": "product",
-        "Type": "Ecoture.Models.Request.AddProductRequest",
+        "Type": "Ecoture.Model.Request.AddProductRequest",
         "IsRequired": true
       }
     ],
     "ReturnTypes": [
       {
-        "Type": "Ecoture.Models.DTO.ProductDTO",
+        "Type": "Ecoture.Model.DTO.ProductDTO",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -560,7 +560,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "Ecoture.Models.DTO.ProductDTO",
+        "Type": "Ecoture.Model.DTO.ProductDTO",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -585,7 +585,7 @@
       },
       {
         "Name": "product",
-        "Type": "Ecoture.Models.Request.UpdateProductRequest",
+        "Type": "Ecoture.Model.Request.UpdateProductRequest",
         "IsRequired": true
       }
     ],
@@ -617,7 +617,7 @@
     "Parameters": [],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.IEnumerable\u00601[[Ecoture.Models.DTO.ResponseDTO, Ecoture, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[Ecoture.Model.DTO.ResponseDTO, Ecoture, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -637,13 +637,13 @@
     "Parameters": [
       {
         "Name": "responseRequest",
-        "Type": "Ecoture.Models.Request.AddResponse",
+        "Type": "Ecoture.Model.Request.AddResponse",
         "IsRequired": true
       }
     ],
     "ReturnTypes": [
       {
-        "Type": "Ecoture.Models.DTO.ResponseDTO",
+        "Type": "Ecoture.Model.DTO.ResponseDTO",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -679,7 +679,7 @@
     "Parameters": [
       {
         "Name": "request",
-        "Type": "Ecoture.Models.Request.AddReviewRequest",
+        "Type": "Ecoture.Model.Request.AddReviewRequest",
         "IsRequired": true
       }
     ],
@@ -700,7 +700,7 @@
       },
       {
         "Name": "request",
-        "Type": "Ecoture.Models.Request.AddReviewRequest",
+        "Type": "Ecoture.Model.Request.AddReviewRequest",
         "IsRequired": true
       }
     ],
@@ -740,15 +740,31 @@
   },
   {
     "ContainingType": "Ecoture.Controllers.UserController",
-    "Method": "Auth",
-    "RelativePath": "User/auth",
+    "Method": "GetUsers",
+    "RelativePath": "User",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Ecoture.Controllers.UserController",
+    "Method": "CreateUser",
+    "RelativePath": "User",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "user",
+        "Type": "Ecoture.Model.Entity.User",
+        "IsRequired": true
+      }
+    ],
     "ReturnTypes": [
       {
-        "Type": "Ecoture.Models.AuthResponse",
+        "Type": "Ecoture.Model.Entity.User",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -757,6 +773,233 @@
         "StatusCode": 200
       }
     ]
+  },
+  {
+    "ContainingType": "Ecoture.Controllers.UserController",
+    "Method": "GetUser",
+    "RelativePath": "User/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Ecoture.Model.Entity.User",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Ecoture.Controllers.UserController",
+    "Method": "DeleteUser",
+    "RelativePath": "User/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Ecoture.Controllers.UserController",
+    "Method": "RequestDeletion",
+    "RelativePath": "User/{id}/delete-request",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Ecoture.Controllers.UserController",
+    "Method": "HardDelete",
+    "RelativePath": "User/{id}/hard-delete",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Ecoture.Controllers.UserController",
+    "Method": "PermanentDelete",
+    "RelativePath": "User/{id}/permanent-delete",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Ecoture.Controllers.UserController",
+    "Method": "EditUser",
+    "RelativePath": "User/{UserId}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "Ecoture.Model.Request.EditUserRequest",
+        "IsRequired": true
+      },
+      {
+        "Name": "UserId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Ecoture.Controllers.UserController",
+    "Method": "Auth",
+    "RelativePath": "User/auth",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Ecoture.Controllers.UserController",
+    "Method": "ChangePassword",
+    "RelativePath": "User/change-password",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "Ecoture.Model.Request.ChangePasswordRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Ecoture.Controllers.UserController",
+    "Method": "CreateStaff",
+    "RelativePath": "User/create-staff",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "Ecoture.Model.Request.CreateStaffRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Ecoture.Controllers.UserController",
+    "Method": "EditProfile",
+    "RelativePath": "User/edit-profile",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "Ecoture.Model.Request.EditProfileRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Ecoture.Controllers.UserController",
+    "Method": "ForgotPassword",
+    "RelativePath": "User/forgot-password",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "Ecoture.Model.Request.ForgotPasswordRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Ecoture.Controllers.UserController",
+    "Method": "GetMfaResponse",
+    "RelativePath": "User/get-mfa",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "Ecoture.Model.Request.MfaRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Ecoture.Model.Response.MfaResponse",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Ecoture.Controllers.UserController",
+    "Method": "GoogleLogin",
+    "RelativePath": "User/google",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "Ecoture.Model.Request.GoogleLoginRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
   },
   {
     "ContainingType": "Ecoture.Controllers.UserController",
@@ -768,21 +1011,11 @@
     "Parameters": [
       {
         "Name": "request",
-        "Type": "Ecoture.Models.LoginRequest",
+        "Type": "Ecoture.Model.Request.LoginRequest",
         "IsRequired": true
       }
     ],
-    "ReturnTypes": [
-      {
-        "Type": "Ecoture.Models.LoginResponse",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
+    "ReturnTypes": []
   },
   {
     "ContainingType": "Ecoture.Controllers.UserController",
@@ -794,7 +1027,135 @@
     "Parameters": [
       {
         "Name": "request",
-        "Type": "Ecoture.Models.Request.RegisterRequest",
+        "Type": "Ecoture.Model.Request.RegisterRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Ecoture.Controllers.UserController",
+    "Method": "ResetPassword",
+    "RelativePath": "User/reset-password",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "Ecoture.Model.Request.ResetPasswordRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Ecoture.Controllers.UserController",
+    "Method": "UpdateMfa",
+    "RelativePath": "User/update-mfa",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "Ecoture.Model.Request.UpdateMfaRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Ecoture.Controllers.VerificationController",
+    "Method": "InitiateEmailChange",
+    "RelativePath": "verify/change-email",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "Ecoture.Controllers.EmailChangeRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Ecoture.Controllers.VerificationController",
+    "Method": "VerifyEmailChange",
+    "RelativePath": "verify/change-email-otp",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "Ecoture.Controllers.VerifyEmailChangeRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Ecoture.Controllers.VerificationController",
+    "Method": "SendVerificationEmail",
+    "RelativePath": "verify/email",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "Ecoture.Controllers.EmailVerificationRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Ecoture.Controllers.VerificationController",
+    "Method": "VerifyEmail",
+    "RelativePath": "verify/email-otp",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "Ecoture.Controllers.OtpVerificationRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Ecoture.Controllers.VerificationController",
+    "Method": "SendVerificationPhone",
+    "RelativePath": "verify/phone",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "Ecoture.Controllers.SmsVerificationRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Ecoture.Controllers.VerificationController",
+    "Method": "VerifyPhone",
+    "RelativePath": "verify/phone-otp",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "Ecoture.Controllers.OtpVerificationRequest",
         "IsRequired": true
       }
     ],

@@ -1,4 +1,4 @@
-﻿using Ecoture.Models;
+﻿using Ecoture.Model.Response;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NanoidDotNet;

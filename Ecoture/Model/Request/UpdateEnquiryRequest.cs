@@ -1,7 +1,7 @@
-﻿using Ecoture.Models.Enum;
+﻿using Ecoture.Model.Enum;
 using System.ComponentModel.DataAnnotations;
 
-namespace Ecoture.Models.Request
+namespace Ecoture.Model.Request
 {
 	public class UpdateEnquiryRequest
 	{

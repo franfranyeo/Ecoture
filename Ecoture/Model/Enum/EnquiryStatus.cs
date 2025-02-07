@@ -1,4 +1,4 @@
-﻿namespace Ecoture.Models.Enum
+﻿namespace Ecoture.Model.Enum
 {
 	public enum EnquiryStatus
 	{

@@ -1,6 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Ecoture.Model.Entity;
+using System.ComponentModel.DataAnnotations;
 
-namespace Ecoture.Models.Entity
+namespace Ecoture.Model.Entity
 {
     public class CreditCard
     {

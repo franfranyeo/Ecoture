@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Ecoture.Models.Entity
+namespace Ecoture.Model.Entity
 {
 	public class Newsletter
 	{

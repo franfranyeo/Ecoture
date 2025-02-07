@@ -1,9 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Ecoture.Models.Entity;
-using Ecoture.Models.Enum;
+using Ecoture.Model.Entity;
+using Ecoture.Model.Entity;
+using Ecoture.Model.Enum;
 
-namespace Ecoture.Models.Entity
+namespace Ecoture.Model.Entity
 {
     public class Product
     {

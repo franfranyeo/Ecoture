@@ -1,7 +1,8 @@
 ﻿using System;
-using Ecoture.Models.Enum;
+using Ecoture.Model.DTO;
+using Ecoture.Model.Enum;
 
-namespace Ecoture.Models.DTO
+namespace Ecoture.Model.DTO
 {
     /// <summary>
     /// Data Transfer Object for Product entity.
