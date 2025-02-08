@@ -1,9 +1,18 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Box, Typography, TextField, Button, Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material';
-import { useFormik } from 'formik';
-import * as yup from 'yup';
-import http from '../http';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import {
+  Box,
+  Typography,
+  TextField,
+  Button,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+} from "@mui/material";
+import { useFormik } from "formik";
+import * as yup from "yup";
+import http from "../utils/http";
 // formating help from ai for ui
 function AddCreditCard() {
   const navigate = useNavigate();
@@ -11,33 +20,45 @@ function AddCreditCard() {
 
   const formik = useFormik({
     initialValues: {
-      cardHolderName: '',
-      cardNumber: '',
-      expiryMonth: '',
-      expiryYear: '',
-      cvv: '',
+      cardHolderName: "",
+      cardNumber: "",
+      expiryMonth: "",
+      expiryYear: "",
+      cvv: "",
     },
     validationSchema: yup.object({
-      cardHolderName: yup.string().required('Card Holder Name is required'),
-      cardNumber: yup.string().matches(/^\d{16}$/, 'Card Number must be 16 digits').required('Card Number is required'),
+      cardHolderName: yup.string().required("Card Holder Name is required"),
+      cardNumber: yup
+        .string()
+        .matches(/^\d{16}$/, "Card Number must be 16 digits")
+        .required("Card Number is required"),
       expiryMonth: yup
         .number()
-        .min(1, 'Must be between 1 and 12')
-        .max(12, 'Must be between 1 and 12')
-        .required('Expiry Month is required'),
+        .min(1, "Must be between 1 and 12")
+        .max(12, "Must be between 1 and 12")
+        .required("Expiry Month is required"),
       expiryYear: yup
         .number()
-        .min(new Date().getFullYear(), `Must be ${new Date().getFullYear()} or later`)
-        .required('Expiry Year is required'),
-      cvv: yup.string().matches(/^\d{3}$/, 'CVV must be 3 digits').required('CVV is required'),
+        .min(
+          new Date().getFullYear(),
+          `Must be ${new Date().getFullYear()} or later`
+        )
+        .required("Expiry Year is required"),
+      cvv: yup
+        .string()
+        .matches(/^\d{3}$/, "CVV must be 3 digits")
+        .required("CVV is required"),
     }),
     onSubmit: (data) => {
-      http.post('/creditcard', data)
+      http
+        .post("/creditcard", data)
         .then(() => {
-          navigate('/creditcards');
+          navigate("/creditcards");
         })
         .catch(() => {
-          alert('An error occurred while adding the credit card. Please try again.');
+          alert(
+            "An error occurred while adding the credit card. Please try again."
+          );
         });
     },
   });
@@ -51,8 +72,11 @@ function AddCreditCard() {
   };
 
   return (
-    <Box sx={{ maxWidth: 500, mx: 'auto', mt: 4 }}>
-      <Typography variant="h5" sx={{ mb: 3, fontWeight: 'bold', textAlign: 'center' }}>
+    <Box sx={{ maxWidth: 500, mx: "auto", mt: 4 }}>
+      <Typography
+        variant="h5"
+        sx={{ mb: 3, fontWeight: "bold", textAlign: "center" }}
+      >
         Add Credit Card
       </Typography>
 
@@ -65,8 +89,13 @@ function AddCreditCard() {
           value={formik.values.cardHolderName}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
-          error={formik.touched.cardHolderName && Boolean(formik.errors.cardHolderName)}
-          helperText={formik.touched.cardHolderName && formik.errors.cardHolderName}
+          error={
+            formik.touched.cardHolderName &&
+            Boolean(formik.errors.cardHolderName)
+          }
+          helperText={
+            formik.touched.cardHolderName && formik.errors.cardHolderName
+          }
         />
         <TextField
           fullWidth
@@ -88,7 +117,9 @@ function AddCreditCard() {
           value={formik.values.expiryMonth}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
-          error={formik.touched.expiryMonth && Boolean(formik.errors.expiryMonth)}
+          error={
+            formik.touched.expiryMonth && Boolean(formik.errors.expiryMonth)
+          }
           helperText={formik.touched.expiryMonth && formik.errors.expiryMonth}
         />
         <TextField
@@ -125,10 +156,11 @@ function AddCreditCard() {
         </Button>
       </form>
 
-      
       <Dialog open={confirmationOpen} onClose={handleClose}>
         <DialogTitle>Confirm Add Credit Card</DialogTitle>
-        <DialogContent>Are you sure you want to add this credit card?</DialogContent>
+        <DialogContent>
+          Are you sure you want to add this credit card?
+        </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} variant="outlined">
             Cancel

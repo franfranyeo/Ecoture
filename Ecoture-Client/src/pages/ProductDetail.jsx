@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Box, Typography, Grid, Button, CardMedia, Chip } from "@mui/material";
 import { ArrowBack } from "@mui/icons-material";
-import http from "../http";
+import http from "../utils/http";
 
 function ProductDetail() {
   const { id } = useParams();
@@ -80,7 +80,10 @@ function ProductDetail() {
               <Typography variant="body1" sx={{ fontWeight: "bold" }}>
                 Detailed Description:
               </Typography>
-              <Typography variant="body2" sx={{ whiteSpace: "pre-wrap", marginTop: 1 }}>
+              <Typography
+                variant="body2"
+                sx={{ whiteSpace: "pre-wrap", marginTop: 1 }}
+              >
                 {product.longDescription}
               </Typography>
             </Box>
@@ -104,11 +107,15 @@ function ProductDetail() {
             <strong>Fit:</strong> {product.fit}
           </Typography>
           <Typography variant="body2" sx={{ marginBottom: 2 }}>
-            <strong>Price Range:</strong> {priceRangeLabels[product.priceRange] || "N/A"}
+            <strong>Price Range:</strong>{" "}
+            {priceRangeLabels[product.priceRange] || "N/A"}
           </Typography>
 
           <Box sx={{ marginBottom: 2 }}>
-            <Typography variant="body2" sx={{ fontWeight: "bold", marginBottom: 1 }}>
+            <Typography
+              variant="body2"
+              sx={{ fontWeight: "bold", marginBottom: 1 }}
+            >
               Select Color:
             </Typography>
             {product.colors && product.colors.length > 0 ? (
@@ -117,7 +124,11 @@ function ProductDetail() {
                   <Chip
                     key={index}
                     label={color.colorName}
-                    color={selectedColor === color.colorName ? "secondary" : "primary"}
+                    color={
+                      selectedColor === color.colorName
+                        ? "secondary"
+                        : "primary"
+                    }
                     onClick={() => setSelectedColor(color.colorName)}
                     sx={{ cursor: "pointer" }}
                   />
@@ -138,7 +149,9 @@ function ProductDetail() {
                   <Chip
                     key={index}
                     label={`${size.sizeName} (${size.stockQuantity} in stock)`}
-                    color={selectedSize === size.sizeName ? "secondary" : "primary"}
+                    color={
+                      selectedSize === size.sizeName ? "secondary" : "primary"
+                    }
                     onClick={() => setSelectedSize(size.sizeName)}
                     sx={{ cursor: "pointer" }}
                   />
@@ -148,7 +161,7 @@ function ProductDetail() {
               <Typography variant="body2">No sizes available</Typography>
             )}
           </Box>
-          
+
           <Button
             variant="contained"
             color="success"

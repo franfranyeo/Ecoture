@@ -1,7 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { Box, Card, CardContent, Typography, Button, Grid2 } from "@mui/material";
+import {
+  Box,
+  Card,
+  CardContent,
+  Typography,
+  Button,
+  Grid2,
+} from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import http from "../../http";
+import http from "../../utils/http";
 
 function Dashboard() {
   const [enquiryStats, setEnquiryStats] = useState({
@@ -14,7 +21,8 @@ function Dashboard() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    http.get("/Enquiry/Summary")
+    http
+      .get("/Enquiry/Summary")
       .then((res) => {
         setEnquiryStats(res.data);
       })
@@ -65,10 +73,18 @@ function Dashboard() {
         }}
       >
         {[
-          { title: "Total Enquiries", count: enquiryStats.total, bgColor: "#e3f2fd" },
+          {
+            title: "Total Enquiries",
+            count: enquiryStats.total,
+            bgColor: "#e3f2fd",
+          },
           { title: "Open", count: enquiryStats.open, bgColor: "#c8e6c9" },
           { title: "Closed", count: enquiryStats.closed, bgColor: "#ffcdd2" },
-          { title: "In Progress", count: enquiryStats.inProgress, bgColor: "#fff9c4" },
+          {
+            title: "In Progress",
+            count: enquiryStats.inProgress,
+            bgColor: "#fff9c4",
+          },
         ].map((stat, index) => (
           <Grid2 xs={12} sm={6} md={3} key={index}>
             <Card

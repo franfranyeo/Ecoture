@@ -3,12 +3,24 @@ import { createTheme } from '@mui/material/styles';
 
 const theme = createTheme({
     palette: {
+        mode: 'light', // default mode
         primary: {
-            main: '#388e3c',
+            light: '#27236D',
+            main: '#180D3B',
+            dark: '#120b29'
         },
         secondary: {
-            main: '#f4511e',
+            light: '#D9D9D9',
+            main: '#464646',
+            dark: '#313131'
+        },
+        background: {
+            default: '#fff',
+            paper: '#fff'
         }
+    },
+    typography: {
+        fontFamily: ['Outfit']
     }
 });
 

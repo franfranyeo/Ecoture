@@ -21,7 +21,7 @@ import {
   InputLabel,
 } from "@mui/material";
 import { Search, Clear } from "@mui/icons-material";
-import http from "../http";
+import http from "../utils/http";
 import UserContext from "../contexts/UserContext";
 
 function Products({ onAddProductClick }) {
@@ -235,7 +235,9 @@ function Products({ onAddProductClick }) {
                 <CardMedia
                   component="img"
                   alt="Product Image"
-                  image={`${import.meta.env.VITE_FILE_BASE_URL}${product.imageFile}`}
+                  image={`${import.meta.env.VITE_FILE_BASE_URL}${
+                    product.imageFile
+                  }`}
                   sx={{ height: 250, objectFit: "cover" }}
                 />
               )}
@@ -323,7 +325,9 @@ function Products({ onAddProductClick }) {
                     onClick={(e) => toggleReviewForm(product.id, e)}
                     sx={{ marginTop: 1 }}
                   >
-                    {reviewFormOpen === product.id ? "Cancel" : "Write a Review"}
+                    {reviewFormOpen === product.id
+                      ? "Cancel"
+                      : "Write a Review"}
                   </Button>
                 )}
 

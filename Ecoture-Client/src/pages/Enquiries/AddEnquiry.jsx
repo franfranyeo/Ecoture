@@ -1,42 +1,45 @@
-import React from 'react';
-import { Box, TextField, Button, Typography } from '@mui/material';
-import { Formik, Form, Field } from 'formik';
-import * as Yup from 'yup';
+import React from "react";
+import { Box, TextField, Button, Typography } from "@mui/material";
+import { Formik, Form, Field } from "formik";
+import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
-import http from "../../http";
+import http from "../../utils/http";
 
 const validationSchema = Yup.object({
   email: Yup.string()
-    .email('Invalid email address')
-    .required('Email is required'),
+    .email("Invalid email address")
+    .required("Email is required"),
   subject: Yup.string()
-    .min(5, 'Subject must be at least 5 characters')
-    .required('Subject is required'),
+    .min(5, "Subject must be at least 5 characters")
+    .required("Subject is required"),
   message: Yup.string()
-    .min(10, 'Message must be at least 10 characters')
-    .required('Message is required'),
+    .min(10, "Message must be at least 10 characters")
+    .required("Message is required"),
 });
-
 
 function AddEnquiry() {
   const navigate = useNavigate();
   const initialValues = {
-    email: '',
-    subject: '',
-    message: '',
+    email: "",
+    subject: "",
+    message: "",
   };
 
   const handleSubmit = (values, { resetForm }) => {
-    const newEnquiry = { email: values.email, subject: values.subject, message: values.message };
-    http.post('/Enquiry', newEnquiry).then(() => {
-      alert('Enquiry added successfully!');
-      navigate('/enquiries');
+    const newEnquiry = {
+      email: values.email,
+      subject: values.subject,
+      message: values.message,
+    };
+    http.post("/Enquiry", newEnquiry).then(() => {
+      alert("Enquiry added successfully!");
+      navigate("/enquiries");
     });
     resetForm();
   };
 
   return (
-    <Box sx={{ maxWidth: '600px', margin: 'auto', padding: '20px' }}>
+    <Box sx={{ maxWidth: "600px", margin: "auto", padding: "20px" }}>
       <Typography variant="h4" gutterBottom>
         Add Enquiry
       </Typography>
@@ -47,7 +50,7 @@ function AddEnquiry() {
       >
         {({ errors, touched, isSubmitting }) => (
           <Form>
-            <Box sx={{ marginBottom: '20px' }}>
+            <Box sx={{ marginBottom: "20px" }}>
               <Field
                 as={TextField}
                 name="email"
@@ -59,7 +62,7 @@ function AddEnquiry() {
                 helperText={touched.email && errors.email}
               />
             </Box>
-            <Box sx={{ marginBottom: '20px' }}>
+            <Box sx={{ marginBottom: "20px" }}>
               <Field
                 as={TextField}
                 name="subject"
@@ -71,7 +74,7 @@ function AddEnquiry() {
                 helperText={touched.subject && errors.subject}
               />
             </Box>
-            <Box sx={{ marginBottom: '20px' }}>
+            <Box sx={{ marginBottom: "20px" }}>
               <Field
                 as={TextField}
                 name="message"
@@ -86,19 +89,25 @@ function AddEnquiry() {
               />
             </Box>
 
-            <Box sx={{ display: 'flex', justifyContent: 'space-between', gap: '10px' }}>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                gap: "10px",
+              }}
+            >
               <Button
                 type="submit"
                 variant="outlined"
                 color="primary"
                 sx={{
-                  textTransform: 'none',
-                  fontSize: '1rem',
-                  borderColor: 'green',
-                  color: 'black',
-                  ':hover': {
-                    backgroundColor: 'rgba(0, 0, 0, 0.04)',
-                    borderColor: 'black',
+                  textTransform: "none",
+                  fontSize: "1rem",
+                  borderColor: "green",
+                  color: "black",
+                  ":hover": {
+                    backgroundColor: "rgba(0, 0, 0, 0.04)",
+                    borderColor: "black",
                   },
                 }}
                 disabled={isSubmitting}
@@ -110,23 +119,24 @@ function AddEnquiry() {
                 variant="outlined"
                 color="primary"
                 sx={{
-                  textTransform: 'none',
-                  fontSize: '1rem',
-                  borderColor: 'black',
-                  color: 'red',
-                  ':hover': {
-                    backgroundColor: 'rgba(0, 0, 0, 0.04)',
-                    borderColor: 'black',
+                  textTransform: "none",
+                  fontSize: "1rem",
+                  borderColor: "black",
+                  color: "red",
+                  ":hover": {
+                    backgroundColor: "rgba(0, 0, 0, 0.04)",
+                    borderColor: "black",
                   },
                 }}
-                onClick={() => navigate('/')}>
+                onClick={() => navigate("/")}
+              >
                 Cancel
               </Button>
             </Box>
           </Form>
         )}
       </Formik>
-    </Box >
+    </Box>
   );
 }
 
