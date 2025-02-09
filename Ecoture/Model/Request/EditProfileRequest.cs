@@ -1,4 +1,5 @@
 ﻿using Ecoture.Model.Request;
+using Ecoture.Model.Response;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -22,7 +23,7 @@ namespace Ecoture.Model.Request
         public DateTime? DateofBirth { get; set; }
         public string? PfpURL { get; set; }
         public bool? Is2FAEnabled { get; set; }
-        public List<string>? MFAMethods { get; set; }
+        public MfaResponse? MFAMethods { get; set; }
         public bool? IsEmailVerified { get; set; }
         public bool? IsPhoneVerified { get; set; }
     }

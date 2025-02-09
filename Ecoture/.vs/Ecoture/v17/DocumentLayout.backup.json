@@ -3,12 +3,96 @@
   "WorkspaceRootPath": "F:\\Github Repos\\Ecoture\\Ecoture\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|f:\\github repos\\ecoture\\ecoture\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|f:\\github repos\\ecoture\\ecoture\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|solutionrelative:controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|f:\\github repos\\ecoture\\ecoture\\services\\usermanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|solutionrelative:services\\usermanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|f:\\github repos\\ecoture\\ecoture\\model\\response\\loginresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|solutionrelative:model\\response\\loginresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|f:\\github repos\\ecoture\\ecoture\\model\\request\\editprofilerequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|solutionrelative:model\\request\\editprofilerequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|f:\\github repos\\ecoture\\ecoture\\model\\response\\profileresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|solutionrelative:model\\response\\profileresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|f:\\github repos\\ecoture\\ecoture\\migrations\\20250207140120_final.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|solutionrelative:migrations\\20250207140120_final.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|f:\\github repos\\ecoture\\ecoture\\migrations\\20250207140120_final.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|solutionrelative:migrations\\20250207140120_final.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|f:\\github repos\\ecoture\\ecoture\\migrations\\mydbcontextmodelsnapshot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|solutionrelative:migrations\\mydbcontextmodelsnapshot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|f:\\github repos\\ecoture\\ecoture\\mydbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|solutionrelative:mydbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|f:\\github repos\\ecoture\\ecoture\\model\\dto\\addressdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|solutionrelative:model\\dto\\addressdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|f:\\github repos\\ecoture\\ecoture\\model\\dto\\userdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|solutionrelative:model\\dto\\userdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|f:\\github repos\\ecoture\\ecoture\\model\\dto\\userbasicdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|solutionrelative:model\\dto\\userbasicdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|f:\\github repos\\ecoture\\ecoture\\model\\dto\\responsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|solutionrelative:model\\dto\\responsedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|f:\\github repos\\ecoture\\ecoture\\model\\enum\\mfaenum.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|solutionrelative:model\\enum\\mfaenum.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|f:\\github repos\\ecoture\\ecoture\\model\\enum\\userrole.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|solutionrelative:model\\enum\\userrole.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|f:\\github repos\\ecoture\\ecoture\\model\\enum\\redemptionstatus.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|solutionrelative:model\\enum\\redemptionstatus.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|f:\\github repos\\ecoture\\ecoture\\model\\enum\\livechatstatus.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|solutionrelative:model\\enum\\livechatstatus.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|f:\\github repos\\ecoture\\ecoture\\model\\enum\\productenums.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|solutionrelative:model\\enum\\productenums.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|f:\\github repos\\ecoture\\ecoture\\model\\enum\\enquirystatus.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|solutionrelative:model\\enum\\enquirystatus.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|f:\\github repos\\ecoture\\ecoture\\controllers\\reviewcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|solutionrelative:controllers\\reviewcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|f:\\github repos\\ecoture\\ecoture\\controllers\\verificationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|solutionrelative:controllers\\verificationcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|f:\\github repos\\ecoture\\ecoture\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
       "RelativeMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|solutionrelative:appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|f:\\github repos\\ecoture\\ecoture\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|f:\\github repos\\ecoture\\ecoture\\model\\request\\updatemfarequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -23,24 +107,8 @@
       "RelativeMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|solutionrelative:model\\response\\edituserresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|f:\\github repos\\ecoture\\ecoture\\model\\response\\loginresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|solutionrelative:model\\response\\loginresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|f:\\github repos\\ecoture\\ecoture\\model\\response\\mfaresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|solutionrelative:model\\response\\mfaresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|f:\\github repos\\ecoture\\ecoture\\model\\response\\uploadresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|solutionrelative:model\\response\\uploadresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|f:\\github repos\\ecoture\\ecoture\\model\\dto\\userdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|solutionrelative:model\\dto\\userdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|f:\\github repos\\ecoture\\ecoture\\model\\dto\\userbasicdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|solutionrelative:model\\dto\\userbasicdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|f:\\github repos\\ecoture\\ecoture\\model\\dto\\updateuserdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -53,10 +121,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|f:\\github repos\\ecoture\\ecoture\\model\\entity\\referral.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|solutionrelative:model\\entity\\referral.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|f:\\github repos\\ecoture\\ecoture\\model\\entity\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|solutionrelative:model\\entity\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|f:\\github repos\\ecoture\\ecoture\\model\\entity\\userotp.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -75,22 +139,6 @@
       "RelativeMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|solutionrelative:model\\entity\\voucher.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|f:\\github repos\\ecoture\\ecoture\\model\\enum\\userrole.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|solutionrelative:model\\enum\\userrole.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|f:\\github repos\\ecoture\\ecoture\\model\\enum\\redemptionstatus.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|solutionrelative:model\\enum\\redemptionstatus.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|f:\\github repos\\ecoture\\ecoture\\services\\usermanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|solutionrelative:services\\usermanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|f:\\github repos\\ecoture\\ecoture\\mydbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|solutionrelative:mydbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|f:\\github repos\\ecoture\\ecoture\\mappingprofile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|solutionrelative:mappingprofile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -99,20 +147,12 @@
       "RelativeMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|solutionrelative:appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|f:\\github repos\\ecoture\\ecoture\\controllers\\reviewcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|solutionrelative:controllers\\reviewcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|f:\\github repos\\ecoture\\ecoture\\model\\entity\\reviews.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|solutionrelative:model\\entity\\reviews.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|f:\\github repos\\ecoture\\ecoture\\services\\smsservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|solutionrelative:services\\smsservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|f:\\github repos\\ecoture\\ecoture\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|solutionrelative:controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|f:\\github repos\\ecoture\\ecoture\\model\\entity\\membership.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -129,10 +169,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|f:\\github repos\\ecoture\\ecoture\\model\\dto\\contentdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|solutionrelative:model\\dto\\contentdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|f:\\github repos\\ecoture\\ecoture\\model\\dto\\addressdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|solutionrelative:model\\dto\\addressdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|f:\\github repos\\ecoture\\ecoture\\controllers\\enquirycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -191,10 +227,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|f:\\github repos\\ecoture\\ecoture\\controllers\\productcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|solutionrelative:controllers\\productcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|f:\\github repos\\ecoture\\ecoture\\migrations\\20250207140120_final.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|solutionrelative:migrations\\20250207140120_final.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -204,8 +236,60 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 9,
+          "SelectedChildIndex": 7,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "ProfileResponse.cs",
+              "DocumentMoniker": "F:\\Github Repos\\Ecoture\\Ecoture\\Model\\Response\\ProfileResponse.cs",
+              "RelativeDocumentMoniker": "Model\\Response\\ProfileResponse.cs",
+              "ToolTip": "F:\\Github Repos\\Ecoture\\Ecoture\\Model\\Response\\ProfileResponse.cs",
+              "RelativeToolTip": "Model\\Response\\ProfileResponse.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwA8AAAAaAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-09T06:53:23.326Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "EditProfileRequest.cs",
+              "DocumentMoniker": "F:\\Github Repos\\Ecoture\\Ecoture\\Model\\Request\\EditProfileRequest.cs",
+              "RelativeDocumentMoniker": "Model\\Request\\EditProfileRequest.cs",
+              "ToolTip": "F:\\Github Repos\\Ecoture\\Ecoture\\Model\\Request\\EditProfileRequest.cs",
+              "RelativeToolTip": "Model\\Request\\EditProfileRequest.cs",
+              "ViewState": "AgIAAA8AAAAAAAAAAAAQwBkAAAA0AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-09T06:38:07.116Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "20250207140120_Final.Designer.cs",
+              "DocumentMoniker": "F:\\Github Repos\\Ecoture\\Ecoture\\Migrations\\20250207140120_Final.Designer.cs",
+              "RelativeDocumentMoniker": "Migrations\\20250207140120_Final.Designer.cs",
+              "ToolTip": "F:\\Github Repos\\Ecoture\\Ecoture\\Migrations\\20250207140120_Final.Designer.cs",
+              "RelativeToolTip": "Migrations\\20250207140120_Final.Designer.cs",
+              "ViewState": "AgIAAOkCAAAAAAAAAAAwwPsCAAAmAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-09T06:20:47.326Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "MyDbContextModelSnapshot.cs",
+              "DocumentMoniker": "F:\\Github Repos\\Ecoture\\Ecoture\\Migrations\\MyDbContextModelSnapshot.cs",
+              "RelativeDocumentMoniker": "Migrations\\MyDbContextModelSnapshot.cs",
+              "ToolTip": "F:\\Github Repos\\Ecoture\\Ecoture\\Migrations\\MyDbContextModelSnapshot.cs",
+              "RelativeToolTip": "Migrations\\MyDbContextModelSnapshot.cs",
+              "ViewState": "AgIAAOYCAAAAAAAAAAAwwPgCAAAmAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-09T06:20:46.058Z",
+              "EditorCaption": ""
+            },
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
@@ -217,42 +301,32 @@
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "UpdateMfaRequest.cs",
-              "DocumentMoniker": "F:\\Github Repos\\Ecoture\\Ecoture\\Model\\Request\\UpdateMfaRequest.cs",
-              "RelativeDocumentMoniker": "Model\\Request\\UpdateMfaRequest.cs",
-              "ToolTip": "F:\\Github Repos\\Ecoture\\Ecoture\\Model\\Request\\UpdateMfaRequest.cs",
-              "RelativeToolTip": "Model\\Request\\UpdateMfaRequest.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAA==",
+              "Title": "LoginResponse.cs",
+              "DocumentMoniker": "F:\\Github Repos\\Ecoture\\Ecoture\\Model\\Response\\LoginResponse.cs",
+              "RelativeDocumentMoniker": "Model\\Response\\LoginResponse.cs",
+              "ToolTip": "F:\\Github Repos\\Ecoture\\Ecoture\\Model\\Response\\LoginResponse.cs",
+              "RelativeToolTip": "Model\\Response\\LoginResponse.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwAgAAAAdAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-07T13:59:09.716Z"
+              "WhenOpened": "2025-02-09T06:19:34.127Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "UploadResponse.cs",
-              "DocumentMoniker": "F:\\Github Repos\\Ecoture\\Ecoture\\Model\\Response\\UploadResponse.cs",
-              "RelativeDocumentMoniker": "Model\\Response\\UploadResponse.cs",
-              "ToolTip": "F:\\Github Repos\\Ecoture\\Ecoture\\Model\\Response\\UploadResponse.cs",
-              "RelativeToolTip": "Model\\Response\\UploadResponse.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 0,
+              "Title": "UserController.cs",
+              "DocumentMoniker": "F:\\Github Repos\\Ecoture\\Ecoture\\Controllers\\UserController.cs",
+              "RelativeDocumentMoniker": "Controllers\\UserController.cs",
+              "ToolTip": "F:\\Github Repos\\Ecoture\\Ecoture\\Controllers\\UserController.cs",
+              "RelativeToolTip": "Controllers\\UserController.cs",
+              "ViewState": "AgIAAEwAAAAAAAAAAAAwwGcAAABDAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-07T13:58:38.54Z"
+              "WhenOpened": "2025-02-07T13:23:07.535Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "UserDTO.cs",
-              "DocumentMoniker": "F:\\Github Repos\\Ecoture\\Ecoture\\Model\\DTO\\UserDTO.cs",
-              "RelativeDocumentMoniker": "Model\\DTO\\UserDTO.cs",
-              "ToolTip": "F:\\Github Repos\\Ecoture\\Ecoture\\Model\\DTO\\UserDTO.cs",
-              "RelativeToolTip": "Model\\DTO\\UserDTO.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-07T13:58:13.141Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 11,
               "Title": "UserBasicDTO.cs",
               "DocumentMoniker": "F:\\Github Repos\\Ecoture\\Ecoture\\Model\\DTO\\UserBasicDTO.cs",
               "RelativeDocumentMoniker": "Model\\DTO\\UserBasicDTO.cs",
@@ -260,156 +334,115 @@
               "RelativeToolTip": "Model\\DTO\\UserBasicDTO.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-07T13:25:34.411Z"
+              "WhenOpened": "2025-02-07T13:25:34.411Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "MfaResponse.cs",
-              "DocumentMoniker": "F:\\Github Repos\\Ecoture\\Ecoture\\Model\\Response\\MfaResponse.cs",
-              "RelativeDocumentMoniker": "Model\\Response\\MfaResponse.cs",
-              "ToolTip": "F:\\Github Repos\\Ecoture\\Ecoture\\Model\\Response\\MfaResponse.cs",
-              "RelativeToolTip": "Model\\Response\\MfaResponse.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAFAAAAAAAAAA==",
+              "DocumentIndex": 10,
+              "Title": "UserDTO.cs",
+              "DocumentMoniker": "F:\\Github Repos\\Ecoture\\Ecoture\\Model\\DTO\\UserDTO.cs",
+              "RelativeDocumentMoniker": "Model\\DTO\\UserDTO.cs",
+              "ToolTip": "F:\\Github Repos\\Ecoture\\Ecoture\\Model\\DTO\\UserDTO.cs",
+              "RelativeToolTip": "Model\\DTO\\UserDTO.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-07T13:42:54.333Z"
+              "WhenOpened": "2025-02-07T13:58:13.141Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "LoginResponse.cs",
-              "DocumentMoniker": "F:\\Github Repos\\Ecoture\\Ecoture\\Model\\Response\\LoginResponse.cs",
-              "RelativeDocumentMoniker": "Model\\Response\\LoginResponse.cs",
-              "ToolTip": "F:\\Github Repos\\Ecoture\\Ecoture\\Model\\Response\\LoginResponse.cs",
-              "RelativeToolTip": "Model\\Response\\LoginResponse.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAeAAAAAAAAAA==",
+              "DocumentIndex": 9,
+              "Title": "AddressDTO.cs",
+              "DocumentMoniker": "F:\\Github Repos\\Ecoture\\Ecoture\\Model\\DTO\\AddressDTO.cs",
+              "RelativeDocumentMoniker": "Model\\DTO\\AddressDTO.cs",
+              "ToolTip": "F:\\Github Repos\\Ecoture\\Ecoture\\Model\\DTO\\AddressDTO.cs",
+              "RelativeToolTip": "Model\\DTO\\AddressDTO.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-07T13:42:28.194Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "EditUserResponse.cs",
-              "DocumentMoniker": "F:\\Github Repos\\Ecoture\\Ecoture\\Model\\Response\\EditUserResponse.cs",
-              "RelativeDocumentMoniker": "Model\\Response\\EditUserResponse.cs",
-              "ToolTip": "F:\\Github Repos\\Ecoture\\Ecoture\\Model\\Response\\EditUserResponse.cs",
-              "RelativeToolTip": "Model\\Response\\EditUserResponse.cs",
-              "ViewState": "AgIAAAQAAAAAAAAAAAAAAAkAAAAYAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-07T13:42:53.291Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "Program.cs",
-              "DocumentMoniker": "F:\\Github Repos\\Ecoture\\Ecoture\\Program.cs",
-              "RelativeDocumentMoniker": "Program.cs",
-              "ToolTip": "F:\\Github Repos\\Ecoture\\Ecoture\\Program.cs",
-              "RelativeToolTip": "Program.cs",
-              "ViewState": "AgIAAIAAAAAAAAAAAAAUwIwAAAAYAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-05T06:46:58.562Z",
+              "WhenOpened": "2025-02-07T13:29:53.107Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "appsettings.Development.json",
-              "DocumentMoniker": "F:\\Github Repos\\Ecoture\\Ecoture\\appsettings.Development.json",
-              "RelativeDocumentMoniker": "appsettings.Development.json",
-              "ToolTip": "F:\\Github Repos\\Ecoture\\Ecoture\\appsettings.Development.json",
-              "RelativeToolTip": "appsettings.Development.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAbAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-02-07T13:56:22.593Z"
+              "Title": "UserManager.cs",
+              "DocumentMoniker": "F:\\Github Repos\\Ecoture\\Ecoture\\Services\\UserManager.cs",
+              "RelativeDocumentMoniker": "Services\\UserManager.cs",
+              "ToolTip": "F:\\Github Repos\\Ecoture\\Ecoture\\Services\\UserManager.cs",
+              "RelativeToolTip": "Services\\UserManager.cs",
+              "ViewState": "AgIAAIYAAAAAAAAAAAAnwJwAAAAnAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-07T13:42:06.493Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 49,
+              "DocumentIndex": 12,
+              "Title": "ResponseDTO.cs",
+              "DocumentMoniker": "F:\\Github Repos\\Ecoture\\Ecoture\\Model\\DTO\\ResponseDTO.cs",
+              "RelativeDocumentMoniker": "Model\\DTO\\ResponseDTO.cs",
+              "ToolTip": "F:\\Github Repos\\Ecoture\\Ecoture\\Model\\DTO\\ResponseDTO.cs",
+              "RelativeToolTip": "Model\\DTO\\ResponseDTO.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-09T06:15:43.305Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
               "Title": "20250207140120_Final.cs",
               "DocumentMoniker": "F:\\Github Repos\\Ecoture\\Ecoture\\Migrations\\20250207140120_Final.cs",
               "RelativeDocumentMoniker": "Migrations\\20250207140120_Final.cs",
               "ToolTip": "F:\\Github Repos\\Ecoture\\Ecoture\\Migrations\\20250207140120_Final.cs",
               "RelativeToolTip": "Migrations\\20250207140120_Final.cs",
-              "ViewState": "AgIAAC4AAAAAAAAAAAAgwAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAADkAAAAAAAAAAAAwwEsAAAAUAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-07T14:01:21.015Z"
+              "WhenOpened": "2025-02-07T14:01:21.015Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "GoogleUserInfo.cs",
-              "DocumentMoniker": "F:\\Github Repos\\Ecoture\\Ecoture\\Model\\Entity\\GoogleUserInfo.cs",
-              "RelativeDocumentMoniker": "Model\\Entity\\GoogleUserInfo.cs",
-              "ToolTip": "F:\\Github Repos\\Ecoture\\Ecoture\\Model\\Entity\\GoogleUserInfo.cs",
-              "RelativeToolTip": "Model\\Entity\\GoogleUserInfo.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 13,
+              "Title": "MFAEnum.cs",
+              "DocumentMoniker": "F:\\Github Repos\\Ecoture\\Ecoture\\Model\\Enum\\MFAEnum.cs",
+              "RelativeDocumentMoniker": "Model\\Enum\\MFAEnum.cs",
+              "ToolTip": "F:\\Github Repos\\Ecoture\\Ecoture\\Model\\Enum\\MFAEnum.cs",
+              "RelativeToolTip": "Model\\Enum\\MFAEnum.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-07T13:58:10.877Z"
+              "WhenOpened": "2025-02-08T17:20:07.548Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "Referral.cs",
-              "DocumentMoniker": "F:\\Github Repos\\Ecoture\\Ecoture\\Model\\Entity\\Referral.cs",
-              "RelativeDocumentMoniker": "Model\\Entity\\Referral.cs",
-              "ToolTip": "F:\\Github Repos\\Ecoture\\Ecoture\\Model\\Entity\\Referral.cs",
-              "RelativeToolTip": "Model\\Entity\\Referral.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 8,
+              "Title": "MyDbContext.cs",
+              "DocumentMoniker": "F:\\Github Repos\\Ecoture\\Ecoture\\MyDbContext.cs",
+              "RelativeDocumentMoniker": "MyDbContext.cs",
+              "ToolTip": "F:\\Github Repos\\Ecoture\\Ecoture\\MyDbContext.cs",
+              "RelativeToolTip": "MyDbContext.cs",
+              "ViewState": "AgIAACAAAAAAAAAAAAAewDEAAAApAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-07T13:58:08.811Z"
+              "WhenOpened": "2025-02-03T17:26:30.671Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "appsettings.Development.json",
+              "DocumentMoniker": "F:\\Github Repos\\Ecoture\\Ecoture\\appsettings.Development.json",
+              "RelativeDocumentMoniker": "appsettings.Development.json",
+              "ToolTip": "F:\\Github Repos\\Ecoture\\Ecoture\\appsettings.Development.json",
+              "RelativeToolTip": "appsettings.Development.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-02-07T13:56:22.593Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 15,
-              "Title": "UserRedemptions.cs",
-              "DocumentMoniker": "F:\\Github Repos\\Ecoture\\Ecoture\\Model\\Entity\\UserRedemptions.cs",
-              "RelativeDocumentMoniker": "Model\\Entity\\UserRedemptions.cs",
-              "ToolTip": "F:\\Github Repos\\Ecoture\\Ecoture\\Model\\Entity\\UserRedemptions.cs",
-              "RelativeToolTip": "Model\\Entity\\UserRedemptions.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-07T13:58:00.632Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 17,
-              "Title": "Voucher.cs",
-              "DocumentMoniker": "F:\\Github Repos\\Ecoture\\Ecoture\\Model\\Entity\\Voucher.cs",
-              "RelativeDocumentMoniker": "Model\\Entity\\Voucher.cs",
-              "ToolTip": "F:\\Github Repos\\Ecoture\\Ecoture\\Model\\Entity\\Voucher.cs",
-              "RelativeToolTip": "Model\\Entity\\Voucher.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-07T13:57:55.508Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "AuthResponse.cs",
-              "DocumentMoniker": "F:\\Github Repos\\Ecoture\\Ecoture\\Model\\Response\\AuthResponse.cs",
-              "RelativeDocumentMoniker": "Model\\Response\\AuthResponse.cs",
-              "ToolTip": "F:\\Github Repos\\Ecoture\\Ecoture\\Model\\Response\\AuthResponse.cs",
-              "RelativeToolTip": "Model\\Response\\AuthResponse.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-07T13:25:21.919Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 18,
-              "Title": "UserRole.cs",
-              "DocumentMoniker": "F:\\Github Repos\\Ecoture\\Ecoture\\Model\\Enum\\UserRole.cs",
-              "RelativeDocumentMoniker": "Model\\Enum\\UserRole.cs",
-              "ToolTip": "F:\\Github Repos\\Ecoture\\Ecoture\\Model\\Enum\\UserRole.cs",
-              "RelativeToolTip": "Model\\Enum\\UserRole.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-07T13:57:52.889Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 19,
               "Title": "RedemptionStatus.cs",
               "DocumentMoniker": "F:\\Github Repos\\Ecoture\\Ecoture\\Model\\Enum\\RedemptionStatus.cs",
               "RelativeDocumentMoniker": "Model\\Enum\\RedemptionStatus.cs",
@@ -421,7 +454,187 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "UserRole.cs",
+              "DocumentMoniker": "F:\\Github Repos\\Ecoture\\Ecoture\\Model\\Enum\\UserRole.cs",
+              "RelativeDocumentMoniker": "Model\\Enum\\UserRole.cs",
+              "ToolTip": "F:\\Github Repos\\Ecoture\\Ecoture\\Model\\Enum\\UserRole.cs",
+              "RelativeToolTip": "Model\\Enum\\UserRole.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-07T13:57:52.889Z"
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 22,
+              "Title": "Program.cs",
+              "DocumentMoniker": "F:\\Github Repos\\Ecoture\\Ecoture\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "F:\\Github Repos\\Ecoture\\Ecoture\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AgIAAIAAAAAAAAAAAAAUwIwAAAAYAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-05T06:46:58.562Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "VerificationController.cs",
+              "DocumentMoniker": "F:\\Github Repos\\Ecoture\\Ecoture\\Controllers\\VerificationController.cs",
+              "RelativeDocumentMoniker": "Controllers\\VerificationController.cs",
+              "ToolTip": "F:\\Github Repos\\Ecoture\\Ecoture\\Controllers\\VerificationController.cs",
+              "RelativeToolTip": "Controllers\\VerificationController.cs",
+              "ViewState": "AgIAAJoAAAAAAAAAAAAMwKoAAABVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-08T17:04:17.854Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "EnquiryStatus.cs",
+              "DocumentMoniker": "F:\\Github Repos\\Ecoture\\Ecoture\\Model\\Enum\\EnquiryStatus.cs",
+              "RelativeDocumentMoniker": "Model\\Enum\\EnquiryStatus.cs",
+              "ToolTip": "F:\\Github Repos\\Ecoture\\Ecoture\\Model\\Enum\\EnquiryStatus.cs",
+              "RelativeToolTip": "Model\\Enum\\EnquiryStatus.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-08T17:17:41.267Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "ProductEnums.cs",
+              "DocumentMoniker": "F:\\Github Repos\\Ecoture\\Ecoture\\Model\\Enum\\ProductEnums.cs",
+              "RelativeDocumentMoniker": "Model\\Enum\\ProductEnums.cs",
+              "ToolTip": "F:\\Github Repos\\Ecoture\\Ecoture\\Model\\Enum\\ProductEnums.cs",
+              "RelativeToolTip": "Model\\Enum\\ProductEnums.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-08T17:17:43.4Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "LivechatStatus.cs",
+              "DocumentMoniker": "F:\\Github Repos\\Ecoture\\Ecoture\\Model\\Enum\\LivechatStatus.cs",
+              "RelativeDocumentMoniker": "Model\\Enum\\LivechatStatus.cs",
+              "ToolTip": "F:\\Github Repos\\Ecoture\\Ecoture\\Model\\Enum\\LivechatStatus.cs",
+              "RelativeToolTip": "Model\\Enum\\LivechatStatus.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAACAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-08T17:17:44.178Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 25,
+              "Title": "EditUserResponse.cs",
+              "DocumentMoniker": "F:\\Github Repos\\Ecoture\\Ecoture\\Model\\Response\\EditUserResponse.cs",
+              "RelativeDocumentMoniker": "Model\\Response\\EditUserResponse.cs",
+              "ToolTip": "F:\\Github Repos\\Ecoture\\Ecoture\\Model\\Response\\EditUserResponse.cs",
+              "RelativeToolTip": "Model\\Response\\EditUserResponse.cs",
+              "ViewState": "AgIAAAQAAAAAAAAAAAAAAAkAAAAYAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-07T13:42:53.291Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "ReviewController.cs",
+              "DocumentMoniker": "F:\\Github Repos\\Ecoture\\Ecoture\\Controllers\\ReviewController.cs",
+              "RelativeDocumentMoniker": "Controllers\\ReviewController.cs",
+              "ToolTip": "F:\\Github Repos\\Ecoture\\Ecoture\\Controllers\\ReviewController.cs",
+              "RelativeToolTip": "Controllers\\ReviewController.cs",
+              "ViewState": "AgIAAE0AAAAAAAAAAAAwwF8AAAAoAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-07T13:50:22.446Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 26,
+              "Title": "UploadResponse.cs",
+              "DocumentMoniker": "F:\\Github Repos\\Ecoture\\Ecoture\\Model\\Response\\UploadResponse.cs",
+              "RelativeDocumentMoniker": "Model\\Response\\UploadResponse.cs",
+              "ToolTip": "F:\\Github Repos\\Ecoture\\Ecoture\\Model\\Response\\UploadResponse.cs",
+              "RelativeToolTip": "Model\\Response\\UploadResponse.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-07T13:58:38.54Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "UpdateMfaRequest.cs",
+              "DocumentMoniker": "F:\\Github Repos\\Ecoture\\Ecoture\\Model\\Request\\UpdateMfaRequest.cs",
+              "RelativeDocumentMoniker": "Model\\Request\\UpdateMfaRequest.cs",
+              "ToolTip": "F:\\Github Repos\\Ecoture\\Ecoture\\Model\\Request\\UpdateMfaRequest.cs",
+              "RelativeToolTip": "Model\\Request\\UpdateMfaRequest.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-07T13:59:09.716Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 28,
+              "Title": "GoogleUserInfo.cs",
+              "DocumentMoniker": "F:\\Github Repos\\Ecoture\\Ecoture\\Model\\Entity\\GoogleUserInfo.cs",
+              "RelativeDocumentMoniker": "Model\\Entity\\GoogleUserInfo.cs",
+              "ToolTip": "F:\\Github Repos\\Ecoture\\Ecoture\\Model\\Entity\\GoogleUserInfo.cs",
+              "RelativeToolTip": "Model\\Entity\\GoogleUserInfo.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-07T13:58:10.877Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 29,
+              "Title": "Referral.cs",
+              "DocumentMoniker": "F:\\Github Repos\\Ecoture\\Ecoture\\Model\\Entity\\Referral.cs",
+              "RelativeDocumentMoniker": "Model\\Entity\\Referral.cs",
+              "ToolTip": "F:\\Github Repos\\Ecoture\\Ecoture\\Model\\Entity\\Referral.cs",
+              "RelativeToolTip": "Model\\Entity\\Referral.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-07T13:58:08.811Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 31,
+              "Title": "UserRedemptions.cs",
+              "DocumentMoniker": "F:\\Github Repos\\Ecoture\\Ecoture\\Model\\Entity\\UserRedemptions.cs",
+              "RelativeDocumentMoniker": "Model\\Entity\\UserRedemptions.cs",
+              "ToolTip": "F:\\Github Repos\\Ecoture\\Ecoture\\Model\\Entity\\UserRedemptions.cs",
+              "RelativeToolTip": "Model\\Entity\\UserRedemptions.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-07T13:58:00.632Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 33,
+              "Title": "Voucher.cs",
+              "DocumentMoniker": "F:\\Github Repos\\Ecoture\\Ecoture\\Model\\Entity\\Voucher.cs",
+              "RelativeDocumentMoniker": "Model\\Entity\\Voucher.cs",
+              "ToolTip": "F:\\Github Repos\\Ecoture\\Ecoture\\Model\\Entity\\Voucher.cs",
+              "RelativeToolTip": "Model\\Entity\\Voucher.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-07T13:57:55.508Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "AuthResponse.cs",
+              "DocumentMoniker": "F:\\Github Repos\\Ecoture\\Ecoture\\Model\\Response\\AuthResponse.cs",
+              "RelativeDocumentMoniker": "Model\\Response\\AuthResponse.cs",
+              "ToolTip": "F:\\Github Repos\\Ecoture\\Ecoture\\Model\\Response\\AuthResponse.cs",
+              "RelativeToolTip": "Model\\Response\\AuthResponse.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-07T13:25:21.919Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 34,
               "Title": "MappingProfile.cs",
               "DocumentMoniker": "F:\\Github Repos\\Ecoture\\Ecoture\\MappingProfile.cs",
               "RelativeDocumentMoniker": "MappingProfile.cs",
@@ -433,7 +646,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 27,
               "Title": "UpdateUserDto.cs",
               "DocumentMoniker": "F:\\Github Repos\\Ecoture\\Ecoture\\Model\\DTO\\UpdateUserDto.cs",
               "RelativeDocumentMoniker": "Model\\DTO\\UpdateUserDto.cs",
@@ -445,7 +658,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 35,
               "Title": "appsettings.json",
               "DocumentMoniker": "F:\\Github Repos\\Ecoture\\Ecoture\\appsettings.json",
               "RelativeDocumentMoniker": "appsettings.json",
@@ -457,19 +670,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 24,
-              "Title": "ReviewController.cs",
-              "DocumentMoniker": "F:\\Github Repos\\Ecoture\\Ecoture\\Controllers\\ReviewController.cs",
-              "RelativeDocumentMoniker": "Controllers\\ReviewController.cs",
-              "ToolTip": "F:\\Github Repos\\Ecoture\\Ecoture\\Controllers\\ReviewController.cs",
-              "RelativeToolTip": "Controllers\\ReviewController.cs",
-              "ViewState": "AgIAACUAAAAAAAAAAAAwwDQAAAAmAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-07T13:50:22.446Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 30,
               "Title": "UserOtp.cs",
               "DocumentMoniker": "F:\\Github Repos\\Ecoture\\Ecoture\\Model\\Entity\\UserOtp.cs",
               "RelativeDocumentMoniker": "Model\\Entity\\UserOtp.cs",
@@ -481,7 +682,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 26,
+              "DocumentIndex": 37,
               "Title": "SmsService.cs",
               "DocumentMoniker": "F:\\Github Repos\\Ecoture\\Ecoture\\Services\\SmsService.cs",
               "RelativeDocumentMoniker": "Services\\SmsService.cs",
@@ -493,19 +694,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
-              "Title": "User.cs",
-              "DocumentMoniker": "F:\\Github Repos\\Ecoture\\Ecoture\\Model\\Entity\\User.cs",
-              "RelativeDocumentMoniker": "Model\\Entity\\User.cs",
-              "ToolTip": "F:\\Github Repos\\Ecoture\\Ecoture\\Model\\Entity\\User.cs",
-              "RelativeToolTip": "Model\\Entity\\User.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAEwAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-07T13:25:49.344Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 32,
               "Title": "UserToken.cs",
               "DocumentMoniker": "F:\\Github Repos\\Ecoture\\Ecoture\\Model\\Entity\\UserToken.cs",
               "RelativeDocumentMoniker": "Model\\Entity\\UserToken.cs",
@@ -517,31 +706,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
-              "Title": "MyDbContext.cs",
-              "DocumentMoniker": "F:\\Github Repos\\Ecoture\\Ecoture\\MyDbContext.cs",
-              "RelativeDocumentMoniker": "MyDbContext.cs",
-              "ToolTip": "F:\\Github Repos\\Ecoture\\Ecoture\\MyDbContext.cs",
-              "RelativeToolTip": "MyDbContext.cs",
-              "ViewState": "AgIAALQAAAAAAAAAAAAcwBsBAAAFAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-03T17:26:30.671Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 20,
-              "Title": "UserManager.cs",
-              "DocumentMoniker": "F:\\Github Repos\\Ecoture\\Ecoture\\Services\\UserManager.cs",
-              "RelativeDocumentMoniker": "Services\\UserManager.cs",
-              "ToolTip": "F:\\Github Repos\\Ecoture\\Ecoture\\Services\\UserManager.cs",
-              "RelativeToolTip": "Services\\UserManager.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAGAAAAA9AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-07T13:42:06.493Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 25,
+              "DocumentIndex": 36,
               "Title": "Reviews.cs",
               "DocumentMoniker": "F:\\Github Repos\\Ecoture\\Ecoture\\Model\\Entity\\Reviews.cs",
               "RelativeDocumentMoniker": "Model\\Entity\\Reviews.cs",
@@ -553,7 +718,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 28,
+              "DocumentIndex": 38,
               "Title": "Membership.cs",
               "DocumentMoniker": "F:\\Github Repos\\Ecoture\\Ecoture\\Model\\Entity\\Membership.cs",
               "RelativeDocumentMoniker": "Model\\Entity\\Membership.cs",
@@ -565,7 +730,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 29,
+              "DocumentIndex": 39,
               "Title": "EnquiryDTO.cs",
               "DocumentMoniker": "F:\\Github Repos\\Ecoture\\Ecoture\\Model\\DTO\\EnquiryDTO.cs",
               "RelativeDocumentMoniker": "Model\\DTO\\EnquiryDTO.cs",
@@ -577,7 +742,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 30,
+              "DocumentIndex": 40,
               "Title": "CreditCardDTO.cs",
               "DocumentMoniker": "F:\\Github Repos\\Ecoture\\Ecoture\\Model\\DTO\\CreditCardDTO.cs",
               "RelativeDocumentMoniker": "Model\\DTO\\CreditCardDTO.cs",
@@ -589,31 +754,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 32,
-              "Title": "AddressDTO.cs",
-              "DocumentMoniker": "F:\\Github Repos\\Ecoture\\Ecoture\\Model\\DTO\\AddressDTO.cs",
-              "RelativeDocumentMoniker": "Model\\DTO\\AddressDTO.cs",
-              "ToolTip": "F:\\Github Repos\\Ecoture\\Ecoture\\Model\\DTO\\AddressDTO.cs",
-              "RelativeToolTip": "Model\\DTO\\AddressDTO.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-07T13:29:53.107Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 27,
-              "Title": "UserController.cs",
-              "DocumentMoniker": "F:\\Github Repos\\Ecoture\\Ecoture\\Controllers\\UserController.cs",
-              "RelativeDocumentMoniker": "Controllers\\UserController.cs",
-              "ToolTip": "F:\\Github Repos\\Ecoture\\Ecoture\\Controllers\\UserController.cs",
-              "RelativeToolTip": "Controllers\\UserController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAXAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-07T13:23:07.535Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 33,
+              "DocumentIndex": 42,
               "Title": "EnquiryController.cs",
               "DocumentMoniker": "F:\\Github Repos\\Ecoture\\Ecoture\\Controllers\\EnquiryController.cs",
               "RelativeDocumentMoniker": "Controllers\\EnquiryController.cs",
@@ -625,7 +766,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 37,
+              "DocumentIndex": 46,
               "Title": "NewsletterController.cs",
               "DocumentMoniker": "F:\\Github Repos\\Ecoture\\Ecoture\\Controllers\\NewsletterController.cs",
               "RelativeDocumentMoniker": "Controllers\\NewsletterController.cs",
@@ -637,7 +778,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 38,
+              "DocumentIndex": 47,
               "Title": "ContentController.cs",
               "DocumentMoniker": "F:\\Github Repos\\Ecoture\\Ecoture\\Controllers\\ContentController.cs",
               "RelativeDocumentMoniker": "Controllers\\ContentController.cs",
@@ -649,7 +790,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 31,
+              "DocumentIndex": 41,
               "Title": "ContentDTO.cs",
               "DocumentMoniker": "F:\\Github Repos\\Ecoture\\Ecoture\\Model\\DTO\\ContentDTO.cs",
               "RelativeDocumentMoniker": "Model\\DTO\\ContentDTO.cs",
@@ -661,7 +802,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 35,
+              "DocumentIndex": 44,
               "Title": "20250205061711_Final.cs",
               "DocumentMoniker": "C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Integrated\\Ecoture\\Migrations\\20250205061711_Final.cs",
               "ToolTip": "C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Integrated\\Ecoture\\Migrations\\20250205061711_Final.cs",
@@ -670,7 +811,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 34,
+              "DocumentIndex": 43,
               "Title": "NewsletterDTO.cs",
               "DocumentMoniker": "F:\\Github Repos\\Ecoture\\Ecoture\\Model\\DTO\\NewsletterDTO.cs",
               "RelativeDocumentMoniker": "Model\\DTO\\NewsletterDTO.cs",
@@ -682,7 +823,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 36,
+              "DocumentIndex": 45,
               "Title": "Content.cs",
               "DocumentMoniker": "F:\\Github Repos\\Ecoture\\Ecoture\\Model\\Entity\\Content.cs",
               "RelativeDocumentMoniker": "Model\\Entity\\Content.cs",
@@ -694,7 +835,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 42,
+              "DocumentIndex": 51,
               "Title": "Newsletter.cs",
               "DocumentMoniker": "F:\\Github Repos\\Ecoture\\Ecoture\\Model\\Entity\\Newsletter.cs",
               "RelativeDocumentMoniker": "Model\\Entity\\Newsletter.cs",
@@ -706,7 +847,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 40,
+              "DocumentIndex": 49,
               "Title": "Enquiry.cs",
               "DocumentMoniker": "F:\\Github Repos\\Ecoture\\Ecoture\\Model\\Entity\\Enquiry.cs",
               "RelativeDocumentMoniker": "Model\\Entity\\Enquiry.cs",
@@ -718,7 +859,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 39,
+              "DocumentIndex": 48,
               "Title": "20250205054922_Latestchangeslast.cs",
               "DocumentMoniker": "C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Integrated\\Ecoture\\Migrations\\20250205054922_Latestchangeslast.cs",
               "ToolTip": "C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Integrated\\Ecoture\\Migrations\\20250205054922_Latestchangeslast.cs",
@@ -727,7 +868,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 41,
+              "DocumentIndex": 50,
               "Title": "Response.cs",
               "DocumentMoniker": "F:\\Github Repos\\Ecoture\\Ecoture\\Model\\Entity\\Response.cs",
               "RelativeDocumentMoniker": "Model\\Entity\\Response.cs",
@@ -739,7 +880,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 45,
+              "DocumentIndex": 54,
               "Title": "20250205052139_Last.cs",
               "DocumentMoniker": "C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Integrated\\Ecoture\\Migrations\\20250205052139_Last.cs",
               "ToolTip": "C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Integrated\\Ecoture\\Migrations\\20250205052139_Last.cs",
@@ -748,7 +889,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 44,
+              "DocumentIndex": 53,
               "Title": "20250205052747_newchanges.cs",
               "DocumentMoniker": "C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Integrated\\Ecoture\\Migrations\\20250205052747_newchanges.cs",
               "ToolTip": "C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Integrated\\Ecoture\\Migrations\\20250205052747_newchanges.cs",
@@ -757,7 +898,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 43,
+              "DocumentIndex": 52,
               "Title": "20250205052938_Latestchanges.cs",
               "DocumentMoniker": "C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Integrated\\Ecoture\\Migrations\\20250205052938_Latestchanges.cs",
               "ToolTip": "C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Integrated\\Ecoture\\Migrations\\20250205052938_Latestchanges.cs",
@@ -766,7 +907,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 46,
+              "DocumentIndex": 55,
               "Title": "20250205051947_Last.cs",
               "DocumentMoniker": "C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Integrated\\Ecoture\\Migrations\\20250205051947_Last.cs",
               "ToolTip": "C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Integrated\\Ecoture\\Migrations\\20250205051947_Last.cs",
@@ -775,7 +916,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 47,
+              "DocumentIndex": 56,
               "Title": "Product.cs",
               "DocumentMoniker": "F:\\Github Repos\\Ecoture\\Ecoture\\Model\\Entity\\Product.cs",
               "RelativeDocumentMoniker": "Model\\Entity\\Product.cs",
@@ -787,7 +928,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 48,
+              "DocumentIndex": 57,
               "Title": "ProductController.cs",
               "DocumentMoniker": "F:\\Github Repos\\Ecoture\\Ecoture\\Controllers\\ProductController.cs",
               "RelativeDocumentMoniker": "Controllers\\ProductController.cs",

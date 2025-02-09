@@ -1371,54 +1371,6 @@
         }
       }
     },
-    "/User/get-mfa": {
-      "post": {
-        "tags": [
-          "User"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/MfaRequest"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/MfaRequest"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/MfaRequest"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "$ref": "#/components/schemas/MfaResponse"
-                }
-              },
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/MfaResponse"
-                }
-              },
-              "text/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/MfaResponse"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/User/update-mfa": {
       "post": {
         "tags": [
@@ -2377,11 +2329,7 @@
             "nullable": true
           },
           "mfaMethods": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "nullable": true
+            "$ref": "#/components/schemas/MfaResponse"
           },
           "isEmailVerified": {
             "type": "boolean",
@@ -2660,16 +2608,6 @@
         },
         "additionalProperties": false
       },
-      "MfaRequest": {
-        "type": "object",
-        "properties": {
-          "userId": {
-            "type": "integer",
-            "format": "int32"
-          }
-        },
-        "additionalProperties": false
-      },
       "MfaResponse": {
         "type": "object",
         "properties": {
@@ -2681,9 +2619,6 @@
             "type": "boolean"
           },
           "email": {
-            "type": "boolean"
-          },
-          "authenticator": {
             "type": "boolean"
           }
         },

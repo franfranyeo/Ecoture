@@ -27,7 +27,7 @@ import { toast } from "react-toastify";
 import { Close } from "@mui/icons-material";
 
 const SecurityTab = () => {
-  const AVAILABLE_METHODS = ["SMS", "Email", "Authenticator"];
+  const AVAILABLE_METHODS = ["SMS", "Email"];
   const { user, setUser } = useContext(UserContext);
 
   const [securityState, setSecurityState] = useState({
@@ -87,15 +87,11 @@ const SecurityTab = () => {
   // API Calls
   const fetchAuthMethods = async () => {
     try {
-      const res = await http.post("/user/get-mfa", {
-        userId: user.userId,
-      });
-      if (res.data) {
-        const activeMethods = Object.keys(res.data).filter(
-          (key) => res.data[key] && key !== "userId"
-        );
-        updateSecurityState({ authMethods: activeMethods });
-      }
+      const mfaMethods = user.mfaMethods;
+      const activeMethods = Object.keys(mfaMethods).filter(
+        (key) => mfaMethods[key] && key !== "userId"
+      );
+      updateSecurityState({ authMethods: activeMethods });
     } catch (error) {
       toast.error("Failed to fetch authentication methods");
     }
@@ -105,13 +101,16 @@ const SecurityTab = () => {
     const payload = {
       userId: securityState.tempUser.userId,
       is2FAEnabled: securityState.is2FAEnabled,
-      mfaMethods: securityState.authMethods,
+      mfaMethods: user.mfaMethods,
       mobileNo: securityState.tempUser.mobileNo,
       isEmailVerified: securityState.tempUser.isEmailVerified,
       isPhoneVerified: securityState.tempUser.isPhoneVerified,
     };
-
-    return await http.post("/user/edit-profile", payload);
+    const res = await http.post("/user/edit-profile", payload);
+    if (res.data) {
+      setUser({ ...user, ...res.data.user });
+      return res;
+    }
   };
 
   // Helper Functions
@@ -186,8 +185,6 @@ const SecurityTab = () => {
     try {
       const response = await updateUserSettings();
       if (response.data) {
-        console.log("hello", response.data);
-        console.log("security", securityState);
         setUser({
           ...user,
           is2FAEnabled: securityState.is2FAEnabled,

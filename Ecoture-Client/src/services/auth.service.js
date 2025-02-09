@@ -7,8 +7,8 @@ export const authService = {
         return response.data;
     },
 
-    async getMFAMethods(userId) {
-        const response = await http.post('/user/get-mfa', { userId });
+    async register(user) {
+        const response = await http.post('/user/register', user);
         return response.data;
     },
 

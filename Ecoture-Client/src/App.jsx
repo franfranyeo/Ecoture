@@ -64,10 +64,6 @@ function App() {
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem("user"));
     if (storedUser) {
-      storedUser.fullName = storedUser.fullName
-        .split(" ")
-        .map((name) => name.charAt(0).toUpperCase() + name.slice(1))
-        .join(" ");
       setUser(storedUser);
       setLoading(false);
     }
@@ -90,8 +86,6 @@ function App() {
 
       try {
         const updateUser = async () => {
-          // Only send the changeable fields to avoid unnecessary updates
-
           const updateData = {
             firstName: user.firstName,
             lastName: user.lastName,
@@ -102,7 +96,7 @@ function App() {
             is2FAEnabled: user.is2FAEnabled,
             isEmailVerified: user.isEmailVerified,
             isPhoneVerified: user.isPhoneVerified,
-            mfaMethods: user.mfaMethods, // If you're tracking MFA methods in the user object
+            mfaMethods: user.mfaMethods,
           };
 
           const res = await http.post(`/user/edit-profile`, updateData);

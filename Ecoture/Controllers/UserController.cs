@@ -33,9 +33,9 @@ namespace Ecoture.Controllers
         public async Task<IActionResult> Register(RegisterRequest request)
         {
             // Register user via UserManager
-            var result = await _userManager.RegisterUserAsync(request);
-            if (!result.IsSuccess)
-                return BadRequest(new { message = result.ErrorMessage });
+            var (IsSuccess, ErrorMessage) = await _userManager.RegisterUserAsync(request);
+            if (!IsSuccess)
+                return BadRequest(new { message = ErrorMessage });
 
             return Ok(new { message = "User registered successfully." });
         }
@@ -64,7 +64,6 @@ namespace Ecoture.Controllers
         [HttpPost("google")]
         public async Task<IActionResult> GoogleLogin(GoogleLoginRequest request)
         {
-            System.Diagnostics.Debug.WriteLine(request.Token);
             try
             {
                 using var httpClient = new HttpClient();
@@ -80,8 +79,9 @@ namespace Ecoture.Controllers
 
 
                 var userInfo = await response.Content.ReadFromJsonAsync<GoogleUserInfo>();
-                // Check if the user exists in your database
                 var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == userInfo.Email);
+                // Check if the user exists in your database
+                var mfaMethods = await _context.MfaResponses.FirstOrDefaultAsync(m => m.UserId == user.UserId);
                 if (user == null)
                 {
                     user = new User
@@ -95,13 +95,15 @@ namespace Ecoture.Controllers
                         UpdatedAt = DateTime.Now,
                     };
 
-                    var mfaResponse = new MfaResponse
+                    mfaMethods ??= new MfaResponse
                     {
-                        UserId = user.UserId
+                        UserId = user.UserId,
+                        Sms = false,
+                        Email = false
                     };
                     // Add user 
                     await _context.Users.AddAsync(user);
-                    await _context.MfaResponses.AddAsync(mfaResponse);
+                    await _context.MfaResponses.AddAsync(mfaMethods);
                     await _context.SaveChangesAsync();
                 }
 
@@ -132,7 +134,8 @@ namespace Ecoture.Controllers
                 return Ok(new
                 {
                     token,
-                    user
+                    user,
+                    mfaMethods
                 });
             }
             catch (InvalidJwtException)
@@ -209,23 +212,7 @@ namespace Ecoture.Controllers
             await _context.SaveChangesAsync();
             return Ok();
         }
-
-        // GET MFA
-        [HttpPost("get-mfa")]
-        public async Task<ActionResult<MfaResponse>> GetMfaResponse([FromBody] MfaRequest request)
-        {
-            var userId = request.UserId;
-            var mfaResponse = await _context.MfaResponses
-                                            .FirstOrDefaultAsync(u => u.UserId == userId);
-
-            if (mfaResponse == null)
-            {
-                return NotFound(new { message = $"User with ID '{userId}' not found." });
-            }
-
-            return Ok(mfaResponse);
-        }
-
+        
         // UPDATE MFA
         [HttpPost("update-mfa"), Authorize]
         public async Task<ActionResult> UpdateMfa([FromBody] UpdateMfaRequest request)
@@ -238,7 +225,7 @@ namespace Ecoture.Controllers
             }
 
             // List of valid MFA types
-            var validMfaTypes = new List<string> { "sms", "email", "authenticator" };
+            var validMfaTypes = new List<string> { "sms", "email" };
 
             // Process each MFA type in the request
             foreach (var mfaType in request.MfaTypes)
@@ -255,9 +242,6 @@ namespace Ecoture.Controllers
                         break;
                     case "email":
                         mfaResponse.Email = request.Enable;
-                        break;
-                    case "authenticator":
-                        mfaResponse.Authenticator = request.Enable;
                         break;
                 }
             }
@@ -276,30 +260,17 @@ namespace Ecoture.Controllers
             var userId = Convert.ToInt32(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
             if (userId <= 0) return Unauthorized();
 
-            var result = await _userManager.EditProfileAsync(userId, request);
-            if (!result.IsSuccess)
+            var (IsSuccess, ErrorMessage, UpdatedUser) = await _userManager.EditProfileAsync(userId, request);
+            if (!IsSuccess)
             {
-                return BadRequest(new { message = result.ErrorMessage });
+                return BadRequest(new { message = ErrorMessage });
             }
 
             // Return the updated user data without sensitive information
             return Ok(new
             {
                 message = "Profile updated successfully.",
-                user = new
-                {
-                    result.UpdatedUser.UserId,
-                    result.UpdatedUser.FirstName,
-                    result.UpdatedUser.LastName,
-                    result.UpdatedUser.Email,
-                    result.UpdatedUser.MobileNo,
-                    result.UpdatedUser.DateofBirth,
-                    result.UpdatedUser.PfpURL,
-                    result.UpdatedUser.Is2FAEnabled,
-                    result.UpdatedUser.IsEmailVerified,
-                    result.UpdatedUser.IsPhoneVerified,
-                    result.UpdatedUser.UpdatedAt
-                }
+                user = UpdatedUser
             });
         }
 

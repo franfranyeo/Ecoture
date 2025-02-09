@@ -132,19 +132,29 @@ namespace Ecoture.Services
                 }
             }
 
+            // Get MFA details in the same database context
+            var mfaDetails = await _context.MfaResponses
+                .FirstOrDefaultAsync(m => m.UserId == user.UserId);
+
             user.LastLogin = DateTime.UtcNow;
 
             await _context.SaveChangesAsync();
 
-
             // Generate access token
             string accessToken = CreateToken(user);
+
+            // If no MFA record exists, create a new one with default values
+            mfaDetails ??= new MfaResponse
+            {
+                UserId = user.UserId,
+            };
 
             // Return user info and access token
             var response = new LoginResponse
             {
                 User = user,
-                AccessToken = accessToken
+                AccessToken = accessToken,
+                MfaMethods = mfaDetails
             };
 
             return response;
@@ -329,7 +339,7 @@ namespace Ecoture.Services
 
 
         // EDIT USER PROFILE
-        public async Task<(bool IsSuccess, string? ErrorMessage, User? UpdatedUser)> EditProfileAsync(int userId, EditProfileRequest request)
+        public async Task<(bool IsSuccess, string? ErrorMessage, ProfileResponse? UpdatedUser)> EditProfileAsync(int userId, EditProfileRequest request)
         {
             var user = await _context.Users.FindAsync(userId);
             if (user == null) return (false, "User not found.", null);
@@ -400,14 +410,39 @@ namespace Ecoture.Services
                 // Update MFA methods if provided
                 if (request.MFAMethods != null)
                 {
-                    System.Diagnostics.Debug.WriteLine(user.Is2FAEnabled);
                     await UpdateUserMFAMethodsAsync(userId, request.MFAMethods);
                 }
 
                 user.UpdatedAt = DateTime.UtcNow;
                 await _context.SaveChangesAsync();
 
-                return (true, null, user);
+                // Fetch updated MFA data
+                var mfaMethods = await _context.MfaResponses
+                    .FirstOrDefaultAsync(m => m.UserId == userId) ?? new MfaResponse
+                    {
+                        UserId = userId,
+                        Sms = false,
+                        Email = false,
+                    };
+
+                // Create response object with both user and MFA data
+                var profileResponse = new ProfileResponse
+                {
+                    UserId = user.UserId,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    Email = user.Email,
+                    MobileNo = user.MobileNo,
+                    DateofBirth = user.DateofBirth,
+                    PfpURL = user.PfpURL,
+                    Is2FAEnabled = user.Is2FAEnabled,
+                    IsEmailVerified = user.IsEmailVerified,
+                    IsPhoneVerified = user.IsPhoneVerified,
+                    UpdatedAt = user.UpdatedAt,
+                    MfaMethods = mfaMethods
+                };
+
+                return (true, null, profileResponse);
             }
             catch (Exception ex)
             {
@@ -436,7 +471,7 @@ namespace Ecoture.Services
         }
 
 
-        private async Task UpdateUserMFAMethodsAsync(int userId, List<string> methods)
+        private async Task UpdateUserMFAMethodsAsync(int userId, MfaResponse methods)
         {
             // Get existing MFA response for the user
             var mfaResponse = await _context.MfaResponses
@@ -453,26 +488,8 @@ namespace Ecoture.Services
             }
 
             // Reset all methods to false
-            mfaResponse.Email = false;
-            mfaResponse.Sms = false;
-            mfaResponse.Authenticator = false;
-
-            // Enable only the selected methods
-            foreach (var method in methods)
-            {
-                switch (method.ToLower())
-                {
-                    case "email":
-                        mfaResponse.Email = true;
-                        break;
-                    case "sms":
-                        mfaResponse.Sms = true;
-                        break;
-                    case "authenticator":
-                        mfaResponse.Authenticator = true;
-                        break;
-                }
-            }
+            mfaResponse.Email = methods.Email;
+            mfaResponse.Sms = methods.Sms;
 
             await _context.SaveChangesAsync();
         }
@@ -505,7 +522,7 @@ namespace Ecoture.Services
         Task<bool> VerifyOtpAsync(int userId, string otp);
         Task<(bool IsSuccess, int StatusCode, string Message)> RequestAccountDeletionAsync(int userId, ClaimsPrincipal userPrincipal);
         Task<(bool IsSuccess, int StatusCode, string Message)> PermanentlyDeleteAccountAsync(int userId, ClaimsPrincipal userPrincipal);
-        Task<(bool IsSuccess, string? ErrorMessage, User? UpdatedUser)> EditProfileAsync(int userId, EditProfileRequest request);
+        Task<(bool IsSuccess, string? ErrorMessage, ProfileResponse? UpdatedUser)> EditProfileAsync(int userId, EditProfileRequest request);
         Task<(bool IsSuccess, string? ErrorMessage)> ChangePasswordAsync(int userId, ChangePasswordRequest request);
 
         Task EditUserAsync(int userId, string firstName, string lastName, string email, DateTime? dateOfBirth, UserRole role, string pfpUrl);

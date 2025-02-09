@@ -961,32 +961,6 @@
   },
   {
     "ContainingType": "Ecoture.Controllers.UserController",
-    "Method": "GetMfaResponse",
-    "RelativePath": "User/get-mfa",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "request",
-        "Type": "Ecoture.Model.Request.MfaRequest",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": [
-      {
-        "Type": "Ecoture.Model.Response.MfaResponse",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
-  },
-  {
-    "ContainingType": "Ecoture.Controllers.UserController",
     "Method": "GoogleLogin",
     "RelativePath": "User/google",
     "HttpMethod": "POST",

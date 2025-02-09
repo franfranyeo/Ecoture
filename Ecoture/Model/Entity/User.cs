@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Globalization;
 using System.Text.Json.Serialization;
 
 
@@ -67,11 +68,27 @@ namespace Ecoture.Model.Entity
 
         public List<UserRedemptions>? UserRedemptions { get; set; }
 
+        
+
         // Navigation property to represent the one-to-many relationship
         [JsonIgnore]
         public List<Product>? Products { get; set; }
 
-        // Computed property for full name
-        public string FullName => $"{FirstName} {LastName}".Trim();
+        // Computed property for full name with capitalization
+        public string FullName
+        {
+            get
+            {
+                string firstName = !string.IsNullOrEmpty(FirstName)
+                    ? CultureInfo.CurrentCulture.TextInfo.ToTitleCase(FirstName.ToLower())
+                    : string.Empty;
+
+                string lastName = !string.IsNullOrEmpty(LastName)
+                    ? CultureInfo.CurrentCulture.TextInfo.ToTitleCase(LastName.ToLower())
+                    : string.Empty;
+
+                return $"{firstName} {lastName}".Trim();
+            }
+        }
     }
 }
