@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Ecoture.Model.Entity;
-using Ecoture.Model.Entity;
 using Ecoture.Model.Enum;
 using Ecoture.Model.Response;
 
@@ -52,7 +51,7 @@ namespace Ecoture
         public required DbSet<PointsTransaction> PointsTransactions { get; set; }
         public required DbSet<UserRedemptions> UserRedemptions { get; set; }
         public required DbSet<Referral> Referrals { get; set; }
-        public required DbSet<Voucher> Vouchers { get; set; }
+        public required DbSet<Reward> Rewards { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -60,7 +59,7 @@ namespace Ecoture
             modelBuilder.Entity<User>()
                 .HasOne(u => u.Membership)
                 .WithOne(m => m.User)
-                .HasForeignKey<Membership>(m => m.userId)
+                .HasForeignKey<Membership>(m => m.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<MfaResponse>().HasKey(m => m.UserId);
@@ -80,22 +79,22 @@ namespace Ecoture
 
             // PointsTransaction relationships
             modelBuilder.Entity<PointsTransaction>()
-                .HasKey(pt => pt.transactionId);
+                .HasKey(pt => pt.TransactionId);
 
             modelBuilder.Entity<PointsTransaction>()
                 .HasOne(pt => pt.User)
                 .WithMany(u => u.PointsTransactions)
-                .HasForeignKey(pt => pt.userId);
+                .HasForeignKey(pt => pt.UserId);
 
             modelBuilder.Entity<PointsTransaction>()
-                .HasOne(pt => pt.Voucher)
-                .WithMany(v => v.PointsTransactions)
-                .HasForeignKey(pt => pt.voucherId);
+                .HasOne(pt => pt.Reward)
+                .WithMany(pt => pt.PointsTransactions)
+                .HasForeignKey(pt => pt.RewardId);
 
             modelBuilder.Entity<PointsTransaction>()
                 .HasOne(pt => pt.Referral)
                 .WithMany()
-                .HasForeignKey(pt => pt.referralId);
+                .HasForeignKey(pt => pt.ReferralId);
 
             // UserRedemption relationships
             modelBuilder.Entity<UserRedemptions>()
@@ -107,7 +106,7 @@ namespace Ecoture
                 .HasForeignKey(ur => ur.userId);
 
             modelBuilder.Entity<UserRedemptions>()
-                .HasOne(ur => ur.Voucher)
+                .HasOne(ur => ur.Reward)
                 .WithMany(v => v.UserRedemptions)
                 .HasForeignKey(ur => ur.voucherId);
 
@@ -240,6 +239,7 @@ namespace Ecoture
                     };
 
                     context.Users.Add(adminUser);
+                    context.MfaResponses.Add(new MfaResponse { UserId = 1 });
                     await context.SaveChangesAsync();
 
                     Console.WriteLine("Admin user successfully created with ID 1.");

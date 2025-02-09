@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Ecoture")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6bb7f0e0d999b47ccf25ad501912910bb71557d5")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2063d1b9c25237e62ce8f04345f7cdc27b2e73d6")]
 [assembly: System.Reflection.AssemblyProductAttribute("Ecoture")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Ecoture")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

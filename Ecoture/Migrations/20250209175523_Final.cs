@@ -98,6 +98,40 @@ namespace Ecoture.Migrations
                 .Annotation("MySQL:Charset", "utf8mb4");
 
             migrationBuilder.CreateTable(
+                name: "Rewards",
+                columns: table => new
+                {
+                    RewardId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    RewardType = table.Column<string>(type: "longtext", nullable: false),
+                    RewardTitle = table.Column<string>(type: "longtext", nullable: false),
+                    RewardDescription = table.Column<string>(type: "longtext", nullable: false),
+                    RewardCode = table.Column<string>(type: "longtext", nullable: false),
+                    RewardPercentage = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    MinimumPurchaseAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    MaximumDiscountCap = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    ExpirationDate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    StartDate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    UsageLimit = table.Column<int>(type: "int", nullable: false),
+                    ApplicableProducts = table.Column<string>(type: "longtext", nullable: false),
+                    Exclusions = table.Column<string>(type: "longtext", nullable: false),
+                    UserEligibility = table.Column<string>(type: "longtext", nullable: false),
+                    IsStackable = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    AutoApply = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    Status = table.Column<string>(type: "longtext", nullable: false),
+                    RewardImage = table.Column<string>(type: "longtext", nullable: true),
+                    LoyaltyPointsRequired = table.Column<int>(type: "int", nullable: true),
+                    CreatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    CreatedBy = table.Column<string>(type: "longtext", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Rewards", x => x.RewardId);
+                })
+                .Annotation("MySQL:Charset", "utf8mb4");
+
+            migrationBuilder.CreateTable(
                 name: "Sizes",
                 columns: table => new
                 {
@@ -130,7 +164,7 @@ namespace Ecoture.Migrations
                     IsEmailVerified = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     IsPhoneVerified = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     IsGoogleLogin = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    ReferralCode = table.Column<string>(type: "varchar(10)", maxLength: 10, nullable: true),
+                    ReferralCode = table.Column<string>(type: "varchar(6)", maxLength: 6, nullable: true),
                     DeleteRequested = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     DeleteRequestedAt = table.Column<DateTime>(type: "datetime", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime", nullable: false),
@@ -139,31 +173,6 @@ namespace Ecoture.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Users", x => x.UserId);
-                })
-                .Annotation("MySQL:Charset", "utf8mb4");
-
-            migrationBuilder.CreateTable(
-                name: "Vouchers",
-                columns: table => new
-                {
-                    voucherId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
-                    voucherCode = table.Column<string>(type: "varchar(10)", maxLength: 10, nullable: false),
-                    voucherType = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
-                    voucherValue = table.Column<decimal>(type: "decimal(10,2)", nullable: false),
-                    pointsRequired = table.Column<int>(type: "int", nullable: false),
-                    startDate = table.Column<DateTime>(type: "datetime", nullable: false),
-                    endDate = table.Column<DateTime>(type: "datetime", nullable: false),
-                    isActive = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    isFirstTimeUseOnly = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    isOneTimeUseOnly = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    voucherLimit = table.Column<int>(type: "int", nullable: false),
-                    voucherTitle = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
-                    voucherDesc = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Vouchers", x => x.voucherId);
                 })
                 .Annotation("MySQL:Charset", "utf8mb4");
 
@@ -269,24 +278,24 @@ namespace Ecoture.Migrations
                 name: "Memberships",
                 columns: table => new
                 {
-                    membershipId = table.Column<int>(type: "int", nullable: false)
+                    MembershipId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
-                    tier = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: false),
-                    totalSpent = table.Column<decimal>(type: "decimal(10,2)", nullable: false),
-                    totalPoints = table.Column<int>(type: "int", nullable: false),
-                    membershipStartDate = table.Column<DateTime>(type: "datetime", nullable: false),
-                    membershipEndDate = table.Column<DateTime>(type: "datetime", nullable: false),
-                    lastTierUpgradeDate = table.Column<DateTime>(type: "datetime", nullable: false),
-                    createdAt = table.Column<DateTime>(type: "datetime", nullable: false),
-                    updatedAt = table.Column<DateTime>(type: "datetime", nullable: false),
-                    userId = table.Column<int>(type: "int", nullable: false)
+                    Tier = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: false),
+                    TotalSpent = table.Column<decimal>(type: "decimal(10,2)", nullable: false),
+                    TotalPoints = table.Column<int>(type: "int", nullable: false),
+                    MembershipStartDate = table.Column<DateTime>(type: "datetime", nullable: false),
+                    MembershipEndDate = table.Column<DateTime>(type: "datetime", nullable: true),
+                    LastTierUpgradeDate = table.Column<DateTime>(type: "datetime", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Memberships", x => x.membershipId);
+                    table.PrimaryKey("PK_Memberships", x => x.MembershipId);
                     table.ForeignKey(
-                        name: "FK_Memberships_Users_userId",
-                        column: x => x.userId,
+                        name: "FK_Memberships_Users_UserId",
+                        column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "UserId",
                         onDelete: ReferentialAction.Cascade);
@@ -391,6 +400,36 @@ namespace Ecoture.Migrations
                 .Annotation("MySQL:Charset", "utf8mb4");
 
             migrationBuilder.CreateTable(
+                name: "UserRedemptions",
+                columns: table => new
+                {
+                    redemptionId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    userId = table.Column<int>(type: "int", nullable: false),
+                    voucherId = table.Column<int>(type: "int", nullable: false),
+                    pointsUsed = table.Column<int>(type: "int", nullable: false),
+                    redemptionDate = table.Column<DateTime>(type: "datetime", nullable: false),
+                    status = table.Column<int>(type: "int", maxLength: 50, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserRedemptions", x => x.redemptionId);
+                    table.ForeignKey(
+                        name: "FK_UserRedemptions_Rewards_voucherId",
+                        column: x => x.voucherId,
+                        principalTable: "Rewards",
+                        principalColumn: "RewardId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_UserRedemptions_Users_userId",
+                        column: x => x.userId,
+                        principalTable: "Users",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySQL:Charset", "utf8mb4");
+
+            migrationBuilder.CreateTable(
                 name: "UserTokens",
                 columns: table => new
                 {
@@ -411,36 +450,6 @@ namespace Ecoture.Migrations
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "UserId",
-                        onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySQL:Charset", "utf8mb4");
-
-            migrationBuilder.CreateTable(
-                name: "UserRedemptions",
-                columns: table => new
-                {
-                    redemptionId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
-                    userId = table.Column<int>(type: "int", nullable: false),
-                    voucherId = table.Column<int>(type: "int", nullable: false),
-                    pointsUsed = table.Column<int>(type: "int", nullable: false),
-                    redemptionDate = table.Column<DateTime>(type: "datetime", nullable: false),
-                    status = table.Column<int>(type: "int", maxLength: 50, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_UserRedemptions", x => x.redemptionId);
-                    table.ForeignKey(
-                        name: "FK_UserRedemptions_Users_userId",
-                        column: x => x.userId,
-                        principalTable: "Users",
-                        principalColumn: "UserId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_UserRedemptions_Vouchers_voucherId",
-                        column: x => x.voucherId,
-                        principalTable: "Vouchers",
-                        principalColumn: "voucherId",
                         onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySQL:Charset", "utf8mb4");
@@ -534,38 +543,38 @@ namespace Ecoture.Migrations
                 name: "PointsTransactions",
                 columns: table => new
                 {
-                    transactionId = table.Column<int>(type: "int", nullable: false)
+                    TransactionId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
-                    userId = table.Column<int>(type: "int", nullable: false),
-                    pointsEarned = table.Column<int>(type: "int", nullable: false),
-                    pointsSpent = table.Column<int>(type: "int", nullable: false),
-                    transactionType = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
-                    createdAt = table.Column<DateTime>(type: "datetime", nullable: false),
-                    expiryDate = table.Column<DateTime>(type: "datetime", nullable: false),
-                    voucherId = table.Column<int>(type: "int", nullable: true),
-                    orderId = table.Column<int>(type: "int", nullable: true),
-                    referralId = table.Column<int>(type: "int", nullable: true),
-                    reviewId = table.Column<int>(type: "int", nullable: true)
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    PointsEarned = table.Column<int>(type: "int", nullable: false),
+                    PointsSpent = table.Column<int>(type: "int", nullable: false),
+                    TransactionType = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime", nullable: false),
+                    ExpiryDate = table.Column<DateTime>(type: "datetime", nullable: false),
+                    RewardId = table.Column<int>(type: "int", nullable: true),
+                    OrderId = table.Column<int>(type: "int", nullable: true),
+                    ReferralId = table.Column<int>(type: "int", nullable: true),
+                    ReviewId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PointsTransactions", x => x.transactionId);
+                    table.PrimaryKey("PK_PointsTransactions", x => x.TransactionId);
                     table.ForeignKey(
-                        name: "FK_PointsTransactions_Referrals_referralId",
-                        column: x => x.referralId,
+                        name: "FK_PointsTransactions_Referrals_ReferralId",
+                        column: x => x.ReferralId,
                         principalTable: "Referrals",
                         principalColumn: "referralId");
                     table.ForeignKey(
-                        name: "FK_PointsTransactions_Users_userId",
-                        column: x => x.userId,
+                        name: "FK_PointsTransactions_Rewards_RewardId",
+                        column: x => x.RewardId,
+                        principalTable: "Rewards",
+                        principalColumn: "RewardId");
+                    table.ForeignKey(
+                        name: "FK_PointsTransactions_Users_UserId",
+                        column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "UserId",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_PointsTransactions_Vouchers_voucherId",
-                        column: x => x.voucherId,
-                        principalTable: "Vouchers",
-                        principalColumn: "voucherId");
                 })
                 .Annotation("MySQL:Charset", "utf8mb4");
 
@@ -580,9 +589,9 @@ namespace Ecoture.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Memberships_userId",
+                name: "IX_Memberships_UserId",
                 table: "Memberships",
-                column: "userId",
+                column: "UserId",
                 unique: true);
 
             migrationBuilder.CreateIndex(
@@ -591,19 +600,19 @@ namespace Ecoture.Migrations
                 column: "NewsletterIssueId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PointsTransactions_referralId",
+                name: "IX_PointsTransactions_ReferralId",
                 table: "PointsTransactions",
-                column: "referralId");
+                column: "ReferralId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PointsTransactions_userId",
+                name: "IX_PointsTransactions_RewardId",
                 table: "PointsTransactions",
-                column: "userId");
+                column: "RewardId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PointsTransactions_voucherId",
+                name: "IX_PointsTransactions_UserId",
                 table: "PointsTransactions",
-                column: "voucherId");
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ProductColors_ColorId",
@@ -760,7 +769,7 @@ namespace Ecoture.Migrations
                 name: "Products");
 
             migrationBuilder.DropTable(
-                name: "Vouchers");
+                name: "Rewards");
 
             migrationBuilder.DropTable(
                 name: "Users");

@@ -739,6 +739,85 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "Ecoture.Controllers.RewardController",
+    "Method": "CreateContent",
+    "RelativePath": "Reward",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "contentDto",
+        "Type": "Ecoture.Model.DTO.ContentDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Ecoture.Model.DTO.ContentDto",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Ecoture.Controllers.RewardController",
+    "Method": "GetContentById",
+    "RelativePath": "Reward/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Ecoture.Controllers.RewardController",
+    "Method": "UpdateContent",
+    "RelativePath": "Reward/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "contentDto",
+        "Type": "Ecoture.Model.DTO.ContentDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Ecoture.Controllers.RewardController",
+    "Method": "DeleteContent",
+    "RelativePath": "Reward/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "Ecoture.Controllers.UserController",
     "Method": "GetUsers",
     "RelativePath": "User",

@@ -74,9 +74,9 @@ namespace Ecoture.Services
 
             var membership = new Membership
             {
-                userId = user.UserId,
-                createdAt = now,
-                updatedAt = now
+                UserId = user.UserId,
+                CreatedAt = now,
+                UpdatedAt = now
             };
 
             user.Membership = membership;

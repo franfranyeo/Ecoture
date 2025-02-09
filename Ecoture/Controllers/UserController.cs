@@ -78,7 +78,9 @@ namespace Ecoture.Controllers
                 var userInfo = await response.Content.ReadFromJsonAsync<GoogleUserInfo>();
                 var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == userInfo.Email);
                 // Check if the user exists in your database
-                var mfaMethods = await _context.MfaResponses.FirstOrDefaultAsync(m => m.UserId == user.UserId);
+
+                MfaResponse? mfaMethods = null;
+                Membership? membership = null;
                 if (user == null)
                 {
                     user = new User
@@ -90,18 +92,28 @@ namespace Ecoture.Controllers
                         PfpURL = userInfo.Picture,
                         CreatedAt = DateTime.Now,
                         UpdatedAt = DateTime.Now,
-                        IsGoogleLogin = true
+                        IsGoogleLogin = true,
+                        ReferralCode = RandomReferralCode.Generate()
                     };
 
+                    mfaMethods = await _context.MfaResponses.FirstOrDefaultAsync(m => m.UserId == user.UserId);
                     mfaMethods ??= new MfaResponse
                     {
                         UserId = user.UserId,
                         Sms = false,
                         Email = false
                     };
+
+                    membership ??= new Membership
+                    {
+                        UserId = user.UserId,
+                    };
+
+                    
                     // Add user 
                     await _context.Users.AddAsync(user);
                     await _context.MfaResponses.AddAsync(mfaMethods);
+                    await _context.Memberships.AddAsync(membership);
                     await _context.SaveChangesAsync();
                 }
 
@@ -133,7 +145,8 @@ namespace Ecoture.Controllers
                 {
                     token,
                     user,
-                    mfaMethods
+                    mfaMethods,
+                    membership
                 });
             }
             catch (InvalidJwtException)

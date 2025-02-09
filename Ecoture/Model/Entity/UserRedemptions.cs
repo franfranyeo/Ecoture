@@ -23,6 +23,6 @@ namespace Ecoture.Model.Entity
 
 
         public User User { get; set; } = null!;
-        public Voucher Voucher { get; set; } = null!;
+        public Reward Reward { get; set; } = null!;
     }
 }

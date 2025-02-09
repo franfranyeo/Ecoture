@@ -9,8 +9,6 @@ import {
 import { ThemeProvider } from "@mui/material/styles";
 import MyTheme from "./themes/MyTheme";
 import Navbar from "components/Navbar";
-import CustomerLanding from "./pages/CustomerLanding";
-import StaffDashboard from "./pages/StaffView";
 import AddProduct from "./pages/AddProduct";
 import EditProduct from "./pages/EditProduct";
 import ProductDetail from "./pages/ProductDetail";
@@ -46,6 +44,7 @@ import ProtectedRoute from "./components/admin/ProtectedRoute";
 import Users from "./pages/admin/user/Users";
 import EditUser from "./pages/admin/user/EditUser";
 import ViewUser from "./pages/admin/user/ViewUser";
+import Rewards from "./pages/admin/rewards/Rewards";
 import Login from "./pages/customer/user/Login";
 import Home from "./pages/Home";
 import Register from "./pages/customer/user/Register";
@@ -147,6 +146,10 @@ function App() {
     },
     {
       url: "/account",
+      component: <Navigate to="/account/profile" />,
+    },
+    {
+      url: "/account/:tab",
       component: <Account />,
     },
     {
@@ -175,6 +178,10 @@ function App() {
     {
       url: "/admin/users/:id/edit",
       component: EditUser,
+    },
+    {
+      url: "/admin/rewards",
+      component: Rewards,
     },
   ];
 

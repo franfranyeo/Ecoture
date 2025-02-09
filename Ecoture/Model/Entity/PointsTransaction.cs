@@ -6,33 +6,33 @@ namespace Ecoture.Model.Entity
 {
     public class PointsTransaction
     {
-        public int transactionId { get; set; }
+        public int TransactionId { get; set; }
 
-        public int userId { get; set; }
+        public int UserId { get; set; }
 
-        public int pointsEarned { get; set; }
-        public int pointsSpent { get; set; }
+        public int PointsEarned { get; set; }
+        public int PointsSpent { get; set; }
 
         [MaxLength(50)]
-        public string transactionType { get; set; } = string.Empty; // e.g., "Referral", "Order", "Review"
+        public string TransactionType { get; set; } = string.Empty; // e.g., "Referral", "Order", "Review"
 
         [Column(TypeName = "datetime")]
-        public DateTime createdAt { get; set; }
+        public DateTime CreatedAt { get; set; }
 
         [Column(TypeName = "datetime")]
-        public DateTime expiryDate { get; set; }
+        public DateTime ExpiryDate { get; set; }
 
-        public int? voucherId { get; set; }
+        public int? RewardId { get; set; }
 
-        public int? orderId { get; set; }
+        public int? OrderId { get; set; }
 
-        public int? referralId { get; set; }
+        public int? ReferralId { get; set; }
 
-        public int? reviewId { get; set; }
+        public int? ReviewId { get; set; }
 
         // Navigation properties
         public User User { get; set; } = null!;
-        public Voucher? Voucher { get; set; }
+        public Reward? Reward { get; set; }
         public Referral? Referral { get; set; }
     }
 }

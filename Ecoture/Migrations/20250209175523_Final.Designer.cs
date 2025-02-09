@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Ecoture.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20250209142343_Final")]
+    [Migration("20250209175523_Final")]
     partial class Final
     {
         /// <inheritdoc />
@@ -186,42 +186,42 @@ namespace Ecoture.Migrations
 
             modelBuilder.Entity("Ecoture.Model.Entity.Membership", b =>
                 {
-                    b.Property<int>("membershipId")
+                    b.Property<int>("MembershipId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("createdAt")
+                    b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime");
 
-                    b.Property<DateTime>("lastTierUpgradeDate")
+                    b.Property<DateTime>("LastTierUpgradeDate")
                         .HasColumnType("datetime");
 
-                    b.Property<DateTime>("membershipEndDate")
+                    b.Property<DateTime?>("MembershipEndDate")
                         .HasColumnType("datetime");
 
-                    b.Property<DateTime>("membershipStartDate")
+                    b.Property<DateTime>("MembershipStartDate")
                         .HasColumnType("datetime");
 
-                    b.Property<string>("tier")
+                    b.Property<string>("Tier")
                         .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("varchar(20)");
 
-                    b.Property<int>("totalPoints")
+                    b.Property<int>("TotalPoints")
                         .HasColumnType("int");
 
-                    b.Property<decimal>("totalSpent")
+                    b.Property<decimal>("TotalSpent")
                         .HasColumnType("decimal(10,2)");
 
-                    b.Property<DateTime>("updatedAt")
+                    b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime");
 
-                    b.Property<int>("userId")
+                    b.Property<int>("UserId")
                         .HasColumnType("int");
 
-                    b.HasKey("membershipId");
+                    b.HasKey("MembershipId");
 
-                    b.HasIndex("userId")
+                    b.HasIndex("UserId")
                         .IsUnique();
 
                     b.ToTable("Memberships");
@@ -256,49 +256,49 @@ namespace Ecoture.Migrations
 
             modelBuilder.Entity("Ecoture.Model.Entity.PointsTransaction", b =>
                 {
-                    b.Property<int>("transactionId")
+                    b.Property<int>("TransactionId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("createdAt")
+                    b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime");
 
-                    b.Property<DateTime>("expiryDate")
+                    b.Property<DateTime>("ExpiryDate")
                         .HasColumnType("datetime");
 
-                    b.Property<int?>("orderId")
+                    b.Property<int?>("OrderId")
                         .HasColumnType("int");
 
-                    b.Property<int>("pointsEarned")
+                    b.Property<int>("PointsEarned")
                         .HasColumnType("int");
 
-                    b.Property<int>("pointsSpent")
+                    b.Property<int>("PointsSpent")
                         .HasColumnType("int");
 
-                    b.Property<int?>("referralId")
+                    b.Property<int?>("ReferralId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("reviewId")
+                    b.Property<int?>("ReviewId")
                         .HasColumnType("int");
 
-                    b.Property<string>("transactionType")
+                    b.Property<int?>("RewardId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("TransactionType")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("varchar(50)");
 
-                    b.Property<int>("userId")
+                    b.Property<int>("UserId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("voucherId")
-                        .HasColumnType("int");
+                    b.HasKey("TransactionId");
 
-                    b.HasKey("transactionId");
+                    b.HasIndex("ReferralId");
 
-                    b.HasIndex("referralId");
+                    b.HasIndex("RewardId");
 
-                    b.HasIndex("userId");
-
-                    b.HasIndex("voucherId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("PointsTransactions");
                 });
@@ -510,6 +510,88 @@ namespace Ecoture.Migrations
                     b.ToTable("Reviews");
                 });
 
+            modelBuilder.Entity("Ecoture.Model.Entity.Reward", b =>
+                {
+                    b.Property<int>("RewardId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("ApplicableProducts")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<bool>("AutoApply")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Exclusions")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<DateTime>("ExpirationDate")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<bool>("IsStackable")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<int?>("LoyaltyPointsRequired")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("MaximumDiscountCap")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("MinimumPurchaseAmount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("RewardCode")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("RewardDescription")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("RewardImage")
+                        .HasColumnType("longtext");
+
+                    b.Property<decimal>("RewardPercentage")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("RewardTitle")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("RewardType")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<int>("UsageLimit")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserEligibility")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("RewardId");
+
+                    b.ToTable("Rewards");
+                });
+
             modelBuilder.Entity("Ecoture.Model.Entity.Size", b =>
                 {
                     b.Property<int>("Id")
@@ -587,8 +669,8 @@ namespace Ecoture.Migrations
                         .HasColumnType("varchar(255)");
 
                     b.Property<string>("ReferralCode")
-                        .HasMaxLength(10)
-                        .HasColumnType("varchar(10)");
+                        .HasMaxLength(6)
+                        .HasColumnType("varchar(6)");
 
                     b.Property<int>("Role")
                         .HasColumnType("int");
@@ -703,61 +785,6 @@ namespace Ecoture.Migrations
                     b.ToTable("UserTokens");
                 });
 
-            modelBuilder.Entity("Ecoture.Model.Entity.Voucher", b =>
-                {
-                    b.Property<int>("voucherId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("endDate")
-                        .HasColumnType("datetime");
-
-                    b.Property<bool>("isActive")
-                        .HasColumnType("tinyint(1)");
-
-                    b.Property<bool>("isFirstTimeUseOnly")
-                        .HasColumnType("tinyint(1)");
-
-                    b.Property<bool>("isOneTimeUseOnly")
-                        .HasColumnType("tinyint(1)");
-
-                    b.Property<int>("pointsRequired")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("startDate")
-                        .HasColumnType("datetime");
-
-                    b.Property<string>("voucherCode")
-                        .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("varchar(10)");
-
-                    b.Property<string>("voucherDesc")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("varchar(100)");
-
-                    b.Property<int>("voucherLimit")
-                        .HasColumnType("int");
-
-                    b.Property<string>("voucherTitle")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("varchar(50)");
-
-                    b.Property<string>("voucherType")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("varchar(50)");
-
-                    b.Property<decimal>("voucherValue")
-                        .HasColumnType("decimal(10,2)");
-
-                    b.HasKey("voucherId");
-
-                    b.ToTable("Vouchers");
-                });
-
             modelBuilder.Entity("Ecoture.Model.Response.MfaResponse", b =>
                 {
                     b.Property<int>("UserId")
@@ -816,7 +843,7 @@ namespace Ecoture.Migrations
                 {
                     b.HasOne("Ecoture.Model.Entity.User", "User")
                         .WithOne("Membership")
-                        .HasForeignKey("Ecoture.Model.Entity.Membership", "userId")
+                        .HasForeignKey("Ecoture.Model.Entity.Membership", "UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -827,23 +854,23 @@ namespace Ecoture.Migrations
                 {
                     b.HasOne("Ecoture.Model.Entity.Referral", "Referral")
                         .WithMany()
-                        .HasForeignKey("referralId");
+                        .HasForeignKey("ReferralId");
+
+                    b.HasOne("Ecoture.Model.Entity.Reward", "Reward")
+                        .WithMany("PointsTransactions")
+                        .HasForeignKey("RewardId");
 
                     b.HasOne("Ecoture.Model.Entity.User", "User")
                         .WithMany("PointsTransactions")
-                        .HasForeignKey("userId")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Ecoture.Model.Entity.Voucher", "Voucher")
-                        .WithMany("PointsTransactions")
-                        .HasForeignKey("voucherId");
-
                     b.Navigation("Referral");
 
-                    b.Navigation("User");
+                    b.Navigation("Reward");
 
-                    b.Navigation("Voucher");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Ecoture.Model.Entity.Product", b =>
@@ -971,15 +998,15 @@ namespace Ecoture.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Ecoture.Model.Entity.Voucher", "Voucher")
+                    b.HasOne("Ecoture.Model.Entity.Reward", "Reward")
                         .WithMany("UserRedemptions")
                         .HasForeignKey("voucherId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("User");
+                    b.Navigation("Reward");
 
-                    b.Navigation("Voucher");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Ecoture.Model.Entity.UserToken", b =>
@@ -1012,6 +1039,13 @@ namespace Ecoture.Migrations
                     b.Navigation("Reviews");
                 });
 
+            modelBuilder.Entity("Ecoture.Model.Entity.Reward", b =>
+                {
+                    b.Navigation("PointsTransactions");
+
+                    b.Navigation("UserRedemptions");
+                });
+
             modelBuilder.Entity("Ecoture.Model.Entity.Size", b =>
                 {
                     b.Navigation("ProductSizes");
@@ -1028,13 +1062,6 @@ namespace Ecoture.Migrations
                     b.Navigation("ReferralsReceived");
 
                     b.Navigation("ReferralsSent");
-
-                    b.Navigation("UserRedemptions");
-                });
-
-            modelBuilder.Entity("Ecoture.Model.Entity.Voucher", b =>
-                {
-                    b.Navigation("PointsTransactions");
 
                     b.Navigation("UserRedemptions");
                 });

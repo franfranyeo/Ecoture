@@ -5,33 +5,33 @@ namespace Ecoture.Model.Entity
 {
     public class Membership
     {
-        public int membershipId { get; set; }
+        public int MembershipId { get; set; }
 
         [MaxLength(20)]
-        public string tier { get; set; } = "Bronze"; // Default tier
+        public string Tier { get; set; } = "Bronze"; // Default tier
 
         [Column(TypeName = "decimal(10,2)")]
-        public decimal totalSpent { get; set; } = 0.00M;
+        public decimal TotalSpent { get; set; } = 0.00M;
 
-        public int totalPoints { get; set; } = 0;
-
-        [Column(TypeName = "datetime")]
-        public DateTime membershipStartDate { get; set; }
+        public int TotalPoints { get; set; } = 0;
 
         [Column(TypeName = "datetime")]
-        public DateTime membershipEndDate { get; set; }
+        public DateTime MembershipStartDate { get; set; } = DateTime.UtcNow;
 
         [Column(TypeName = "datetime")]
-        public DateTime lastTierUpgradeDate { get; set; }
+        public DateTime? MembershipEndDate { get; set; }
 
         [Column(TypeName = "datetime")]
-        public DateTime createdAt { get; set; }
+        public DateTime LastTierUpgradeDate { get; set; } = DateTime.UtcNow;
 
         [Column(TypeName = "datetime")]
-        public DateTime updatedAt { get; set; }
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
-        public int userId { get; set; }
+        [Column(TypeName = "datetime")]
+        public DateTime UpdatedAt { get; set; }
 
-        public User User { get; set; } = null!;
+        public int UserId { get; set; }
+
+        public User? User { get; set; } 
     }
 }

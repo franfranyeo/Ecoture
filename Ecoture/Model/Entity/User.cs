@@ -46,7 +46,7 @@ namespace Ecoture.Model.Entity
 
         public bool IsGoogleLogin { get; set; } = false;
 
-        [MaxLength(10)]
+        [MaxLength(6)]
         public string? ReferralCode { get; set; }
 
         public bool DeleteRequested { get; set; }
@@ -91,6 +91,18 @@ namespace Ecoture.Model.Entity
 
                 return $"{firstName} {lastName}".Trim();
             }
+        }
+    }
+
+    public class RandomReferralCode
+    {
+        private static readonly Random _random = new();
+        private const string _chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+
+        public static string Generate()
+        {
+            return new string(Enumerable.Repeat(_chars, 6)
+                .Select(s => s[_random.Next(s.Length)]).ToArray());
         }
     }
 }

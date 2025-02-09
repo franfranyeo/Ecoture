@@ -1235,6 +1235,138 @@
         }
       }
     },
+    "/Reward/{id}": {
+      "get": {
+        "tags": [
+          "Reward"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Reward"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ContentDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ContentDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ContentDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Reward"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/Reward": {
+      "post": {
+        "tags": [
+          "Reward"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ContentDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ContentDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ContentDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ContentDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ContentDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ContentDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/User/register": {
       "post": {
         "tags": [
@@ -2584,7 +2716,8 @@
           },
           "membershipEndDate": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "nullable": true
           },
           "lastTierUpgradeDate": {
             "type": "string",
@@ -2709,7 +2842,7 @@
             "type": "string",
             "format": "date-time"
           },
-          "voucherId": {
+          "rewardId": {
             "type": "integer",
             "format": "int32",
             "nullable": true
@@ -2732,8 +2865,8 @@
           "user": {
             "$ref": "#/components/schemas/User"
           },
-          "voucher": {
-            "$ref": "#/components/schemas/Voucher"
+          "reward": {
+            "$ref": "#/components/schemas/Reward"
           },
           "referral": {
             "$ref": "#/components/schemas/Referral"
@@ -3000,6 +3133,115 @@
         },
         "additionalProperties": false
       },
+      "Reward": {
+        "type": "object",
+        "properties": {
+          "rewardId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "rewardType": {
+            "type": "string",
+            "nullable": true
+          },
+          "rewardTitle": {
+            "type": "string",
+            "nullable": true
+          },
+          "rewardDescription": {
+            "type": "string",
+            "nullable": true
+          },
+          "rewardCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "rewardPercentage": {
+            "type": "number",
+            "format": "double"
+          },
+          "minimumPurchaseAmount": {
+            "type": "number",
+            "format": "double"
+          },
+          "maximumDiscountCap": {
+            "type": "number",
+            "format": "double"
+          },
+          "expirationDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "startDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "usageLimit": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "applicableProducts": {
+            "type": "string",
+            "nullable": true
+          },
+          "exclusions": {
+            "type": "string",
+            "nullable": true
+          },
+          "userEligibility": {
+            "type": "string",
+            "nullable": true
+          },
+          "isStackable": {
+            "type": "boolean"
+          },
+          "autoApply": {
+            "type": "boolean"
+          },
+          "status": {
+            "type": "string",
+            "nullable": true
+          },
+          "rewardImage": {
+            "type": "string",
+            "nullable": true
+          },
+          "loyaltyPointsRequired": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "createdBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "pointsTransactions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PointsTransaction"
+            },
+            "nullable": true
+          },
+          "userRedemptions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UserRedemptions"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "SizeRequest": {
         "required": [
           "sizeName",
@@ -3251,7 +3493,7 @@
             "type": "boolean"
           },
           "referralCode": {
-            "maxLength": 10,
+            "maxLength": 6,
             "type": "string",
             "nullable": true
           },
@@ -3352,8 +3594,8 @@
           "user": {
             "$ref": "#/components/schemas/User"
           },
-          "voucher": {
-            "$ref": "#/components/schemas/Voucher"
+          "reward": {
+            "$ref": "#/components/schemas/Reward"
           }
         },
         "additionalProperties": false
@@ -3376,79 +3618,6 @@
           },
           "otp": {
             "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "Voucher": {
-        "type": "object",
-        "properties": {
-          "voucherId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "voucherCode": {
-            "maxLength": 10,
-            "type": "string",
-            "nullable": true
-          },
-          "voucherType": {
-            "maxLength": 50,
-            "type": "string",
-            "nullable": true
-          },
-          "voucherValue": {
-            "type": "number",
-            "format": "double"
-          },
-          "pointsRequired": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "startDate": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "endDate": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "isActive": {
-            "type": "boolean"
-          },
-          "isFirstTimeUseOnly": {
-            "type": "boolean"
-          },
-          "isOneTimeUseOnly": {
-            "type": "boolean"
-          },
-          "voucherLimit": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "voucherTitle": {
-            "maxLength": 50,
-            "type": "string",
-            "nullable": true
-          },
-          "voucherDesc": {
-            "maxLength": 100,
-            "type": "string",
-            "nullable": true
-          },
-          "pointsTransactions": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/PointsTransaction"
-            },
-            "nullable": true
-          },
-          "userRedemptions": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/UserRedemptions"
-            },
             "nullable": true
           }
         },
