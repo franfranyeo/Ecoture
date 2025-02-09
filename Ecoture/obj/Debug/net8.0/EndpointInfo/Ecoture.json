@@ -3247,6 +3247,9 @@
           "isPhoneVerified": {
             "type": "boolean"
           },
+          "isGoogleLogin": {
+            "type": "boolean"
+          },
           "referralCode": {
             "maxLength": 10,
             "type": "string",

@@ -556,6 +556,9 @@ namespace Ecoture.Migrations
                     b.Property<bool>("IsEmailVerified")
                         .HasColumnType("tinyint(1)");
 
+                    b.Property<bool>("IsGoogleLogin")
+                        .HasColumnType("tinyint(1)");
+
                     b.Property<bool>("IsPhoneVerified")
                         .HasColumnType("tinyint(1)");
 
@@ -757,9 +760,6 @@ namespace Ecoture.Migrations
                     b.Property<int>("UserId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    b.Property<bool>("Authenticator")
-                        .HasColumnType("tinyint(1)");
 
                     b.Property<bool>("Email")
                         .HasColumnType("tinyint(1)");

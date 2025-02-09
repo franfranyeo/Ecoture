@@ -6,13 +6,10 @@ using System.Text;
 using Microsoft.AspNetCore.Authorization;
 using Ecoture.Model.Enum;
 using Ecoture.Model.Request;
-using Ecoture.Model.Request;
 using Google.Apis.Auth;
 using Microsoft.EntityFrameworkCore;
 using Ecoture.Model.Entity;
 using Ecoture.Services;
-using Ecoture.Model.DTO;
-using Org.BouncyCastle.Crypto;
 using Ecoture.Model.Response;
 
 
@@ -93,6 +90,7 @@ namespace Ecoture.Controllers
                         PfpURL = userInfo.Picture,
                         CreatedAt = DateTime.Now,
                         UpdatedAt = DateTime.Now,
+                        IsGoogleLogin = true
                     };
 
                     mfaMethods ??= new MfaResponse

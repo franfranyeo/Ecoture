@@ -44,6 +44,8 @@ namespace Ecoture.Model.Entity
 
         public bool IsPhoneVerified { get; set; } = false;
 
+        public bool IsGoogleLogin { get; set; } = false;
+
         [MaxLength(10)]
         public string? ReferralCode { get; set; }
 

@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Ecoture.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20250207140120_Final")]
+    [Migration("20250209142343_Final")]
     partial class Final
     {
         /// <inheritdoc />
@@ -559,6 +559,9 @@ namespace Ecoture.Migrations
                     b.Property<bool>("IsEmailVerified")
                         .HasColumnType("tinyint(1)");
 
+                    b.Property<bool>("IsGoogleLogin")
+                        .HasColumnType("tinyint(1)");
+
                     b.Property<bool>("IsPhoneVerified")
                         .HasColumnType("tinyint(1)");
 
@@ -760,9 +763,6 @@ namespace Ecoture.Migrations
                     b.Property<int>("UserId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
-
-                    b.Property<bool>("Authenticator")
-                        .HasColumnType("tinyint(1)");
 
                     b.Property<bool>("Email")
                         .HasColumnType("tinyint(1)");

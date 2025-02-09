@@ -72,8 +72,7 @@ namespace Ecoture.Migrations
                     UserId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
                     Sms = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    Email = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    Authenticator = table.Column<bool>(type: "tinyint(1)", nullable: false)
+                    Email = table.Column<bool>(type: "tinyint(1)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -130,6 +129,7 @@ namespace Ecoture.Migrations
                     Is2FAEnabled = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     IsEmailVerified = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     IsPhoneVerified = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    IsGoogleLogin = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     ReferralCode = table.Column<string>(type: "varchar(10)", maxLength: 10, nullable: true),
                     DeleteRequested = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     DeleteRequestedAt = table.Column<DateTime>(type: "datetime", nullable: true),
