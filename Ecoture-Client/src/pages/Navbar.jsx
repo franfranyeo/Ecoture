@@ -25,16 +25,16 @@ function Navbar({ onLogout }) {
  
 
 
-  // Fetch cart data from API
-  useEffect(() => {
-    http.get("/cart")
-        .then((response) => {
-            setCart(response.data);
-        })
-        .catch(() => {
-            console.error("Failed to fetch cart data");
-        });
-}, []); // Empty dependency array ensures this runs once on mount
+//   // Fetch cart data from API
+//   useEffect(() => {
+//     http.get("/cart")
+//         .then((response) => {
+//             setCart(response.data);
+//         })
+//         .catch(() => {
+//             console.error("Failed to fetch cart data");
+//         });
+// }, []); // Empty dependency array ensures this runs once on mount
 
   const handleMenuOpen = (event) => {
     if (user) {

@@ -89,7 +89,7 @@ function EditAddress() {
     http.delete(`/address/${id}`)
       .then(() => {
         toast.success('Address deleted successfully!');
-        navigate('/addresses');
+        navigate('/choice');
       })
       .catch(() => {
         toast.error('Failed to delete the address.');
