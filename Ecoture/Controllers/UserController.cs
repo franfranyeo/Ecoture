@@ -58,6 +58,10 @@ namespace Ecoture.Controllers
             {
                 return Unauthorized(new { message = ex.Message });
             }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
         }
 
         // GOOGLE SIGNIN
