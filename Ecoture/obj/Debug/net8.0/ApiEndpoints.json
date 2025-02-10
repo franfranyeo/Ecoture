@@ -504,11 +504,16 @@
         "Name": "search",
         "Type": "System.String",
         "IsRequired": false
+      },
+      {
+        "Name": "category",
+        "Type": "System.String",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.IEnumerable\u00601[[Ecoture.Model.DTO.ProductDTO, Ecoture, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[Ecoture.Models.DTO.ProductDTO, Ecoture, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -528,13 +533,13 @@
     "Parameters": [
       {
         "Name": "product",
-        "Type": "Ecoture.Model.Request.AddProductRequest",
+        "Type": "Ecoture.Models.Request.AddProductRequest",
         "IsRequired": true
       }
     ],
     "ReturnTypes": [
       {
-        "Type": "Ecoture.Model.DTO.ProductDTO",
+        "Type": "Ecoture.Models.DTO.ProductDTO",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -560,7 +565,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "Ecoture.Model.DTO.ProductDTO",
+        "Type": "Ecoture.Models.DTO.ProductDTO",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -585,7 +590,7 @@
       },
       {
         "Name": "product",
-        "Type": "Ecoture.Model.Request.UpdateProductRequest",
+        "Type": "Ecoture.Models.Request.UpdateProductRequest",
         "IsRequired": true
       }
     ],
@@ -679,7 +684,7 @@
     "Parameters": [
       {
         "Name": "request",
-        "Type": "Ecoture.Model.Request.AddReviewRequest",
+        "Type": "Ecoture.Models.Request.AddReviewRequest",
         "IsRequired": true
       }
     ],
@@ -700,7 +705,7 @@
       },
       {
         "Name": "request",
-        "Type": "Ecoture.Model.Request.AddReviewRequest",
+        "Type": "Ecoture.Models.Request.AddReviewRequest",
         "IsRequired": true
       }
     ],

@@ -1,4 +1,4 @@
-﻿namespace Ecoture.Model.DTO
+﻿namespace Ecoture.Models.DTO
 {
     public class ReviewDTO
     {

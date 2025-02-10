@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Ecoture.Model.Entity;
-using Ecoture.Model.Entity;
 using Ecoture.Model.Enum;
 using Ecoture.Model.Response;
+using Ecoture.Models.Entity;
 
 
 namespace Ecoture
@@ -38,6 +38,10 @@ namespace Ecoture
 		public required DbSet<Review> Reviews { get; set; } // DbSet for Reviews
 		public required DbSet<Color> Colors { get; set; } // DbSet for Colors
 		public required DbSet<ProductColor> ProductColors { get; set; } // DbSet for ProductColors
+        public required DbSet<ProductFit> ProductFits { get; set; }
+        public required DbSet<Fit> Fits { get; set; }
+        public required DbSet<ProductCategory> ProductCategories { get; set; }
+        public required DbSet<Category> Categories { get; set; }
 
 		// AHMED DB CONTEXT 
 		public required DbSet<Address> Addresses { get; set; } // Addresses table

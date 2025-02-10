@@ -11,6 +11,9 @@ import {
   ToggleButton,
   IconButton,
   Chip,
+  FormGroup,
+  Checkbox,
+  FormControlLabel,
 } from "@mui/material";
 import { AddCircleOutline, RemoveCircleOutline } from "@mui/icons-material";
 import { useFormik } from "formik";
@@ -33,8 +36,8 @@ function AddProduct() {
       description: "",
       longDescription: "",
       price: "",
-      categoryName: "",
-      fit: "",
+      categories: [],
+      fits: [],
     },
     validationSchema: yup.object({
       title: yup
@@ -59,8 +62,8 @@ function AddProduct() {
         .number()
         .min(0.01, "Price must be greater than zero")
         .required("Price is required"),
-      categoryName: yup.string().required("Category is required"),
-      fit: yup.string().required("Fit is required"),
+      categories: yup.array().min(1, "At least one category is required"),
+      fits: yup.array().min(1, "At least one fit is required"),
       sizes: yup.array().of(
         yup.object().shape({
           sizeName: yup.string().trim().required("Size name is required"),
@@ -101,6 +104,9 @@ function AddProduct() {
           sizeName: s.sizeName.trim(),
           stockQuantity: parseInt(s.stockQuantity, 10),
         }));
+
+      data.categories = formik.values.categories || [];
+      data.fits = formik.values.fits || [];
 
       http
         .post("/product", data)
@@ -362,40 +368,95 @@ function AddProduct() {
               <Typography variant="subtitle1" sx={{ mt: 2, mb: 1 }}>
                 Category Name:
               </Typography>
-              <ToggleButtonGroup
-                color="primary"
-                exclusive
-                value={formik.values.categoryName}
-                onChange={(e, value) =>
-                  formik.setFieldValue("categoryName", value)
-                }
-              >
-                <ToggleButton value="Landing">Landing</ToggleButton>
-                <ToggleButton value="New arrivals">New arrivals</ToggleButton>
-                <ToggleButton value="Trending">Trending</ToggleButton>
-                <ToggleButton value="Women">Women</ToggleButton>
-                <ToggleButton value="Men">Men</ToggleButton>
-                <ToggleButton value="Girls">Girls</ToggleButton>
-                <ToggleButton value="Boys">Boys</ToggleButton>
-              </ToggleButtonGroup>
+              <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1 }}>
+                {[
+                  "Landing",
+                  "New arrivals",
+                  "Trending",
+                  "Women",
+                  "Men",
+                  "Girls",
+                  "Boys",
+                ].map((category) => (
+                  <Button
+                    key={category}
+                    variant={
+                      formik.values.categories.includes(category)
+                        ? "contained"
+                        : "outlined"
+                    }
+                    onClick={() => {
+                      const selected = formik.values.categories.includes(
+                        category
+                      )
+                        ? formik.values.categories.filter((c) => c !== category)
+                        : [...formik.values.categories, category];
+
+                      formik.setFieldValue("categories", selected); // This line updates the formik values for categories
+                    }}
+                    sx={{
+                      borderRadius: "20px",
+                      border: "1px solid #ccc",
+                      backgroundColor: formik.values.categories.includes(
+                        category
+                      )
+                        ? "#555"
+                        : "#fff",
+                      color: formik.values.categories.includes(category)
+                        ? "#fff"
+                        : "#000",
+                      "&:hover": { backgroundColor: "#f0f0f0", color: "#000" },
+                      padding: "8px 16px",
+                      textTransform: "none",
+                    }}
+                  >
+                    {category}
+                  </Button>
+                ))}
+              </Box>
 
               <Typography variant="subtitle1" sx={{ mt: 2, mb: 1 }}>
                 Fit:
               </Typography>
-              <ToggleButtonGroup
-                color="primary"
-                exclusive
-                value={formik.values.fit}
-                onChange={(e, value) => formik.setFieldValue("fit", value)}
-              >
-                <ToggleButton value="Regular Tapered">
-                  Regular Tapered
-                </ToggleButton>
-                <ToggleButton value="Skinny Tapered">
-                  Skinny Tapered
-                </ToggleButton>
-                <ToggleButton value="Seasonal Fit">Seasonal Fit</ToggleButton>
-              </ToggleButtonGroup>
+              <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1 }}>
+                {["Regular Tapered", "Skinny Tapered", "Seasonal Fit"].map(
+                  (fit) => (
+                    <Button
+                      key={fit}
+                      variant={
+                        formik.values.fits.includes(fit)
+                          ? "contained"
+                          : "outlined"
+                      }
+                      onClick={() => {
+                        const selected = formik.values.fits.includes(fit)
+                          ? formik.values.fits.filter((f) => f !== fit)
+                          : [...formik.values.fits, fit];
+
+                        formik.setFieldValue("fits", selected);
+                      }}
+                      sx={{
+                        borderRadius: "20px",
+                        border: "1px solid #ccc",
+                        backgroundColor: formik.values.fits.includes(fit)
+                          ? "#555"
+                          : "#fff",
+                        color: formik.values.fits.includes(fit)
+                          ? "#fff"
+                          : "#000",
+                        "&:hover": {
+                          backgroundColor: "#f0f0f0",
+                          color: "#000",
+                        },
+                        padding: "8px 16px",
+                        textTransform: "none",
+                      }}
+                    >
+                      {fit}
+                    </Button>
+                  )
+                )}
+              </Box>
             </Grid>
 
             <Grid item xs={12} md={4}>

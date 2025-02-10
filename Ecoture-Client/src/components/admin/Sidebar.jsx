@@ -32,8 +32,14 @@ const sideMenuOptions = [
         name: 'Users',
         icon: usersIcon,
         path: '/admin/users'
+    },
+    {
+        name: 'Product Management',
+        icon: usersIcon, // Add a relevant icon here
+        path: '/addproduct'
     }
 ];
+
 
 function Sidebar() {
     const { user } = useContext(UserContext);
@@ -101,11 +107,7 @@ function Sidebar() {
                 <Divider />
                 {sideMenuOptions.map((option) => (
                     <React.Fragment key={option.name}>
-                        <ListItem
-                            button
-                            onClick={() =>
-                                option.subOptions && handleClick(option.name)
-                            }
+                        <ListItem onClick={() => option.subOptions && handleClick(option.name)}
                             sx={{
                                 my: 1,
                                 borderRadius: 1,
