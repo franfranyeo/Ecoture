@@ -36,7 +36,7 @@ const sideMenuOptions = [
     {
         name: 'Product Management',
         icon: usersIcon, // Add a relevant icon here
-        path: '/addproduct'
+        path: '/products'
     }
 ];
 

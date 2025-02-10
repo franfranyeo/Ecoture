@@ -29,13 +29,16 @@ function Navbar() {
   const navigate = useNavigate();
   const adminRoles = [0, 1];
 
+  
+
+
   const customerNavItems = [
-    { text: "New Arrivals", link: "/new-arrivals" },
-    { text: "Trending", link: "/trending" },
-    { text: "Women", link: "/women" },
-    { text: "Men", link: "/men" },
-    { text: "Girls", link: "/girls" },
-    { text: "Boys", link: "/boys" },
+    { text: "New Arrivals", link: "/category/NewArrivals" },
+    { text: "Trending", link: "/category/Trending" },
+    { text: "Women", link: "/category/Women" },
+    { text: "Men", link: "/category/Men" },
+    { text: "Girls", link: "/category/Girls" },
+    { text: "Boys", link: "/category/Boys" },
     // { text: "Addresses", link: "/addresses" },
     // { text: "Credit Cards", link: "/creditcards" },
     // { text: "Choice", link: "/choice" },

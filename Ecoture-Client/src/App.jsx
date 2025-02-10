@@ -14,7 +14,9 @@ import StaffDashboard from "./pages/StaffView";
 import AddProduct from "./pages/AddProduct";
 import EditProduct from "./pages/EditProduct";
 import ProductDetail from "./pages/ProductDetail";
-import Reviews from "./pages/Reviews"; // Use Reviews.jsx now instead of ProductReviews
+import Reviews from "./pages/Reviews";
+import Products from "./pages/Products";
+
 import http from "./utils/http";
 import UserContext from "./contexts/UserContext";
 import { GoogleOAuthProvider } from "@react-oauth/google";
@@ -237,6 +239,9 @@ function App() {
                     />
                   }
                 />
+                <Route path="/products" element={<Products />} />
+                <Route path="/category/:categoryName" element={<Products />} />
+
                 {/* Edit Product */}
                 <Route path="/editproduct/:id" element={<EditProduct />} />
                 {/* Product Detail */}

@@ -371,7 +371,7 @@ function AddProduct() {
               <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1 }}>
                 {[
                   "Landing",
-                  "New arrivals",
+                  "New Arrivals",
                   "Trending",
                   "Women",
                   "Men",
