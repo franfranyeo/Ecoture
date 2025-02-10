@@ -1,4 +1,3 @@
-// Choice.jsx
 import React, { useState, useEffect } from "react";
 import {
   Box,
@@ -9,9 +8,10 @@ import {
   CardMedia,
   Button,
   Alert,
+  IconButton,
 } from "@mui/material";
-import { useNavigate } from "react-router-dom";
-import http from "../utils/http";
+import { useLocation, useNavigate, Link } from "react-router-dom";
+import http from "../http";
 
 function Choice() {
   const [addresses, setAddresses] = useState([]);
@@ -20,9 +20,10 @@ function Choice() {
   const [selectedCard, setSelectedCard] = useState(null);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
+  const { state } = useLocation();
 
   useEffect(() => {
-    // fetching addresses and credit cards
+    // Fetching addresses and credit cards
     Promise.all([http.get("/address"), http.get("/creditcard")])
       .then(([addressRes, cardRes]) => {
         setAddresses(addressRes.data);
@@ -33,10 +34,7 @@ function Choice() {
 
   const handleNext = () => {
     if (selectedAddress && selectedCard) {
-      // save selections to local storage*, help from ai to store in local storage
-      localStorage.setItem("selectedAddress", JSON.stringify(selectedAddress));
-      localStorage.setItem("selectedCard", JSON.stringify(selectedCard));
-      navigate("/confirmation");
+      navigate(`/confirmation`, { state: state });
     } else {
       alert("Please select both an address and a credit card.");
     }
@@ -56,16 +54,29 @@ function Choice() {
       </Typography>
 
       <Grid container spacing={3}>
+        {/* Addresses Section */}
         <Grid item xs={12} md={6}>
-          <Typography variant="h5" sx={{ mb: 2, fontWeight: "bold" }}>
-            Addresses
-          </Typography>
+          <Box sx={{ display: "flex", justifyContent: "space-between", mb: 2 }}>
+            <Typography variant="h5" sx={{ fontWeight: "bold" }}>
+              Addresses
+            </Typography>
+            <Button
+              variant="contained"
+              component={Link}
+              to="/addaddress"
+              size="small"
+            >
+              Add Address
+            </Button>
+          </Box>
+
           {addresses.length > 0 ? (
             addresses.map((address) => (
               <Card
                 key={address.id}
                 sx={{
                   mb: 2,
+                  position: "relative",
                   cursor: "pointer",
                   border:
                     selectedAddress?.id === address.id
@@ -97,6 +108,21 @@ function Choice() {
                     {address.description}
                   </Typography>
                 </CardContent>
+
+                {/* Edit Icon */}
+                <IconButton
+                  component={Link}
+                  to={`/editaddress/${address.id}`}
+                  sx={{
+                    position: "absolute",
+                    top: 8,
+                    right: 8,
+                    backgroundColor: "white",
+                    "&:hover": { backgroundColor: "lightgray" },
+                  }}
+                >
+                  <Typography>Edit</Typography>
+                </IconButton>
               </Card>
             ))
           ) : (
@@ -106,16 +132,29 @@ function Choice() {
           )}
         </Grid>
 
+        {/* Credit Cards Section */}
         <Grid item xs={12} md={6}>
-          <Typography variant="h5" sx={{ mb: 2, fontWeight: "bold" }}>
-            Credit Cards
-          </Typography>
+          <Box sx={{ display: "flex", justifyContent: "space-between", mb: 2 }}>
+            <Typography variant="h5" sx={{ fontWeight: "bold" }}>
+              Credit Cards
+            </Typography>
+            <Button
+              variant="contained"
+              component={Link}
+              to="/addcreditcard"
+              size="small"
+            >
+              Add Credit Card
+            </Button>
+          </Box>
+
           {creditCards.length > 0 ? (
             creditCards.map((card) => (
               <Card
                 key={card.id}
                 sx={{
                   mb: 2,
+                  position: "relative",
                   cursor: "pointer",
                   border:
                     selectedCard?.id === card.id
@@ -140,6 +179,21 @@ function Choice() {
                     Expiry: {card.expiryMonth}/{card.expiryYear}
                   </Typography>
                 </CardContent>
+
+                {/* Edit Icon */}
+                <IconButton
+                  component={Link}
+                  to={`/editcreditcard/${card.id}`}
+                  sx={{
+                    position: "absolute",
+                    top: 8,
+                    right: 8,
+                    backgroundColor: "white",
+                    "&:hover": { backgroundColor: "lightgray" },
+                  }}
+                >
+                  <Typography>Edit</Typography>
+                </IconButton>
               </Card>
             ))
           ) : (
@@ -150,6 +204,7 @@ function Choice() {
         </Grid>
       </Grid>
 
+      {/* Confirm Button */}
       <Box sx={{ textAlign: "center", mt: 4 }}>
         <Button
           variant="contained"

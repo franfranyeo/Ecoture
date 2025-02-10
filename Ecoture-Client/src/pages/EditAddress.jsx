@@ -78,8 +78,8 @@ function EditAddress() {
       http
         .put(`/address/${id}`, data)
         .then(() => {
-          toast.success("Address updated successfully!");
-          navigate("/addresses");
+          toast.success('Address updated successfully!');
+          navigate('/choice');
         })
         .catch(() => {
           toast.error("Failed to update the address.");

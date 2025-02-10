@@ -1,79 +1,81 @@
-// Confirmation.jsx
-import React from 'react';
-import { Box, Typography, Card, CardContent, CardMedia, Button } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import { Box, Typography, Card, CardContent, Button } from "@mui/material";
+import { useLocation, useNavigate } from "react-router-dom";
+import http from "../http";
 
-//retrival of info from local storage, help from ai to retrieve
 function Confirmation() {
-  const selectedAddress = JSON.parse(localStorage.getItem('selectedAddress'));
-  const selectedCard = JSON.parse(localStorage.getItem('selectedCard'));
-  const navigate = useNavigate();
+    const navigate = useNavigate();
+    const [order, setOrder] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const { state } = useLocation();
 
-  if (!selectedAddress || !selectedCard) {
-    return (
-      <Box sx={{ textAlign: 'center', mt: 4 }}>
-        <Typography variant="h6" color="error">
-          No selection made. Please go back and select both an address and a credit card.
-        </Typography>
-        <Button variant="contained" onClick={() => navigate('/choice')} sx={{ mt: 2 }}>
-          Go Back
-        </Button>
-      </Box>
+    useEffect(() => {
+        if (!state || !state.orderId) {
+            alert("Error: Order ID is missing.");
+            navigate("/cart");
+            return;
+        }
+        // Fetch Order Details
+        http.get(`/order/${state.orderId}`)
+            .then((res) => setOrder(res.data))
+            .catch(() => alert("Failed to fetch order details."))
+            .finally(() => setLoading(false));
+    }, [state, navigate]);
+
+    if (loading) return <Typography>Loading order details...</Typography>;
+
+    if (!order) return (
+        <Box sx={{ textAlign: "center", mt: 4 }}>
+            <Typography variant="h6" color="error">Error loading order details. Please try again.</Typography>
+            <Button variant="contained" onClick={() => navigate("/cart")} sx={{ mt: 2 }}>
+                Back to Cart
+            </Button>
+        </Box>
     );
-  }
 
-  return (
-    <Box sx={{ mt: 4, mx: 'auto', maxWidth: 800 }}>
-      <Typography variant="h4" sx={{ mb: 4, textAlign: 'center', fontWeight: 'bold' }}>
-        Confirmation
-      </Typography>
-      <Box sx={{ display: 'flex', justifyContent: 'center', gap: 4 }}>
-        {/* selected address to show */}
-        <Card sx={{ width: 300, border: '1px solid gray', boxShadow: 3 }}>
-          {selectedAddress.imageFile && (
-            <CardMedia
-              component="img"
-              height="140"
-              image={`${import.meta.env.VITE_FILE_BASE_URL}${selectedAddress.imageFile}`}
-              alt={selectedAddress.title}
-            />
-          )}
-          <CardContent>
-            <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
-              Selected Address
+    return (
+        <Box sx={{ mt: 4, mx: "auto", maxWidth: 800 }}>
+            <Typography variant="h4" sx={{ mb: 4, textAlign: "center", fontWeight: "bold" }}>
+                Order Confirmation
             </Typography>
-            <Typography variant="body1">{selectedAddress.title}</Typography>
-            <Typography variant="body2" color="textSecondary">
-              {selectedAddress.description}
-            </Typography>
-          </CardContent>
-        </Card>
 
-        {/* selected card to show */}
-        <Card sx={{ width: 300, border: '1px solid gray', boxShadow: 3 }}>
-          <CardContent>
-            <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
-              Selected Credit Card
-            </Typography>
-            <Typography variant="body1">{selectedCard.cardHolderName}</Typography>
-            <Typography variant="body2" color="textSecondary">
-              **** **** **** {selectedCard.lastFourDigits}
-            </Typography>
-            <Typography variant="body2" color="textSecondary">
-              Expiry: {selectedCard.expiryMonth}/{selectedCard.expiryYear}
-            </Typography>
-          </CardContent>
-        </Card>
-      </Box>
+            <Card sx={{ mb: 3, p: 2 }}>
+                <CardContent>
+                    <Typography variant="h6">Order ID: {order.id}</Typography>
+                    <Typography>Total Price: ${order.totalPrice.toFixed(2)}</Typography>
+                    <Typography>Date: {new Date(order.createdAt).toLocaleString()}</Typography>
+                </CardContent>
+            </Card>
 
-      
-      <Box sx={{ textAlign: 'center', mt: 4 }}>
-        <Button variant="contained" onClick={() => navigate('/choice')}>
-          Back to Choice
-        </Button>
-      </Box>
-    </Box>
-  );
+            {order.orderItems && order.orderItems.length > 0 ? (
+                order.orderItems.map((item) => (
+                    <Card key={item.id} sx={{ mb: 2, p: 2, display: "flex", alignItems: "center" }}>
+                        <img
+                            src={`${import.meta.env.VITE_FILE_BASE_URL}${item.imageFile}`}
+                            alt={item.productTitle}
+                            width="80"
+                            height="80"
+                            style={{ marginRight: 10 }}
+                        />
+                        <CardContent>
+                            <Typography variant="h6">{item.productTitle}</Typography>
+                            <Typography>Color: {item.color} | Size: {item.size}</Typography>
+                            <Typography>Quantity: {item.quantity}</Typography>
+                            <Typography>${item.price.toFixed(2)}</Typography>
+                        </CardContent>
+                    </Card>
+                ))
+            ) : (
+                <Typography>No items in this order.</Typography>
+            )}
+
+            <Box sx={{ textAlign: "center", mt: 4 }}>
+                <Button variant="contained" onClick={() => navigate("/")}>
+                    Back to Home
+                </Button>
+            </Box>
+        </Box>
+    );
 }
 
 export default Confirmation;

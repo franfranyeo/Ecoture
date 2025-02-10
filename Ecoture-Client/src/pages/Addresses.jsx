@@ -25,7 +25,6 @@ import dayjs from "dayjs";
 import UserContext from "../contexts/UserContext";
 import global from "../utils/global";
 
-// formating help from ai, make the ui look abit neater
 function Addresses() {
   const [addressList, setAddressList] = useState([]);
   const [search, setSearch] = useState("");

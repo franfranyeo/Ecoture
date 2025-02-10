@@ -3,27 +3,45 @@ using Ecoture.Model.Entity;
 using Ecoture.Model.Enum;
 using Ecoture.Model.Response;
 
-
 namespace Ecoture
 {
     public class MyDbContext : DbContext
 	{
 		private readonly IConfiguration _configuration;
 
-		public MyDbContext(IConfiguration configuration)
-		{
-			_configuration = configuration;
-		}
+        public MyDbContext(DbContextOptions<MyDbContext> options, IConfiguration configuration)
+            : base(options)
+        {
+            _configuration = configuration;
+        }
 
-		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-		{
-			string? connectionString = _configuration.GetConnectionString("MyConnection");
-			if (connectionString != null)
-			{
-				optionsBuilder.UseMySQL(connectionString);
-			}
-		}
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+                string? connectionString = _configuration.GetConnectionString("MyConnection");
+                if (string.IsNullOrEmpty(connectionString))
+                {
+                    throw new Exception("Database connection string is missing in appsettings.json.");
+                }
+                optionsBuilder.UseMySQL(connectionString);
+            }
+        }
 
+        // ✅ Define DbSets for Entities
+        public DbSet<Enquiry> Enquiries { get; set; }
+        public DbSet<Response> Responses { get; set; }
+        public required DbSet<Product> Products { get; set; }
+        public required DbSet<User> Users { get; set; }
+        public required DbSet<Size> Sizes { get; set; }
+        public required DbSet<ProductSize> ProductSizes { get; set; }
+        public required DbSet<Review> Reviews { get; set; }
+        public required DbSet<Color> Colors { get; set; }
+        public required DbSet<ProductColor> ProductColors { get; set; }
+        public required DbSet<ProductFit> ProductFits { get; set; }
+        public required DbSet<Fit> Fits { get; set; }
+        public required DbSet<ProductCategory> ProductCategories { get; set; }
+        public required DbSet<Category> Categories { get; set; }
 
 		public DbSet<Enquiry> Enquiries { get; set; }
 		public DbSet<Response> Responses { get; set; }
@@ -38,9 +56,8 @@ namespace Ecoture
 		public required DbSet<Color> Colors { get; set; } // DbSet for Colors
 		public required DbSet<ProductColor> ProductColors { get; set; } // DbSet for ProductColors
 
-		// AHMED DB CONTEXT 
-		public required DbSet<Address> Addresses { get; set; } // Addresses table
-		public required DbSet<CreditCard> CreditCards { get; set; } // New CreditCards table
+        // Order Items Table
+        public required DbSet<OrderItem> OrderItems { get; set; }
 
         // FRAN DB CONTEXT
         public required DbSet<User> Users { get; set; }

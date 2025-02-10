@@ -33,7 +33,7 @@ function CreditCards() {
   };
 
   useEffect(() => {
-    getCreditCards();
+    getCreditCards(); // Fetch credit cards on initial load
   }, []);
 
   const handleCardClick = (cardId) => {
@@ -49,20 +49,8 @@ function CreditCards() {
         My Credit Cards
       </Typography>
 
-      <Typography
-        variant="body1"
-        color="text.secondary"
-        sx={{ textAlign: "center", mb: 3 }}
-      >
-        Click on a card below to edit its details.
-      </Typography>
-
       {/* error alert */}
-      {error && (
-        <Alert severity="error" sx={{ mb: 3 }}>
-          {error}
-        </Alert>
-      )}
+      {error && <Alert severity="error" sx={{ mb: 3 }}>{error}</Alert>}
 
       <Grid container spacing={3} justifyContent="center">
         {creditCardList.length > 0 ? (
@@ -84,24 +72,16 @@ function CreditCards() {
                   },
                 }}
               >
-                <CardContent sx={{ textAlign: "center" }}>
-                  <Typography variant="h6" sx={{ fontWeight: "bold", mb: 1 }}>
+                <CardContent sx={{ textAlign: 'center' }}>
+                  <Typography variant="h6" sx={{ fontWeight: 'bold', mb: 1 }}>
                     {card.cardHolderName}
                   </Typography>
 
-                  <Typography
-                    variant="body2"
-                    color="text.secondary"
-                    sx={{ mb: 1 }}
-                  >
+                  <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
                     Card Number: **** **** **** {card.lastFourDigits}
                   </Typography>
 
-                  <Typography
-                    variant="body2"
-                    color="text.secondary"
-                    sx={{ mb: 2 }}
-                  >
+                  <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
                     Expiry: {card.expiryMonth}/{card.expiryYear}
                   </Typography>
 
@@ -136,15 +116,14 @@ function CreditCards() {
         )}
       </Grid>
 
+      {/* Buttons - Add Credit Card and Choose Information */}
       {user && (
-        <Box sx={{ textAlign: "center", mt: 4 }}>
-          <Button
-            variant="contained"
-            component={Link}
-            to="/addcreditcard"
-            size="large"
-          >
+        <Box sx={{ textAlign: 'center', mt: 4, display: 'flex', justifyContent: 'center', gap: '20px' }}>
+          <Button variant="contained" component={Link} to="/addcreditcard" size="large">
             Add Credit Card
+          </Button>
+          <Button variant="contained" component={Link} to="/choice" size="large">
+            Choose Information
           </Button>
         </Box>
       )}
