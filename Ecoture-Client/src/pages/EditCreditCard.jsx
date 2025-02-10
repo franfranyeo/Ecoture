@@ -58,7 +58,7 @@ function EditCreditCard() {
       http.put(`/creditcard/${id}`, data)
         .then(() => {
           setUpdateDialogOpen(false);
-          navigate('/creditcards');
+          navigate('/choice');
         })
         .catch(() => {
           setError('Failed to update the credit card. Please try again.');

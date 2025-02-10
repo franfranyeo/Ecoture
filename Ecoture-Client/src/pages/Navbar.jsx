@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import {
   AppBar,
   Toolbar,
@@ -14,11 +14,27 @@ import ProfileIcon from "../assets/Profile.png";
 import ShoppingCartIcon from "../assets/ShoppingCart.png";
 import EcoTureLogo from "../assets/Ecoture6.png";
 import "/navbar.css";
+import http from "../http"; // Ensure you have an HTTP helper
 
 function Navbar({ onLogout }) {
   const { user } = useContext(UserContext);
   const [anchorEl, setAnchorEl] = useState(null);
   const navigate = useNavigate();
+  const [cart, setCart] = useState([]); // Manage cart data locally
+
+ 
+
+
+  // Fetch cart data from API
+  useEffect(() => {
+    http.get("/cart")
+        .then((response) => {
+            setCart(response.data);
+        })
+        .catch(() => {
+            console.error("Failed to fetch cart data");
+        });
+}, []); // Empty dependency array ensures this runs once on mount
 
   const handleMenuOpen = (event) => {
     if (user) {
@@ -70,15 +86,6 @@ function Navbar({ onLogout }) {
             <Link to="/category/Boys" className="nav-link">
               Boys
             </Link>
-            <Link to="/addresses" className="nav-link">
-              Addresses
-            </Link>
-            <Link to="/creditcards" className="nav-link">
-              Credit Cards
-            </Link>
-            <Link to="/choice" className="nav-link">
-              Choice
-            </Link>
           </div>
 
           {/* Profile and Cart Section */}
@@ -89,6 +96,9 @@ function Navbar({ onLogout }) {
                 alt="Shopping Cart"
                 className="nav-icon cart-icon"
               />
+              {cart.length > 0 && (
+                <span className="cart-count">{cart.length}</span>
+              )}
             </Link>
 
             {/* Profile Section */}

@@ -26,6 +26,7 @@ import EditCreditCard from './pages/EditCreditCard';
 import MyForm from './pages/MyForm';
 import Choice from './pages/Choice';
 import Confirmation from './pages/Confirmation';
+import Cart from './pages/Cart';
 
 // Amelia Imports
 import Enquiries from './pages/Enquiries/Enquiries';
@@ -106,6 +107,8 @@ function App() {
                             <Route path="/form" element={<MyForm />} />
                             <Route path="/choice" element={<Choice />} />
                             <Route path="/confirmation" element={<Confirmation />} />
+                            <Route path="/cart" element={<Cart />} />
+                                
 
                             {/* Enquiry Management */}
                             <Route path="/dashboard" element={<Dashboard />} />

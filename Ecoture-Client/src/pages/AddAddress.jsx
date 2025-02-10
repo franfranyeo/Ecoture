@@ -41,7 +41,7 @@ function AddAddress() {
       http
         .post('/address', data)
         .then(() => {
-          navigate('/addresses');
+          navigate('/choice');
         })
         .catch((error) => {
           toast.error('An error occurred while adding the address.');

@@ -5,6 +5,7 @@ using Ecoture.Models.Enum;
 using Ecoture.Models.DTO;
 using Ecoture.Models.Request;
 using System.Linq;
+using Ecoture.Model.DTO;
 
 namespace Ecoture
 {
@@ -16,6 +17,15 @@ namespace Ecoture
             CreateMap<Response, ResponseDTO>();
             CreateMap<Response, ResponseDTO>()
                 .ForMember(dest => dest.Subject, opt => opt.MapFrom(src => src.Enquiry.subject));
+
+            CreateMap<Cart, CartDTO>().ReverseMap();
+            CreateMap<AddToCartRequest, Cart>().ReverseMap();
+
+            CreateMap<Order, OrderDTO>()
+            .ForMember(dest => dest.OrderItems, opt => opt.MapFrom(src => src.OrderItems));
+
+            // Map OrderItem to OrderItemDTO
+            CreateMap<OrderItem, OrderItemDTO>();
 
             // ✅ Map Product to ProductDTO
             CreateMap<Product, ProductDTO>()
@@ -85,6 +95,13 @@ namespace Ecoture
                 .ForMember(dest => dest.ProductFits, opt => opt.Ignore()) // ✅ Ignore fits (handled in ProductController)
                 .ForMember(dest => dest.ProductCategories, opt => opt.Ignore()) // ✅ Ignore categories (handled in ProductController)
                 .ReverseMap();
+
+            // ✅ Map Order to OrderDTO
+            CreateMap<Order, OrderDTO>()
+                .ForMember(dest => dest.OrderItems, opt => opt.MapFrom(src => src.OrderItems)); // Map collection explicitly
+
+            // ✅ Map OrderItem to OrderItemDTO
+            CreateMap<OrderItem, OrderItemDTO>();
         }
     }
 }

@@ -34,7 +34,7 @@ function AddCreditCard() {
     onSubmit: (data) => {
       http.post('/creditcard', data)
         .then(() => {
-          navigate('/creditcards');
+          navigate('/choice');
         })
         .catch(() => {
           alert('An error occurred while adding the credit card. Please try again.');

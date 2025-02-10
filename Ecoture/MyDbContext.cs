@@ -46,8 +46,26 @@ namespace Ecoture
         public required DbSet<Address> Addresses { get; set; }
         public required DbSet<CreditCard> CreditCards { get; set; }
 
+        public required DbSet<Cart> Carts { get; set; } // New Cart Table
+                                                        // Orders Table
+        public required DbSet<Order> Orders { get; set; }
+
+        // Order Items Table
+        public required DbSet<OrderItem> OrderItems { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Cart>()
+    .HasOne(c => c.User)
+    .WithMany()
+    .HasForeignKey(c => c.UserId)
+    .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Cart>()
+                .HasOne(c => c.Product)
+                .WithMany()
+                .HasForeignKey(c => c.ProductId)
+                .OnDelete(DeleteBehavior.Cascade);
             // ✅ Configure many-to-many relationships
             ConfigureProductSizeRelationship(modelBuilder);
             ConfigureProductColorRelationship(modelBuilder);

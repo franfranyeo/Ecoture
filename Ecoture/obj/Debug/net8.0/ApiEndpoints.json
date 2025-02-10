@@ -115,6 +115,48 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "Ecoture.Controllers.CartController",
+    "Method": "AddToCart",
+    "RelativePath": "Cart",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "Ecoture.Models.Request.AddToCartRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Ecoture.Controllers.CartController",
+    "Method": "GetCart",
+    "RelativePath": "Cart",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Ecoture.Controllers.CartController",
+    "Method": "RemoveFromCart",
+    "RelativePath": "Cart/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "Ecoture.Controllers.CreditCardController",
     "Method": "GetAll",
     "RelativePath": "CreditCard",
@@ -335,6 +377,88 @@
     "ReturnTypes": [
       {
         "Type": "Ecoture.Models.UploadResponse",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Ecoture.Controllers.OrderController",
+    "Method": "PlaceOrder",
+    "RelativePath": "Order",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "selectedCartItems",
+        "Type": "System.Collections.Generic.List\u00601[[Ecoture.Models.DTO.CartDTO, Ecoture, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Ecoture.Controllers.OrderController",
+    "Method": "GetUserOrders",
+    "RelativePath": "Order",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[Ecoture.Model.DTO.OrderDTO, Ecoture, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Ecoture.Controllers.OrderController",
+    "Method": "GetOrderDetails",
+    "RelativePath": "Order/{orderId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "orderId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Ecoture.Model.DTO.OrderDTO",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Ecoture.Controllers.OrderController",
+    "Method": "GetLatestOrder",
+    "RelativePath": "Order/latest",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "Ecoture.Model.DTO.OrderDTO",
         "MediaTypes": [
           "text/plain",
           "application/json",

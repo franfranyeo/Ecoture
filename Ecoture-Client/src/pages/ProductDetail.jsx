@@ -37,6 +37,40 @@ function ProductDetail() {
       });
   }, [id]);
 
+  const handleAddToCart = async () => {
+    if (!selectedColor || !selectedSize) {
+      alert("Please select a color and size before adding to cart.");
+      return;
+    }
+
+    const cartItem = {
+      productId: product.id,
+      productTitle: product.title,
+      price: product.price,
+      color: selectedColor,
+      size: selectedSize,
+      imageFile: product.imageFile || "", // Ensure it's not null
+      quantity: 1,
+    };
+
+    try {
+      const response = await http.post("/cart", cartItem, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (response.status === 200) {
+        alert("Item added to cart successfully!");
+      } else {
+        alert("Failed to add item to cart.");
+      }
+    } catch (error) {
+      console.error("Error adding to cart:", error);
+      alert("Failed to add item to cart.");
+    }
+  };
+
   if (loading) return <Typography>Loading...</Typography>;
   if (error) return <Typography color="error">{error}</Typography>;
 
@@ -290,6 +324,7 @@ function ProductDetail() {
               borderRadius: "8px",
             }}
             disabled={!selectedColor || !selectedSize}
+            onClick={handleAddToCart} //  Fix: Call function when clicked
           >
             Add to Cart
           </Button>

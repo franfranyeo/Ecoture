@@ -1,20 +1,19 @@
-// Address.jsx
 import React, { useEffect, useState, useContext } from 'react';
-import { Link } from 'react-router-dom';
-import { Box, Typography, Grid, Card, CardContent, CardMedia, IconButton, Button, InputAdornment, TextField } from '@mui/material';
+import { Link, useParams } from 'react-router-dom';
+import { Box, Typography, Grid, Card, CardContent, CardMedia, IconButton, Button, InputAdornment, TextField, Divider } from '@mui/material';
 import { AccountCircle, AccessTime, Search, Edit, Clear } from '@mui/icons-material';
 import http from '../http';
 import dayjs from 'dayjs';
 import UserContext from '../contexts/UserContext';
 import global from '../global';
 
-// formating help from ai, make the ui look abit neater
 function Addresses() {
     const [addressList, setAddressList] = useState([]);
     const [search, setSearch] = useState('');
     const { user } = useContext(UserContext);
+    const { orderId } = useParams();
 
-    // fetch addresses
+    // Fetch addresses from the server
     const getAddresses = () => {
         http.get('/address')
             .then((res) => {
@@ -25,7 +24,7 @@ function Addresses() {
             });
     };
 
-    // search addresses,
+    // Search addresses function
     const searchAddresses = () => {
         http.get(`/address?search=${search}`)
             .then((res) => {
@@ -36,45 +35,41 @@ function Addresses() {
             });
     };
 
-    // fetch all addresses
     useEffect(() => {
-        getAddresses();
+        getAddresses(); // Fetch addresses on initial load
     }, []);
 
-    
+    // Handle search changes and call the search API
     const handleSearchChange = (e) => {
         const value = e.target.value;
         setSearch(value);
 
-        
         if (value.trim()) {
-            searchAddresses();
+            searchAddresses(); // Fetch search results
         } else {
-            
-            getAddresses();
+            getAddresses(); // Re-fetch all addresses if search is cleared
         }
     };
 
-   
     const handleKeyDown = (e) => {
         if (e.key === 'Enter') {
             searchAddresses();
         }
     };
 
-   
     const handleSearchClear = () => {
         setSearch('');
         getAddresses();
     };
 
     return (
-        <Box>
-            <Typography variant="h4" sx={{ mb: 3, fontWeight: 'bold' }}>
+        <Box sx={{ padding: '20px', maxWidth: '1200px', margin: '0 auto' }}>
+            {/* Title */}
+            <Typography variant="h4" sx={{ mb: 3, fontWeight: 'bold', textAlign: 'center' }}>
                 My Addresses
             </Typography>
 
-            
+            {/* Search Bar */}
             <TextField
                 value={search}
                 onChange={handleSearchChange}
@@ -95,13 +90,18 @@ function Addresses() {
                         </InputAdornment>
                     ),
                 }}
-                sx={{ mb: 4 }}
+                sx={{
+                    mb: 4,
+                    maxWidth: '500px',
+                    margin: '0 auto',
+                    display: 'block',
+                }}
             />
 
-            
+            {/* Address List */}
             <Grid container spacing={3}>
                 {addressList.map((address) => (
-                    <Grid item xs={12} key={address.id}>
+                    <Grid item xs={12} sm={6} md={4} key={address.id}>
                         <Card
                             sx={{
                                 display: 'flex',
@@ -109,16 +109,21 @@ function Addresses() {
                                 overflow: 'hidden',
                                 backgroundColor: '#f9f9f9',
                                 border: '1px solid #ddd',
-                                height: '145px', 
+                                height: '145px',
+                                boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)',
+                                transition: '0.3s',
+                                '&:hover': {
+                                    transform: 'scale(1.02)',
+                                    boxShadow: '0px 6px 15px rgba(0, 0, 0, 0.15)',
+                                },
                             }}
                         >
-                            
                             {address.imageFile && (
                                 <CardMedia
                                     component="img"
                                     sx={{
-                                        width: 120, 
-                                        height: '100%', 
+                                        width: 120,
+                                        height: '100%',
                                         objectFit: 'cover',
                                     }}
                                     image={`${import.meta.env.VITE_FILE_BASE_URL}${address.imageFile}`}
@@ -128,12 +133,9 @@ function Addresses() {
 
                             <Box sx={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
                                 <CardContent sx={{ padding: '12px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-                                    
                                     <Typography variant="subtitle1" sx={{ fontWeight: 'bold', mb: 0.5 }}>
                                         {address.title}
                                     </Typography>
-
-                                    
                                     <Typography
                                         variant="body2"
                                         sx={{
@@ -146,7 +148,6 @@ function Addresses() {
                                         {address.description}
                                     </Typography>
 
-                                  
                                     <Box sx={{ display: 'flex', alignItems: 'center', color: 'text.secondary', gap: 1, fontSize: '0.8rem' }}>
                                         <Box sx={{ display: 'flex', alignItems: 'center' }}>
                                             <AccountCircle sx={{ mr: 0.5, fontSize: '16px' }} />
@@ -183,11 +184,14 @@ function Addresses() {
                 ))}
             </Grid>
 
-            {/* Add Address Button */}
+            {/* Add Address and Add Card Buttons */}
             {user && (
-                <Box sx={{ textAlign: 'center', mt: 4 }}>
+                <Box sx={{ textAlign: 'center', mt: 4, display: 'flex', justifyContent: 'center', gap: '20px' }}>
                     <Button variant="contained" component={Link} to="/addaddress" size="large">
                         Add Address
+                    </Button>
+                    <Button variant="contained" component={Link} to="/addcreditcard" size="large">
+                        Add Card
                     </Button>
                 </Box>
             )}
