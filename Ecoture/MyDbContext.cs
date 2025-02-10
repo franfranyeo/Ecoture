@@ -54,9 +54,6 @@ namespace Ecoture
         // Order Items Table
         public required DbSet<OrderItem> OrderItems { get; set; }
 
-		public DbSet<Content> Contents { get; set; }
-		public DbSet<Newsletter> Newsletters { get; set; }
-
         // FRAN DB CONTEXT
         public required DbSet<User> Users { get; set; }
         public required DbSet<UserToken> UserTokens { get; set; }

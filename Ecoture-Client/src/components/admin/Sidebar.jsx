@@ -43,6 +43,11 @@ const sideMenuOptions = [
     icon: usersIcon,
     path: "/",
   },
+  {
+    name: "Enquiries",
+    icon: usersIcon,
+    path: "/dashboard",
+  },
 ];
 
 function Sidebar() {
