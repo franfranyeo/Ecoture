@@ -1,7 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Ecoture.Model.Entity;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Ecoture.Model.Entity
+namespace Ecoture.Models.Entity
 {
     public class Review
     {

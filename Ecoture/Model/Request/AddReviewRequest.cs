@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Ecoture.Model.Request
+namespace Ecoture.Models.Request
 {
     public class AddReviewRequest
     {

@@ -1,4 +1,4 @@
-﻿namespace Ecoture.Model.Entity
+﻿namespace Ecoture.Models.Entity
 {
     public class Size
     {

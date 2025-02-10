@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using Ecoture.Model.Entity;
-using Ecoture.Model.Request;
-using Ecoture.Model.DTO;
+using Ecoture.Models.Entity;
+using Ecoture.Models.Request;
+using Ecoture.Models.DTO;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;

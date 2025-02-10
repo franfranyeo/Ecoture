@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "qd+ifKYH4FIJtiLTe2aJ6De7X2lN6Jbl4fUCLJF78b0=",
+  "Hash": "lr4rcCJD0NBUArgMY+0kGQxqfNdrYHQvY32oRx6xBRU=",
   "Source": "Ecoture",
   "BasePath": "_content/Ecoture",
   "Mode": "Default",
@@ -55,6 +55,25 @@
       "OriginalItemSpec": "wwwroot\\uploads\\24yDsoio5x.PNG"
     },
     {
+      "Identity": "C:\\Documents\\Enterprise Development Project\\Francine\\Ecoture\\Ecoture\\wwwroot\\uploads\\2tlAXQo7Pw.jpg",
+      "SourceId": "Ecoture",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Documents\\Enterprise Development Project\\Francine\\Ecoture\\Ecoture\\wwwroot\\",
+      "BasePath": "_content/Ecoture",
+      "RelativePath": "uploads/2tlAXQo7Pw.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\2tlAXQo7Pw.jpg"
+    },
+    {
       "Identity": "C:\\Documents\\Enterprise Development Project\\Francine\\Ecoture\\Ecoture\\wwwroot\\uploads\\3NSjdc8pJJ.PNG",
       "SourceId": "Ecoture",
       "SourceType": "Discovered",
@@ -74,6 +93,44 @@
       "OriginalItemSpec": "wwwroot\\uploads\\3NSjdc8pJJ.PNG"
     },
     {
+      "Identity": "C:\\Documents\\Enterprise Development Project\\Francine\\Ecoture\\Ecoture\\wwwroot\\uploads\\3vVKoDvD7O.jpg",
+      "SourceId": "Ecoture",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Documents\\Enterprise Development Project\\Francine\\Ecoture\\Ecoture\\wwwroot\\",
+      "BasePath": "_content/Ecoture",
+      "RelativePath": "uploads/3vVKoDvD7O.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\3vVKoDvD7O.jpg"
+    },
+    {
+      "Identity": "C:\\Documents\\Enterprise Development Project\\Francine\\Ecoture\\Ecoture\\wwwroot\\uploads\\41e2D0k4Ol.png",
+      "SourceId": "Ecoture",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Documents\\Enterprise Development Project\\Francine\\Ecoture\\Ecoture\\wwwroot\\",
+      "BasePath": "_content/Ecoture",
+      "RelativePath": "uploads/41e2D0k4Ol.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\41e2D0k4Ol.png"
+    },
+    {
       "Identity": "C:\\Documents\\Enterprise Development Project\\Francine\\Ecoture\\Ecoture\\wwwroot\\uploads\\9ka8n6Ww8l.PNG",
       "SourceId": "Ecoture",
       "SourceType": "Discovered",
@@ -91,6 +148,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\uploads\\9ka8n6Ww8l.PNG"
+    },
+    {
+      "Identity": "C:\\Documents\\Enterprise Development Project\\Francine\\Ecoture\\Ecoture\\wwwroot\\uploads\\aOFa2lSMHg.jpg",
+      "SourceId": "Ecoture",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Documents\\Enterprise Development Project\\Francine\\Ecoture\\Ecoture\\wwwroot\\",
+      "BasePath": "_content/Ecoture",
+      "RelativePath": "uploads/aOFa2lSMHg.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\aOFa2lSMHg.jpg"
     },
     {
       "Identity": "C:\\Documents\\Enterprise Development Project\\Francine\\Ecoture\\Ecoture\\wwwroot\\uploads\\avlEOWnxHv.PNG",
@@ -207,6 +283,25 @@
       "OriginalItemSpec": "wwwroot\\uploads\\d8Pn9hLWje.PNG"
     },
     {
+      "Identity": "C:\\Documents\\Enterprise Development Project\\Francine\\Ecoture\\Ecoture\\wwwroot\\uploads\\D9JdfxlyYG.jpg",
+      "SourceId": "Ecoture",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Documents\\Enterprise Development Project\\Francine\\Ecoture\\Ecoture\\wwwroot\\",
+      "BasePath": "_content/Ecoture",
+      "RelativePath": "uploads/D9JdfxlyYG.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\D9JdfxlyYG.jpg"
+    },
+    {
       "Identity": "C:\\Documents\\Enterprise Development Project\\Francine\\Ecoture\\Ecoture\\wwwroot\\uploads\\dYHsBVLjvk.PNG",
       "SourceId": "Ecoture",
       "SourceType": "Discovered",
@@ -243,6 +338,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\uploads\\e0Nw025KTX.PNG"
+    },
+    {
+      "Identity": "C:\\Documents\\Enterprise Development Project\\Francine\\Ecoture\\Ecoture\\wwwroot\\uploads\\esH9zFzCix.jpg",
+      "SourceId": "Ecoture",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Documents\\Enterprise Development Project\\Francine\\Ecoture\\Ecoture\\wwwroot\\",
+      "BasePath": "_content/Ecoture",
+      "RelativePath": "uploads/esH9zFzCix.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\esH9zFzCix.jpg"
     },
     {
       "Identity": "C:\\Documents\\Enterprise Development Project\\Francine\\Ecoture\\Ecoture\\wwwroot\\uploads\\euJeKyLkPR.PNG",
@@ -359,6 +473,25 @@
       "OriginalItemSpec": "wwwroot\\uploads\\pjhKjMaUeo.PNG"
     },
     {
+      "Identity": "C:\\Documents\\Enterprise Development Project\\Francine\\Ecoture\\Ecoture\\wwwroot\\uploads\\Pl5Y78TQIy.png",
+      "SourceId": "Ecoture",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Documents\\Enterprise Development Project\\Francine\\Ecoture\\Ecoture\\wwwroot\\",
+      "BasePath": "_content/Ecoture",
+      "RelativePath": "uploads/Pl5Y78TQIy.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\Pl5Y78TQIy.png"
+    },
+    {
       "Identity": "C:\\Documents\\Enterprise Development Project\\Francine\\Ecoture\\Ecoture\\wwwroot\\uploads\\qHQ6CqVfOd.PNG",
       "SourceId": "Ecoture",
       "SourceType": "Discovered",
@@ -452,6 +585,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\uploads\\VTjBVCaMRH.png"
+    },
+    {
+      "Identity": "C:\\Documents\\Enterprise Development Project\\Francine\\Ecoture\\Ecoture\\wwwroot\\uploads\\-ZLckIw0Jy.jpg",
+      "SourceId": "Ecoture",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Documents\\Enterprise Development Project\\Francine\\Ecoture\\Ecoture\\wwwroot\\",
+      "BasePath": "_content/Ecoture",
+      "RelativePath": "uploads/-ZLckIw0Jy.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\uploads\\-ZLckIw0Jy.jpg"
     }
   ]
 }

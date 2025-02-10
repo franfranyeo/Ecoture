@@ -1,10 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Ecoture.Model.Entity;
-using Ecoture.Model.Entity;
 using Ecoture.Model.Enum;
+using Ecoture.Models.Enum;
 
-namespace Ecoture.Model.Entity
+namespace Ecoture.Models.Entity
 {
     public class Product
     {
@@ -25,17 +27,11 @@ namespace Ecoture.Model.Entity
         [Required, Range(0, int.MaxValue, ErrorMessage = "Stock Quantity must be a non-negative value.")]
         public int StockQuantity { get; set; }
 
-        [Required, MaxLength(50)]
-        public string CategoryName { get; set; } = string.Empty;
-
-        [Required, MaxLength(30)]
-        public string Fit { get; set; } = string.Empty;
-
         [Required(ErrorMessage = "Price Range is required.")]
         public PriceRange PriceRange { get; set; } // Enum for Price Range
 
         [MaxLength(255)]
-        public string? ImageFile { get; set; }  // Increased length to store full image URLs if needed
+        public string? ImageFile { get; set; } // URL or filename for the product image
 
         [Column(TypeName = "datetime")]
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow; // Auto-assign default value
@@ -55,9 +51,13 @@ namespace Ecoture.Model.Entity
         // Navigation property for the many-to-many relationship with Colors
         public virtual List<ProductColor> ProductColors { get; set; } = new();
 
-        // New Navigation Property: One-to-Many relationship with Reviews
+        // Navigation property for the many-to-many relationship with Fits
+        public virtual List<ProductFit> ProductFits { get; set; } = new();
+
+        // Navigation property for the many-to-many relationship with Categories
+        public virtual List<ProductCategory> ProductCategories { get; set; } = new();
+
+        // Navigation property for the one-to-many relationship with Reviews
         public virtual List<Review> Reviews { get; set; } = new();
-	}
+    }
 }
-
-
