@@ -11,8 +11,8 @@ import {
   Tooltip,
 } from "@mui/material";
 import { Edit } from "@mui/icons-material";
-import http from "../http";
-import UserContext from "../contexts/UserContext";
+import http from "../../http";
+import UserContext from "../../contexts/UserContext";
 
 function CreditCards() {
   const [creditCardList, setCreditCardList] = useState([]);

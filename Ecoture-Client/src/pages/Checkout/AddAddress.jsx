@@ -12,7 +12,7 @@ import {
 import { ArrowBack } from "@mui/icons-material";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import http from "../http";
+import http from "../../http";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 // formating help from ai for ui and clean up

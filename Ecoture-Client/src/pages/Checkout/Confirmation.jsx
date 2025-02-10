@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Box, Typography, Card, CardContent, Button } from "@mui/material";
 import { useLocation, useNavigate } from "react-router-dom";
-import http from "../http";
+import http from "../../http";
 
 function Confirmation() {
     const navigate = useNavigate();

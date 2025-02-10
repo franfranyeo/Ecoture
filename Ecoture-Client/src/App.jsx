@@ -24,16 +24,16 @@ import CustomerLanding from './pages/CustomerLanding';
 import StaffDashboard from './pages/StaffView';
 
 // AHMED IMPORTS
-import Addresses from "./pages/Addresses";
-import AddAddress from "./pages/AddAddress";
-import EditAddress from "./pages/EditAddress";
-import CreditCards from "./pages/CreditCards";
-import AddCreditCard from "./pages/AddCreditCard";
-import EditCreditCard from "./pages/EditCreditCard";
-import MyForm from "./pages/MyForm";
-import Choice from "./pages/Choice"; // New Page
-import Confirmation from "./pages/Confirmation"; // New Page
-import Cart from './pages/Cart';
+import Addresses from "./pages/Checkout/Addresses";
+import AddAddress from "./pages/Checkout/AddAddress";
+import EditAddress from "./pages/Checkout/EditAddress";
+import CreditCards from "./pages/Checkout/CreditCards";
+import AddCreditCard from "./pages/Checkout/AddCreditCard";
+import EditCreditCard from "./pages/Checkout/EditCreditCard";
+import MyForm from "./pages/Checkout/MyForm";
+import Choice from "./pages/Checkout/Choice";
+import Confirmation from "./pages/Checkout/Confirmation";
+import Cart from './pages/Checkout/Cart';
 
 // Amelia Imports
 import Enquiries from "./pages/Enquiries/Enquiries";
@@ -55,7 +55,7 @@ import EditUser from "./pages/admin/user/EditUser";
 import ViewUser from "./pages/admin/user/ViewUser";
 import Rewards from "./pages/admin/rewards/Rewards";
 import Login from "./pages/customer/user/Login";
-import Home from "./pages/Home";
+// import Home from "./pages/Home";
 import Register from "./pages/customer/user/Register";
 import TermsOfUse from "./pages/customer/user/TermsOfUse";
 import PrivacyPolicy from "./pages/customer/user/PrivacyPolicy";

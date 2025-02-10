@@ -18,7 +18,7 @@ import {
 import { ArrowBack } from "@mui/icons-material";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import http from "../http";
+import http from "../../http";
 
 // formating help from ai
 function EditCreditCard() {

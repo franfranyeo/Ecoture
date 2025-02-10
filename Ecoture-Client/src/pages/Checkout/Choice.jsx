@@ -11,7 +11,7 @@ import {
   IconButton,
 } from "@mui/material";
 import { useLocation, useNavigate, Link } from "react-router-dom";
-import http from "../http";
+import http from "../../http";
 
 function Choice() {
   const [addresses, setAddresses] = useState([]);
