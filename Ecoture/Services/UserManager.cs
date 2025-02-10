@@ -512,8 +512,9 @@ namespace Ecoture.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task EditUserAsync(int userId, string firstName, string lastName, string email, DateTime? dateOfBirth, UserRole role, string pfpUrl)
+        public async Task EditUserAsync(int userId, string firstName, string lastName, string email, DateTime? dateOfBirth, string role, string pfpUrl)
         {
+            var r = Enum.Parse<UserRole>(role);
             var user = await _context.Users.FindAsync(userId);
             if (user != null)
             {
@@ -521,7 +522,7 @@ namespace Ecoture.Services
                 user.LastName = lastName;
                 user.Email = email;
                 user.DateofBirth = dateOfBirth;
-                user.Role = role;
+                user.Role = r;
                 user.PfpURL = pfpUrl;
 
                 await _context.SaveChangesAsync();
@@ -543,7 +544,7 @@ namespace Ecoture.Services
         Task<(bool IsSuccess, string? ErrorMessage, ProfileResponse? UpdatedUser)> EditProfileAsync(int userId, EditProfileRequest request);
         Task<(bool IsSuccess, string? ErrorMessage)> ChangePasswordAsync(int userId, ChangePasswordRequest request);
 
-        Task EditUserAsync(int userId, string firstName, string lastName, string email, DateTime? dateOfBirth, UserRole role, string pfpUrl);
+        Task EditUserAsync(int userId, string firstName, string lastName, string email, DateTime? dateOfBirth, string role, string pfpUrl);
     }
 
 }

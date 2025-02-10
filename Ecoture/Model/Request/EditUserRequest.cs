@@ -15,7 +15,7 @@ namespace Ecoture.Model.Request
         public string Email { get; set; }
         [Column(TypeName = "date")]
         public DateTime? DateofBirth { get; set; }
-        public UserRole Role { get; set; }
+        public string Role { get; set; }
         [MaxLength(255)]
         public string PfpURL { get; set; }
     }
