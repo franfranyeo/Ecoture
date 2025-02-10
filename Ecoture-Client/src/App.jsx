@@ -9,14 +9,18 @@ import {
 import { ThemeProvider } from "@mui/material/styles";
 import MyTheme from "./themes/MyTheme";
 import Navbar from "components/Navbar";
-import AddProduct from "./pages/AddProduct";
-import EditProduct from "./pages/EditProduct";
-import ProductDetail from "./pages/ProductDetail";
-import Reviews from "./pages/Reviews"; // Use Reviews.jsx now instead of ProductReviews
 import http from "./utils/http";
 import UserContext from "./contexts/UserContext";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { useMemo, useRef } from "react";
+
+// KEON IMPORTS
+import AddProduct from "./pages/AddProduct";
+import EditProduct from "./pages/EditProduct";
+import ProductDetail from "./pages/ProductDetail";
+import Reviews from "./pages/Reviews";
+import Products from "./pages/Products";
+
 // AHMED IMPORTS
 import Addresses from "./pages/Addresses";
 import AddAddress from "./pages/AddAddress";
@@ -226,6 +230,8 @@ function App() {
                     element={<ProtectedRoute element={route.component} />}
                   />
                 ))}
+                {/* Category Routes - Products.jsx handles category filtering */}
+                <Route path="/category/:categoryName" element={<Products />} />
                 {/* Add Product */}
                 <Route
                   path="/addproduct"
