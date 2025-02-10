@@ -30,16 +30,16 @@ function Navbar() {
   const adminRoles = [0, 1];
 
   const customerNavItems = [
-    { text: "New Arrivals", link: "/new-arrivals" },
-    { text: "Trending", link: "/trending" },
+    { text: "New Arrivals", link: "category/New%20Arrivals" },
+    { text: "Trending", link: "category/Trending" },
     // temp removed
-    // { text: "Women", link: "/women" },
-    // { text: "Men", link: "/men" },
-    // { text: "Girls", link: "/girls" },
-    // { text: "Boys", link: "/boys" },
-    { text: "Addresses", link: "/addresses" },
-    { text: "Credit Cards", link: "/creditcards" },
-    { text: "Choice", link: "/choice" },
+    { text: "Women", link: "category/Women" },
+    { text: "Men", link: "category/Men" },
+    { text: "Girls", link: "category/Girls" },
+    { text: "Boys", link: "category/Boys" },
+    // { text: "Addresses", link: "/addresses" },
+    // { text: "Credit Cards", link: "/creditcards" },
+    // { text: "Choice", link: "/choice" },
   ];
 
   const handleLogout = () => {

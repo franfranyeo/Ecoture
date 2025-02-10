@@ -208,11 +208,6 @@ function App() {
     //   url: "/admin/rewards/:id/view",
     //   component: ViewReward,
     // }
-
-    {
-      url: "/admin/products",
-      component: StaffDashboard
-    }
   ];
 
   const logout = () => {
@@ -237,7 +232,7 @@ function App() {
               <Navbar onLogout={logout} />
 
               <Routes>
-                <Route path="/" element={<CustomerLanding />} />
+                <Route path="/" element={user?.role == "Admin" ? <StaffDashboard /> : <CustomerLanding />} />
 
                 {sharedRoutes.map((route, index) => (
                   <Route
@@ -273,6 +268,7 @@ function App() {
                     />
                   }
                 />
+
                 {/* Edit Product */}
                 <Route path="/editproduct/:id" element={<EditProduct />} />
                 {/* Product Detail */}

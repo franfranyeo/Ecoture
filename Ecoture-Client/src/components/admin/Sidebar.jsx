@@ -35,13 +35,13 @@ const sideMenuOptions = [
   },
   {
     name: "Rewards",
-    icon: "",
+    icon: usersIcon,
     path: "/admin/rewards",
   },
   {
-    name: "Prodcuts",
-    icon: "",
-    path: "/admin/products",
+    name: "Products",
+    icon: usersIcon,
+    path: "/",
   },
 ];
 
