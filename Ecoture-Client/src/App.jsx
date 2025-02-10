@@ -33,6 +33,7 @@ import EditCreditCard from "./pages/EditCreditCard";
 import MyForm from "./pages/MyForm";
 import Choice from "./pages/Choice"; // New Page
 import Confirmation from "./pages/Confirmation"; // New Page
+import Cart from './pages/Cart';
 
 // Amelia Imports
 import Enquiries from "./pages/Enquiries/Enquiries";
@@ -257,9 +258,9 @@ function App() {
                   />
                 ))}
 
+                {/* Keon Product */}
                 {/* Category Routes - Products.jsx handles category filtering */}
                 <Route path="/category/:categoryName" element={<Products />} />
-                {/* Add Product */}
                 <Route
                   path="/addproduct"
                   element={
@@ -271,14 +272,10 @@ function App() {
                     />
                   }
                 />
-
-                {/* Edit Product */}
                 <Route path="/editproduct/:id" element={<EditProduct />} />
-                {/* Product Detail */}
                 <Route path="/product/:id" element={<ProductDetail />} />
-                {/* Product Reviews */}
-                <Route path="/reviews/:productId" element={<Reviews />} />{" "}
-                {/* Updated route for reviews */}
+                <Route path="/reviews/:productId" element={<Reviews />} />
+
                 {/* AHMED CODES */}
                 <Route path="/addresses" element={<Addresses />} />
                 <Route path="/addaddress" element={<AddAddress />} />
@@ -290,8 +287,9 @@ function App() {
                   element={<EditCreditCard />}
                 />
                 <Route path="/form" element={<MyForm />} />
-                <Route path="/choice" element={<Choice />} /> {/* New Route */}
-                <Route path="/confirmation" element={<Confirmation />} />{" "}
+                <Route path="/choice" element={<Choice />} />
+                <Route path="/confirmation" element={<Confirmation />} />
+                <Route path="/cart" element={<Cart />} />
                 
                 {/* Enquiry Management */}
                 <Route path="/dashboard" element={<EnquiriesDashboard />} />

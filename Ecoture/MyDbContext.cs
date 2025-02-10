@@ -163,12 +163,6 @@ namespace Ecoture
 				.HasForeignKey(r => r.enquiryId)
 				.OnDelete(DeleteBehavior.Cascade);
 
-			modelBuilder.Entity<Newsletter>()
-				.HasMany(n => n.Contents)
-				.WithMany()
-				.UsingEntity(j => j.ToTable("NewsletterContents"));
-
-
 
 			//  Configure many-to-many relationship: Products ↔ Sizes
 			modelBuilder.Entity<Cart>()
@@ -186,10 +180,10 @@ namespace Ecoture
             ConfigureReviewRelationship(modelBuilder);
             ConfigureResponseRelationship(modelBuilder);
 
-            modelBuilder.Entity<Newsletter>()
-                .HasMany(n => n.Contents)
-                .WithMany()
-                .UsingEntity(j => j.ToTable("NewsletterContents"));
+            // modelBuilder.Entity<Newsletter>()
+            //     .HasMany(n => n.Contents)
+            //     .WithMany()
+            //     .UsingEntity(j => j.ToTable("NewsletterContents"));
 
             // ✅ Configure decimal precision for Product Price
             modelBuilder.Entity<Product>()
