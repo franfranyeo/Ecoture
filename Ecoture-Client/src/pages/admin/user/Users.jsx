@@ -245,26 +245,31 @@ const Users = () => {
           }}
         >
           <Box sx={{ display: "flex", alignItems: "center" }}>
+            {/* Search Bar */}
             <Input
               value={search}
-              placeholder="Search..."
               onChange={onSearchChange}
-              sx={{
-                mr: 2,
-                width: "300px",
-                borderBottom: "1px solid gray",
-              }}
+              placeholder="Search users..."
               startAdornment={
                 <InputAdornment position="start">
                   <Search />
                 </InputAdornment>
               }
+              endAdornment={
+                search && (
+                  <InputAdornment position="end">
+                    <IconButton onClick={onClickClear}>
+                      <Clear />
+                    </IconButton>
+                  </InputAdornment>
+                )
+              }
+              sx={{
+                mr: 2,
+                width: "300px",
+                borderBottom: "1px solid gray",
+              }}
             />
-            <Tooltip title="Clear">
-              <IconButton color="primary" onClick={onClickClear}>
-                <Clear />
-              </IconButton>
-            </Tooltip>
           </Box>
 
           <Box sx={{ display: "flex", alignItems: "center" }}>

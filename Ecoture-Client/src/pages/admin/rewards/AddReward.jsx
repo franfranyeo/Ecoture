@@ -261,6 +261,21 @@ function AddReward() {
             margin="dense"
           />
 
+          {/* Start Date */}
+          <TextField
+            fullWidth
+            label="Start Date"
+            name="startDate"
+            type="date"
+            InputLabelProps={{ shrink: true }}
+            value={formik.values.startDate}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            error={formik.touched.startDate && Boolean(formik.errors.startDate)}
+            helperText={formik.touched.startDate && formik.errors.startDate}
+            margin="dense"
+          />
+
           {/* Expiration Date */}
           <TextField
             fullWidth
@@ -281,20 +296,56 @@ function AddReward() {
             margin="dense"
           />
 
-          {/* Start Date */}
-          <TextField
+          {/* <TextField
             fullWidth
-            label="Start Date"
-            name="startDate"
-            type="date"
-            InputLabelProps={{ shrink: true }}
-            value={formik.values.startDate}
+            label="Exclusions"
+            name="exclusions"
+            type="text"
+            value={formik.values.exclusions}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            error={formik.touched.startDate && Boolean(formik.errors.startDate)}
-            helperText={formik.touched.startDate && formik.errors.startDate}
+            error={
+              formik.touched.exclusions && Boolean(formik.errors.exclusions)
+            }
+            helperText={formik.touched.exclusions && formik.errors.exclusions}
             margin="dense"
           />
+
+          <TextField
+            fullWidth
+            label="User Eligibility"
+            name="userEligibility"
+            type="text"
+            value={formik.values.userEligibility}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            error={
+              formik.touched.userEligibility &&
+              Boolean(formik.errors.userEligibility)
+            }
+            helperText={
+              formik.touched.userEligibility && formik.errors.userEligibility
+            }
+            margin="dense"
+          />
+          <TextField
+            fullWidth
+            label="Applicable Products"
+            name="applicableProducts"
+            type="text"
+            value={formik.values.applicableProducts}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            error={
+              formik.touched.applicableProducts &&
+              Boolean(formik.errors.applicableProducts)
+            }
+            helperText={
+              formik.touched.applicableProducts &&
+              formik.errors.applicableProducts
+            }
+            margin="dense"
+          /> */}
 
           {/* Usage Limit */}
           <TextField

@@ -15,9 +15,9 @@ namespace Ecoture.Model.Entity
         public DateTime ExpirationDate { get; set; }
         public DateTime StartDate { get; set; } 
         public int UsageLimit { get; set; }
-        public string ApplicableProducts { get; set; } 
-        public string Exclusions { get; set; }
-        public string UserEligibility { get; set; } 
+        public string? ApplicableProducts { get; set; } 
+        public string? Exclusions { get; set; }
+        public string? UserEligibility { get; set; } 
         public bool IsStackable { get; set; } 
         public bool AutoApply { get; set; } 
         public string Status { get; set; }

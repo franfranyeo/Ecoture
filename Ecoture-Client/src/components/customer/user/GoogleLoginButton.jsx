@@ -19,11 +19,12 @@ function GoogleLoginButton() {
         const res = await http.post("user/google", {
           token: tokenResponse.access_token,
         });
-        const { user, token, mfaMethods } = res.data;
+        const { user, accessToken, mfaMethods } = res.data;
+        console.log(res.data);
         if (user) {
           user["mfaMethods"] = mfaMethods;
           localStorage.setItem("user", JSON.stringify(user));
-          localStorage.setItem("accessToken", token);
+          localStorage.setItem("accessToken", accessToken);
         } else {
           console.error("User data is not available");
         }

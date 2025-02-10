@@ -193,7 +193,7 @@ function Navbar() {
                       onClick={handleMenuOpen}
                     />
                   )}
-                  <Typography
+                  {/* <Typography
                     variant="body1"
                     sx={{
                       fontWeight: "500",
@@ -204,7 +204,7 @@ function Navbar() {
                     onClick={handleMenuOpen}
                   >
                     {user.fullName}
-                  </Typography>
+                  </Typography> */}
 
                   {/* Dropdown Menu */}
                   <Menu
@@ -225,6 +225,50 @@ function Navbar() {
                       },
                     }}
                   >
+                    <Box
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        padding: "0px 16px 16px 14px",
+                        borderBottom: "1px solid rgba(0, 0, 0, 0.1)",
+                      }}
+                    >
+                      {/* <img
+                      src={user.pfpURL}
+                      alt="User Avatar"
+                      className="nav-icon avatar-icon"
+                      style={{
+                          width: '40px',
+                          height: '40px',
+                          borderRadius: '50%',
+                          marginRight: '8px'
+                      }}
+                      /> */}
+                      {user.pfpURL ? (
+                        <img
+                          src={user.pfpURL}
+                          alt="User Avatar"
+                          className="nav-icon avatar-icon"
+                          style={{
+                            width: "40px",
+                            height: "40px",
+                            borderRadius: "50%",
+                          }}
+                        />
+                      ) : (
+                        <Avatar width="40px" height="40px" />
+                      )}
+                      <Box style={{ marginLeft: "8px" }}>
+                        <Box
+                          style={{
+                            fontWeight: "500",
+                          }}
+                        >
+                          {user.fullName}
+                        </Box>
+                        <Box>{user.email}</Box>
+                      </Box>
+                    </Box>
                     <MenuItem onClick={() => handleNavigate("/account")}>
                       Account
                     </MenuItem>

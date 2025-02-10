@@ -57,6 +57,8 @@ import PrivacyPolicy from "./pages/customer/user/PrivacyPolicy";
 import { ToastContainer } from "react-toastify";
 import { Box } from "@mui/material";
 import AddReward from "./pages/admin/rewards/AddReward";
+import EditReward from "./pages/admin/rewards/EditReward";
+import ViewReward from "./pages/admin/rewards/ViewReward";
 
 function App() {
   // update in the user context too
@@ -192,6 +194,18 @@ function App() {
       url: "/admin/rewards/add",
       component: AddReward,
     },
+    {
+      url: "/admin/rewards/:id/edit",
+      component: EditReward,
+    },
+    {
+      url: "/admin/rewards/:id/view",
+      component: ViewReward,
+    },
+    // {
+    //   url: "/admin/rewards/:id/view",
+    //   component: ViewReward,
+    // }
   ];
 
   const logout = () => {

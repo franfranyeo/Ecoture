@@ -288,25 +288,6 @@ function ViewUser() {
                   Delete Account
                 </Button>
               </Box>
-
-              {/* <Box
-                                sx={{
-                                    display: 'flex',
-                                    justifyContent: 'flex-end',
-                                    mt: 2,
-                                    gap: 2
-                                }}
-                            >
-                                {user.role !== 'Admin' && (
-                                    <Button
-                                        variant="contained"
-                                        color="error"
-                                        onClick={() => handleDelete(user._id)}
-                                    >
-                                        Delete
-                                    </Button>
-                                )}
-                            </Box> */}
             </Box>
           </>
         )}

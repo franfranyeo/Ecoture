@@ -123,12 +123,210 @@ function EditReward() {
         >
           <ArrowBack fontSize="large" />
         </IconButton>
-        <Typography variant="h4">Edit User</Typography>
+        <Typography variant="h4">Edit Reward</Typography>
       </Box>
       <Paper elevation={3} sx={{ p: 3 }}>
         <form onSubmit={formik.handleSubmit}>
-          {/* Similar form fields as in AddReward */}
-          {/* Include all fields from AddReward here */}
+          {/* Reward Type */}
+          <FormControl fullWidth margin="dense">
+            <InputLabel>Reward Type</InputLabel>
+            <Select
+              name="rewardType"
+              value={formik.values.rewardType}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={
+                formik.touched.rewardType && Boolean(formik.errors.rewardType)
+              }
+            >
+              <MenuItem value="Discount">Discount</MenuItem>
+              <MenuItem value="FreeShipping">Free Shipping</MenuItem>
+              <MenuItem value="Cashback">Cashback</MenuItem>
+              <MenuItem value="Cashback">Charity</MenuItem>
+            </Select>
+            {formik.touched.rewardType && formik.errors.rewardType && (
+              <FormHelperText error>{formik.errors.rewardType}</FormHelperText>
+            )}
+          </FormControl>
+
+          {/* Reward Title */}
+          <TextField
+            fullWidth
+            label="Reward Title"
+            name="rewardTitle"
+            value={formik.values.rewardTitle}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            error={
+              formik.touched.rewardTitle && Boolean(formik.errors.rewardTitle)
+            }
+            helperText={formik.touched.rewardTitle && formik.errors.rewardTitle}
+            margin="dense"
+          />
+
+          {/* Reward Description */}
+          <TextField
+            fullWidth
+            label="Reward Description"
+            name="rewardDescription"
+            multiline
+            rows={4}
+            value={formik.values.rewardDescription}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            error={
+              formik.touched.rewardDescription &&
+              Boolean(formik.errors.rewardDescription)
+            }
+            helperText={
+              formik.touched.rewardDescription &&
+              formik.errors.rewardDescription
+            }
+            margin="dense"
+          />
+
+          {/* Reward Code */}
+          <TextField
+            fullWidth
+            label="Reward Code"
+            name="rewardCode"
+            value={formik.values.rewardCode}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            error={
+              formik.touched.rewardCode && Boolean(formik.errors.rewardCode)
+            }
+            helperText={formik.touched.rewardCode && formik.errors.rewardCode}
+            margin="dense"
+          />
+
+          {/* Reward Percentage */}
+          <TextField
+            fullWidth
+            label="Reward Percentage (%)"
+            name="rewardPercentage"
+            type="number"
+            value={formik.values.rewardPercentage}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            error={
+              formik.touched.rewardPercentage &&
+              Boolean(formik.errors.rewardPercentage)
+            }
+            helperText={
+              formik.touched.rewardPercentage && formik.errors.rewardPercentage
+            }
+            margin="dense"
+          />
+
+          {/* Minimum Purchase Amount */}
+          <TextField
+            fullWidth
+            label="Minimum Purchase Amount"
+            name="minimumPurchaseAmount"
+            type="number"
+            value={formik.values.minimumPurchaseAmount}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            error={
+              formik.touched.minimumPurchaseAmount &&
+              Boolean(formik.errors.minimumPurchaseAmount)
+            }
+            helperText={
+              formik.touched.minimumPurchaseAmount &&
+              formik.errors.minimumPurchaseAmount
+            }
+            margin="dense"
+          />
+
+          {/* Maximum Discount Cap */}
+          <TextField
+            fullWidth
+            label="Maximum Discount Cap"
+            name="maximumDiscountCap"
+            type="number"
+            value={formik.values.maximumDiscountCap}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            error={
+              formik.touched.maximumDiscountCap &&
+              Boolean(formik.errors.maximumDiscountCap)
+            }
+            helperText={
+              formik.touched.maximumDiscountCap &&
+              formik.errors.maximumDiscountCap
+            }
+            margin="dense"
+          />
+
+          {/* Expiration Date */}
+          <TextField
+            fullWidth
+            label="Expiration Date"
+            name="expirationDate"
+            type="date"
+            InputLabelProps={{ shrink: true }}
+            value={formik.values.expirationDate}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            error={
+              formik.touched.expirationDate &&
+              Boolean(formik.errors.expirationDate)
+            }
+            helperText={
+              formik.touched.expirationDate && formik.errors.expirationDate
+            }
+            margin="dense"
+          />
+
+          {/* Start Date */}
+          <TextField
+            fullWidth
+            label="Start Date"
+            name="startDate"
+            type="date"
+            InputLabelProps={{ shrink: true }}
+            value={formik.values.startDate}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            error={formik.touched.startDate && Boolean(formik.errors.startDate)}
+            helperText={formik.touched.startDate && formik.errors.startDate}
+            margin="dense"
+          />
+
+          {/* Usage Limit */}
+          <TextField
+            fullWidth
+            label="Usage Limit"
+            name="usageLimit"
+            type="number"
+            value={formik.values.usageLimit}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            error={
+              formik.touched.usageLimit && Boolean(formik.errors.usageLimit)
+            }
+            helperText={formik.touched.usageLimit && formik.errors.usageLimit}
+            margin="dense"
+          />
+
+          {/* Status */}
+          <FormControl fullWidth margin="dense">
+            <InputLabel>Status</InputLabel>
+            <Select
+              name="status"
+              value={formik.values.status}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={formik.touched.status && Boolean(formik.errors.status)}
+            >
+              <MenuItem value="Active">Active</MenuItem>
+              <MenuItem value="Inactive">Inactive</MenuItem>
+            </Select>
+            {formik.touched.status && formik.errors.status && (
+              <FormHelperText error>{formik.errors.status}</FormHelperText>
+            )}
+          </FormControl>
           <Button
             type="submit"
             variant="contained"

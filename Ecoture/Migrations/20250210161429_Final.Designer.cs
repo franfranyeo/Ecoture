@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Ecoture.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20250210133007_Final")]
+    [Migration("20250210161429_Final")]
     partial class Final
     {
         /// <inheritdoc />
@@ -211,34 +211,34 @@ namespace Ecoture.Migrations
                         new
                         {
                             MembershipId = 1,
-                            CreatedAt = new DateTime(2025, 2, 10, 13, 30, 6, 291, DateTimeKind.Utc).AddTicks(1510),
+                            CreatedAt = new DateTime(2025, 2, 10, 16, 14, 28, 514, DateTimeKind.Utc).AddTicks(2246),
                             SpendingRequired = 0.00m,
                             Tier = 1,
-                            UpdatedAt = new DateTime(2025, 2, 10, 13, 30, 6, 291, DateTimeKind.Utc).AddTicks(1517)
+                            UpdatedAt = new DateTime(2025, 2, 10, 16, 14, 28, 514, DateTimeKind.Utc).AddTicks(2246)
                         },
                         new
                         {
                             MembershipId = 2,
-                            CreatedAt = new DateTime(2025, 2, 10, 13, 30, 6, 291, DateTimeKind.Utc).AddTicks(1519),
+                            CreatedAt = new DateTime(2025, 2, 10, 16, 14, 28, 514, DateTimeKind.Utc).AddTicks(2248),
                             SpendingRequired = 2000.00m,
                             Tier = 2,
-                            UpdatedAt = new DateTime(2025, 2, 10, 13, 30, 6, 291, DateTimeKind.Utc).AddTicks(1519)
+                            UpdatedAt = new DateTime(2025, 2, 10, 16, 14, 28, 514, DateTimeKind.Utc).AddTicks(2248)
                         },
                         new
                         {
                             MembershipId = 3,
-                            CreatedAt = new DateTime(2025, 2, 10, 13, 30, 6, 291, DateTimeKind.Utc).AddTicks(1521),
+                            CreatedAt = new DateTime(2025, 2, 10, 16, 14, 28, 514, DateTimeKind.Utc).AddTicks(2250),
                             SpendingRequired = 4000.00m,
                             Tier = 3,
-                            UpdatedAt = new DateTime(2025, 2, 10, 13, 30, 6, 291, DateTimeKind.Utc).AddTicks(1521)
+                            UpdatedAt = new DateTime(2025, 2, 10, 16, 14, 28, 514, DateTimeKind.Utc).AddTicks(2250)
                         },
                         new
                         {
                             MembershipId = 4,
-                            CreatedAt = new DateTime(2025, 2, 10, 13, 30, 6, 291, DateTimeKind.Utc).AddTicks(1522),
+                            CreatedAt = new DateTime(2025, 2, 10, 16, 14, 28, 514, DateTimeKind.Utc).AddTicks(2252),
                             SpendingRequired = 0.00m,
                             Tier = 0,
-                            UpdatedAt = new DateTime(2025, 2, 10, 13, 30, 6, 291, DateTimeKind.Utc).AddTicks(1523)
+                            UpdatedAt = new DateTime(2025, 2, 10, 16, 14, 28, 514, DateTimeKind.Utc).AddTicks(2252)
                         });
                 });
 
@@ -532,7 +532,6 @@ namespace Ecoture.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("ApplicableProducts")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<bool>("AutoApply")
@@ -545,7 +544,6 @@ namespace Ecoture.Migrations
                         .HasColumnType("longtext");
 
                     b.Property<string>("Exclusions")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<DateTime>("ExpirationDate")
@@ -599,7 +597,6 @@ namespace Ecoture.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("UserEligibility")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.HasKey("RewardId");

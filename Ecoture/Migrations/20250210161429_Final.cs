@@ -132,9 +132,9 @@ namespace Ecoture.Migrations
                     ExpirationDate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     StartDate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     UsageLimit = table.Column<int>(type: "int", nullable: false),
-                    ApplicableProducts = table.Column<string>(type: "longtext", nullable: false),
-                    Exclusions = table.Column<string>(type: "longtext", nullable: false),
-                    UserEligibility = table.Column<string>(type: "longtext", nullable: false),
+                    ApplicableProducts = table.Column<string>(type: "longtext", nullable: true),
+                    Exclusions = table.Column<string>(type: "longtext", nullable: true),
+                    UserEligibility = table.Column<string>(type: "longtext", nullable: true),
                     IsStackable = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     AutoApply = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     Status = table.Column<string>(type: "longtext", nullable: false),
@@ -585,10 +585,10 @@ namespace Ecoture.Migrations
                 columns: new[] { "MembershipId", "CreatedAt", "SpendingRequired", "Tier", "UpdatedAt" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2025, 2, 10, 13, 30, 6, 291, DateTimeKind.Utc).AddTicks(1510), 0.00m, 1, new DateTime(2025, 2, 10, 13, 30, 6, 291, DateTimeKind.Utc).AddTicks(1517) },
-                    { 2, new DateTime(2025, 2, 10, 13, 30, 6, 291, DateTimeKind.Utc).AddTicks(1519), 2000.00m, 2, new DateTime(2025, 2, 10, 13, 30, 6, 291, DateTimeKind.Utc).AddTicks(1519) },
-                    { 3, new DateTime(2025, 2, 10, 13, 30, 6, 291, DateTimeKind.Utc).AddTicks(1521), 4000.00m, 3, new DateTime(2025, 2, 10, 13, 30, 6, 291, DateTimeKind.Utc).AddTicks(1521) },
-                    { 4, new DateTime(2025, 2, 10, 13, 30, 6, 291, DateTimeKind.Utc).AddTicks(1522), 0.00m, 0, new DateTime(2025, 2, 10, 13, 30, 6, 291, DateTimeKind.Utc).AddTicks(1523) }
+                    { 1, new DateTime(2025, 2, 10, 16, 14, 28, 514, DateTimeKind.Utc).AddTicks(2246), 0.00m, 1, new DateTime(2025, 2, 10, 16, 14, 28, 514, DateTimeKind.Utc).AddTicks(2246) },
+                    { 2, new DateTime(2025, 2, 10, 16, 14, 28, 514, DateTimeKind.Utc).AddTicks(2248), 2000.00m, 2, new DateTime(2025, 2, 10, 16, 14, 28, 514, DateTimeKind.Utc).AddTicks(2248) },
+                    { 3, new DateTime(2025, 2, 10, 16, 14, 28, 514, DateTimeKind.Utc).AddTicks(2250), 4000.00m, 3, new DateTime(2025, 2, 10, 16, 14, 28, 514, DateTimeKind.Utc).AddTicks(2250) },
+                    { 4, new DateTime(2025, 2, 10, 16, 14, 28, 514, DateTimeKind.Utc).AddTicks(2252), 0.00m, 0, new DateTime(2025, 2, 10, 16, 14, 28, 514, DateTimeKind.Utc).AddTicks(2252) }
                 });
 
             migrationBuilder.CreateIndex(

@@ -19,9 +19,11 @@ function MFAVerification({ userData, onCancel, onSuccess }) {
   const [selectedMethod, setSelectedMethod] = useState(null);
   const [otp, setOtp] = useState("");
   const [isInitialLoad, setIsInitialLoad] = useState(true);
+  const [accessToken, setAccessToken] = useState(null);
 
   useEffect(() => {
     if (!userData || !userData.mfaMethods) return;
+    setAccessToken(userData.accessToken);
 
     const { email, sms } = userData.mfaMethods;
     const methods = [];
@@ -67,7 +69,7 @@ function MFAVerification({ userData, onCancel, onSuccess }) {
         method: selectedMethod,
         otp,
       });
-      onSuccess(userData);
+      onSuccess(userData, accessToken, userData.mfaMethods);
     } catch (error) {
       toast.error("Invalid verification code");
     }

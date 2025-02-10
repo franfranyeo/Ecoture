@@ -98,9 +98,9 @@ namespace Ecoture.Controllers
             reward.ExpirationDate = rewardDto.ExpirationDate;
             reward.StartDate = rewardDto.StartDate;
             reward.UsageLimit = rewardDto.UsageLimit;
-            reward.ApplicableProducts = rewardDto.ApplicableProducts;
-            reward.Exclusions = rewardDto.Exclusions;
-            reward.UserEligibility = rewardDto.UserEligibility;
+            //reward.ApplicableProducts = rewardDto.ApplicableProducts;
+            //reward.Exclusions = rewardDto.Exclusions;
+            //reward.UserEligibility = rewardDto.UserEligibility;
             reward.IsStackable = rewardDto.IsStackable;
             reward.AutoApply = rewardDto.AutoApply;
             reward.Status = rewardDto.Status;

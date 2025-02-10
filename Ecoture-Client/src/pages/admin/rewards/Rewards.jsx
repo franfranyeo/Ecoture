@@ -127,6 +127,25 @@ const Rewards = () => {
   const handlePageChange = (event, value) => {
     setCurrentPage(value);
   };
+
+  const handleFilterClose = () => {
+    setAnchorElSort(null);
+    setAnchorElRewardType(null);
+  };
+
+  const handleRewardTypeFilterClick = (event) => {
+    setAnchorElRewardType(event.currentTarget);
+  };
+
+  const handleFilterChange = (value, type) => {
+    if (type === "rewardType") {
+      setFilterRewardType(value);
+    } else if (type === "sort") {
+      setSortOrder(value);
+    }
+    handleFilterClose();
+  };
+
   // Apply filters and sorting
   const applyFilters = () => {
     let updatedRewards = [...rewards];
@@ -183,10 +202,8 @@ const Rewards = () => {
 
   return (
     <>
-      <Box sx={{ display: "flex", justifyContent: "space-between", mb: 3 }}>
-        <Typography variant="h4" gutterBottom>
-          Rewards
-        </Typography>
+      <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+        <Typography variant="h4">Rewards</Typography>
 
         {/* Add Reward Button */}
         <Button
@@ -199,194 +216,235 @@ const Rewards = () => {
           Add Reward
         </Button>
       </Box>
-
-      {/* Filters */}
-      <Box sx={{ display: "flex", alignItems: "center", mb: 2, gap: 2 }}>
-        {/* Search Bar */}
-        <Input
-          value={search}
-          onChange={onSearchChange}
-          placeholder="Search rewards..."
-          startAdornment={
-            <InputAdornment position="start">
-              <Search />
-            </InputAdornment>
-          }
-          endAdornment={
-            search && (
-              <InputAdornment position="end">
-                <IconButton onClick={onClickClear}>
-                  <Clear />
+      <Box
+        sx={{
+          minHeight: "100vh",
+          py: 3,
+          borderRadius: "8px",
+        }}
+      >
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            flexDirection: { xs: "column", md: "row" },
+            justifyContent: "space-between",
+            mb: 2,
+          }}
+        >
+          {/* Filters */}
+          <Box
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              width: "100%",
+            }}
+          >
+            {/* Search Bar */}
+            <Input
+              value={search}
+              onChange={onSearchChange}
+              placeholder="Search rewards..."
+              startAdornment={
+                <InputAdornment position="start">
+                  <Search />
+                </InputAdornment>
+              }
+              endAdornment={
+                search && (
+                  <InputAdornment position="end">
+                    <IconButton onClick={onClickClear}>
+                      <Clear />
+                    </IconButton>
+                  </InputAdornment>
+                )
+              }
+              sx={{
+                mr: 2,
+                width: "300px",
+                borderBottom: "1px solid gray",
+              }}
+            />
+            {/* Reward Type Filter */}
+            <Box sx={{ display: "flex", alignItems: "center" }}>
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  mr: 2,
+                }}
+              >
+                <Typography variant="body1" sx={{ mr: 1 }}>
+                  Reward Type
+                </Typography>
+                <IconButton onClick={handleRewardTypeFilterClick}>
+                  <FilterList />
                 </IconButton>
-              </InputAdornment>
-            )
-          }
-          sx={{ flexGrow: 1 }}
-        />
-        {/* Reward Type Filter */}
-        <Box>
-          <Button
-            variant="outlined"
-            onClick={(e) => setAnchorElRewardType(e.currentTarget)}
-            endIcon={<FilterList />}
-            sx={{ mr: 2 }}
-          >
-            Reward Type: {filterRewardType || "All"}
-          </Button>
-          <Menu
-            anchorEl={anchorElRewardType}
-            open={Boolean(anchorElRewardType)}
-            onClose={() => setAnchorElRewardType(null)}
-          >
-            {REWARD_TYPES.map((type) => (
-              <MenuItem
-                key={type}
-                onClick={() => {
-                  setFilterRewardType(type === "All Rewards" ? "" : type);
-                  setAnchorElRewardType(null);
+                <Menu
+                  anchorEl={anchorElRewardType}
+                  open={Boolean(anchorElRewardType)}
+                  onClose={() => setAnchorElRewardType(null)}
+                >
+                  {REWARD_TYPES.map((type) => (
+                    <MenuItem
+                      key={type}
+                      onClick={() => {
+                        setFilterRewardType(type === "All Rewards" ? "" : type);
+                        setAnchorElRewardType(null);
+                      }}
+                    >
+                      {type}
+                    </MenuItem>
+                  ))}
+                </Menu>
+              </Box>
+
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  ml: 2,
                 }}
               >
-                {type}
-              </MenuItem>
-            ))}
-          </Menu>
-
-          {/* Sort Filter */}
-          <Button
-            variant="outlined"
-            onClick={(e) => setAnchorElSort(e.currentTarget)}
-            endIcon={<Sort />}
-            sx={{ mr: 2 }}
-          >
-            Sort: {sortOrder.charAt(0).toUpperCase() + sortOrder.slice(1)}
-          </Button>
-          <Menu
-            anchorEl={anchorElSort}
-            open={Boolean(anchorElSort)}
-            onClose={() => setAnchorElSort(null)}
-          >
-            {SORT_OPTIONS.map((option) => (
-              <MenuItem
-                key={option}
-                onClick={() => {
-                  setSortOrder(option.toLowerCase());
-                  setAnchorElSort(null);
-                }}
-              >
-                {option}
-              </MenuItem>
-            ))}
-          </Menu>
+                {/* Sort Filter */}
+                <Typography variant="body1" sx={{ mr: 1 }}>
+                  Sort:
+                </Typography>
+                <IconButton onClick={(e) => setAnchorElSort(e.currentTarget)}>
+                  <Sort />
+                </IconButton>
+                <Menu
+                  anchorEl={anchorElSort}
+                  open={Boolean(anchorElSort)}
+                  onClose={handleFilterClose}
+                >
+                  {SORT_OPTIONS.map((option) => (
+                    <MenuItem
+                      key={option}
+                      onClick={() =>
+                        handleFilterChange(option.toLowerCase(), "sort")
+                      }
+                    >
+                      {option}
+                    </MenuItem>
+                  ))}
+                </Menu>
+              </Box>
+            </Box>
+          </Box>
         </Box>
-      </Box>
 
-      {/* Active Filters */}
-      <Box sx={{ mb: 2 }}>
-        {filterRewardType && (
-          <Chip
-            label={`Reward Type: ${filterRewardType}`}
-            onDelete={() => setFilterRewardType("")}
-            sx={{ mr: 1 }}
-          />
-        )}
-        {sortOrder !== "default" && (
-          <Chip
-            label={`Sort: ${
-              sortOrder.charAt(0).toUpperCase() + sortOrder.slice(1)
-            }`}
-            onDelete={() => setSortOrder("default")}
-            sx={{ mr: 1 }}
-          />
-        )}
-      </Box>
-
-      {/* Loading State */}
-      {loading ? (
-        <Box sx={{ display: "flex", justifyContent: "center", mt: 5 }}>
-          <CircularProgress />
+        {/* Active Filters */}
+        <Box sx={{ mb: 2 }}>
+          {filterRewardType && (
+            <Chip
+              label={`Reward Type: ${filterRewardType}`}
+              onDelete={() => setFilterRewardType("")}
+              sx={{ mr: 1 }}
+            />
+          )}
+          {sortOrder !== "default" && (
+            <Chip
+              label={`Sort: ${
+                sortOrder.charAt(0).toUpperCase() + sortOrder.slice(1)
+              }`}
+              onDelete={() => setSortOrder("default")}
+              sx={{ mr: 1 }}
+            />
+          )}
         </Box>
-      ) : filteredRewards.length === 0 ? (
-        <Typography>No rewards found.</Typography>
-      ) : (
-        <>
-          {/* Rewards Table */}
-          <TableContainer component={Paper}>
-            <Table>
-              <TableHead>
-                <TableRow>
-                  <TableCell>Reward ID</TableCell>
-                  <TableCell>Title</TableCell>
-                  <TableCell>Description</TableCell>
-                  <TableCell>Type</TableCell>
-                  <TableCell>Expiration Date</TableCell>
-                  <TableCell>Actions</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {currentRewards.map((reward) => (
-                  <TableRow key={reward.rewardId}>
-                    <TableCell>{reward.rewardId}</TableCell>
-                    <TableCell>{reward.rewardTitle}</TableCell>
-                    <TableCell>{reward.rewardDescription}</TableCell>
-                    <TableCell>{reward.rewardType}</TableCell>
-                    <TableCell>{reward.expirationDate.split("T")[0]}</TableCell>
-                    <TableCell>
-                      <Tooltip title="View">
-                        <IconButton
-                          component={Link}
-                          to={`/admin/rewards/${reward.rewardId}/view`}
-                        >
-                          <Visibility />
-                        </IconButton>
-                      </Tooltip>
-                      <Tooltip title="Edit">
-                        <IconButton
-                          component={Link}
-                          to={`/admin/rewards/${reward.rewardId}/edit`}
-                        >
-                          <Edit />
-                        </IconButton>
-                      </Tooltip>
-                      <Tooltip title="Delete">
-                        <IconButton
-                          onClick={() => handleDelete(reward.rewardId)}
-                        >
-                          <Delete />
-                        </IconButton>
-                      </Tooltip>
-                    </TableCell>
+
+        {/* Loading State */}
+        {loading ? (
+          <Box sx={{ display: "flex", justifyContent: "center", mt: 5 }}>
+            <CircularProgress />
+          </Box>
+        ) : filteredRewards.length === 0 ? (
+          <Typography>No rewards found.</Typography>
+        ) : (
+          <>
+            {/* Rewards Table */}
+            <TableContainer component={Paper}>
+              <Table>
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Reward ID</TableCell>
+                    <TableCell>Title</TableCell>
+                    <TableCell>Description</TableCell>
+                    <TableCell>Type</TableCell>
+                    <TableCell>Expiration Date</TableCell>
+                    <TableCell>Actions</TableCell>
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
+                </TableHead>
+                <TableBody>
+                  {currentRewards.map((reward) => (
+                    <TableRow key={reward.rewardId}>
+                      <TableCell>{reward.rewardId}</TableCell>
+                      <TableCell>{reward.rewardTitle}</TableCell>
+                      <TableCell>{reward.rewardDescription}</TableCell>
+                      <TableCell>{reward.rewardType}</TableCell>
+                      <TableCell>
+                        {reward.expirationDate.split("T")[0]}
+                      </TableCell>
+                      <TableCell>
+                        <Tooltip title="View">
+                          <IconButton
+                            component={Link}
+                            to={`/admin/rewards/${reward.rewardId}/view`}
+                          >
+                            <Visibility />
+                          </IconButton>
+                        </Tooltip>
+                        <Tooltip title="Edit">
+                          <IconButton
+                            component={Link}
+                            to={`/admin/rewards/${reward.rewardId}/edit`}
+                          >
+                            <Edit />
+                          </IconButton>
+                        </Tooltip>
+                        <Tooltip title="Delete">
+                          <IconButton
+                            onClick={() => handleDelete(reward.rewardId)}
+                          >
+                            <Delete />
+                          </IconButton>
+                        </Tooltip>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
 
-          {/* Pagination */}
-          <Pagination
-            count={Math.ceil(filteredRewards.length / rewardsPerPage)}
-            page={currentPage}
-            onChange={handlePageChange}
-            sx={{ mt: 2, display: "flex", justifyContent: "center" }}
-          />
-        </>
-      )}
+            {/* Pagination */}
+            <Pagination
+              count={Math.ceil(filteredRewards.length / rewardsPerPage)}
+              page={currentPage}
+              onChange={handlePageChange}
+              sx={{ mt: 2, display: "flex", justifyContent: "center" }}
+            />
+          </>
+        )}
 
-      {/* Delete Confirmation Dialog */}
-      <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Confirm Delete</DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            Are you sure you want to delete this reward? This action cannot be
-            undone.
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={deleteReward} color="error">
-            Delete
-          </Button>
-        </DialogActions>
-      </Dialog>
+        {/* Delete Confirmation Dialog */}
+        <Dialog open={open} onClose={handleClose}>
+          <DialogTitle>Confirm Delete</DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              Are you sure you want to delete this reward? This action cannot be
+              undone.
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose}>Cancel</Button>
+            <Button onClick={deleteReward} color="error">
+              Delete
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </Box>
     </>
   );
 };

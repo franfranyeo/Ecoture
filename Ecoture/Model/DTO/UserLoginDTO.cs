@@ -3,6 +3,8 @@
     public class UserLoginDTO
     {
         public int UserId { get; set; } // Maps to UserId in the User entity
+        public string FirstName { get; set; } = string.Empty;
+        public string LastName { get; set; } = string.Empty;
         public string FullName { get; set; } = string.Empty; // Combines FirstName and LastName
         public string Email { get; set; } = string.Empty;
         public string MobileNo { get; set; } = string.Empty;

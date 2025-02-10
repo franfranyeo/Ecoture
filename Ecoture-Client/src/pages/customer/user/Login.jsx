@@ -37,7 +37,7 @@ function Login() {
   const handleLoginSubmit = async (credentials) => {
     try {
       const response = await authService.login(credentials);
-      console.log(response);
+      console.log(response, "HANDLELOGIN");
       const { user, accessToken, mfaMethods } = response;
 
       if (user.is2FAEnabled) {
@@ -56,8 +56,8 @@ function Login() {
     setUserData(null);
   };
 
-  const handleMFASuccess = (user) => {
-    handleLoginSuccess(user);
+  const handleMFASuccess = (user, accessToken, mfaMethods) => {
+    handleLoginSuccess(user, accessToken, mfaMethods);
   };
 
   return (

@@ -63,96 +63,133 @@ namespace Ecoture.Controllers
             }
         }
 
-        // GOOGLE SIGNIN
         [HttpPost("google")]
         public async Task<IActionResult> GoogleLogin(GoogleLoginRequest request)
         {
             try
             {
+                // Step 1: Validate the Google token and fetch user info
                 using var httpClient = new HttpClient();
                 var url = $"https://www.googleapis.com/oauth2/v3/userinfo?access_token={request.Token}";
                 var response = await httpClient.GetAsync(url);
-
-                string content = await response.Content.ReadAsStringAsync();
 
                 if (!response.IsSuccessStatusCode)
                 {
                     return Unauthorized(new { message = "Invalid Google token" });
                 }
 
-
                 var userInfo = await response.Content.ReadFromJsonAsync<GoogleUserInfo>();
-                var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == userInfo.Email);
-                // Check if the user exists in your database
+                if (userInfo == null || string.IsNullOrEmpty(userInfo.Email))
+                {
+                    return Unauthorized(new { message = "Invalid Google user information" });
+                }
 
+                // Step 2: Check if the user exists in the database
+                var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == userInfo.Email);
                 MfaResponse? mfaMethods = null;
                 Membership? membership = null;
+
                 if (user == null)
                 {
+                    // Create a new user
                     user = new User
                     {
                         Email = userInfo.Email,
-                        FirstName = string.IsNullOrEmpty(userInfo.GivenName) ? "" : userInfo.GivenName,
-                        LastName = string.IsNullOrEmpty(userInfo.FamilyName) ? "" : userInfo.FamilyName,
-                        Password = string.Empty,
+                        FirstName = userInfo.GivenName ?? string.Empty,
+                        LastName = userInfo.FamilyName ?? string.Empty,
+                        Password = string.Empty, // No password for Google login
                         PfpURL = userInfo.Picture,
-                        CreatedAt = DateTime.Now,
-                        UpdatedAt = DateTime.Now,
+                        CreatedAt = DateTime.UtcNow,
+                        UpdatedAt = DateTime.UtcNow,
                         IsGoogleLogin = true,
-                        ReferralCode = RandomReferralCode.Generate()
+                        ReferralCode = RandomReferralCode.Generate(),
                     };
 
                     mfaMethods = await _context.MfaResponses.FirstOrDefaultAsync(m => m.UserId == user.UserId);
                     mfaMethods ??= new MfaResponse
                     {
                         UserId = user.UserId,
-                        Sms = false,
-                        Email = false
                     };
-
-                    membership = await _context.Memberships.FirstOrDefaultAsync(m => m.MembershipId == user.MembershipId);
-
-                    // Add user 
-                    await _context.Users.AddAsync(user);
+                    // Add user and membership to the database
+                    _context.Users.Add(user);
                     await _context.MfaResponses.AddAsync(mfaMethods);
                     await _context.SaveChangesAsync();
                 }
-
+                // Fetch existing membership and MFA methods
+                membership = await _context.Memberships.FirstOrDefaultAsync(m => m.MembershipId == user.MembershipId);
+                mfaMethods = await _context.MfaResponses.FirstOrDefaultAsync(m => m.UserId == user.UserId);
+                mfaMethods ??= new MfaResponse
+                {
+                    UserId = user.UserId,
+                };
+                // Step 3: Generate JWT token
                 string? secret = _configuration.GetValue<string>("Authentication:Secret");
                 if (string.IsNullOrEmpty(secret))
                 {
                     throw new Exception("Secret is required for JWT authentication.");
                 }
-                int tokenExpiresDays = _configuration.GetValue<int>("Authentication:TokenExpiresDays");
 
+                int tokenExpiresDays = _configuration.GetValue<int>("Authentication:TokenExpiresDays");
                 var tokenHandler = new JwtSecurityTokenHandler();
                 var key = Encoding.ASCII.GetBytes(secret);
-
                 var tokenDescriptor = new SecurityTokenDescriptor
                 {
-                    Subject = new ClaimsIdentity(
-                    [
-                        new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()),
-                    new Claim(ClaimTypes.Name, $"{user.FirstName} {user.LastName}".Trim()),
-                    new Claim(ClaimTypes.Email, user.Email)
-                    ]),
+                    Subject = new ClaimsIdentity(new[]
+                    {
+                new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()),
+                new Claim(ClaimTypes.Name, $"{user.FirstName} {user.LastName}".Trim()),
+                new Claim(ClaimTypes.Email, user.Email)
+            }),
                     Expires = DateTime.UtcNow.AddDays(tokenExpiresDays),
                     SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
                 };
+
                 var securityToken = tokenHandler.CreateToken(tokenDescriptor);
                 string token = tokenHandler.WriteToken(securityToken);
 
-                return Ok(new
+                // Step 4: Prepare the response
+                var res = new LoginResponse
                 {
-                    token,
-                    user,
-                    mfaMethods,
-                    membership
-                });
+                    User = new UserLoginDTO
+                    {
+                        UserId = user.UserId,
+                        FirstName = user.FirstName,
+                        LastName = user.LastName,
+                        FullName = user.FullName,
+                        Email = user.Email,
+                        MobileNo = user.MobileNo,
+                        DateOfBirth = user.DateofBirth,
+                        Role = user.Role.ToString(),
+                        PfpURL = user.PfpURL,
+                        TotalSpending = user.TotalSpending,
+                        TotalPoints = user.TotalPoints,
+                        MembershipTier = membership?.Tier.ToString() ?? "Bronze",
+                        MembershipStartDate = user.MembershipStartDate,
+                        MembershipEndDate = user.MembershipEndDate,
+                        ReferralCode = user.ReferralCode,
+                        Is2FAEnabled = user.Is2FAEnabled,
+                        IsEmailVerified = user.IsEmailVerified,
+                        IsPhoneVerified = user.IsPhoneVerified,
+                        IsGoogleLogin = user.IsGoogleLogin,
+                        LastLogin = user.LastLogin,
+                        CreatedAt = user.CreatedAt,
+                        UpdatedAt = user.UpdatedAt,
+                    },
+                    AccessToken = token,
+                    MfaMethods = mfaMethods,
+                };
+
+                return Ok(res);
             }
-            catch (InvalidJwtException)
+            catch (HttpRequestException)
             {
                 return Unauthorized(new { message = "Invalid Google token" });
+            }
+            catch (Exception ex)
+            {
+                // Log the exception (optional)
+                Console.Error.WriteLine($"Error during Google login: {ex.Message}");
+                return StatusCode(500, new { message = "An unexpected error occurred" });
             }
         }
 
@@ -422,6 +459,8 @@ namespace Ecoture.Controllers
             var users = rawUsers.Select(u => new UserDTO
             {
                 UserId = u.UserId,
+                FirstName = u.FirstName,
+                LastName = u.LastName,
                 FullName = u.FullName,
                 Email = u.Email,
                 MobileNo = u.MobileNo,

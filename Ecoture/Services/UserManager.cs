@@ -149,6 +149,8 @@ namespace Ecoture.Services
                 User = new UserLoginDTO
                 {
                     UserId = user.UserId,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
                     FullName = user.FullName,
                     Email = user.Email,
                     MobileNo = user.MobileNo,
