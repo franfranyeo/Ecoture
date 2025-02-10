@@ -91,7 +91,7 @@ function EditCreditCard() {
       .delete(`/creditcard/${id}`)
       .then(() => {
         setDeleteDialogOpen(false);
-        navigate("/creditcards");
+        navigate('/choice');
       })
       .catch(() => {
         setError("Failed to delete the credit card. Please try again.");
