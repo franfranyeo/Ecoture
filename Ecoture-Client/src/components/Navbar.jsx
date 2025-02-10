@@ -32,14 +32,13 @@ function Navbar() {
   const customerNavItems = [
     { text: "New Arrivals", link: "/new-arrivals" },
     { text: "Trending", link: "/trending" },
-    // temp removed
-    // { text: "Women", link: "/women" },
-    // { text: "Men", link: "/men" },
-    // { text: "Girls", link: "/girls" },
-    // { text: "Boys", link: "/boys" },
-    { text: "Addresses", link: "/addresses" },
-    { text: "Credit Cards", link: "/creditcards" },
-    { text: "Choice", link: "/choice" },
+    { text: "Women", link: "/women" },
+    { text: "Men", link: "/men" },
+    { text: "Girls", link: "/girls" },
+    { text: "Boys", link: "/boys" },
+    // { text: "Addresses", link: "/addresses" },
+    // { text: "Credit Cards", link: "/creditcards" },
+    // { text: "Choice", link: "/choice" },
   ];
 
   const handleLogout = () => {
