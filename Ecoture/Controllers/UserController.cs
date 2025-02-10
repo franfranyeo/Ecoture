@@ -485,19 +485,46 @@ namespace Ecoture.Controllers
         }
 
         // GET: api/Users/5 (Get user by ID)
-        [HttpGet("{id}")]
-        public async Task<ActionResult<User>> GetUser(int id)
-        {
-            var user = await _context.Users
-                .FirstOrDefaultAsync(u => u.UserId == id);
+        [HttpGet("{userId}"), Authorize]
+public async Task<IActionResult> GetUser(int userId)
+{
+    var rawUser = await _context.Users
+        .Include(u => u.Membership)
+        .FirstOrDefaultAsync(u => u.UserId == userId);
 
-            if (user == null)
-            {
-                return NotFound();
-            }
+    if (rawUser == null)
+    {
+        return NotFound(new { message = "User not found" });
+    }
 
-            return user;
-        }
+    // Proceed with the mapping logic
+    var user = new UserDTO
+    {
+        UserId = rawUser.UserId,
+        FirstName = rawUser.FirstName,
+        LastName = rawUser.LastName,
+        FullName = rawUser.FullName,
+        Email = rawUser.Email,
+        MobileNo = rawUser.MobileNo,
+        DateOfBirth = rawUser.DateofBirth,
+        Role = rawUser.Role.ToString(),
+        PfpURL = rawUser.PfpURL,
+        TotalSpending = rawUser.TotalSpending,
+        TotalPoints = rawUser.TotalPoints,
+        MembershipTier = rawUser.Membership.Tier.ToString(),
+        MembershipStartDate = rawUser.MembershipStartDate,
+        MembershipEndDate = rawUser.MembershipEndDate,
+        ReferralCode = rawUser.ReferralCode,
+        Is2FAEnabled = rawUser.Is2FAEnabled,
+        IsEmailVerified = rawUser.IsEmailVerified,
+        IsPhoneVerified = rawUser.IsPhoneVerified,
+        IsGoogleLogin = rawUser.IsGoogleLogin,
+        CreatedAt = rawUser.CreatedAt,
+        UpdatedAt = rawUser.UpdatedAt
+    };
+
+    return Ok(user);
+}
 
         // POST: api/Users (Create a new user)
         [HttpPost]
