@@ -173,10 +173,15 @@ msbuild.wrn
 # Image Uploads
 uploads/
 
+# Ignore Visual Studio temporary files and build results
+.vs/
+[Bb]in/
+[Oo]bj/
+
 # Migrations
 # ignore the ecotureAPI migrations
 Ecoture/.vs
-Ecoture/Ecoture/obj
+Ecoture/obj
 Ecoture\Ecoture\bin
 Ecoture\Ecoture\obj
 /Ecoture/.vs
