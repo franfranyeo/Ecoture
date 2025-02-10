@@ -176,11 +176,5 @@ uploads/
 # Migrations
 # ignore the ecotureAPI migrations
 Ecoture/.vs
-Ecoture/Ecoture/obj
-Ecoture\Ecoture\bin
-Ecoture\Ecoture\obj
-/Ecoture/.vs
-/Ecoture/obj
-/Ecoture/bin
-/Ecoture/obj
-/Ecoture/obj/Debug
+Ecoture/obj/Debug
+Ecoture/bin/Debug
