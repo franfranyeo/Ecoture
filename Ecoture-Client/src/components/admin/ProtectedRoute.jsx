@@ -5,7 +5,7 @@ import UserContext from "contexts/UserContext";
 import AdminLayout from "./AdminLayout";
 import NotFound from "../../pages/NotFound";
 
-const ADMIN_ROLE = [0, 1]; // Adjust to your backend role mapping
+const ADMIN_ROLE = ["Admin", "Staff"]; // Adjust to your backend role mapping
 
 const ProtectedRoute = ({ element: Component, ...rest }) => {
   const { user } = useContext(UserContext);

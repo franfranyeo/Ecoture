@@ -14,17 +14,19 @@ function Login() {
   const [userData, setUserData] = useState(null);
   const { setUser } = useContext(UserContext);
 
-  const handleLoginSuccess = (user, accessToken = "") => {
+  const handleLoginSuccess = (user, accessToken = "", mfaMethods) => {
     if (user.accessToken) {
       accessToken = user.accessToken;
       delete user.accessToken;
     }
-    setUser(user);
-    localStorage.setItem("user", JSON.stringify(user));
+    const userToStore = { ...user, mfaMethods };
+    console.log(userToStore);
+    setUser(userToStore);
+    localStorage.setItem("user", JSON.stringify(userToStore));
     localStorage.setItem("accessToken", accessToken);
 
     toast.success("Logged in successfully");
-    if (user.role === 0 || user.role === 1) {
+    if (user.role === "Admin" || user.role === "Staff") {
       // staff or admin role
       navigate("/admin/dashboard");
     } else {
@@ -35,6 +37,7 @@ function Login() {
   const handleLoginSubmit = async (credentials) => {
     try {
       const response = await authService.login(credentials);
+      console.log(response);
       const { user, accessToken, mfaMethods } = response;
 
       if (user.is2FAEnabled) {

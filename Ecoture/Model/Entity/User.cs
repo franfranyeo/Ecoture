@@ -46,6 +46,15 @@ namespace Ecoture.Model.Entity
 
         public bool IsGoogleLogin { get; set; } = false;
 
+        public decimal TotalSpending { get; set; } = 0.00m;
+
+        public int TotalPoints { get; set; } = 0;
+
+        public int MembershipId { get; set; } = 1;
+
+        public DateTime MembershipStartDate { get; set; } // When the user enrolled
+        public DateTime? MembershipEndDate { get; set; } // For paid memberships with expiration
+
         [MaxLength(6)]
         public string? ReferralCode { get; set; }
 
@@ -60,7 +69,7 @@ namespace Ecoture.Model.Entity
         [Column(TypeName = "datetime")]
         public DateTime UpdatedAt { get; set; }
 
-        public Membership? Membership { get; set; }
+        public Membership Membership { get; set; }
 
         public ICollection<Referral> ReferralsReceived { get; set; } = new List<Referral>(); // Referrals received by the user
 

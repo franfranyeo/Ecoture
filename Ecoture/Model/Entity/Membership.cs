@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Ecoture.Model.Enum;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Ecoture.Model.Entity
@@ -8,30 +9,14 @@ namespace Ecoture.Model.Entity
         public int MembershipId { get; set; }
 
         [MaxLength(20)]
-        public string Tier { get; set; } = "Bronze"; // Default tier
+        public MembershipTiers Tier { get; set; } = MembershipTiers.Bronze; // Default tier
 
-        [Column(TypeName = "decimal(10,2)")]
-        public decimal TotalSpent { get; set; } = 0.00M;
-
-        public int TotalPoints { get; set; } = 0;
-
-        [Column(TypeName = "datetime")]
-        public DateTime MembershipStartDate { get; set; } = DateTime.UtcNow;
-
-        [Column(TypeName = "datetime")]
-        public DateTime? MembershipEndDate { get; set; }
-
-        [Column(TypeName = "datetime")]
-        public DateTime LastTierUpgradeDate { get; set; } = DateTime.UtcNow;
+        public decimal SpendingRequired { get; set; } = 0.00m;
 
         [Column(TypeName = "datetime")]
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
         [Column(TypeName = "datetime")]
         public DateTime UpdatedAt { get; set; }
-
-        public int UserId { get; set; }
-
-        public User? User { get; set; } 
     }
 }

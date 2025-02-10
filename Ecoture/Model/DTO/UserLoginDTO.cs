@@ -1,6 +1,6 @@
 ﻿namespace Ecoture.Model.DTO
 {
-    public class UserDTO
+    public class UserLoginDTO
     {
         public int UserId { get; set; } // Maps to UserId in the User entity
         public string FullName { get; set; } = string.Empty; // Combines FirstName and LastName
@@ -19,6 +19,7 @@
         public bool IsEmailVerified { get; set; } = false;
         public bool IsPhoneVerified { get; set; } = false;
         public bool IsGoogleLogin { get; set; } = false;
+        public DateTime LastLogin { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
     }

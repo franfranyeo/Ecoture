@@ -56,10 +56,45 @@ namespace Ecoture
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{
+            modelBuilder.Entity<Membership>().HasData(
+                new Membership
+                {
+                    MembershipId = 1,
+                    Tier = MembershipTiers.Bronze,
+                    SpendingRequired = 0.00m,
+                    CreatedAt = DateTime.UtcNow,
+                    UpdatedAt = DateTime.UtcNow
+                },
+                new Membership
+                {
+                    MembershipId = 2,
+                    Tier = MembershipTiers.Silver,
+                    SpendingRequired = 2000.00m,
+                    CreatedAt = DateTime.UtcNow,
+                    UpdatedAt = DateTime.UtcNow
+                },
+                new Membership
+                {
+                    MembershipId = 3,
+                    Tier = MembershipTiers.Gold,
+                    SpendingRequired = 4000.00m,
+                    CreatedAt = DateTime.UtcNow,
+                    UpdatedAt = DateTime.UtcNow
+                },
+                new Membership
+                {
+                    MembershipId = 4,
+                    Tier = MembershipTiers.None,
+                    SpendingRequired = 0.00m,
+                    CreatedAt = DateTime.UtcNow,
+                    UpdatedAt = DateTime.UtcNow
+                }
+            );
+
             modelBuilder.Entity<User>()
-                .HasOne(u => u.Membership)
-                .WithOne(m => m.User)
-                .HasForeignKey<Membership>(m => m.UserId)
+                .HasOne(u => u.Membership) 
+                .WithMany()
+                .HasForeignKey(u => u.MembershipId) 
                 .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<MfaResponse>().HasKey(m => m.UserId);
@@ -243,6 +278,8 @@ namespace Ecoture
                     await context.SaveChangesAsync();
 
                     Console.WriteLine("Admin user successfully created with ID 1.");
+
+                    
                 }
                 else
                 {

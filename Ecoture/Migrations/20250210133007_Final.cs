@@ -4,6 +4,8 @@ using MySql.EntityFrameworkCore.Metadata;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace Ecoture.Migrations
 {
     /// <inheritdoc />
@@ -62,6 +64,23 @@ namespace Ecoture.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Enquiries", x => x.enquiryId);
+                })
+                .Annotation("MySQL:Charset", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "Memberships",
+                columns: table => new
+                {
+                    MembershipId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    Tier = table.Column<int>(type: "int", maxLength: 20, nullable: false),
+                    SpendingRequired = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Memberships", x => x.MembershipId);
                 })
                 .Annotation("MySQL:Charset", "utf8mb4");
 
@@ -146,37 +165,6 @@ namespace Ecoture.Migrations
                 .Annotation("MySQL:Charset", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "Users",
-                columns: table => new
-                {
-                    UserId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
-                    FirstName = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false),
-                    LastName = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: true),
-                    Email = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false),
-                    Password = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false),
-                    MobileNo = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: false),
-                    DateofBirth = table.Column<DateTime>(type: "date", nullable: true),
-                    Role = table.Column<int>(type: "int", nullable: false),
-                    PfpURL = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: true),
-                    LastLogin = table.Column<DateTime>(type: "datetime", nullable: false),
-                    Is2FAEnabled = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    IsEmailVerified = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    IsPhoneVerified = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    IsGoogleLogin = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    ReferralCode = table.Column<string>(type: "varchar(6)", maxLength: 6, nullable: true),
-                    DeleteRequested = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    DeleteRequestedAt = table.Column<DateTime>(type: "datetime", nullable: true),
-                    CreatedAt = table.Column<DateTime>(type: "datetime", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Users", x => x.UserId);
-                })
-                .Annotation("MySQL:Charset", "utf8mb4");
-
-            migrationBuilder.CreateTable(
                 name: "Responses",
                 columns: table => new
                 {
@@ -195,6 +183,48 @@ namespace Ecoture.Migrations
                         column: x => x.enquiryId,
                         principalTable: "Enquiries",
                         principalColumn: "enquiryId",
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySQL:Charset", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "Users",
+                columns: table => new
+                {
+                    UserId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    FirstName = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false),
+                    LastName = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: true),
+                    Email = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false),
+                    Password = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false),
+                    MobileNo = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: false),
+                    DateofBirth = table.Column<DateTime>(type: "date", nullable: true),
+                    Role = table.Column<int>(type: "int", nullable: false),
+                    PfpURL = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: true),
+                    LastLogin = table.Column<DateTime>(type: "datetime", nullable: false),
+                    Is2FAEnabled = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    IsEmailVerified = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    IsPhoneVerified = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    IsGoogleLogin = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    TotalSpending = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    TotalPoints = table.Column<int>(type: "int", nullable: false),
+                    MembershipId = table.Column<int>(type: "int", nullable: false),
+                    MembershipStartDate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    MembershipEndDate = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    ReferralCode = table.Column<string>(type: "varchar(6)", maxLength: 6, nullable: true),
+                    DeleteRequested = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    DeleteRequestedAt = table.Column<DateTime>(type: "datetime", nullable: true),
+                    CreatedAt = table.Column<DateTime>(type: "datetime", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Users", x => x.UserId);
+                    table.ForeignKey(
+                        name: "FK_Users_Memberships_MembershipId",
+                        column: x => x.MembershipId,
+                        principalTable: "Memberships",
+                        principalColumn: "MembershipId",
                         onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySQL:Charset", "utf8mb4");
@@ -267,34 +297,6 @@ namespace Ecoture.Migrations
                     table.PrimaryKey("PK_CreditCards", x => x.Id);
                     table.ForeignKey(
                         name: "FK_CreditCards_Users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Users",
-                        principalColumn: "UserId",
-                        onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySQL:Charset", "utf8mb4");
-
-            migrationBuilder.CreateTable(
-                name: "Memberships",
-                columns: table => new
-                {
-                    MembershipId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
-                    Tier = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: false),
-                    TotalSpent = table.Column<decimal>(type: "decimal(10,2)", nullable: false),
-                    TotalPoints = table.Column<int>(type: "int", nullable: false),
-                    MembershipStartDate = table.Column<DateTime>(type: "datetime", nullable: false),
-                    MembershipEndDate = table.Column<DateTime>(type: "datetime", nullable: true),
-                    LastTierUpgradeDate = table.Column<DateTime>(type: "datetime", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime", nullable: false),
-                    UserId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Memberships", x => x.MembershipId);
-                    table.ForeignKey(
-                        name: "FK_Memberships_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "UserId",
@@ -578,6 +580,17 @@ namespace Ecoture.Migrations
                 })
                 .Annotation("MySQL:Charset", "utf8mb4");
 
+            migrationBuilder.InsertData(
+                table: "Memberships",
+                columns: new[] { "MembershipId", "CreatedAt", "SpendingRequired", "Tier", "UpdatedAt" },
+                values: new object[,]
+                {
+                    { 1, new DateTime(2025, 2, 10, 13, 30, 6, 291, DateTimeKind.Utc).AddTicks(1510), 0.00m, 1, new DateTime(2025, 2, 10, 13, 30, 6, 291, DateTimeKind.Utc).AddTicks(1517) },
+                    { 2, new DateTime(2025, 2, 10, 13, 30, 6, 291, DateTimeKind.Utc).AddTicks(1519), 2000.00m, 2, new DateTime(2025, 2, 10, 13, 30, 6, 291, DateTimeKind.Utc).AddTicks(1519) },
+                    { 3, new DateTime(2025, 2, 10, 13, 30, 6, 291, DateTimeKind.Utc).AddTicks(1521), 4000.00m, 3, new DateTime(2025, 2, 10, 13, 30, 6, 291, DateTimeKind.Utc).AddTicks(1521) },
+                    { 4, new DateTime(2025, 2, 10, 13, 30, 6, 291, DateTimeKind.Utc).AddTicks(1522), 0.00m, 0, new DateTime(2025, 2, 10, 13, 30, 6, 291, DateTimeKind.Utc).AddTicks(1523) }
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Addresses_UserId",
                 table: "Addresses",
@@ -587,12 +600,6 @@ namespace Ecoture.Migrations
                 name: "IX_CreditCards_UserId",
                 table: "CreditCards",
                 column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Memberships_UserId",
-                table: "Memberships",
-                column: "UserId",
-                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_NewsletterContents_NewsletterIssueId",
@@ -700,6 +707,11 @@ namespace Ecoture.Migrations
                 column: "voucherId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Users_MembershipId",
+                table: "Users",
+                column: "MembershipId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_UserTokens_UserId",
                 table: "UserTokens",
                 column: "UserId");
@@ -713,9 +725,6 @@ namespace Ecoture.Migrations
 
             migrationBuilder.DropTable(
                 name: "CreditCards");
-
-            migrationBuilder.DropTable(
-                name: "Memberships");
 
             migrationBuilder.DropTable(
                 name: "MfaResponses");
@@ -773,6 +782,9 @@ namespace Ecoture.Migrations
 
             migrationBuilder.DropTable(
                 name: "Users");
+
+            migrationBuilder.DropTable(
+                name: "Memberships");
         }
     }
 }

@@ -190,38 +190,53 @@ namespace Ecoture.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime");
 
-                    b.Property<DateTime>("LastTierUpgradeDate")
-                        .HasColumnType("datetime");
+                    b.Property<decimal>("SpendingRequired")
+                        .HasColumnType("decimal(18,2)");
 
-                    b.Property<DateTime?>("MembershipEndDate")
-                        .HasColumnType("datetime");
-
-                    b.Property<DateTime>("MembershipStartDate")
-                        .HasColumnType("datetime");
-
-                    b.Property<string>("Tier")
-                        .IsRequired()
+                    b.Property<int>("Tier")
                         .HasMaxLength(20)
-                        .HasColumnType("varchar(20)");
-
-                    b.Property<int>("TotalPoints")
                         .HasColumnType("int");
-
-                    b.Property<decimal>("TotalSpent")
-                        .HasColumnType("decimal(10,2)");
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
                     b.HasKey("MembershipId");
 
-                    b.HasIndex("UserId")
-                        .IsUnique();
-
                     b.ToTable("Memberships");
+
+                    b.HasData(
+                        new
+                        {
+                            MembershipId = 1,
+                            CreatedAt = new DateTime(2025, 2, 10, 13, 30, 6, 291, DateTimeKind.Utc).AddTicks(1510),
+                            SpendingRequired = 0.00m,
+                            Tier = 1,
+                            UpdatedAt = new DateTime(2025, 2, 10, 13, 30, 6, 291, DateTimeKind.Utc).AddTicks(1517)
+                        },
+                        new
+                        {
+                            MembershipId = 2,
+                            CreatedAt = new DateTime(2025, 2, 10, 13, 30, 6, 291, DateTimeKind.Utc).AddTicks(1519),
+                            SpendingRequired = 2000.00m,
+                            Tier = 2,
+                            UpdatedAt = new DateTime(2025, 2, 10, 13, 30, 6, 291, DateTimeKind.Utc).AddTicks(1519)
+                        },
+                        new
+                        {
+                            MembershipId = 3,
+                            CreatedAt = new DateTime(2025, 2, 10, 13, 30, 6, 291, DateTimeKind.Utc).AddTicks(1521),
+                            SpendingRequired = 4000.00m,
+                            Tier = 3,
+                            UpdatedAt = new DateTime(2025, 2, 10, 13, 30, 6, 291, DateTimeKind.Utc).AddTicks(1521)
+                        },
+                        new
+                        {
+                            MembershipId = 4,
+                            CreatedAt = new DateTime(2025, 2, 10, 13, 30, 6, 291, DateTimeKind.Utc).AddTicks(1522),
+                            SpendingRequired = 0.00m,
+                            Tier = 0,
+                            UpdatedAt = new DateTime(2025, 2, 10, 13, 30, 6, 291, DateTimeKind.Utc).AddTicks(1523)
+                        });
                 });
 
             modelBuilder.Entity("Ecoture.Model.Entity.Newsletter", b =>
@@ -651,6 +666,15 @@ namespace Ecoture.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("varchar(100)");
 
+                    b.Property<DateTime?>("MembershipEndDate")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<int>("MembershipId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("MembershipStartDate")
+                        .HasColumnType("datetime(6)");
+
                     b.Property<string>("MobileNo")
                         .IsRequired()
                         .HasMaxLength(20)
@@ -672,10 +696,18 @@ namespace Ecoture.Migrations
                     b.Property<int>("Role")
                         .HasColumnType("int");
 
+                    b.Property<int>("TotalPoints")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("TotalSpending")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime");
 
                     b.HasKey("UserId");
+
+                    b.HasIndex("MembershipId");
 
                     b.ToTable("Users");
                 });
@@ -836,17 +868,6 @@ namespace Ecoture.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Ecoture.Model.Entity.Membership", b =>
-                {
-                    b.HasOne("Ecoture.Model.Entity.User", "User")
-                        .WithOne("Membership")
-                        .HasForeignKey("Ecoture.Model.Entity.Membership", "UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("Ecoture.Model.Entity.PointsTransaction", b =>
                 {
                     b.HasOne("Ecoture.Model.Entity.Referral", "Referral")
@@ -976,6 +997,17 @@ namespace Ecoture.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Ecoture.Model.Entity.User", b =>
+                {
+                    b.HasOne("Ecoture.Model.Entity.Membership", "Membership")
+                        .WithMany()
+                        .HasForeignKey("MembershipId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Membership");
+                });
+
             modelBuilder.Entity("Ecoture.Model.Entity.UserOtp", b =>
                 {
                     b.HasOne("Ecoture.Model.Entity.User", "User")
@@ -1050,8 +1082,6 @@ namespace Ecoture.Migrations
 
             modelBuilder.Entity("Ecoture.Model.Entity.User", b =>
                 {
-                    b.Navigation("Membership");
-
                     b.Navigation("PointsTransactions");
 
                     b.Navigation("Products");

@@ -72,14 +72,7 @@ namespace Ecoture.Services
                 UpdatedAt = now,
             };
 
-            var membership = new Membership
-            {
-                UserId = user.UserId,
-                CreatedAt = now,
-                UpdatedAt = now
-            };
-
-            user.Membership = membership;
+            user.MembershipId = 1;
 
             var mfaResponse = new MfaResponse
             {
@@ -132,10 +125,6 @@ namespace Ecoture.Services
                 }
             }
 
-            // Get MFA details in the same database context
-            var mfaDetails = await _context.MfaResponses
-                .FirstOrDefaultAsync(m => m.UserId == user.UserId);
-
             user.LastLogin = DateTime.UtcNow;
 
             await _context.SaveChangesAsync();
@@ -143,18 +132,45 @@ namespace Ecoture.Services
             // Generate access token
             string accessToken = CreateToken(user);
 
+            // Get MFA details in the same database context
+            var mfaDetails = await _context.MfaResponses
+                .FirstOrDefaultAsync(m => m.UserId == user.UserId);
             // If no MFA record exists, create a new one with default values
             mfaDetails ??= new MfaResponse
             {
                 UserId = user.UserId,
             };
 
+            var membershipDetails = await _context.Memberships.FirstOrDefaultAsync(m => m.MembershipId == user.MembershipId);
+            
             // Return user info and access token
             var response = new LoginResponse
             {
-                User = user,
+                User = new UserLoginDTO
+                {
+                    UserId = user.UserId,
+                    FullName = user.FullName,
+                    Email = user.Email,
+                    MobileNo = user.MobileNo,
+                    DateOfBirth = user.DateofBirth,
+                    Role = user.Role.ToString(),
+                    PfpURL = user.PfpURL,
+                    TotalSpending = user.TotalSpending,
+                    TotalPoints = user.TotalPoints,
+                    MembershipTier = membershipDetails?.Tier.ToString() ?? "Bronze",
+                    MembershipStartDate = user.MembershipStartDate,
+                    MembershipEndDate = user.MembershipEndDate,
+                    ReferralCode = user.ReferralCode,
+                    Is2FAEnabled = user.Is2FAEnabled,
+                    IsEmailVerified = user.IsEmailVerified,
+                    IsPhoneVerified = user.IsPhoneVerified,
+                    IsGoogleLogin = user.IsGoogleLogin,
+                    LastLogin = user.LastLogin,
+                    CreatedAt = user.CreatedAt,
+                    UpdatedAt = user.UpdatedAt,
+                },
                 AccessToken = accessToken,
-                MfaMethods = mfaDetails
+                MfaMethods = mfaDetails,
             };
 
             return response;

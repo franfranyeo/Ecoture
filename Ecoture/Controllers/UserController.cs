@@ -11,6 +11,8 @@ using Microsoft.EntityFrameworkCore;
 using Ecoture.Model.Entity;
 using Ecoture.Services;
 using Ecoture.Model.Response;
+using Ecoture.Model.DTO;
+using System.Globalization;
 
 
 namespace Ecoture.Controllers
@@ -108,16 +110,11 @@ namespace Ecoture.Controllers
                         Email = false
                     };
 
-                    membership ??= new Membership
-                    {
-                        UserId = user.UserId,
-                    };
+                    membership = await _context.Memberships.FirstOrDefaultAsync(m => m.MembershipId == user.MembershipId);
 
-                    
                     // Add user 
                     await _context.Users.AddAsync(user);
                     await _context.MfaResponses.AddAsync(mfaMethods);
-                    await _context.Memberships.AddAsync(membership);
                     await _context.SaveChangesAsync();
                 }
 
@@ -417,7 +414,34 @@ namespace Ecoture.Controllers
         [HttpGet, Authorize]
         public async Task<IActionResult> GetUsers()
         {
-            var users = await _context.Users.ToListAsync();
+            var rawUsers = await _context.Users
+                .Include(u => u.Membership)
+                .ToListAsync();
+
+            // Proceed with the mapping logic
+            var users = rawUsers.Select(u => new UserDTO
+            {
+                UserId = u.UserId,
+                FullName = u.FullName,
+                Email = u.Email,
+                MobileNo = u.MobileNo,
+                DateOfBirth = u.DateofBirth,
+                Role = u.Role.ToString(),
+                PfpURL = u.PfpURL,
+                TotalSpending = u.TotalSpending,
+                TotalPoints = u.TotalPoints,
+                MembershipTier = u.Membership.Tier.ToString(),
+                MembershipStartDate = u.MembershipStartDate,
+                MembershipEndDate = u.MembershipEndDate,
+                ReferralCode = u.ReferralCode,
+                Is2FAEnabled = u.Is2FAEnabled,
+                IsEmailVerified = u.IsEmailVerified,
+                IsPhoneVerified = u.IsPhoneVerified,
+                IsGoogleLogin = u.IsGoogleLogin,
+                CreatedAt = u.CreatedAt,
+                UpdatedAt = u.UpdatedAt
+            }).ToList();
+
             return Ok(users);
         }
 

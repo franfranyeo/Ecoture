@@ -87,7 +87,7 @@ function Navbar() {
           {/* EcoTure Logo */}
           <Box
             onClick={() => {
-              if (user?.role === 0 || user?.role === 1) {
+              if (["Admin", "Staff"].includes(user?.role)) {
                 // Staff or Admin
                 navigate("/admin/dashboard");
               } else {

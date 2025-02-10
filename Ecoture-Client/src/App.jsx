@@ -56,6 +56,7 @@ import TermsOfUse from "./pages/customer/user/TermsOfUse";
 import PrivacyPolicy from "./pages/customer/user/PrivacyPolicy";
 import { ToastContainer } from "react-toastify";
 import { Box } from "@mui/material";
+import AddReward from "./pages/admin/rewards/AddReward";
 
 function App() {
   // update in the user context too
@@ -186,6 +187,10 @@ function App() {
     {
       url: "/admin/rewards",
       component: Rewards,
+    },
+    {
+      url: "/admin/rewards/add",
+      component: AddReward,
     },
   ];
 

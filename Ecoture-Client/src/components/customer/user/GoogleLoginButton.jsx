@@ -21,7 +21,6 @@ function GoogleLoginButton() {
         });
         const { user, token, mfaMethods } = res.data;
         if (user) {
-          user["fullName"] = `${user.firstName} ${user.lastName}`;
           user["mfaMethods"] = mfaMethods;
           localStorage.setItem("user", JSON.stringify(user));
           localStorage.setItem("accessToken", token);

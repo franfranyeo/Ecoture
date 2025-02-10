@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   Box,
   Paper,
@@ -18,8 +18,10 @@ import { useState } from "react";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import DataTable from "../../DataTable";
 import { AccessTime, MonetizationOn } from "@mui/icons-material";
+import UserContext from "contexts/UserContext";
 
 const MembershipTab = () => {
+  const { user } = useContext(UserContext);
   const [vouchers, setVouchers] = useState([
     {
       voucherCode: "V12345",
@@ -120,10 +122,14 @@ const MembershipTab = () => {
         </Box>
 
         <Box mt={4} mb={2}>
-          <Typography variant="h6">You are a Gold Member</Typography>
+          <Typography variant="h6">
+            You are a {user.membership ? user.membership.tier : "Bronze"} Member
+          </Typography>
           <Box display="flex" justifyContent="space-between" mt={2}>
-            <Typography variant="body1">Gold</Typography>
-            <Typography variant="body1">Platinum</Typography>
+            <Typography variant="body1">
+              {user.membership ? user.membership.tier : "Bronze"}
+            </Typography>
+            <Typography variant="body1">Silver</Typography>
           </Box>
         </Box>
         <Grid container spacing={2}>
@@ -157,7 +163,7 @@ const MembershipTab = () => {
                     fontWeight: "bold",
                   }}
                 >
-                  200
+                  {user.totalPoints}
                 </Typography>
               </CardContent>
             </Card>
