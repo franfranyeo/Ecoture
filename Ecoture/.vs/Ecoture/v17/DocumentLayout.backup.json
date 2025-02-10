@@ -3,6 +3,26 @@
   "WorkspaceRootPath": "C:\\Documents\\Enterprise Development Project\\EDP PROJECT\\Integrated v2\\Ecoture\\Ecoture\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|c:\\documents\\enterprise development project\\edp project\\integrated v2\\ecoture\\ecoture\\controllers\\reviewcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|solutionrelative:controllers\\reviewcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|c:\\documents\\enterprise development project\\edp project\\integrated v2\\ecoture\\ecoture\\model\\request\\addreviewrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|solutionrelative:model\\request\\addreviewrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|c:\\documents\\enterprise development project\\edp project\\integrated v2\\ecoture\\ecoture\\model\\entity\\reviews.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|solutionrelative:model\\entity\\reviews.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|c:\\documents\\enterprise development project\\edp project\\integrated v2\\ecoture\\ecoture\\model\\dto\\reviewdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|solutionrelative:model\\dto\\reviewdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|c:\\documents\\enterprise development project\\edp project\\integrated v2\\ecoture\\ecoture\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|c:\\documents\\enterprise development project\\edp project\\integrated v2\\ecoture\\ecoture\\mydbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|solutionrelative:mydbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -15,12 +35,32 @@
       "RelativeMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|solutionrelative:model\\request\\updateproductrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|c:\\documents\\enterprise development project\\edp project\\integrated v2\\ecoture\\ecoture\\model\\request\\sizerequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|solutionrelative:model\\request\\sizerequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|c:\\documents\\enterprise development project\\edp project\\integrated v2\\ecoture\\ecoture\\model\\request\\addproductrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|solutionrelative:model\\request\\addproductrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|c:\\documents\\enterprise development project\\edp project\\integrated v2\\ecoture\\ecoture\\model\\enum\\productenums.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|solutionrelative:model\\enum\\productenums.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|c:\\documents\\enterprise development project\\edp project\\integrated v2\\ecoture\\ecoture\\model\\entity\\sizes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|solutionrelative:model\\entity\\sizes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|c:\\documents\\enterprise development project\\edp project\\integrated v2\\ecoture\\ecoture\\model\\entity\\productsizes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|solutionrelative:model\\entity\\productsizes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|c:\\documents\\enterprise development project\\edp project\\integrated v2\\ecoture\\ecoture\\model\\entity\\productfit.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|solutionrelative:model\\entity\\productfit.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|c:\\documents\\enterprise development project\\edp project\\integrated v2\\ecoture\\ecoture\\model\\entity\\productcolor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|solutionrelative:model\\entity\\productcolor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|c:\\documents\\enterprise development project\\edp project\\integrated v2\\ecoture\\ecoture\\model\\entity\\productcategory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -51,40 +91,48 @@
       "RelativeMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|solutionrelative:controllers\\productcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|c:\\documents\\enterprise development project\\edp project\\integrated v2\\ecoture\\ecoture\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|c:\\documents\\enterprise development project\\edp project\\integrated v2\\ecoture\\ecoture\\migrations\\20250204121310_productcategoryandfitupdates.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|solutionrelative:migrations\\20250204121310_productcategoryandfitupdates.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|c:\\documents\\enterprise development project\\edp project\\integrated v2\\ecoture\\ecoture\\model\\request\\addaddressrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|solutionrelative:model\\request\\addaddressrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|c:\\documents\\enterprise development project\\edp project\\integrated v2\\ecoture\\ecoture\\model\\dto\\addressdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|solutionrelative:model\\dto\\addressdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|c:\\documents\\enterprise development project\\edp project\\integrated v2\\ecoture\\ecoture\\model\\dto\\creditcarddto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|solutionrelative:model\\dto\\creditcarddto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|c:\\documents\\enterprise development project\\edp project\\integrated v2\\ecoture\\ecoture\\migrations\\20250203174306_updateproduct.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|solutionrelative:migrations\\20250203174306_updateproduct.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|c:\\documents\\enterprise development project\\edp project\\integrated v2\\ecoture\\ecoture\\migrations\\20250203100618_hopefullylastint.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|solutionrelative:migrations\\20250203100618_hopefullylastint.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|c:\\documents\\enterprise development project\\edp project\\integrated v2\\ecoture\\ecoture\\controllers\\responsecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|solutionrelative:controllers\\responsecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|c:\\documents\\enterprise development project\\edp project\\integrated v2\\ecoture\\ecoture\\model\\dto\\enquirydto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|solutionrelative:model\\dto\\enquirydto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|c:\\documents\\enterprise development project\\edp project\\integrated v2\\ecoture\\ecoture\\model\\enum\\livechatstatus.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|solutionrelative:model\\enum\\livechatstatus.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|c:\\documents\\enterprise development project\\edp project\\integrated v2\\ecoture\\ecoture\\model\\request\\registerrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|solutionrelative:model\\request\\registerrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|c:\\documents\\enterprise development project\\edp project\\integrated v2\\ecoture\\ecoture\\model\\entity\\creditcard.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|solutionrelative:model\\entity\\creditcard.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|c:\\documents\\enterprise development project\\edp project\\integrated v2\\ecoture\\ecoture\\model\\request\\sizerequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|solutionrelative:model\\request\\sizerequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|c:\\documents\\enterprise development project\\edp project\\integrated v2\\ecoture\\ecoture\\model\\enum\\productenums.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|solutionrelative:model\\enum\\productenums.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|c:\\documents\\enterprise development project\\edp project\\integrated v2\\ecoture\\ecoture\\model\\entity\\sizes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|solutionrelative:model\\entity\\sizes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|c:\\documents\\enterprise development project\\edp project\\integrated v2\\ecoture\\ecoture\\model\\entity\\productsizes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|solutionrelative:model\\entity\\productsizes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|c:\\documents\\enterprise development project\\edp project\\integrated v2\\ecoture\\ecoture\\model\\entity\\productcolor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|solutionrelative:model\\entity\\productcolor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|c:\\documents\\enterprise development project\\edp project\\integrated v2\\ecoture\\ecoture\\migrations\\20250204121310_productcategoryandfitupdates.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|solutionrelative:migrations\\20250204121310_productcategoryandfitupdates.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|c:\\documents\\enterprise development project\\edp project\\integrated v2\\ecoture\\ecoture\\model\\request\\addaddressrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B5DEA42B-667B-4145-A0CA-6349EF9BF0C5}|Ecoture.csproj|solutionrelative:model\\request\\addaddressrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -94,7 +142,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 7,
+          "SelectedChildIndex": 10,
           "Children": [
             {
               "$type": "Bookmark",
@@ -105,165 +153,52 @@
               "Name": "ST:0:0:{66f449b5-c823-40bc-9016-02b4d06a1a8e}"
             },
             {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "ProductCategory.cs",
-              "DocumentMoniker": "C:\\Documents\\Enterprise Development Project\\EDP PROJECT\\Integrated v2\\Ecoture\\Ecoture\\Model\\Entity\\ProductCategory.cs",
-              "RelativeDocumentMoniker": "Model\\Entity\\ProductCategory.cs",
-              "ToolTip": "C:\\Documents\\Enterprise Development Project\\EDP PROJECT\\Integrated v2\\Ecoture\\Ecoture\\Model\\Entity\\ProductCategory.cs",
-              "RelativeToolTip": "Model\\Entity\\ProductCategory.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAbAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-04T10:49:21.195Z"
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
             },
             {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "ProductFit.cs",
-              "DocumentMoniker": "C:\\Documents\\Enterprise Development Project\\EDP PROJECT\\Integrated v2\\Ecoture\\Ecoture\\Model\\Entity\\ProductFit.cs",
-              "RelativeDocumentMoniker": "Model\\Entity\\ProductFit.cs",
-              "ToolTip": "C:\\Documents\\Enterprise Development Project\\EDP PROJECT\\Integrated v2\\Ecoture\\Ecoture\\Model\\Entity\\ProductFit.cs",
-              "RelativeToolTip": "Model\\Entity\\ProductFit.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAFAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-04T10:48:53.416Z"
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "AddProductRequest.cs",
-              "DocumentMoniker": "C:\\Documents\\Enterprise Development Project\\EDP PROJECT\\Integrated v2\\Ecoture\\Ecoture\\Model\\Request\\AddProductRequest.cs",
-              "RelativeDocumentMoniker": "Model\\Request\\AddProductRequest.cs",
-              "ToolTip": "C:\\Documents\\Enterprise Development Project\\EDP PROJECT\\Integrated v2\\Ecoture\\Ecoture\\Model\\Request\\AddProductRequest.cs",
-              "RelativeToolTip": "Model\\Request\\AddProductRequest.cs",
-              "ViewState": "AgIAABEAAAAAAAAAAAAUwCEAAAAKAAAAAAAAAA==",
+              "Title": "ReviewDTO.cs",
+              "DocumentMoniker": "C:\\Documents\\Enterprise Development Project\\EDP PROJECT\\Integrated v2\\Ecoture\\Ecoture\\Model\\DTO\\ReviewDTO.cs",
+              "RelativeDocumentMoniker": "Model\\DTO\\ReviewDTO.cs",
+              "ToolTip": "C:\\Documents\\Enterprise Development Project\\EDP PROJECT\\Integrated v2\\Ecoture\\Ecoture\\Model\\DTO\\ReviewDTO.cs",
+              "RelativeToolTip": "Model\\DTO\\ReviewDTO.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAbAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-04T10:42:15.043Z"
+              "WhenOpened": "2025-02-10T11:25:51.951Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "UpdateProductRequest.cs",
-              "DocumentMoniker": "C:\\Documents\\Enterprise Development Project\\EDP PROJECT\\Integrated v2\\Ecoture\\Ecoture\\Model\\Request\\UpdateProductRequest.cs",
-              "RelativeDocumentMoniker": "Model\\Request\\UpdateProductRequest.cs",
-              "ToolTip": "C:\\Documents\\Enterprise Development Project\\EDP PROJECT\\Integrated v2\\Ecoture\\Ecoture\\Model\\Request\\UpdateProductRequest.cs",
-              "RelativeToolTip": "Model\\Request\\UpdateProductRequest.cs",
-              "ViewState": "AgIAACwAAAAAAAAAAAAcwDsAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-04T10:42:34.06Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 6,
               "Title": "MappingProfile.cs",
               "DocumentMoniker": "C:\\Documents\\Enterprise Development Project\\EDP PROJECT\\Integrated v2\\Ecoture\\Ecoture\\MappingProfile.cs",
               "RelativeDocumentMoniker": "MappingProfile.cs",
               "ToolTip": "C:\\Documents\\Enterprise Development Project\\EDP PROJECT\\Integrated v2\\Ecoture\\Ecoture\\MappingProfile.cs",
               "RelativeToolTip": "MappingProfile.cs",
-              "ViewState": "AgIAAEAAAAAAAAAAAAAuwFMAAAAjAAAAAAAAAA==",
+              "ViewState": "AgIAAB8AAAAAAAAAAAAQwFQAAAAgAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-02-04T10:44:28.076Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 5,
               "Title": "MyDbContext.cs",
               "DocumentMoniker": "C:\\Documents\\Enterprise Development Project\\EDP PROJECT\\Integrated v2\\Ecoture\\Ecoture\\MyDbContext.cs",
               "RelativeDocumentMoniker": "MyDbContext.cs",
               "ToolTip": "C:\\Documents\\Enterprise Development Project\\EDP PROJECT\\Integrated v2\\Ecoture\\Ecoture\\MyDbContext.cs",
               "RelativeToolTip": "MyDbContext.cs",
-              "ViewState": "AgIAAKYAAAAAAAAAAAAgwLgAAAArAAAAAAAAAA==",
+              "ViewState": "AgIAALAAAAAAAAAAAAAAAL0AAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-04T10:44:39.84Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-02-04T10:44:39.84Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "Product.cs",
-              "DocumentMoniker": "C:\\Documents\\Enterprise Development Project\\EDP PROJECT\\Integrated v2\\Ecoture\\Ecoture\\Model\\Entity\\Product.cs",
-              "RelativeDocumentMoniker": "Model\\Entity\\Product.cs",
-              "ToolTip": "C:\\Documents\\Enterprise Development Project\\EDP PROJECT\\Integrated v2\\Ecoture\\Ecoture\\Model\\Entity\\Product.cs",
-              "RelativeToolTip": "Model\\Entity\\Product.cs",
-              "ViewState": "AgIAACkAAAAAAAAAAAAIwDwAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-04T10:41:19.35Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "Fit.cs",
-              "DocumentMoniker": "C:\\Documents\\Enterprise Development Project\\EDP PROJECT\\Integrated v2\\Ecoture\\Ecoture\\Model\\Entity\\Fit.cs",
-              "RelativeDocumentMoniker": "Model\\Entity\\Fit.cs",
-              "ToolTip": "C:\\Documents\\Enterprise Development Project\\EDP PROJECT\\Integrated v2\\Ecoture\\Ecoture\\Model\\Entity\\Fit.cs",
-              "RelativeToolTip": "Model\\Entity\\Fit.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-04T11:56:14.912Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "Color.cs",
-              "DocumentMoniker": "C:\\Documents\\Enterprise Development Project\\EDP PROJECT\\Integrated v2\\Ecoture\\Ecoture\\Model\\Entity\\Color.cs",
-              "RelativeDocumentMoniker": "Model\\Entity\\Color.cs",
-              "ToolTip": "C:\\Documents\\Enterprise Development Project\\EDP PROJECT\\Integrated v2\\Ecoture\\Ecoture\\Model\\Entity\\Color.cs",
-              "RelativeToolTip": "Model\\Entity\\Color.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAARAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-04T10:41:53.677Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "Category.cs",
-              "DocumentMoniker": "C:\\Documents\\Enterprise Development Project\\EDP PROJECT\\Integrated v2\\Ecoture\\Ecoture\\Model\\Entity\\Category.cs",
-              "RelativeDocumentMoniker": "Model\\Entity\\Category.cs",
-              "ToolTip": "C:\\Documents\\Enterprise Development Project\\EDP PROJECT\\Integrated v2\\Ecoture\\Ecoture\\Model\\Entity\\Category.cs",
-              "RelativeToolTip": "Model\\Entity\\Category.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAFAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-04T10:49:34.644Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "ProductDTO.cs",
-              "DocumentMoniker": "C:\\Documents\\Enterprise Development Project\\EDP PROJECT\\Integrated v2\\Ecoture\\Ecoture\\Model\\DTO\\ProductDTO.cs",
-              "RelativeDocumentMoniker": "Model\\DTO\\ProductDTO.cs",
-              "ToolTip": "C:\\Documents\\Enterprise Development Project\\EDP PROJECT\\Integrated v2\\Ecoture\\Ecoture\\Model\\DTO\\ProductDTO.cs",
-              "RelativeToolTip": "Model\\DTO\\ProductDTO.cs",
-              "ViewState": "AgIAADMAAAAAAAAAAAAwwEEAAAAWAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-04T10:40:39.142Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "ProductController.cs",
-              "DocumentMoniker": "C:\\Documents\\Enterprise Development Project\\EDP PROJECT\\Integrated v2\\Ecoture\\Ecoture\\Controllers\\ProductController.cs",
-              "RelativeDocumentMoniker": "Controllers\\ProductController.cs",
-              "ToolTip": "C:\\Documents\\Enterprise Development Project\\EDP PROJECT\\Integrated v2\\Ecoture\\Ecoture\\Controllers\\ProductController.cs",
-              "RelativeToolTip": "Controllers\\ProductController.cs",
-              "ViewState": "AgIAAPsBAAAAAAAAAAAqwAwCAAANAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-04T10:40:28.484Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 20,
-              "Title": "20250204121310_ProductCategoryandFitUpdates.cs",
-              "DocumentMoniker": "C:\\Documents\\Enterprise Development Project\\EDP PROJECT\\Integrated v2\\Ecoture\\Ecoture\\Migrations\\20250204121310_ProductCategoryandFitUpdates.cs",
-              "RelativeDocumentMoniker": "Migrations\\20250204121310_ProductCategoryandFitUpdates.cs",
-              "ToolTip": "C:\\Documents\\Enterprise Development Project\\EDP PROJECT\\Integrated v2\\Ecoture\\Ecoture\\Migrations\\20250204121310_ProductCategoryandFitUpdates.cs",
-              "RelativeToolTip": "Migrations\\20250204121310_ProductCategoryandFitUpdates.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAjAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-04T12:13:11.109Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 4,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Documents\\Enterprise Development Project\\EDP PROJECT\\Integrated v2\\Ecoture\\Ecoture\\Program.cs",
               "RelativeDocumentMoniker": "Program.cs",
@@ -275,31 +210,56 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
-              "Title": "AddAddressRequest.cs",
-              "DocumentMoniker": "C:\\Documents\\Enterprise Development Project\\EDP PROJECT\\Integrated v2\\Ecoture\\Ecoture\\Model\\Request\\AddAddressRequest.cs",
-              "RelativeDocumentMoniker": "Model\\Request\\AddAddressRequest.cs",
-              "ToolTip": "C:\\Documents\\Enterprise Development Project\\EDP PROJECT\\Integrated v2\\Ecoture\\Ecoture\\Model\\Request\\AddAddressRequest.cs",
-              "RelativeToolTip": "Model\\Request\\AddAddressRequest.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 2,
+              "Title": "Reviews.cs",
+              "DocumentMoniker": "C:\\Documents\\Enterprise Development Project\\EDP PROJECT\\Integrated v2\\Ecoture\\Ecoture\\Model\\Entity\\Reviews.cs",
+              "RelativeDocumentMoniker": "Model\\Entity\\Reviews.cs",
+              "ToolTip": "C:\\Documents\\Enterprise Development Project\\EDP PROJECT\\Integrated v2\\Ecoture\\Ecoture\\Model\\Entity\\Reviews.cs",
+              "RelativeToolTip": "Model\\Entity\\Reviews.cs",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAuwBwAAAADAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-04T10:56:51.572Z"
+              "WhenOpened": "2025-02-10T11:16:38.052Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
-              "Title": "CreditCard.cs",
-              "DocumentMoniker": "C:\\Documents\\Enterprise Development Project\\EDP PROJECT\\Integrated v2\\Ecoture\\Ecoture\\Model\\Entity\\CreditCard.cs",
-              "RelativeDocumentMoniker": "Model\\Entity\\CreditCard.cs",
-              "ToolTip": "C:\\Documents\\Enterprise Development Project\\EDP PROJECT\\Integrated v2\\Ecoture\\Ecoture\\Model\\Entity\\CreditCard.cs",
-              "RelativeToolTip": "Model\\Entity\\CreditCard.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 1,
+              "Title": "AddReviewRequest.cs",
+              "DocumentMoniker": "C:\\Documents\\Enterprise Development Project\\EDP PROJECT\\Integrated v2\\Ecoture\\Ecoture\\Model\\Request\\AddReviewRequest.cs",
+              "RelativeDocumentMoniker": "Model\\Request\\AddReviewRequest.cs",
+              "ToolTip": "C:\\Documents\\Enterprise Development Project\\EDP PROJECT\\Integrated v2\\Ecoture\\Ecoture\\Model\\Request\\AddReviewRequest.cs",
+              "RelativeToolTip": "Model\\Request\\AddReviewRequest.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-04T10:47:17.988Z"
+              "WhenOpened": "2025-02-06T04:56:36.137Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 0,
+              "Title": "ReviewController.cs",
+              "DocumentMoniker": "C:\\Documents\\Enterprise Development Project\\EDP PROJECT\\Integrated v2\\Ecoture\\Ecoture\\Controllers\\ReviewController.cs",
+              "RelativeDocumentMoniker": "Controllers\\ReviewController.cs",
+              "ToolTip": "C:\\Documents\\Enterprise Development Project\\EDP PROJECT\\Integrated v2\\Ecoture\\Ecoture\\Controllers\\ReviewController.cs",
+              "RelativeToolTip": "Controllers\\ReviewController.cs",
+              "ViewState": "AgIAANAAAAAAAAAAAAAgwOQAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-06T07:20:18.706Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "UpdateProductRequest.cs",
+              "DocumentMoniker": "C:\\Documents\\Enterprise Development Project\\EDP PROJECT\\Integrated v2\\Ecoture\\Ecoture\\Model\\Request\\UpdateProductRequest.cs",
+              "RelativeDocumentMoniker": "Model\\Request\\UpdateProductRequest.cs",
+              "ToolTip": "C:\\Documents\\Enterprise Development Project\\EDP PROJECT\\Integrated v2\\Ecoture\\Ecoture\\Model\\Request\\UpdateProductRequest.cs",
+              "RelativeToolTip": "Model\\Request\\UpdateProductRequest.cs",
+              "ViewState": "AgIAAC4AAAAAAAAAAAAAwD8AAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-04T10:42:34.06Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
               "Title": "SizeRequest.cs",
               "DocumentMoniker": "C:\\Documents\\Enterprise Development Project\\EDP PROJECT\\Integrated v2\\Ecoture\\Ecoture\\Model\\Request\\SizeRequest.cs",
               "RelativeDocumentMoniker": "Model\\Request\\SizeRequest.cs",
@@ -311,19 +271,31 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 9,
+              "Title": "AddProductRequest.cs",
+              "DocumentMoniker": "C:\\Documents\\Enterprise Development Project\\EDP PROJECT\\Integrated v2\\Ecoture\\Ecoture\\Model\\Request\\AddProductRequest.cs",
+              "RelativeDocumentMoniker": "Model\\Request\\AddProductRequest.cs",
+              "ToolTip": "C:\\Documents\\Enterprise Development Project\\EDP PROJECT\\Integrated v2\\Ecoture\\Ecoture\\Model\\Request\\AddProductRequest.cs",
+              "RelativeToolTip": "Model\\Request\\AddProductRequest.cs",
+              "ViewState": "AgIAABMAAAAAAAAAAAAAACAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-04T10:42:15.043Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
               "Title": "ProductEnums.cs",
               "DocumentMoniker": "C:\\Documents\\Enterprise Development Project\\EDP PROJECT\\Integrated v2\\Ecoture\\Ecoture\\Model\\Enum\\ProductEnums.cs",
               "RelativeDocumentMoniker": "Model\\Enum\\ProductEnums.cs",
               "ToolTip": "C:\\Documents\\Enterprise Development Project\\EDP PROJECT\\Integrated v2\\Ecoture\\Ecoture\\Model\\Enum\\ProductEnums.cs",
               "RelativeToolTip": "Model\\Enum\\ProductEnums.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAABAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-02-04T10:42:06.257Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 11,
               "Title": "Sizes.cs",
               "DocumentMoniker": "C:\\Documents\\Enterprise Development Project\\EDP PROJECT\\Integrated v2\\Ecoture\\Ecoture\\Model\\Entity\\Sizes.cs",
               "RelativeDocumentMoniker": "Model\\Entity\\Sizes.cs",
@@ -335,27 +307,255 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 12,
               "Title": "ProductSizes.cs",
               "DocumentMoniker": "C:\\Documents\\Enterprise Development Project\\EDP PROJECT\\Integrated v2\\Ecoture\\Ecoture\\Model\\Entity\\ProductSizes.cs",
               "RelativeDocumentMoniker": "Model\\Entity\\ProductSizes.cs",
               "ToolTip": "C:\\Documents\\Enterprise Development Project\\EDP PROJECT\\Integrated v2\\Ecoture\\Ecoture\\Model\\Entity\\ProductSizes.cs",
               "RelativeToolTip": "Model\\Entity\\ProductSizes.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAbAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-02-04T10:41:42.175Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 14,
               "Title": "ProductColor.cs",
               "DocumentMoniker": "C:\\Documents\\Enterprise Development Project\\EDP PROJECT\\Integrated v2\\Ecoture\\Ecoture\\Model\\Entity\\ProductColor.cs",
               "RelativeDocumentMoniker": "Model\\Entity\\ProductColor.cs",
               "ToolTip": "C:\\Documents\\Enterprise Development Project\\EDP PROJECT\\Integrated v2\\Ecoture\\Ecoture\\Model\\Entity\\ProductColor.cs",
               "RelativeToolTip": "Model\\Entity\\ProductColor.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAKAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-02-04T10:41:30.932Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "ProductCategory.cs",
+              "DocumentMoniker": "C:\\Documents\\Enterprise Development Project\\EDP PROJECT\\Integrated v2\\Ecoture\\Ecoture\\Model\\Entity\\ProductCategory.cs",
+              "RelativeDocumentMoniker": "Model\\Entity\\ProductCategory.cs",
+              "ToolTip": "C:\\Documents\\Enterprise Development Project\\EDP PROJECT\\Integrated v2\\Ecoture\\Ecoture\\Model\\Entity\\ProductCategory.cs",
+              "RelativeToolTip": "Model\\Entity\\ProductCategory.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAbAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-04T10:49:21.195Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "Product.cs",
+              "DocumentMoniker": "C:\\Documents\\Enterprise Development Project\\EDP PROJECT\\Integrated v2\\Ecoture\\Ecoture\\Model\\Entity\\Product.cs",
+              "RelativeDocumentMoniker": "Model\\Entity\\Product.cs",
+              "ToolTip": "C:\\Documents\\Enterprise Development Project\\EDP PROJECT\\Integrated v2\\Ecoture\\Ecoture\\Model\\Entity\\Product.cs",
+              "RelativeToolTip": "Model\\Entity\\Product.cs",
+              "ViewState": "AgIAACoAAAAAAAAAAAAuwDgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-04T10:41:19.35Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "Fit.cs",
+              "DocumentMoniker": "C:\\Documents\\Enterprise Development Project\\EDP PROJECT\\Integrated v2\\Ecoture\\Ecoture\\Model\\Entity\\Fit.cs",
+              "RelativeDocumentMoniker": "Model\\Entity\\Fit.cs",
+              "ToolTip": "C:\\Documents\\Enterprise Development Project\\EDP PROJECT\\Integrated v2\\Ecoture\\Ecoture\\Model\\Entity\\Fit.cs",
+              "RelativeToolTip": "Model\\Entity\\Fit.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-04T11:56:14.912Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "Color.cs",
+              "DocumentMoniker": "C:\\Documents\\Enterprise Development Project\\EDP PROJECT\\Integrated v2\\Ecoture\\Ecoture\\Model\\Entity\\Color.cs",
+              "RelativeDocumentMoniker": "Model\\Entity\\Color.cs",
+              "ToolTip": "C:\\Documents\\Enterprise Development Project\\EDP PROJECT\\Integrated v2\\Ecoture\\Ecoture\\Model\\Entity\\Color.cs",
+              "RelativeToolTip": "Model\\Entity\\Color.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-04T10:41:53.677Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "Category.cs",
+              "DocumentMoniker": "C:\\Documents\\Enterprise Development Project\\EDP PROJECT\\Integrated v2\\Ecoture\\Ecoture\\Model\\Entity\\Category.cs",
+              "RelativeDocumentMoniker": "Model\\Entity\\Category.cs",
+              "ToolTip": "C:\\Documents\\Enterprise Development Project\\EDP PROJECT\\Integrated v2\\Ecoture\\Ecoture\\Model\\Entity\\Category.cs",
+              "RelativeToolTip": "Model\\Entity\\Category.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-04T10:49:34.644Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "ProductDTO.cs",
+              "DocumentMoniker": "C:\\Documents\\Enterprise Development Project\\EDP PROJECT\\Integrated v2\\Ecoture\\Ecoture\\Model\\DTO\\ProductDTO.cs",
+              "RelativeDocumentMoniker": "Model\\DTO\\ProductDTO.cs",
+              "ToolTip": "C:\\Documents\\Enterprise Development Project\\EDP PROJECT\\Integrated v2\\Ecoture\\Ecoture\\Model\\DTO\\ProductDTO.cs",
+              "RelativeToolTip": "Model\\DTO\\ProductDTO.cs",
+              "ViewState": "AgIAADQAAAAAAAAAAAAqwD8AAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-04T10:40:39.142Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "ProductFit.cs",
+              "DocumentMoniker": "C:\\Documents\\Enterprise Development Project\\EDP PROJECT\\Integrated v2\\Ecoture\\Ecoture\\Model\\Entity\\ProductFit.cs",
+              "RelativeDocumentMoniker": "Model\\Entity\\ProductFit.cs",
+              "ToolTip": "C:\\Documents\\Enterprise Development Project\\EDP PROJECT\\Integrated v2\\Ecoture\\Ecoture\\Model\\Entity\\ProductFit.cs",
+              "RelativeToolTip": "Model\\Entity\\ProductFit.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAgAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-04T10:48:53.416Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "ProductController.cs",
+              "DocumentMoniker": "C:\\Documents\\Enterprise Development Project\\EDP PROJECT\\Integrated v2\\Ecoture\\Ecoture\\Controllers\\ProductController.cs",
+              "RelativeDocumentMoniker": "Controllers\\ProductController.cs",
+              "ToolTip": "C:\\Documents\\Enterprise Development Project\\EDP PROJECT\\Integrated v2\\Ecoture\\Ecoture\\Controllers\\ProductController.cs",
+              "RelativeToolTip": "Controllers\\ProductController.cs",
+              "ViewState": "AgIAAP0BAAAAAAAAAAAgwAgCAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-04T10:40:28.484Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "20250204121310_ProductCategoryandFitUpdates.cs",
+              "DocumentMoniker": "C:\\Documents\\Enterprise Development Project\\EDP PROJECT\\Integrated v2\\Ecoture\\Ecoture\\Migrations\\20250204121310_ProductCategoryandFitUpdates.cs",
+              "RelativeDocumentMoniker": "Migrations\\20250204121310_ProductCategoryandFitUpdates.cs",
+              "ToolTip": "C:\\Documents\\Enterprise Development Project\\EDP PROJECT\\Integrated v2\\Ecoture\\Ecoture\\Migrations\\20250204121310_ProductCategoryandFitUpdates.cs",
+              "RelativeToolTip": "Migrations\\20250204121310_ProductCategoryandFitUpdates.cs",
+              "ViewState": "AgIAAGcAAAAAAAAAAAAuwA0AAAAmAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-04T12:13:11.109Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "CreditCardDTO.cs",
+              "DocumentMoniker": "C:\\Documents\\Enterprise Development Project\\EDP PROJECT\\Integrated v2\\Ecoture\\Ecoture\\Model\\DTO\\CreditCardDTO.cs",
+              "RelativeDocumentMoniker": "Model\\DTO\\CreditCardDTO.cs",
+              "ToolTip": "C:\\Documents\\Enterprise Development Project\\EDP PROJECT\\Integrated v2\\Ecoture\\Ecoture\\Model\\DTO\\CreditCardDTO.cs",
+              "RelativeToolTip": "Model\\DTO\\CreditCardDTO.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-07T12:31:08.781Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 27,
+              "Title": "ResponseController.cs",
+              "DocumentMoniker": "C:\\Documents\\Enterprise Development Project\\EDP PROJECT\\Integrated v2\\Ecoture\\Ecoture\\Controllers\\ResponseController.cs",
+              "RelativeDocumentMoniker": "Controllers\\ResponseController.cs",
+              "ToolTip": "C:\\Documents\\Enterprise Development Project\\EDP PROJECT\\Integrated v2\\Ecoture\\Ecoture\\Controllers\\ResponseController.cs",
+              "RelativeToolTip": "Controllers\\ResponseController.cs",
+              "ViewState": "AgIAAEQAAAAAAAAAAAAgwA8AAAAPAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-06T07:22:04.719Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 26,
+              "Title": "20250203100618_hopefullylastint.cs",
+              "DocumentMoniker": "C:\\Documents\\Enterprise Development Project\\EDP PROJECT\\Integrated v2\\Ecoture\\Ecoture\\Migrations\\20250203100618_hopefullylastint.cs",
+              "RelativeDocumentMoniker": "Migrations\\20250203100618_hopefullylastint.cs",
+              "ToolTip": "C:\\Documents\\Enterprise Development Project\\EDP PROJECT\\Integrated v2\\Ecoture\\Ecoture\\Migrations\\20250203100618_hopefullylastint.cs",
+              "RelativeToolTip": "Migrations\\20250203100618_hopefullylastint.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-06T07:23:01.78Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "AddressDTO.cs",
+              "DocumentMoniker": "C:\\Documents\\Enterprise Development Project\\EDP PROJECT\\Integrated v2\\Ecoture\\Ecoture\\Model\\DTO\\AddressDTO.cs",
+              "RelativeDocumentMoniker": "Model\\DTO\\AddressDTO.cs",
+              "ToolTip": "C:\\Documents\\Enterprise Development Project\\EDP PROJECT\\Integrated v2\\Ecoture\\Ecoture\\Model\\DTO\\AddressDTO.cs",
+              "RelativeToolTip": "Model\\DTO\\AddressDTO.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-07T12:31:09.887Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 25,
+              "Title": "20250203174306_UpdateProduct.cs",
+              "DocumentMoniker": "C:\\Documents\\Enterprise Development Project\\EDP PROJECT\\Integrated v2\\Ecoture\\Ecoture\\Migrations\\20250203174306_UpdateProduct.cs",
+              "RelativeDocumentMoniker": "Migrations\\20250203174306_UpdateProduct.cs",
+              "ToolTip": "C:\\Documents\\Enterprise Development Project\\EDP PROJECT\\Integrated v2\\Ecoture\\Ecoture\\Migrations\\20250203174306_UpdateProduct.cs",
+              "RelativeToolTip": "Migrations\\20250203174306_UpdateProduct.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-06T07:23:05.524Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 28,
+              "Title": "EnquiryDTO.cs",
+              "DocumentMoniker": "C:\\Documents\\Enterprise Development Project\\EDP PROJECT\\Integrated v2\\Ecoture\\Ecoture\\Model\\DTO\\EnquiryDTO.cs",
+              "RelativeDocumentMoniker": "Model\\DTO\\EnquiryDTO.cs",
+              "ToolTip": "C:\\Documents\\Enterprise Development Project\\EDP PROJECT\\Integrated v2\\Ecoture\\Ecoture\\Model\\DTO\\EnquiryDTO.cs",
+              "RelativeToolTip": "Model\\DTO\\EnquiryDTO.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-06T07:20:07.187Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 29,
+              "Title": "LivechatStatus.cs",
+              "DocumentMoniker": "C:\\Documents\\Enterprise Development Project\\EDP PROJECT\\Integrated v2\\Ecoture\\Ecoture\\Model\\Enum\\LivechatStatus.cs",
+              "RelativeDocumentMoniker": "Model\\Enum\\LivechatStatus.cs",
+              "ToolTip": "C:\\Documents\\Enterprise Development Project\\EDP PROJECT\\Integrated v2\\Ecoture\\Ecoture\\Model\\Enum\\LivechatStatus.cs",
+              "RelativeToolTip": "Model\\Enum\\LivechatStatus.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-06T06:37:11.914Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 30,
+              "Title": "RegisterRequest.cs",
+              "DocumentMoniker": "C:\\Documents\\Enterprise Development Project\\EDP PROJECT\\Integrated v2\\Ecoture\\Ecoture\\Model\\Request\\RegisterRequest.cs",
+              "RelativeDocumentMoniker": "Model\\Request\\RegisterRequest.cs",
+              "ToolTip": "C:\\Documents\\Enterprise Development Project\\EDP PROJECT\\Integrated v2\\Ecoture\\Ecoture\\Model\\Request\\RegisterRequest.cs",
+              "RelativeToolTip": "Model\\Request\\RegisterRequest.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAfAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-06T04:56:41.242Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 31,
+              "Title": "CreditCard.cs",
+              "DocumentMoniker": "C:\\Documents\\Enterprise Development Project\\EDP PROJECT\\Integrated v2\\Ecoture\\Ecoture\\Model\\Entity\\CreditCard.cs",
+              "RelativeDocumentMoniker": "Model\\Entity\\CreditCard.cs",
+              "ToolTip": "C:\\Documents\\Enterprise Development Project\\EDP PROJECT\\Integrated v2\\Ecoture\\Ecoture\\Model\\Entity\\CreditCard.cs",
+              "RelativeToolTip": "Model\\Entity\\CreditCard.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-04T10:47:17.988Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 32,
+              "Title": "AddAddressRequest.cs",
+              "DocumentMoniker": "C:\\Documents\\Enterprise Development Project\\EDP PROJECT\\Integrated v2\\Ecoture\\Ecoture\\Model\\Request\\AddAddressRequest.cs",
+              "RelativeDocumentMoniker": "Model\\Request\\AddAddressRequest.cs",
+              "ToolTip": "C:\\Documents\\Enterprise Development Project\\EDP PROJECT\\Integrated v2\\Ecoture\\Ecoture\\Model\\Request\\AddAddressRequest.cs",
+              "RelativeToolTip": "Model\\Request\\AddAddressRequest.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-04T10:56:51.572Z"
             }
           ]
         }

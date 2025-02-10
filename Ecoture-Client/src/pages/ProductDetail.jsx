@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { Box, Typography, Grid, Button, CardMedia, Chip } from "@mui/material";
 import { ArrowBack } from "@mui/icons-material";
 import http from "../http";
+import ReactImageMagnify from "react-image-magnify";
 
 function ProductDetail() {
   const { id } = useParams();
@@ -61,20 +62,49 @@ function ProductDetail() {
 
       <Grid container spacing={4}>
         <Grid item xs={12} md={6}>
-          <CardMedia
-            component="img"
-            alt={product.title || "Product Image"}
-            image={
-              product.imageFile
-                ? `${import.meta.env.VITE_FILE_BASE_URL}${product.imageFile}`
-                : "/placeholder.png"
-            }
-            sx={{
-              width: "100%",
-              borderRadius: "8px",
-              boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
-            }}
-          />
+          <Grid item xs={12} md={6}>
+            <Box sx={{ width: "100%", maxWidth: "600px", margin: "0 auto" }}>
+              <ReactImageMagnify
+                {...{
+                  smallImage: {
+                    alt: product.title || "Product Image",
+                    isFluidWidth: false,
+                    width: 600,
+                    height: 750, // Reduced height
+                    src: product.imageFile
+                      ? `${import.meta.env.VITE_FILE_BASE_URL}${
+                          product.imageFile
+                        }`
+                      : "/placeholder.png",
+                    style: { borderRadius: "10px" }, // Rounded edges
+                  },
+                  largeImage: {
+                    src: product.imageFile
+                      ? `${import.meta.env.VITE_FILE_BASE_URL}${
+                          product.imageFile
+                        }`
+                      : "/placeholder.png",
+                    width: 1000, // Adjusted zoom size
+                    height: 1500,
+                    style: { borderRadius: "10px" }, // Rounded edges
+                  },
+                  enlargedImageContainerStyle: {
+                    background: "#fff",
+                    zIndex: 10,
+                  },
+                  enlargedImagePosition: "beside",
+                  lensStyle: {
+                    backgroundColor: "rgba(0,0,0,0.2)",
+                    border: "1px solid black",
+                  },
+                  isHintEnabled: true, // Enables cursor hint
+                  hintTextMouse: "Zoom", // Adds a zoom hint
+                  style: { cursor: "zoom-in" }, // **Ensures cursor change on hover**
+                }}
+              />
+            </Box>
+          </Grid>
+
           {product.longDescription && (
             <Box sx={{ marginTop: 2 }}>
               <Typography variant="body1" sx={{ fontWeight: "bold" }}>
