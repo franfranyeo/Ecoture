@@ -33,6 +33,9 @@ import AddEnquiry from './pages/Enquiries/AddEnquiry';
 import AddResponse from './pages/Enquiries/AddResponse';
 import UpdateEnquiry from './pages/Enquiries/UpdateEnquiry';
 import Dashboard from './pages/Enquiries/Dashboard';
+import SelectContent from './pages/Newsletter/SelectContent';
+import CreateNewsletter from './pages/Newsletter/CreateNewsletter';
+
 
 function App() {
     const [user, setUser] = useState(null);
@@ -113,6 +116,11 @@ function App() {
                             <Route path="/addenquiry" element={<AddEnquiry />} />
                             <Route path="/addresponse/:id" element={<AddResponse />} />
                             <Route path="/updateenquiry/:id" element={<UpdateEnquiry />} />
+                            
+                            {/* Newsletter Management */}
+                            <Route path="/createnewsletter" element={<CreateNewsletter />} />
+                            <Route path="/selectcontent" element={<SelectContent />} />
+
                         </Routes>
                     </div>
                 </ThemeProvider>

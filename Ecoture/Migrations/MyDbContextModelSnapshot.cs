@@ -19,6 +19,21 @@ namespace Ecoture.Migrations
                 .HasAnnotation("ProductVersion", "8.0.12")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
+            modelBuilder.Entity("ContentNewsletter", b =>
+                {
+                    b.Property<int>("ContentsContentId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("NewsletterIssueId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ContentsContentId", "NewsletterIssueId");
+
+                    b.HasIndex("NewsletterIssueId");
+
+                    b.ToTable("NewsletterContents", (string)null);
+                });
+
             modelBuilder.Entity("Ecoture.Models.Entity.Address", b =>
                 {
                     b.Property<int>("Id")
@@ -85,6 +100,31 @@ namespace Ecoture.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Colors");
+                });
+
+            modelBuilder.Entity("Ecoture.Models.Entity.Content", b =>
+                {
+                    b.Property<int>("ContentId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("ContentTitle")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<bool>("Membership")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<int>("PreferencesId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ProductIds")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("ContentId");
+
+                    b.ToTable("Contents");
                 });
 
             modelBuilder.Entity("Ecoture.Models.Entity.CreditCard", b =>
@@ -175,6 +215,33 @@ namespace Ecoture.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Fits");
+                });
+
+            modelBuilder.Entity("Ecoture.Models.Entity.Newsletter", b =>
+                {
+                    b.Property<int>("IssueId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int>("ContentId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("DateSent")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("IssueTitle")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("varchar(200)");
+
+                    b.Property<string>("NewsletterCategory")
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .HasColumnType("varchar(40)");
+
+                    b.HasKey("IssueId");
+
+                    b.ToTable("Newsletters");
                 });
 
             modelBuilder.Entity("Ecoture.Models.Entity.Product", b =>
@@ -427,6 +494,21 @@ namespace Ecoture.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("ContentNewsletter", b =>
+                {
+                    b.HasOne("Ecoture.Models.Entity.Content", null)
+                        .WithMany()
+                        .HasForeignKey("ContentsContentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Ecoture.Models.Entity.Newsletter", null)
+                        .WithMany()
+                        .HasForeignKey("NewsletterIssueId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Ecoture.Models.Entity.Address", b =>

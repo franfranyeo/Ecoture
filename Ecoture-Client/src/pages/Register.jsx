@@ -9,7 +9,6 @@ import 'react-toastify/dist/ReactToastify.css';
 
 function Register() {
     const navigate = useNavigate();
-
     const formik = useFormik({
         initialValues: {
             name: "",

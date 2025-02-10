@@ -30,7 +30,6 @@ namespace Ecoture.Models.Entity
 		[Column(TypeName = "datetime")]
 		public DateTime updatedAt { get; set; } 
 
-		[JsonIgnore]
 		public ICollection<Response>? Responses { get; set; } 
 	}
 

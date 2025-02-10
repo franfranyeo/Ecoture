@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Documents\\Enterprise Development Project\\EDP PROJECT\\Integrated v2\\Ecoture\\Ecoture\\Ecoture.csproj": {}
+    "C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Git Clone\\Ecoture\\Ecoture\\Ecoture.csproj": {}
   },
   "projects": {
-    "C:\\Documents\\Enterprise Development Project\\EDP PROJECT\\Integrated v2\\Ecoture\\Ecoture\\Ecoture.csproj": {
+    "C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Git Clone\\Ecoture\\Ecoture\\Ecoture.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Documents\\Enterprise Development Project\\EDP PROJECT\\Integrated v2\\Ecoture\\Ecoture\\Ecoture.csproj",
+        "projectUniqueName": "C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Git Clone\\Ecoture\\Ecoture\\Ecoture.csproj",
         "projectName": "Ecoture",
-        "projectPath": "C:\\Documents\\Enterprise Development Project\\EDP PROJECT\\Integrated v2\\Ecoture\\Ecoture\\Ecoture.csproj",
-        "packagesPath": "C:\\Users\\Keon\\.nuget\\packages\\",
-        "outputPath": "C:\\Documents\\Enterprise Development Project\\EDP PROJECT\\Integrated v2\\Ecoture\\Ecoture\\obj\\",
+        "projectPath": "C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Git Clone\\Ecoture\\Ecoture\\Ecoture.csproj",
+        "packagesPath": "C:\\Users\\jiaxi\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\jiaxi\\Desktop\\Sch\\Enterprise Development Project\\Git Clone\\Ecoture\\Ecoture\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Keon\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\jiaxi\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [

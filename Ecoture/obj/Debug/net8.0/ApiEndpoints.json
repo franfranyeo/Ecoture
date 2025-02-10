@@ -115,6 +115,85 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "Ecoture.Controllers.ContentController",
+    "Method": "CreateContent",
+    "RelativePath": "Content",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "contentDto",
+        "Type": "Ecoture.Models.DTO.ContentDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Ecoture.Models.DTO.ContentDto",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Ecoture.Controllers.ContentController",
+    "Method": "GetContentById",
+    "RelativePath": "Content/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Ecoture.Controllers.ContentController",
+    "Method": "UpdateContent",
+    "RelativePath": "Content/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "contentDto",
+        "Type": "Ecoture.Models.DTO.ContentDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Ecoture.Controllers.ContentController",
+    "Method": "DeleteContent",
+    "RelativePath": "Content/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "Ecoture.Controllers.CreditCardController",
     "Method": "GetAll",
     "RelativePath": "CreditCard",
@@ -343,6 +422,75 @@
         "StatusCode": 200
       }
     ]
+  },
+  {
+    "ContainingType": "Ecoture.Controllers.NewsletterController",
+    "Method": "CreateNewsletter",
+    "RelativePath": "Newsletter",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "newsletterDto",
+        "Type": "Ecoture.Models.DTO.NewsletterDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Ecoture.Controllers.NewsletterController",
+    "Method": "GetNewsletterById",
+    "RelativePath": "Newsletter/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Ecoture.Controllers.NewsletterController",
+    "Method": "UpdateNewsletter",
+    "RelativePath": "Newsletter/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "newsletterDto",
+        "Type": "Ecoture.Models.DTO.NewsletterDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Ecoture.Controllers.NewsletterController",
+    "Method": "DeleteNewsletter",
+    "RelativePath": "Newsletter/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
   },
   {
     "ContainingType": "Ecoture.Controllers.ProductController",

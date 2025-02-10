@@ -6,7 +6,5 @@
 		public int chatSessionId { get; set; } 
 		public string message { get; set; }  
 
-
-		//public Livechat Livechat { get; set; }
 	}
 }
