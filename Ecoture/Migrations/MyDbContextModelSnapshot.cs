@@ -151,7 +151,7 @@ namespace Ecoture.Migrations
                     b.ToTable("Colors");
                 });
 
-            modelBuilder.Entity("Ecoture.Model.Entity.Content", b =>
+            modelBuilder.Entity("Ecoture.Models.Entity.Content", b =>
                 {
                     b.Property<int>("ContentId")
                         .ValueGeneratedOnAdd()

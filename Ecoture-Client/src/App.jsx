@@ -40,6 +40,8 @@ import AddEnquiry from "./pages/Enquiries/AddEnquiry";
 import AddResponse from "./pages/Enquiries/AddResponse";
 import UpdateEnquiry from "./pages/Enquiries/UpdateEnquiry";
 import EnquiriesDashboard from "./pages/Enquiries/Dashboard";
+import SelectContent from './pages/Newsletter/SelectContent';
+import CreateNewsletter from './pages/Newsletter/CreateNewsletter';
 
 // Fran Imports
 import Account from "./pages/customer/user/Account";
@@ -61,6 +63,7 @@ import { Box } from "@mui/material";
 import AddReward from "./pages/admin/rewards/AddReward";
 import EditReward from "./pages/admin/rewards/EditReward";
 import ViewReward from "./pages/admin/rewards/ViewReward";
+
 
 function App() {
   // update in the user context too
@@ -289,12 +292,17 @@ function App() {
                 <Route path="/form" element={<MyForm />} />
                 <Route path="/choice" element={<Choice />} /> {/* New Route */}
                 <Route path="/confirmation" element={<Confirmation />} />{" "}
-                {/* New Route */}
+                
+                {/* Enquiry Management */}
                 <Route path="/dashboard" element={<EnquiriesDashboard />} />
                 <Route path="/enquiries" element={<Enquiries />} />
                 <Route path="/addenquiry" element={<AddEnquiry />} />
                 <Route path="/addresponse/:id" element={<AddResponse />} />
                 <Route path="/updateenquiry/:id" element={<UpdateEnquiry />} />
+
+                {/* Newsletter Management */}
+                <Route path="/createnewsletter" element={<CreateNewsletter />} />
+                <Route path="/selectcontent" element={<SelectContent />} />
               </Routes>
             </Box>
           </ThemeProvider>

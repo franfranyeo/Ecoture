@@ -31,6 +31,8 @@ namespace Ecoture
         // ✅ Define DbSets for Entities
         public DbSet<Enquiry> Enquiries { get; set; }
         public DbSet<Response> Responses { get; set; }
+        public DbSet<Content> Contents { get; set; }
+        public DbSet<Newsletter> Newsletters { get; set; }
         public required DbSet<Product> Products { get; set; }
         public required DbSet<Size> Sizes { get; set; }
         public required DbSet<ProductSize> ProductSizes { get; set; }
@@ -187,9 +189,12 @@ namespace Ecoture
             ConfigureReviewRelationship(modelBuilder);
             ConfigureResponseRelationship(modelBuilder);
 
+            modelBuilder.Entity<Newsletter>()
+                .HasMany(n => n.Contents)
+                .WithMany()
+                .UsingEntity(j => j.ToTable("NewsletterContents"));
 
-
-			// ✅ Configure decimal precision for Product Price
+            // ✅ Configure decimal precision for Product Price
             modelBuilder.Entity<Product>()
                 .Property(p => p.Price)
                 .HasColumnType("decimal(10,2)");

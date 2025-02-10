@@ -7,6 +7,8 @@ namespace Ecoture.Model.Entity
 		public int PreferencesId { get; set; }
 		public bool Membership { get; set; }
 
-		public List<int> ProductIds { get; set; } = new();
+		public string ContentTitle { get; set; } = string.Empty;
+
+        public List<int> ProductIds { get; set; } = new();
 	}
 }
