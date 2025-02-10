@@ -1,8 +1,8 @@
-﻿using Ecoture.Models.Entity;
+﻿using Ecoture.Model.Entity;
 using System;
 using System.Collections.Generic;
 
-namespace Ecoture.Models.Entity
+namespace Ecoture.Model.Entity
 {
     public class Order
     {

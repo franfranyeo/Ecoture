@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Ecoture.Models.Request
+namespace Ecoture.Model.Request
 {
     public class AddToCartRequest
     {

@@ -4,7 +4,7 @@ import { useGoogleLogin } from "@react-oauth/google";
 import { toast } from "react-toastify";
 import UserContext from "contexts/UserContext";
 import { useNavigate } from "react-router-dom";
-import http from "utils/http";
+import http from "http";
 import "react-toastify/dist/ReactToastify.css";
 import googleIcon from "assets/images/google-logo.svg";
 

@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Ecoture.Models.Entity;
-using Ecoture.Models.DTO;
-using Ecoture.Models.Request;
+using Ecoture.Model.Entity;
+using Ecoture.Model.DTO;
+using Ecoture.Model.Request;
 using System.Security.Claims;
 using AutoMapper;
 

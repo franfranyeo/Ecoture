@@ -8,9 +8,9 @@ using System;
 
 using AutoMapper;
 using Microsoft.Extensions.Logging;
-using Ecoture.Models.Entity;
-using Ecoture.Models.DTO;
-using Ecoture.Models;
+using Ecoture.Model.Entity;
+using Ecoture.Model.DTO;
+using Ecoture.Model;
 using Ecoture.Model.DTO;
 using Mysqlx.Crud;
 
@@ -46,7 +46,7 @@ namespace Ecoture.Controllers
 
                 decimal totalPrice = selectedCartItems.Sum(item => item.Price * item.Quantity);
 
-                var order = new Models.Entity.Order
+                var order = new Model.Entity.Order
                 {
                     UserId = userId,
                     CreatedAt = DateTime.UtcNow,

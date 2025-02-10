@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Ecoture.Models.Entity
+namespace Ecoture.Model.Entity
 {
     public class Category
     {

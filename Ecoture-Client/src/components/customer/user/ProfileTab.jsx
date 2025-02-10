@@ -16,7 +16,7 @@ import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
 import { styled } from "@mui/material/styles";
 import React, { useState, useContext, useEffect } from "react";
 import { toast } from "react-toastify";
-import http from "utils/http";
+import http from "http";
 import UserContext from "contexts/UserContext";
 import { useFormik } from "formik";
 import * as yup from "yup";

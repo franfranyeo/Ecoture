@@ -1,6 +1,6 @@
-﻿using Ecoture.Models.Entity;
+﻿using Ecoture.Model.Entity;
 
-namespace Ecoture.Models.Entity
+namespace Ecoture.Model.Entity
 {
     public class ProductCategory
     {

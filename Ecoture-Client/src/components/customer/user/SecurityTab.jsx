@@ -22,7 +22,7 @@ import {
 } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import UserContext from "contexts/UserContext";
-import http from "utils/http";
+import http from "http";
 import { toast } from "react-toastify";
 import { Close } from "@mui/icons-material";
 

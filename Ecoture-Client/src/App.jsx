@@ -9,7 +9,7 @@ import {
 import { ThemeProvider } from "@mui/material/styles";
 import MyTheme from "./themes/MyTheme";
 import Navbar from "components/Navbar";
-import http from "./utils/http";
+import http from "./http";
 import UserContext from "./contexts/UserContext";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { useMemo, useRef } from "react";
@@ -20,6 +20,8 @@ import EditProduct from "./pages/EditProduct";
 import ProductDetail from "./pages/ProductDetail";
 import Reviews from "./pages/Reviews";
 import Products from "./pages/Products";
+import CustomerLanding from './pages/CustomerLanding';
+import StaffDashboard from './pages/StaffView';
 
 // AHMED IMPORTS
 import Addresses from "./pages/Addresses";
@@ -206,6 +208,11 @@ function App() {
     //   url: "/admin/rewards/:id/view",
     //   component: ViewReward,
     // }
+
+    {
+      url: "/admin/products",
+      component: StaffDashboard
+    }
   ];
 
   const logout = () => {
@@ -230,7 +237,8 @@ function App() {
               <Navbar onLogout={logout} />
 
               <Routes>
-                <Route path="/" element={<Home />} />
+                <Route path="/" element={<CustomerLanding />} />
+
                 {sharedRoutes.map((route, index) => (
                   <Route
                     key={index}
@@ -242,6 +250,7 @@ function App() {
                   path="/admin"
                   element={<Navigate to="/admin/dashboard" />}
                 />
+
                 {adminRoutes.map((route, index) => (
                   <Route
                     key={index}
@@ -249,6 +258,7 @@ function App() {
                     element={<ProtectedRoute element={route.component} />}
                   />
                 ))}
+
                 {/* Category Routes - Products.jsx handles category filtering */}
                 <Route path="/category/:categoryName" element={<Products />} />
                 {/* Add Product */}

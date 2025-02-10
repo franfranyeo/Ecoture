@@ -38,6 +38,11 @@ const sideMenuOptions = [
     icon: "",
     path: "/admin/rewards",
   },
+  {
+    name: "Prodcuts",
+    icon: "",
+    path: "/admin/products",
+  },
 ];
 
 function Sidebar() {

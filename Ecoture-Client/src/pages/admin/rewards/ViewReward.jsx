@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import http from "utils/http";
+import http from "http";
 import {
   Box,
   Typography,

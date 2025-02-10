@@ -17,7 +17,7 @@ import {
   Alert,
 } from "@mui/material";
 import { ArrowBack, Delete } from "@mui/icons-material";
-import http from "../utils/http";
+import http from "../http";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { ToastContainer, toast } from "react-toastify";

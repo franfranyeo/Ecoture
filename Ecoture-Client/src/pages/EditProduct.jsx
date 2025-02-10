@@ -23,7 +23,7 @@ import { Chip } from "@mui/material";
 
 import { useFormik } from "formik";
 import * as yup from "yup";
-import http from "../utils/http";
+import http from "../http";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 

@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
-using Ecoture.Models.Entity;
-using Ecoture.Models;
-using Ecoture.Models.Enum;
-using Ecoture.Models.DTO;
-using Ecoture.Models.Request;
+using Ecoture.Model.Entity;
+using Ecoture.Model;
+using Ecoture.Model.Enum;
+using Ecoture.Model.DTO;
+using Ecoture.Model.Request;
 using System.Linq;
 using Ecoture.Model.DTO;
 
