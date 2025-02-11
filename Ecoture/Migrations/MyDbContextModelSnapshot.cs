@@ -19,21 +19,6 @@ namespace Ecoture.Migrations
                 .HasAnnotation("ProductVersion", "8.0.12")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-            modelBuilder.Entity("ContentNewsletter", b =>
-                {
-                    b.Property<int>("ContentsContentId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("NewsletterIssueId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ContentsContentId", "NewsletterIssueId");
-
-                    b.HasIndex("NewsletterIssueId");
-
-                    b.ToTable("NewsletterContents", (string)null);
-                });
-
             modelBuilder.Entity("Ecoture.Model.Entity.Address", b =>
                 {
                     b.Property<int>("Id")
@@ -151,14 +136,21 @@ namespace Ecoture.Migrations
                     b.ToTable("Colors");
                 });
 
-            modelBuilder.Entity("Ecoture.Models.Entity.Content", b =>
+            modelBuilder.Entity("Ecoture.Model.Entity.Content", b =>
                 {
                     b.Property<int>("ContentId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+                    b.Property<string>("ContentTitle")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
                     b.Property<bool>("Membership")
                         .HasColumnType("tinyint(1)");
+
+                    b.Property<int?>("NewsletterIssueId")
+                        .HasColumnType("int");
 
                     b.Property<int>("PreferencesId")
                         .HasColumnType("int");
@@ -168,6 +160,8 @@ namespace Ecoture.Migrations
                         .HasColumnType("longtext");
 
                     b.HasKey("ContentId");
+
+                    b.HasIndex("NewsletterIssueId");
 
                     b.ToTable("Contents");
                 });
@@ -289,34 +283,34 @@ namespace Ecoture.Migrations
                         new
                         {
                             MembershipId = 1,
-                            CreatedAt = new DateTime(2025, 2, 10, 20, 59, 14, 22, DateTimeKind.Utc).AddTicks(971),
+                            CreatedAt = new DateTime(2025, 2, 11, 3, 3, 14, 182, DateTimeKind.Utc).AddTicks(9640),
                             SpendingRequired = 0.00m,
                             Tier = 1,
-                            UpdatedAt = new DateTime(2025, 2, 10, 20, 59, 14, 22, DateTimeKind.Utc).AddTicks(971)
+                            UpdatedAt = new DateTime(2025, 2, 11, 3, 3, 14, 182, DateTimeKind.Utc).AddTicks(9641)
                         },
                         new
                         {
                             MembershipId = 2,
-                            CreatedAt = new DateTime(2025, 2, 10, 20, 59, 14, 22, DateTimeKind.Utc).AddTicks(973),
+                            CreatedAt = new DateTime(2025, 2, 11, 3, 3, 14, 182, DateTimeKind.Utc).AddTicks(9644),
                             SpendingRequired = 2000.00m,
                             Tier = 2,
-                            UpdatedAt = new DateTime(2025, 2, 10, 20, 59, 14, 22, DateTimeKind.Utc).AddTicks(973)
+                            UpdatedAt = new DateTime(2025, 2, 11, 3, 3, 14, 182, DateTimeKind.Utc).AddTicks(9645)
                         },
                         new
                         {
                             MembershipId = 3,
-                            CreatedAt = new DateTime(2025, 2, 10, 20, 59, 14, 22, DateTimeKind.Utc).AddTicks(975),
+                            CreatedAt = new DateTime(2025, 2, 11, 3, 3, 14, 182, DateTimeKind.Utc).AddTicks(9646),
                             SpendingRequired = 4000.00m,
                             Tier = 3,
-                            UpdatedAt = new DateTime(2025, 2, 10, 20, 59, 14, 22, DateTimeKind.Utc).AddTicks(975)
+                            UpdatedAt = new DateTime(2025, 2, 11, 3, 3, 14, 182, DateTimeKind.Utc).AddTicks(9647)
                         },
                         new
                         {
                             MembershipId = 4,
-                            CreatedAt = new DateTime(2025, 2, 10, 20, 59, 14, 22, DateTimeKind.Utc).AddTicks(976),
+                            CreatedAt = new DateTime(2025, 2, 11, 3, 3, 14, 182, DateTimeKind.Utc).AddTicks(9649),
                             SpendingRequired = 0.00m,
                             Tier = 0,
-                            UpdatedAt = new DateTime(2025, 2, 10, 20, 59, 14, 22, DateTimeKind.Utc).AddTicks(977)
+                            UpdatedAt = new DateTime(2025, 2, 11, 3, 3, 14, 182, DateTimeKind.Utc).AddTicks(9649)
                         });
                 });
 
@@ -1001,21 +995,6 @@ namespace Ecoture.Migrations
                     b.ToTable("MfaResponses");
                 });
 
-            modelBuilder.Entity("ContentNewsletter", b =>
-                {
-                    b.HasOne("Ecoture.Model.Entity.Content", null)
-                        .WithMany()
-                        .HasForeignKey("ContentsContentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Ecoture.Model.Entity.Newsletter", null)
-                        .WithMany()
-                        .HasForeignKey("NewsletterIssueId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("Ecoture.Model.Entity.Address", b =>
                 {
                     b.HasOne("Ecoture.Model.Entity.User", "User")
@@ -1044,6 +1023,13 @@ namespace Ecoture.Migrations
                     b.Navigation("Product");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Ecoture.Model.Entity.Content", b =>
+                {
+                    b.HasOne("Ecoture.Model.Entity.Newsletter", null)
+                        .WithMany("Contents")
+                        .HasForeignKey("NewsletterIssueId");
                 });
 
             modelBuilder.Entity("Ecoture.Model.Entity.CreditCard", b =>
@@ -1305,6 +1291,11 @@ namespace Ecoture.Migrations
             modelBuilder.Entity("Ecoture.Model.Entity.Fit", b =>
                 {
                     b.Navigation("ProductFits");
+                });
+
+            modelBuilder.Entity("Ecoture.Model.Entity.Newsletter", b =>
+                {
+                    b.Navigation("Contents");
                 });
 
             modelBuilder.Entity("Ecoture.Model.Entity.Order", b =>
