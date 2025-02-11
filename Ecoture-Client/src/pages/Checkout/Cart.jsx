@@ -128,7 +128,7 @@ function Cart() {
         </Typography>
 
         {cart.length === 0 ? (
-          <Typography>No items in cart.</Typography>
+          <Typography sx={{ minWidth: '500px' }}>No items in cart.</Typography>
         ) : (
           <>
             <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
