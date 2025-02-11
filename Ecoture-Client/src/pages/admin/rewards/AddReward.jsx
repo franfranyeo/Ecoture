@@ -19,7 +19,7 @@ import {
   IconButton,
   Divider,
 } from "@mui/material";
-import http from "http";
+import http from "../../../http";
 import { ArrowBack } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 
