@@ -20,7 +20,6 @@ function GoogleLoginButton() {
           token: tokenResponse.access_token,
         });
         const { user, accessToken, mfaMethods } = res.data;
-        console.log(res.data);
         if (user) {
           user["mfaMethods"] = mfaMethods;
           localStorage.setItem("user", JSON.stringify(user));

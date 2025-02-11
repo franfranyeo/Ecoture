@@ -19,6 +19,7 @@ import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import DataTable from "../../DataTable";
 import { AccessTime, MonetizationOn } from "@mui/icons-material";
 import UserContext from "contexts/UserContext";
+import ProgressBar from "./ProgressBar";
 
 const MembershipTab = () => {
   const { user } = useContext(UserContext);
@@ -125,6 +126,10 @@ const MembershipTab = () => {
           <Typography variant="h6">
             You are a {user.membership ? user.membership.tier : "Bronze"} Member
           </Typography>
+          <ProgressBar
+            totalSpent={user.totalSpending.toFixed(2)}
+            target={1000}
+          />
           <Box display="flex" justifyContent="space-between" mt={2}>
             <Typography variant="body1">
               {user.membership ? user.membership.tier : "Bronze"}
@@ -234,15 +239,15 @@ const MembershipTab = () => {
           sx={{ mb: 2 }}
           variant="fullWidth"
         >
-          <Tab label="MY VOUCHERS & REWARDS" sx={{ flex: 1 }} />
-          <Tab label="CLAIM VOUCHERS & REWARDS" sx={{ flex: 1 }} />
+          <Tab label="MY REWARDS" sx={{ flex: 1 }} />
+          <Tab label="CLAIM MORE REWARDS" sx={{ flex: 1 }} />
         </Tabs>
 
         {tabIndex === 0 && (
           <Box>
             <Box>
               <Typography variant="h6" gutterBottom>
-                My Vouchers & Rewards
+                My Rewards
               </Typography>
               <TextField
                 fullWidth

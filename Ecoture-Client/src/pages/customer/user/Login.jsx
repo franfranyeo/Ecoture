@@ -20,7 +20,6 @@ function Login() {
       delete user.accessToken;
     }
     const userToStore = { ...user, mfaMethods };
-    console.log(userToStore);
     setUser(userToStore);
     localStorage.setItem("user", JSON.stringify(userToStore));
     localStorage.setItem("accessToken", accessToken);
@@ -37,7 +36,6 @@ function Login() {
   const handleLoginSubmit = async (credentials) => {
     try {
       const response = await authService.login(credentials);
-      console.log(response, "HANDLELOGIN");
       const { user, accessToken, mfaMethods } = response;
 
       if (user.is2FAEnabled) {
