@@ -225,7 +225,7 @@ function Products({ onAddProductClick }) {
         }}
       >
         {/* Only render the dropdown if the user is logged in */}
-        {user && (
+        {user && user.role && user.role == "Admin" && (
           <>
             <InputLabel shrink>Category</InputLabel>
             <Select
@@ -289,7 +289,7 @@ function Products({ onAddProductClick }) {
         <IconButton color="secondary" onClick={onClickClear}>
           <Clear />
         </IconButton>
-        {user && (
+        {user && user.role && user.role == "Admin" && (
           <Button
             variant="contained"
             color="primary"
@@ -469,7 +469,7 @@ function Products({ onAddProductClick }) {
                   </Button>
                 </Box>
 
-                {user && (
+                {user && user.role && user.role == "Admin" && (
                   <Box
                     sx={{
                       display: "flex",
