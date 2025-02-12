@@ -143,8 +143,6 @@ function EditProduct() {
     }),
 
     onSubmit: (values) => {
-      console.log("Form submitted with values:", values);
-
       // Create the request body
       const requestBody = {
         title: values.title,
@@ -161,13 +159,10 @@ function EditProduct() {
         colors: colors,
       };
 
-      console.log("Sending request body:", requestBody);
-
       // Make the API call
       http
         .put(`/product/${id}`, requestBody)
         .then((response) => {
-          console.log("Update successful:", response);
           toast.success("Product updated successfully!");
           navigate("/");
         })

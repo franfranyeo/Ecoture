@@ -622,6 +622,11 @@ const ProfileTab = ({ user }) => {
                 </Button>
               )}
             </Grid>
+            <Grid item xs={6}>
+              {!isEditing && user.isGoogleLogin && (
+                <Typography variant="body1">Logged in with Google</Typography>
+              )}
+            </Grid>
           </Grid>
 
           <Divider sx={{ my: 2 }} />
