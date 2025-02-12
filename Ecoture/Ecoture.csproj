@@ -7,6 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Model\Entity\NewFolder\**" />
+    <Content Remove="Model\Entity\NewFolder\**" />
+    <EmbeddedResource Remove="Model\Entity\NewFolder\**" />
+    <None Remove="Model\Entity\NewFolder\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="13.0.1" />
     <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
     <PackageReference Include="Google.Apis.Auth" Version="1.69.0" />
@@ -26,6 +33,7 @@
 
   <ItemGroup>
     <Folder Include="Migrations\" />
+    <Folder Include="Model\Enum\" />
     <Folder Include="wwwroot\uploads\" />
   </ItemGroup>
 

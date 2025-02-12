@@ -18,7 +18,7 @@ import {
 import { ArrowBack } from "@mui/icons-material";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import http from "../utils/http";
+import http from "../../http";
 
 // formating help from ai
 function EditCreditCard() {
@@ -65,7 +65,7 @@ function EditCreditCard() {
         .put(`/creditcard/${id}`, data)
         .then(() => {
           setUpdateDialogOpen(false);
-          navigate("/creditcards");
+          navigate('/choice');
         })
         .catch(() => {
           setError("Failed to update the credit card. Please try again.");
@@ -91,7 +91,7 @@ function EditCreditCard() {
       .delete(`/creditcard/${id}`)
       .then(() => {
         setDeleteDialogOpen(false);
-        navigate("/creditcards");
+        navigate('/choice');
       })
       .catch(() => {
         setError("Failed to delete the credit card. Please try again.");

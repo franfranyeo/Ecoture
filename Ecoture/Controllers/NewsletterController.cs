@@ -19,7 +19,7 @@ namespace Ecoture.Controllers
 		[HttpGet("{id}")]
 		public IActionResult GetNewsletterById(int id)
 		{
-			var newsletter = _context.Newsletters.Include(n => n.Contents) .FirstOrDefault(n => n.IssueId == id);
+			var newsletter = _context.Newsletters.Include(n => n.Contents).FirstOrDefault(n => n.IssueId == id);
 
 			if (newsletter == null)
 				return NotFound();

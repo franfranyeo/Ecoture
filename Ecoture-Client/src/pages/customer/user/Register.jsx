@@ -13,7 +13,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import GoogleLoginButton from "components/customer/user/GoogleLoginButton"; // Ensure you have this package installed
-import http from "utils/http";
+import http from "../../../http";
 import { toast } from "react-toastify";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import AuthLayout from "components/customer/user/AuthLayout";

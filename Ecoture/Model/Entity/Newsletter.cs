@@ -17,6 +17,6 @@ namespace Ecoture.Model.Entity
 		[MaxLength(40)]
 		public string NewsletterCategory { get; set; } = string.Empty;
 
-		public ICollection<Content>? Contents { get; set; }
+		public ICollection<Content> Contents { get; set; }
 	}
 }

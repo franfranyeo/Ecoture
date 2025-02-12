@@ -35,8 +35,18 @@ const sideMenuOptions = [
   },
   {
     name: "Rewards",
-    icon: "",
+    icon: usersIcon,
     path: "/admin/rewards",
+  },
+  {
+    name: "Products",
+    icon: usersIcon,
+    path: "/",
+  },
+  {
+    name: "Enquiries",
+    icon: usersIcon,
+    path: "/dashboard",
   },
 ];
 
@@ -61,7 +71,7 @@ function Sidebar() {
     }));
   };
 
-  const isActive = (path) => location.pathname.startsWith(path);
+  const isActive = (path) => location.pathname == path;
 
   const isParentActive = (subOptions) =>
     subOptions && subOptions.some((subOption) => isActive(subOption.path));
@@ -112,9 +122,10 @@ function Sidebar() {
                 my: 1,
                 borderRadius: 1,
                 backgroundColor:
-                  isActive(option.path) || isParentActive(option.subOptions)
-                    ? "primary.main"
-                    : "transparent",
+                isActive(option.path) 
+                ? "primary.main"
+                : "transparent",
+                // || isParentActive(option.subOptions)
                 "&:hover": {
                   backgroundColor: "primary.light",
                   cursor: "pointer",

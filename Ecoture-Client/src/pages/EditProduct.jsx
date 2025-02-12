@@ -23,7 +23,7 @@ import { Chip } from "@mui/material";
 
 import { useFormik } from "formik";
 import * as yup from "yup";
-import http from "../utils/http";
+import http from "../http";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -87,6 +87,10 @@ function EditProduct() {
         setProduct({
           ...data,
           priceRange: computedPriceRange, // Store calculated price range
+          fits: data.fits ? data.fits.map((f) => f.fitName) : [],
+          categories: data.categories
+            ? data.categories.map((c) => c.categoryName)
+            : [],
         });
 
         setImageFile(data.imageFile);
@@ -106,10 +110,10 @@ function EditProduct() {
       description: product.description || "",
       longDescription: product.longDescription || "",
       price: product.price || "",
-      categoryName: product.categoryName || "",
-      colour: product.colour || "",
-      fit: product.fit || "",
+      categories: product.categories || [],
+      fits: product.fits || [],
     },
+
     enableReinitialize: true,
     validationSchema: yup.object({
       title: yup
@@ -134,19 +138,19 @@ function EditProduct() {
         .number()
         .min(0.01, "Price must be greater than zero")
         .required("Price is required"),
-
-      categoryName: yup.string().required("Category is required"),
-      fit: yup.string().required("Fit is required"),
+      categories: yup.array().min(1, "At least one category is required"),
+      fits: yup.array().min(1, "At least one fit is required"),
     }),
+
     onSubmit: (values) => {
       // Create the request body
       const requestBody = {
         title: values.title,
         description: values.description,
         longDescription: values.longDescription,
-        price: parseFloat(values.price), //  Backend will now determine price range
-        categoryName: values.categoryName,
-        fit: values.fit,
+        price: parseFloat(values.price),
+        categories: values.categories, // Support multiple categories
+        fits: values.fits, // Support multiple fits
         imageFile: imageFile,
         sizes: sizes.map((s) => ({
           sizeName: s.sizeName.trim(),
@@ -418,25 +422,55 @@ function EditProduct() {
                 </Grid>
               ))}
 
-              <Typography variant="subtitle1" sx={{ mt: 2 }}>
-                Category Name:
+              <Typography variant="subtitle1" sx={{ mt: 2, mb: 1 }}>
+                Categories:
               </Typography>
-              <ToggleButtonGroup
-                color="primary"
-                exclusive
-                value={formik.values.categoryName}
-                onChange={(e, value) =>
-                  formik.setFieldValue("categoryName", value)
-                }
-              >
-                <ToggleButton value="Landing">Landing</ToggleButton>
-                <ToggleButton value="New arrivals">New arrivals</ToggleButton>
-                <ToggleButton value="Trending">Trending</ToggleButton>
-                <ToggleButton value="Women">Women</ToggleButton>
-                <ToggleButton value="Men">Men</ToggleButton>
-                <ToggleButton value="Girls">Girls</ToggleButton>
-                <ToggleButton value="Boys">Boys</ToggleButton>
-              </ToggleButtonGroup>
+              <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1 }}>
+                {[
+                  "Landing",
+                  "New arrivals",
+                  "Trending",
+                  "Women",
+                  "Men",
+                  "Girls",
+                  "Boys",
+                ].map((category) => (
+                  <Button
+                    key={category}
+                    variant={
+                      formik.values.categories.includes(category)
+                        ? "contained"
+                        : "outlined"
+                    }
+                    onClick={() => {
+                      const selected = formik.values.categories.includes(
+                        category
+                      )
+                        ? formik.values.categories.filter((c) => c !== category)
+                        : [...formik.values.categories, category];
+
+                      formik.setFieldValue("categories", selected);
+                    }}
+                    sx={{
+                      borderRadius: "20px",
+                      border: "1px solid #ccc",
+                      backgroundColor: formik.values.categories.includes(
+                        category
+                      )
+                        ? "#555"
+                        : "#fff",
+                      color: formik.values.categories.includes(category)
+                        ? "#fff"
+                        : "#000",
+                      "&:hover": { backgroundColor: "#f0f0f0", color: "#000" },
+                      padding: "8px 16px",
+                      textTransform: "none",
+                    }}
+                  >
+                    {category}
+                  </Button>
+                ))}
+              </Box>
 
               <Typography variant="subtitle1" sx={{ mt: 2, mb: 1 }}>
                 Colors:
@@ -463,23 +497,48 @@ function EditProduct() {
                 ))}
               </Box>
 
-              <Typography variant="subtitle1" sx={{ mt: 2 }}>
-                Fit:
+              <Typography variant="subtitle1" sx={{ mt: 2, mb: 1 }}>
+                Fits:
               </Typography>
-              <ToggleButtonGroup
-                color="primary"
-                exclusive
-                value={formik.values.fit}
-                onChange={(e, value) => formik.setFieldValue("fit", value)}
-              >
-                <ToggleButton value="Regular Tapered">
-                  Regular Tapered
-                </ToggleButton>
-                <ToggleButton value="Skinny Tapered">
-                  Skinny Tapered
-                </ToggleButton>
-                <ToggleButton value="Seasonal Fit">Seasonal Fit</ToggleButton>
-              </ToggleButtonGroup>
+              <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1 }}>
+                {["Regular Tapered", "Skinny Tapered", "Seasonal Fit"].map(
+                  (fit) => (
+                    <Button
+                      key={fit}
+                      variant={
+                        formik.values.fits.includes(fit)
+                          ? "contained"
+                          : "outlined"
+                      }
+                      onClick={() => {
+                        const selected = formik.values.fits.includes(fit)
+                          ? formik.values.fits.filter((f) => f !== fit)
+                          : [...formik.values.fits, fit];
+
+                        formik.setFieldValue("fits", selected);
+                      }}
+                      sx={{
+                        borderRadius: "20px",
+                        border: "1px solid #ccc",
+                        backgroundColor: formik.values.fits.includes(fit)
+                          ? "#555"
+                          : "#fff",
+                        color: formik.values.fits.includes(fit)
+                          ? "#fff"
+                          : "#000",
+                        "&:hover": {
+                          backgroundColor: "#f0f0f0",
+                          color: "#000",
+                        },
+                        padding: "8px 16px",
+                        textTransform: "none",
+                      }}
+                    >
+                      {fit}
+                    </Button>
+                  )
+                )}
+              </Box>
             </Grid>
 
             <Grid item xs={12} md={4}>

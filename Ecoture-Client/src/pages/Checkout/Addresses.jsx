@@ -20,12 +20,11 @@ import {
   Edit,
   Clear,
 } from "@mui/icons-material";
-import http from "../utils/http";
+import http from "../../http";
 import dayjs from "dayjs";
-import UserContext from "../contexts/UserContext";
-import global from "../utils/global";
+import UserContext from "../../contexts/UserContext";
+import global from "../../global";
 
-// formating help from ai, make the ui look abit neater
 function Addresses() {
   const [addressList, setAddressList] = useState([]);
   const [search, setSearch] = useState("");

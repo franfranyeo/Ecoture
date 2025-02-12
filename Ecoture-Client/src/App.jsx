@@ -9,7 +9,7 @@ import {
 import { ThemeProvider } from "@mui/material/styles";
 import MyTheme from "./themes/MyTheme";
 import Navbar from "components/Navbar";
-import http from "./utils/http";
+import http from "./http";
 import UserContext from "./contexts/UserContext";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { useMemo, useRef } from "react";
@@ -20,17 +20,20 @@ import EditProduct from "./pages/EditProduct";
 import ProductDetail from "./pages/ProductDetail";
 import Reviews from "./pages/Reviews";
 import Products from "./pages/Products";
+import CustomerLanding from './pages/CustomerLanding';
+import StaffDashboard from './pages/StaffView';
 
 // AHMED IMPORTS
-import Addresses from "./pages/Addresses";
-import AddAddress from "./pages/AddAddress";
-import EditAddress from "./pages/EditAddress";
-import CreditCards from "./pages/CreditCards";
-import AddCreditCard from "./pages/AddCreditCard";
-import EditCreditCard from "./pages/EditCreditCard";
-import MyForm from "./pages/MyForm";
-import Choice from "./pages/Choice"; // New Page
-import Confirmation from "./pages/Confirmation"; // New Page
+import Addresses from "./pages/Checkout/Addresses";
+import AddAddress from "./pages/Checkout/AddAddress";
+import EditAddress from "./pages/Checkout/EditAddress";
+import CreditCards from "./pages/Checkout/CreditCards";
+import AddCreditCard from "./pages/Checkout/AddCreditCard";
+import EditCreditCard from "./pages/Checkout/EditCreditCard";
+import MyForm from "./pages/Checkout/MyForm";
+import Choice from "./pages/Checkout/Choice";
+import Confirmation from "./pages/Checkout/Confirmation";
+import Cart from './pages/Checkout/Cart';
 
 // Amelia Imports
 import Enquiries from "./pages/Enquiries/Enquiries";
@@ -38,6 +41,8 @@ import AddEnquiry from "./pages/Enquiries/AddEnquiry";
 import AddResponse from "./pages/Enquiries/AddResponse";
 import UpdateEnquiry from "./pages/Enquiries/UpdateEnquiry";
 import EnquiriesDashboard from "./pages/Enquiries/Dashboard";
+import SelectContent from './pages/Newsletter/SelectContent';
+import CreateNewsletter from './pages/Newsletter/CreateNewsletter';
 
 // Fran Imports
 import Account from "./pages/customer/user/Account";
@@ -50,7 +55,7 @@ import EditUser from "./pages/admin/user/EditUser";
 import ViewUser from "./pages/admin/user/ViewUser";
 import Rewards from "./pages/admin/rewards/Rewards";
 import Login from "./pages/customer/user/Login";
-import Home from "./pages/Home";
+// import Home from "./pages/Home";
 import Register from "./pages/customer/user/Register";
 import TermsOfUse from "./pages/customer/user/TermsOfUse";
 import PrivacyPolicy from "./pages/customer/user/PrivacyPolicy";
@@ -59,6 +64,7 @@ import { Box } from "@mui/material";
 import AddReward from "./pages/admin/rewards/AddReward";
 import EditReward from "./pages/admin/rewards/EditReward";
 import ViewReward from "./pages/admin/rewards/ViewReward";
+
 
 function App() {
   // update in the user context too
@@ -230,7 +236,8 @@ function App() {
               <Navbar onLogout={logout} />
 
               <Routes>
-                <Route path="/" element={<Home />} />
+                <Route path="/" element={user?.role == "Admin" ? <StaffDashboard /> : <CustomerLanding />} />
+
                 {sharedRoutes.map((route, index) => (
                   <Route
                     key={index}
@@ -242,6 +249,7 @@ function App() {
                   path="/admin"
                   element={<Navigate to="/admin/dashboard" />}
                 />
+
                 {adminRoutes.map((route, index) => (
                   <Route
                     key={index}
@@ -249,9 +257,10 @@ function App() {
                     element={<ProtectedRoute element={route.component} />}
                   />
                 ))}
+
+                {/* Keon Product */}
                 {/* Category Routes - Products.jsx handles category filtering */}
                 <Route path="/category/:categoryName" element={<Products />} />
-                {/* Add Product */}
                 <Route
                   path="/addproduct"
                   element={
@@ -263,13 +272,10 @@ function App() {
                     />
                   }
                 />
-                {/* Edit Product */}
                 <Route path="/editproduct/:id" element={<EditProduct />} />
-                {/* Product Detail */}
                 <Route path="/product/:id" element={<ProductDetail />} />
-                {/* Product Reviews */}
-                <Route path="/reviews/:productId" element={<Reviews />} />{" "}
-                {/* Updated route for reviews */}
+                <Route path="/reviews/:productId" element={<Reviews />} />
+
                 {/* AHMED CODES */}
                 <Route path="/addresses" element={<Addresses />} />
                 <Route path="/addaddress" element={<AddAddress />} />
@@ -281,14 +287,20 @@ function App() {
                   element={<EditCreditCard />}
                 />
                 <Route path="/form" element={<MyForm />} />
-                <Route path="/choice" element={<Choice />} /> {/* New Route */}
-                <Route path="/confirmation" element={<Confirmation />} />{" "}
-                {/* New Route */}
+                <Route path="/choice" element={<Choice />} />
+                <Route path="/confirmation" element={<Confirmation />} />
+                <Route path="/cart" element={<Cart />} />
+                
+                {/* Enquiry Management */}
                 <Route path="/dashboard" element={<EnquiriesDashboard />} />
                 <Route path="/enquiries" element={<Enquiries />} />
                 <Route path="/addenquiry" element={<AddEnquiry />} />
                 <Route path="/addresponse/:id" element={<AddResponse />} />
                 <Route path="/updateenquiry/:id" element={<UpdateEnquiry />} />
+
+                {/* Newsletter Management */}
+                <Route path="/createnewsletter" element={<CreateNewsletter />} />
+                <Route path="/selectcontent" element={<SelectContent />} />
               </Routes>
             </Box>
           </ThemeProvider>

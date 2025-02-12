@@ -9,8 +9,8 @@ namespace Ecoture.Model.DTO
 		public int ContentId { get; set; }
 		public DateTime DateSent { get; set; }
 		public string NewsletterCategory { get; set; } = string.Empty;
-		
-		[MinLength(1)]
-		public List<int> ContentIds { get; set; } = new();
-	}
+
+        [MinLength(1, ErrorMessage = "At least one content must be selected.")]
+        public List<int> ContentIds { get; set; } = new();
+    }
 }

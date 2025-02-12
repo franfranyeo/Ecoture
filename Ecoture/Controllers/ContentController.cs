@@ -16,7 +16,7 @@ namespace Ecoture.Controllers
 			_context = context;
 		}
 
-		[HttpGet("{id}")]
+        [HttpGet("{id}")]
 		public async Task<IActionResult> GetContentById(int id)
 		{
 			var content = await _context.Contents.FindAsync(id);
@@ -70,7 +70,8 @@ namespace Ecoture.Controllers
 
 			content.ProductIds = contentDto.ProductIds;
 			content.PreferencesId = contentDto.PreferencesId;
-			content.Membership = contentDto.Membership;
+			content.ContentTitle = contentDto.ContentTitle;
+            content.Membership = contentDto.Membership;
 
 			try
 			{

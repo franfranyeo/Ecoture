@@ -1,5 +1,5 @@
 // services/auth.service.js
-import http from 'utils/http';
+import http from '../http';
 
 export const authService = {
     async login(credentials) {

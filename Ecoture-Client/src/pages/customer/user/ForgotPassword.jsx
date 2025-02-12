@@ -16,7 +16,7 @@ import {
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import http from 'utils/http';
+import http from '../../../http';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import AuthLayout from 'components/customer/user/AuthLayout';

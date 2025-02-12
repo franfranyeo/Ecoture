@@ -17,7 +17,7 @@ import {
   Alert,
 } from "@mui/material";
 import { ArrowBack, Delete } from "@mui/icons-material";
-import http from "../utils/http";
+import http from "../../http";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { ToastContainer, toast } from "react-toastify";
@@ -78,8 +78,8 @@ function EditAddress() {
       http
         .put(`/address/${id}`, data)
         .then(() => {
-          toast.success("Address updated successfully!");
-          navigate("/addresses");
+          toast.success('Address updated successfully!');
+          navigate('/choice');
         })
         .catch(() => {
           toast.error("Failed to update the address.");
@@ -91,8 +91,8 @@ function EditAddress() {
     http
       .delete(`/address/${id}`)
       .then(() => {
-        toast.success("Address deleted successfully!");
-        navigate("/addresses");
+        toast.success('Address deleted successfully!');
+        navigate('/choice');
       })
       .catch(() => {
         toast.error("Failed to delete the address.");

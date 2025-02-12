@@ -16,17 +16,19 @@ namespace Ecoture.Model.Request
         [Required, Range(0.01, double.MaxValue, ErrorMessage = "Price must be greater than zero.")]
         public decimal Price { get; set; }
 
-        [Required, MaxLength(50)]
-        public string CategoryName { get; set; } = string.Empty;
+        // Support multiple categories instead of a single one
+        [Required, MinLength(1, ErrorMessage = "At least one category must be provided.")]
+        public List<string> Categories { get; set; } = new();
 
-        // Change single Colour to a list of colors
+        // Support multiple colors
         [Required, MinLength(1, ErrorMessage = "At least one color must be provided.")]
         public List<string> Colors { get; set; } = new();
 
-        [Required, MaxLength(30)]
-        public string Fit { get; set; } = string.Empty;
+        // Support multiple fits instead of a single one
+        [Required, MinLength(1, ErrorMessage = "At least one fit must be provided.")]
+        public List<string> Fits { get; set; } = new();
 
-        [MaxLength(20)]
+        [MaxLength(255)]
         public string? ImageFile { get; set; }
 
         // New property to handle multiple sizes and their stock quantities

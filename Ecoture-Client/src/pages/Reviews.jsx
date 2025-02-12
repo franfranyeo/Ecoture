@@ -17,7 +17,7 @@ import {
   DialogTitle,
 } from "@mui/material";
 import { Edit, Delete, Save, Cancel } from "@mui/icons-material";
-import http from "../utils/http";
+import http from "../http";
 import UserContext from "../contexts/UserContext";
 
 const Reviews = () => {

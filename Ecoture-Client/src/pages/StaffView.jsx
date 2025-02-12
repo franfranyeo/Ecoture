@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Dashboard from './Dashboard';
 import AddProduct from './AddProduct';
-import Products from './Products';
+import Products from './Products'; // Products component to manage and display products
 
 function StaffView() {
     const [activeSection, setActiveSection] = useState('Product Management'); // Default to Product Management
@@ -28,7 +28,7 @@ function StaffView() {
                         backgroundColor: '#fff',
                     }}
                 >
-                    {/* Render Product Management */}
+                    {/* Render Product Management Section */}
                     {activeSection === 'Product Management' && (
                         <>
                             {!isAddingProduct ? (
@@ -45,7 +45,7 @@ function StaffView() {
                                         Product Management
                                     </h1>
                                     <Products
-                                        onAddProductClick={() => setIsAddingProduct(true)}
+                                        onAddProductClick={() => setIsAddingProduct(true)} // Show Add Product form
                                     />
                                 </>
                             ) : (
@@ -69,7 +69,7 @@ function StaffView() {
                                             borderRadius: '5px',
                                             cursor: 'pointer',
                                         }}
-                                        onClick={() => setIsAddingProduct(false)}
+                                        onClick={() => setIsAddingProduct(false)} // Go back to Product Management
                                     >
                                         Back to Product Management
                                     </button>

@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import http from "../utils/http";
+import http from "../../http";
 // formating help from ai for ui
 function AddCreditCard() {
   const navigate = useNavigate();
