@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState } from "react";
 import { Box, Button, Typography } from "@mui/material";
 import EmailEditor from "react-email-editor";
-import http from "../../http"; // Axios instance for API requests
+import http from "utils/http"; // Axios instance for API requests
 
 function CreateNewsletter() {
   const emailEditorRef = useRef(null);

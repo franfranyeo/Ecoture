@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import { Box, Card, CardContent, Typography, Button, Grid, CardMedia, TextField } from "@mui/material";
-import http from "../../http";
+import http from "utils/http";
 
 function SelectContent() {
   const navigate = useNavigate();

@@ -8,7 +8,7 @@ import {
   Grid2,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import http from "../../http";
+import http from "utils/http";
 
 function Dashboard() {
   const [enquiryStats, setEnquiryStats] = useState({

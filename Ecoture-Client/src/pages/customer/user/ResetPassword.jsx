@@ -9,7 +9,7 @@ import {
 } from '@mui/material';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import http from 'http';
+import http from "utils/http";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useLocation, useNavigate } from 'react-router-dom';

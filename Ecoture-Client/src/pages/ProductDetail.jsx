@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Box, Typography, Grid, Button, CardMedia, Chip } from "@mui/material";
 import { ArrowBack } from "@mui/icons-material";
-import http from "../http";
+import http from "utils/http";
 import ReactImageMagnify from "react-image-magnify";
 
 function ProductDetail() {

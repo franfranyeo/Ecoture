@@ -8,7 +8,7 @@ import {
   CardContent,
   Divider,
 } from "@mui/material";
-import http from "../../http";
+import http from "utils/http";
 import { useNavigate } from "react-router-dom";
 
 function Enquiries() {

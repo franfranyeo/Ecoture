@@ -11,7 +11,7 @@ import {
   Checkbox,
   TextField,
 } from "@mui/material";
-import http from "../../http";
+import http from "utils/http";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";

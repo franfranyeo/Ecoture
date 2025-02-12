@@ -37,7 +37,7 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import http from "../../../http";
+import http from "utils/http";
 import UserContext from "contexts/UserContext";
 
 // Constants

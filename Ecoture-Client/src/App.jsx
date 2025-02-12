@@ -9,7 +9,7 @@ import {
 import { ThemeProvider } from "@mui/material/styles";
 import MyTheme from "./themes/MyTheme";
 import Navbar from "components/Navbar";
-import http from "./http";
+import http from "utils/http";
 import UserContext from "./contexts/UserContext";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { useMemo, useRef } from "react";
@@ -55,7 +55,7 @@ import EditUser from "./pages/admin/user/EditUser";
 import ViewUser from "./pages/admin/user/ViewUser";
 import Rewards from "./pages/admin/rewards/Rewards";
 import Login from "./pages/customer/user/Login";
-// import Home from "./pages/Home";
+import Home from "./pages/Home";
 import Register from "./pages/customer/user/Register";
 import TermsOfUse from "./pages/customer/user/TermsOfUse";
 import PrivacyPolicy from "./pages/customer/user/PrivacyPolicy";

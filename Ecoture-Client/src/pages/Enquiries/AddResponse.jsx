@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { Button, Box, Typography, Paper } from "@mui/material";
-import http from "../../http";
+import http from "utils/http";
 
 // Validation schema using Yup
 const validationSchema = Yup.object({

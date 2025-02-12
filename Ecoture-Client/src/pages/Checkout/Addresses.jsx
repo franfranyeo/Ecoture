@@ -20,10 +20,10 @@ import {
   Edit,
   Clear,
 } from "@mui/icons-material";
-import http from "../../http";
+import http from "utils/http";
 import dayjs from "dayjs";
 import UserContext from "../../contexts/UserContext";
-import global from "../../global";
+import global from "utils/global";
 
 function Addresses() {
   const [addressList, setAddressList] = useState([]);

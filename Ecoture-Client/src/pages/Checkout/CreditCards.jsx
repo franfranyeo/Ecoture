@@ -11,7 +11,7 @@ import {
   Tooltip,
 } from "@mui/material";
 import { Edit } from "@mui/icons-material";
-import http from "../../http";
+import http from "utils/http";
 import UserContext from "../../contexts/UserContext";
 
 function CreditCards() {

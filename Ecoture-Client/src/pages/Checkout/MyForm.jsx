@@ -17,7 +17,7 @@ import { Checkbox, FormControlLabel } from "@mui/material";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import dayjs from "dayjs";
-import http from "../../http";
+import http from "utils/http";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 // npm install @mui/x-date-pickers

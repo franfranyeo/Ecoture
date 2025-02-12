@@ -3,7 +3,7 @@ import { Box, TextField, Button, Typography } from "@mui/material";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
-import http from "../../http";
+import http from "utils/http";
 
 const validationSchema = Yup.object({
   email: Yup.string()

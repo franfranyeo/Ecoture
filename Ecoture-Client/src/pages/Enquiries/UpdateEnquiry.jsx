@@ -9,7 +9,7 @@ import {
   FormControl,
   InputLabel,
 } from "@mui/material";
-import http from "../../http";
+import http from "utils/http";
 
 // Mapping enums
 const statusEnum = {

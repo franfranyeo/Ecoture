@@ -14,7 +14,7 @@ import ProfileIcon from "../assets/Profile.png";
 import ShoppingCartIcon from "../assets/ShoppingCart.png";
 import EcoTureLogo from "../assets/Ecoture6.png";
 import "/navbar.css";
-import http from "../http"; // Ensure you have an HTTP helper
+import http from "utils/http"; // Ensure you have an HTTP helper
 
 function Navbar({ onLogout }) {
   const { user } = useContext(UserContext);
