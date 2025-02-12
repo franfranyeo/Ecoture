@@ -98,6 +98,11 @@ const SecurityTab = () => {
   };
 
   const updateUserSettings = async () => {
+    securityState.authMethods.forEach((method) => {
+      if (user.mfaMethods.hasOwnProperty(method)) {
+        user.mfaMethods[method] = true;
+      }
+    });
     const payload = {
       userId: securityState.tempUser.userId,
       is2FAEnabled: securityState.is2FAEnabled,
