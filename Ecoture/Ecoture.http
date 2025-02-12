@@ -1,0 +1,6 @@
+@Ecoture_HostAddress = http://localhost:5036
+
+GET {{Ecoture_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

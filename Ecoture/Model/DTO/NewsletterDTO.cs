@@ -1,0 +1,16 @@
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Ecoture.Model.DTO
+{
+	public class NewsletterDto
+	{
+		public int IssueId { get; set; }
+		public string IssueTitle { get; set; } = string.Empty;
+		public int ContentId { get; set; }
+		public DateTime DateSent { get; set; }
+		public string NewsletterCategory { get; set; } = string.Empty;
+
+        [MinLength(1, ErrorMessage = "At least one content must be selected.")]
+        public List<int> ContentIds { get; set; } = new();
+    }
+}

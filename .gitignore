@@ -170,13 +170,22 @@ msbuild.log
 msbuild.err
 msbuild.wrn
 
-# Visual Studio 2022
-.vs/
-/Ecoture-server/.vs
-
 # Image Uploads
 uploads/
 
+# Ignore Visual Studio temporary files and build results
+.vs/
+[Bb]in/
+[Oo]bj/
+
 # Migrations
-/Ecoture-server/Ecoture-server/Migrations/*
-Ecoture-server/Ecoture-server/Migrations/ApplicationDbContextModelSnapshot.cs
+# ignore the ecotureAPI migrations
+Ecoture/.vs
+Ecoture/obj
+Ecoture\Ecoture\bin
+Ecoture\Ecoture\obj
+/Ecoture/.vs
+/Ecoture/obj
+/Ecoture/bin
+/Ecoture/obj
+/Ecoture/obj/Debug
