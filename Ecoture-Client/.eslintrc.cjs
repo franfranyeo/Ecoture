@@ -1,4 +1,5 @@
 module.exports = {
+  root: true,
   env: { browser: true, es2020: true },
   extends: [
     'eslint:recommended',
@@ -6,10 +7,11 @@ module.exports = {
     'plugin:react/jsx-runtime',
     'plugin:react-hooks/recommended',
   ],
-  parserOptions: { ecmaVersion: 'latest', sourceType: 'module' },
-  settings: { react: { version: '18.2' } },
+  ignorePatterns: ['dist', '.eslintrc.cjs'],
   plugins: ['react-refresh'],
   rules: {
     'react-refresh/only-export-components': 'warn',
   },
-}
+  settings: { react: { version: '18.2' } },
+  parserOptions: { ecmaVersion: 'latest', sourceType: 'module' },
+};
