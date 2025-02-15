@@ -304,10 +304,9 @@ function App() {
                 <Route path="/createnewsletter" element={<CreateNewsletter />} />
                 <Route path="/selectcontent" element={<SelectContent />} />
 
-                <Route path="/livechat" element={<Chat />} />
                 <Route path="/adminchat" element={<AdminChat />} />
               </Routes>
-              <ChatWidget />
+              {!adminRoutes.includes(location.pathname) && <ChatWidget />}
             </Box>
           </ThemeProvider>
         </Router>
