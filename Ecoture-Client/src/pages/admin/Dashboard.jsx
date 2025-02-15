@@ -1,13 +1,12 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-
+// import { useState } from 'react';
+// import { useNavigate } from 'react-router-dom';
 import { Box } from '@mui/material';
 
 import EnquiriesDashboard from '../Enquiries/Dashboard';
 
 const Dashboard = () => {
-  const [activeSection, setActiveSection] = useState('Product Management');
-  const navigate = useNavigate();
+  // const [activeSection, setActiveSection] = useState('Product Management');
+  // const navigate = useNavigate();
   return (
     <>
       <Box

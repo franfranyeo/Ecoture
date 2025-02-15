@@ -60,9 +60,9 @@ function EditProduct() {
     5: '$50+',
   };
 
-  const reversePriceRangeMap = Object.fromEntries(
-    Object.entries(priceRangeMap).map(([k, v]) => [v, parseInt(k)])
-  );
+  // const reversePriceRangeMap = Object.fromEntries(
+  //   Object.entries(priceRangeMap).map(([k, v]) => [v, parseInt(k)])
+  // );
 
   useEffect(() => {
     http
@@ -160,7 +160,7 @@ function EditProduct() {
       // Make the API call
       http
         .put(`/product/${id}`, requestBody)
-        .then((response) => {
+        .then(() => {
           toast.success('Product updated successfully!');
           navigate('/');
         })

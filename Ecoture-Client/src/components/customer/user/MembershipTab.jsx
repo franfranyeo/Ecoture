@@ -23,7 +23,7 @@ import ProgressBar from './ProgressBar';
 
 const MembershipTab = () => {
   const { user } = useContext(UserContext);
-  const [vouchers, setVouchers] = useState([
+  const [vouchers] = useState([
     {
       voucherCode: 'V12345',
       customerName: 'John Doe',

@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import { useFormik } from 'formik';
 import { useContext, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';

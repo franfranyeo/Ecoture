@@ -11,7 +11,7 @@ import SecurityTab from 'components/customer/user/SecurityTab';
 import UserContext from 'contexts/UserContext';
 
 const Account = () => {
-  const { user, setUser } = useContext(UserContext);
+  const { user } = useContext(UserContext);
   const [selected, setSelected] = useState('Profile');
   const [loading, setLoading] = useState(true);
 

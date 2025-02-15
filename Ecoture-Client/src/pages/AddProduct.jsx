@@ -72,13 +72,13 @@ function AddProduct() {
     }),
     onSubmit: (data) => {
       // Automatically determine price range based on price input
-      const priceRangeMap = {
-        1: '$10-$20',
-        2: '$20-$30',
-        3: '$30-$40',
-        4: '$40-$50',
-        5: '$50+',
-      };
+      // const priceRangeMap = {
+      //   1: '$10-$20',
+      //   2: '$20-$30',
+      //   3: '$30-$40',
+      //   4: '$40-$50',
+      //   5: '$50+',
+      // };
 
       if (data.price < 20) data.priceRange = 1;
       else if (data.price < 30) data.priceRange = 2;

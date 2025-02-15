@@ -8,7 +8,7 @@ const AdminChat = () => {
   const [connection, setConnection] = useState(null);
   const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState('');
-  const [user, setUser] = useState('Admin');
+  const [user] = useState('Admin');
   const [targetUser, setTargetUser] = useState('');
   const [users, setUsers] = useState([]);
 

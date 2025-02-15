@@ -65,7 +65,7 @@ function MFAVerification({ userData, onCancel, onSuccess }) {
 
   const handleVerify = async () => {
     try {
-      const response = await authService.verifyMFACode({
+      await authService.verifyMFACode({
         email: userData.email,
         method: selectedMethod,
         otp,

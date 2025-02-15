@@ -60,7 +60,7 @@ function ForgotPassword() {
       data.email = data.email.trim().toLowerCase();
       setEmail(data.email); // Save the email for resending
       try {
-        const res = await http.post('/user/forgot-password', data);
+        await http.post('/user/forgot-password', data);
         setIsModalOpen(true); // Show modal on successful response
       } catch (err) {
         console.error(err);

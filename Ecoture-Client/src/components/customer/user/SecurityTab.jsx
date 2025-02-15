@@ -254,7 +254,7 @@ const SecurityTab = () => {
         }),
       };
 
-      const res = await http.post(endpoint, payload);
+      await http.post(endpoint, payload);
       updateModalState({ otpSent: true });
       toast.success('OTP sent successfully');
     } catch (error) {
