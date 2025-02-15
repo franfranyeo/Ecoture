@@ -41,12 +41,12 @@ const sideMenuOptions = [
   {
     name: "Products",
     icon: usersIcon,
-    path: "/",
+    path: "/admin/products",
   },
   {
     name: "Enquiries",
     icon: usersIcon,
-    path: "/dashboard",
+    path: "/admin/enquiries",
   },
 ];
 
@@ -114,17 +114,19 @@ function Sidebar() {
         </ListItem>
         <Divider />
         {sideMenuOptions.map((option) => (
-          <React.Fragment key={option.name}>
+          <React.Fragment
+            key={option.name}
+            onClick={() => handleClick(option.name)}
+          >
             <ListItem
               button
               onClick={() => option.subOptions && handleClick(option.name)}
               sx={{
                 my: 1,
                 borderRadius: 1,
-                backgroundColor:
-                isActive(option.path) 
-                ? "primary.main"
-                : "transparent",
+                backgroundColor: isActive(option.path)
+                  ? "primary.main"
+                  : "transparent",
                 // || isParentActive(option.subOptions)
                 "&:hover": {
                   backgroundColor: "primary.light",

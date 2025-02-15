@@ -40,29 +40,6 @@ function Dashboard() {
         backgroundColor: "#f5f5f5",
       }}
     >
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          width: "100%",
-          maxWidth: "1200px",
-          marginBottom: "40px",
-        }}
-      >
-        <Typography variant="h4" sx={{ fontWeight: "bold" }}>
-          Dashboard
-        </Typography>
-        <Button
-          variant="contained"
-          color="success"
-          sx={{ height: "40px" }}
-          onClick={() => navigate("/addenquiry")}
-        >
-          Add Enquiry
-        </Button>
-      </Box>
-
       <Grid2
         container
         spacing={3}

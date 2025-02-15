@@ -1,9 +1,31 @@
-import React from "react";
+import React, { useState } from "react";
+import EnquiriesDashboard from "../Enquiries/Dashboard";
+import { Box, Button } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
+  const [activeSection, setActiveSection] = useState("Product Management");
+  const navigate = useNavigate();
   return (
     <>
-      <h1>Dashboard</h1>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
+        <h1>Dashboard</h1>
+        <Button
+          variant="contained"
+          color="success"
+          sx={{ height: "40px" }}
+          onClick={() => navigate("/addenquiry")}
+        >
+          Add Enquiry
+        </Button>
+      </Box>
+      <EnquiriesDashboard />
     </>
   );
 };
