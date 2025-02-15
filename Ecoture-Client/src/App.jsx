@@ -23,6 +23,16 @@ import Products from "./pages/Products";
 import CustomerLanding from "./pages/CustomerLanding";
 import StaffDashboard from "./pages/admin/products/AdminProducts";
 
+
+
+
+
+
+
+
+
+
+
 // AHMED IMPORTS
 import Addresses from "./pages/Checkout/Addresses";
 import AddAddress from "./pages/Checkout/AddAddress";
@@ -35,6 +45,16 @@ import Choice from "./pages/Checkout/Choice";
 import Confirmation from "./pages/Checkout/Confirmation";
 import Cart from "./pages/Checkout/Cart";
 
+
+
+
+
+
+
+
+
+
+
 // Amelia Imports
 import Enquiries from "./pages/Enquiries/Enquiries";
 import AddEnquiry from "./pages/Enquiries/AddEnquiry";
@@ -43,9 +63,19 @@ import UpdateEnquiry from "./pages/Enquiries/UpdateEnquiry";
 import EnquiriesDashboard from "./pages/Enquiries/Dashboard";
 import SelectContent from './pages/Newsletter/SelectContent';
 import CreateNewsletter from './pages/Newsletter/CreateNewsletter';
-import Chat from "./pages/LiveChat/Chat";
 import AdminChat from "./pages/LiveChat/AdminChat";
 import ChatWidget from "./components/ChatWidget";
+
+
+
+
+
+
+
+
+
+
+
 
 // Fran Imports
 import Account from "./pages/customer/user/Account";
