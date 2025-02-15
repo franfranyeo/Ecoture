@@ -1,44 +1,46 @@
 // Address.jsx
-import React, { useEffect, useState, useContext } from "react";
-import { Link } from "react-router-dom";
+import dayjs from 'dayjs';
+import { useContext, useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import global from 'utils/global';
+import http from 'utils/http';
+
+import {
+  AccessTime,
+  AccountCircle,
+  Clear,
+  Edit,
+  Search,
+} from '@mui/icons-material';
 import {
   Box,
-  Typography,
-  Grid,
+  Button,
   Card,
   CardContent,
   CardMedia,
+  Grid,
   IconButton,
-  Button,
   InputAdornment,
   TextField,
-} from "@mui/material";
-import {
-  AccountCircle,
-  AccessTime,
-  Search,
-  Edit,
-  Clear,
-} from "@mui/icons-material";
-import http from "utils/http";
-import dayjs from "dayjs";
-import UserContext from "../../contexts/UserContext";
-import global from "utils/global";
+  Typography,
+} from '@mui/material';
+
+import UserContext from '../../contexts/UserContext';
 
 function Addresses() {
   const [addressList, setAddressList] = useState([]);
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState('');
   const { user } = useContext(UserContext);
 
   // fetch addresses
   const getAddresses = () => {
     http
-      .get("/address")
+      .get('/address')
       .then((res) => {
         setAddressList(res.data);
       })
       .catch((err) => {
-        console.error("Error fetching addresses:", err);
+        console.error('Error fetching addresses:', err);
       });
   };
 
@@ -50,7 +52,7 @@ function Addresses() {
         setAddressList(res.data);
       })
       .catch((err) => {
-        console.error("Error searching addresses:", err);
+        console.error('Error searching addresses:', err);
       });
   };
 
@@ -71,19 +73,19 @@ function Addresses() {
   };
 
   const handleKeyDown = (e) => {
-    if (e.key === "Enter") {
+    if (e.key === 'Enter') {
       searchAddresses();
     }
   };
 
   const handleSearchClear = () => {
-    setSearch("");
+    setSearch('');
     getAddresses();
   };
 
   return (
     <Box>
-      <Typography variant="h4" sx={{ mb: 3, fontWeight: "bold" }}>
+      <Typography variant="h4" sx={{ mb: 3, fontWeight: 'bold' }}>
         My Addresses
       </Typography>
 
@@ -115,12 +117,12 @@ function Addresses() {
           <Grid item xs={12} key={address.id}>
             <Card
               sx={{
-                display: "flex",
+                display: 'flex',
                 borderRadius: 2,
-                overflow: "hidden",
-                backgroundColor: "#f9f9f9",
-                border: "1px solid #ddd",
-                height: "145px",
+                overflow: 'hidden',
+                backgroundColor: '#f9f9f9',
+                border: '1px solid #ddd',
+                height: '145px',
               }}
             >
               {address.imageFile && (
@@ -128,8 +130,8 @@ function Addresses() {
                   component="img"
                   sx={{
                     width: 120,
-                    height: "100%",
-                    objectFit: "cover",
+                    height: '100%',
+                    objectFit: 'cover',
                   }}
                   image={`${import.meta.env.VITE_FILE_BASE_URL}${
                     address.imageFile
@@ -138,18 +140,18 @@ function Addresses() {
                 />
               )}
 
-              <Box sx={{ display: "flex", flexDirection: "column", flex: 1 }}>
+              <Box sx={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
                 <CardContent
                   sx={{
-                    padding: "12px",
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "center",
+                    padding: '12px',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'center',
                   }}
                 >
                   <Typography
                     variant="subtitle1"
-                    sx={{ fontWeight: "bold", mb: 0.5 }}
+                    sx={{ fontWeight: 'bold', mb: 0.5 }}
                   >
                     {address.title}
                   </Typography>
@@ -157,9 +159,9 @@ function Addresses() {
                   <Typography
                     variant="body2"
                     sx={{
-                      color: "text.secondary",
+                      color: 'text.secondary',
                       mb: 0.5,
-                      fontSize: "0.85rem",
+                      fontSize: '0.85rem',
                       lineHeight: 1.4,
                     }}
                   >
@@ -168,21 +170,21 @@ function Addresses() {
 
                   <Box
                     sx={{
-                      display: "flex",
-                      alignItems: "center",
-                      color: "text.secondary",
+                      display: 'flex',
+                      alignItems: 'center',
+                      color: 'text.secondary',
                       gap: 1,
-                      fontSize: "0.8rem",
+                      fontSize: '0.8rem',
                     }}
                   >
-                    <Box sx={{ display: "flex", alignItems: "center" }}>
-                      <AccountCircle sx={{ mr: 0.5, fontSize: "16px" }} />
+                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                      <AccountCircle sx={{ mr: 0.5, fontSize: '16px' }} />
                       <Typography variant="caption">
                         {address.user?.name}
                       </Typography>
                     </Box>
-                    <Box sx={{ display: "flex", alignItems: "center" }}>
-                      <AccessTime sx={{ mr: 0.5, fontSize: "16px" }} />
+                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                      <AccessTime sx={{ mr: 0.5, fontSize: '16px' }} />
                       <Typography variant="caption">
                         {dayjs(address.createdAt).format(global.datetimeFormat)}
                       </Typography>
@@ -192,14 +194,14 @@ function Addresses() {
 
                 {/* Edit Button */}
                 {user && user.id === address.userId && (
-                  <Box sx={{ ml: "auto", mr: 2, mb: 1 }}>
+                  <Box sx={{ ml: 'auto', mr: 2, mb: 1 }}>
                     <IconButton
                       component={Link}
                       to={`/editaddress/${address.id}`}
                       sx={{
-                        backgroundColor: "white",
-                        "&:hover": { backgroundColor: "lightgray" },
-                        padding: "6px",
+                        backgroundColor: 'white',
+                        '&:hover': { backgroundColor: 'lightgray' },
+                        padding: '6px',
                       }}
                     >
                       <Edit color="success" />
@@ -214,7 +216,7 @@ function Addresses() {
 
       {/* Add Address Button */}
       {user && (
-        <Box sx={{ textAlign: "center", mt: 4 }}>
+        <Box sx={{ textAlign: 'center', mt: 4 }}>
           <Button
             variant="contained"
             component={Link}

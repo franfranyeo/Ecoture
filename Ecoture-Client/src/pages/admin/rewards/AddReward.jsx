@@ -1,71 +1,68 @@
-import React from "react";
-import { useFormik } from "formik";
-import * as yup from "yup";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { useFormik } from 'formik';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import http from 'utils/http';
+import * as yup from 'yup';
+
+import { ArrowBack } from '@mui/icons-material';
 import {
   Box,
-  Typography,
-  TextField,
   Button,
+  FormControl,
+  FormHelperText,
+  IconButton,
+  InputLabel,
+  MenuItem,
   Paper,
   Select,
-  MenuItem,
-  FormControl,
-  InputLabel,
-  FormHelperText,
-  Grid,
-  Avatar,
-  IconButton,
-  Divider,
-} from "@mui/material";
-import http from "utils/http";
-import { ArrowBack } from "@mui/icons-material";
-import { useNavigate } from "react-router-dom";
+  TextField,
+  Typography,
+} from '@mui/material';
 
 function AddReward() {
   const navigate = useNavigate();
 
   // Validation schema for the reward form
   const validationSchema = yup.object().shape({
-    rewardType: yup.string().required("Reward type is required"),
+    rewardType: yup.string().required('Reward type is required'),
     rewardTitle: yup
       .string()
       .trim()
-      .min(2, "Title must be at least 2 characters")
-      .max(100, "Title cannot exceed 100 characters")
-      .required("Title is required"),
+      .min(2, 'Title must be at least 2 characters')
+      .max(100, 'Title cannot exceed 100 characters')
+      .required('Title is required'),
     rewardDescription: yup
       .string()
       .trim()
-      .min(10, "Description must be at least 10 characters")
-      .max(500, "Description cannot exceed 500 characters")
-      .required("Description is required"),
+      .min(10, 'Description must be at least 10 characters')
+      .max(500, 'Description cannot exceed 500 characters')
+      .required('Description is required'),
     rewardCode: yup
       .string()
       .trim()
-      .min(3, "Code must be at least 3 characters")
-      .max(20, "Code cannot exceed 20 characters")
-      .required("Code is required"),
+      .min(3, 'Code must be at least 3 characters')
+      .max(20, 'Code cannot exceed 20 characters')
+      .required('Code is required'),
     rewardPercentage: yup
       .number()
-      .min(0, "Percentage must be at least 0")
-      .max(100, "Percentage cannot exceed 100")
-      .required("Percentage is required"),
+      .min(0, 'Percentage must be at least 0')
+      .max(100, 'Percentage cannot exceed 100')
+      .required('Percentage is required'),
     minimumPurchaseAmount: yup
       .number()
-      .min(0, "Minimum purchase amount must be at least 0")
-      .required("Minimum purchase amount is required"),
+      .min(0, 'Minimum purchase amount must be at least 0')
+      .required('Minimum purchase amount is required'),
     maximumDiscountCap: yup
       .number()
-      .min(0, "Maximum discount cap must be at least 0")
-      .required("Maximum discount cap is required"),
-    expirationDate: yup.date().required("Expiration date is required"),
-    startDate: yup.date().required("Start date is required"),
+      .min(0, 'Maximum discount cap must be at least 0')
+      .required('Maximum discount cap is required'),
+    expirationDate: yup.date().required('Expiration date is required'),
+    startDate: yup.date().required('Start date is required'),
     usageLimit: yup
       .number()
-      .min(1, "Usage limit must be at least 1")
-      .required("Usage limit is required"),
+      .min(1, 'Usage limit must be at least 1')
+      .required('Usage limit is required'),
     applicableProducts: yup.string().nullable(),
     exclusions: yup.string().nullable(),
     userEligibility: yup.string().nullable(),
@@ -73,54 +70,54 @@ function AddReward() {
     autoApply: yup.boolean(),
     status: yup
       .string()
-      .oneOf(["Active", "Inactive"])
-      .required("Status is required"),
+      .oneOf(['Active', 'Inactive'])
+      .required('Status is required'),
     loyaltyPointsRequired: yup
       .number()
-      .min(0, "Loyalty points required must be at least 0")
+      .min(0, 'Loyalty points required must be at least 0')
       .nullable(),
   });
 
   // Formik setup
   const formik = useFormik({
     initialValues: {
-      rewardType: "",
-      rewardTitle: "",
-      rewardDescription: "",
-      rewardCode: "",
+      rewardType: '',
+      rewardTitle: '',
+      rewardDescription: '',
+      rewardCode: '',
       rewardPercentage: 0,
       minimumPurchaseAmount: 0,
       maximumDiscountCap: 0,
       expirationDate: null,
       startDate: null,
       usageLimit: 1,
-      applicableProducts: "",
-      exclusions: "",
-      userEligibility: "",
+      applicableProducts: '',
+      exclusions: '',
+      userEligibility: '',
       isStackable: false,
       autoApply: false,
-      status: "Active",
+      status: 'Active',
       loyaltyPointsRequired: null,
     },
     validationSchema,
     onSubmit: async (values) => {
       try {
-        const response = await http.post("/rewards", values);
-        console.log("Reward created successfully:", response.data);
-        toast.success("Reward created successfully");
-        navigate("/admin/rewards");
+        const response = await http.post('/rewards', values);
+        console.log('Reward created successfully:', response.data);
+        toast.success('Reward created successfully');
+        navigate('/admin/rewards');
       } catch (error) {
-        console.error("Error creating reward:", error);
-        toast.error("Failed to create reward");
+        console.error('Error creating reward:', error);
+        toast.error('Failed to create reward');
       }
     },
   });
 
   return (
     <>
-      <Box sx={{ display: "flex", alignItems: "center", mb: 3 }}>
+      <Box sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
         <IconButton
-          sx={{ cursor: "pointer" }}
+          sx={{ cursor: 'pointer' }}
           onClick={() => navigate(`/admin/rewards`)}
         >
           <ArrowBack fontSize="large" />

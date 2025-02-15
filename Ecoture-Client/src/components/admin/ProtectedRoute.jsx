@@ -1,11 +1,16 @@
-import React from "react";
-import { Navigate } from "react-router-dom";
-import { useContext } from "react";
-import UserContext from "contexts/UserContext";
-import AdminLayout from "./AdminLayout";
-import NotFound from "../../pages/NotFound";
+import PropTypes from 'prop-types';
+import { useContext } from 'react';
 
-const ADMIN_ROLE = ["Admin", "Staff"]; // Adjust to your backend role mapping
+import UserContext from 'contexts/UserContext';
+
+import NotFound from '../../pages/NotFound';
+import AdminLayout from './AdminLayout';
+
+const ADMIN_ROLE = ['Admin', 'Staff']; // Adjust to your backend role mapping
+
+ProtectedRoute.propTypes = {
+  element: PropTypes.any,
+};
 
 const ProtectedRoute = ({ element: Component, ...rest }) => {
   const { user } = useContext(UserContext);

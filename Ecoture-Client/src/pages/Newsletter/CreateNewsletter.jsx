@@ -1,33 +1,37 @@
-import React, { useRef, useEffect, useState } from "react";
-import { Box, Button, Typography } from "@mui/material";
-import EmailEditor from "react-email-editor";
-import http from "utils/http"; // Axios instance for API requests
+import { useEffect, useRef, useState } from 'react';
+import EmailEditor from 'react-email-editor';
+import http from 'utils/http';
+
+import { Box, Button, Typography } from '@mui/material';
+
+// Axios instance for API requests
 
 function CreateNewsletter() {
   const emailEditorRef = useRef(null);
-  const [isEditorReady, setIsEditorReady] = useState(false);
+  const [isEditorReady] = useState(false);
   const [contents, setContents] = useState([]);
-  
-  useEffect(() => {
-    http.get("/Content")
-    .then((res) => {
-        setContents(res.data);
-    })
-    .catch((err) => {
-        console.error("Error fetching contents:", err);
-    });
-    }, []);
 
-    const handleEditorReady = () => {
-        if (!emailEditorRef.current || !emailEditorRef.current.editor) {
-          console.error("🚨 Editor is not initialized yet.");
-          return;
-        }
-      
-        console.log("✅ Editor is Ready");
-      
-        // Your Custom HTML Email Template
-        const customHTML = `
+  useEffect(() => {
+    http
+      .get('/Content')
+      .then((res) => {
+        setContents(res.data);
+      })
+      .catch((err) => {
+        console.error('Error fetching contents:', err);
+      });
+  }, []);
+
+  const handleEditorReady = () => {
+    if (!emailEditorRef.current || !emailEditorRef.current.editor) {
+      console.error('🚨 Editor is not initialized yet.');
+      return;
+    }
+
+    console.log('✅ Editor is Ready');
+
+    // Your Custom HTML Email Template
+    const customHTML = `
           <!DOCTYPE html>
           <html>
           <head>
@@ -46,22 +50,21 @@ function CreateNewsletter() {
           </body>
           </html>
         `;
-      
-        setTimeout(() => {
-          try {
-            emailEditorRef.current.editor.setContent(customHTML);
-            console.log("🎉 Custom HTML Loaded Successfully!");
-          } catch (error) {
-            console.error("🚨 Error Injecting HTML:", error);
-          }
-        }, 1000);
-      };
-      
+
+    setTimeout(() => {
+      try {
+        emailEditorRef.current.editor.setContent(customHTML);
+        console.log('🎉 Custom HTML Loaded Successfully!');
+      } catch (error) {
+        console.error('🚨 Error Injecting HTML:', error);
+      }
+    }, 1000);
+  };
 
   // ✅ Save Newsletter Content
   const handleSaveNewsletter = () => {
     if (!isEditorReady || !emailEditorRef.current) {
-      console.error("🚨 Editor is not ready, cannot save.");
+      console.error('🚨 Editor is not ready, cannot save.');
       return;
     }
 
@@ -69,40 +72,35 @@ function CreateNewsletter() {
       const { design, html } = data;
 
       // Send to backend API
-      http.post("/Newsletter", {
-        Title: "My Newsletter",
-        EmailBody: html,
-        DesignJson: design, // Save design JSON for future edits
-      })
+      http
+        .post('/Newsletter', {
+          Title: 'My Newsletter',
+          EmailBody: html,
+          DesignJson: design, // Save design JSON for future edits
+        })
         .then((res) => {
-          console.log("✅ Newsletter saved successfully:", res.data);
+          console.log('✅ Newsletter saved successfully:', res.data);
         })
         .catch((err) => {
-          console.error("🚨 Error saving newsletter:", err);
+          console.error('🚨 Error saving newsletter:', err);
         });
     });
   };
 
   return (
-    <Box sx={{ padding: "20px", minHeight: "100vh" }}>
-      <Typography variant="h4" sx={{ marginBottom: "20px" }}>
+    <Box sx={{ padding: '20px', minHeight: '100vh' }}>
+      <Typography variant="h4" sx={{ marginBottom: '20px' }}>
         Create Newsletter
       </Typography>
 
       {/* ✅ Ensure onReady callback is used */}
-      <EmailEditor
-  ref={emailEditorRef}
-  onLoad={handleEditorReady}
-
-/>
-
-
+      <EmailEditor ref={emailEditorRef} onLoad={handleEditorReady} />
 
       {/* ✅ Save Button */}
       <Button
         variant="contained"
         color="primary"
-        sx={{ marginTop: "20px" }}
+        sx={{ marginTop: '20px' }}
         onClick={handleSaveNewsletter}
       >
         Save Newsletter

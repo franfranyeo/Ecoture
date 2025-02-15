@@ -1,27 +1,28 @@
-import React, { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
-import http from "utils/http";
+import { useFormik } from 'formik';
+import { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import http from 'utils/http';
+import * as yup from 'yup';
+
+import { ArrowBack } from '@mui/icons-material';
 import {
+  Avatar,
   Box,
-  Typography,
-  TextField,
   Button,
-  Paper,
-  Select,
-  MenuItem,
+  Divider,
   FormControl,
-  InputLabel,
   FormHelperText,
   Grid,
-  Avatar,
   IconButton,
-  Divider,
-} from "@mui/material";
-import { useFormik } from "formik";
-import * as yup from "yup";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { ArrowBack } from "@mui/icons-material";
+  InputLabel,
+  MenuItem,
+  Paper,
+  Select,
+  TextField,
+  Typography,
+} from '@mui/material';
 
 function EditUser() {
   const navigate = useNavigate();
@@ -29,12 +30,12 @@ function EditUser() {
   const [loading, setLoading] = useState(true);
 
   const [user, setUser] = useState({
-    salutations: "",
-    firstName: "",
-    lastName: "",
-    dateofBirth: "",
-    email: "",
-    mobileNumber: "",
+    salutations: '',
+    firstName: '',
+    lastName: '',
+    dateofBirth: '',
+    email: '',
+    mobileNumber: '',
   });
 
   useEffect(() => {
@@ -42,9 +43,9 @@ function EditUser() {
       const cleanedUser = {
         ...res.data,
         dateofBirth: res.data.dateofBirth
-          ? res.data.dateofBirth.split("T")[0]
-          : "Not set",
-        mobileNumber: res.data.mobileNumber || "Not set",
+          ? res.data.dateofBirth.split('T')[0]
+          : 'Not set',
+        mobileNumber: res.data.mobileNumber || 'Not set',
       };
       setUser(cleanedUser);
       setLoading(false);
@@ -55,22 +56,22 @@ function EditUser() {
     firstName: yup
       .string()
       .trim()
-      .min(2, "First name must be at least 2 characters")
+      .min(2, 'First name must be at least 2 characters')
       .max(50, "First name can't be longer than 50 characters")
-      .required("First name is required"),
+      .required('First name is required'),
     lastName: yup
       .string()
       .trim()
-      .min(2, "Last name must be at least 2 characters")
+      .min(2, 'Last name must be at least 2 characters')
       .max(50, "Last name can't be longer than 50 characters")
       .nullable(),
     email: yup
       .string()
       .trim()
       .lowercase()
-      .email("Enter a valid email")
+      .email('Enter a valid email')
       .max(50, "Email can't be longer than 50 characters")
-      .required("Email is required"),
+      .required('Email is required'),
 
     mobileNumber: yup.string().trim(),
   });
@@ -79,13 +80,13 @@ function EditUser() {
     firstName: yup
       .string()
       .trim()
-      .min(2, "First name must be at least 2 characters")
+      .min(2, 'First name must be at least 2 characters')
       .max(50, "First name can't be longer than 50 characters")
-      .required("First name is required"),
+      .required('First name is required'),
     lastName: yup
       .string()
       .trim()
-      .min(2, "Last name must be at least 2 characters")
+      .min(2, 'Last name must be at least 2 characters')
       .max(50, "Last name can't be longer than 50 characters")
       .nullable(),
 
@@ -93,9 +94,9 @@ function EditUser() {
       .string()
       .trim()
       .lowercase()
-      .email("Enter a valid email")
+      .email('Enter a valid email')
       .max(50, "Email can't be longer than 50 characters")
-      .required("Email is required"),
+      .required('Email is required'),
     mobileNumber: yup.string().nullable(),
   });
 
@@ -103,36 +104,36 @@ function EditUser() {
     firstName: yup
       .string()
       .trim()
-      .min(2, "First name must be at least 2 characters")
+      .min(2, 'First name must be at least 2 characters')
       .max(50, "First name can't be longer than 50 characters")
-      .required("First name is required"),
+      .required('First name is required'),
     lastName: yup
       .string()
       .trim()
-      .min(2, "Last name must be at least 2 characters")
+      .min(2, 'Last name must be at least 2 characters')
       .max(50, "Last name can't be longer than 50 characters")
       .nullable(),
     email: yup
       .string()
       .trim()
       .lowercase()
-      .email("Enter a valid email")
+      .email('Enter a valid email')
       .max(50, "Email can't be longer than 50 characters")
-      .required("Email is required"),
+      .required('Email is required'),
   });
 
   const formik = useFormik({
     initialValues: {
       ...user,
-      dateofBirth: user.dateofBirth ? user.dateofBirth.split("T")[0] : null,
+      dateofBirth: user.dateofBirth ? user.dateofBirth.split('T')[0] : null,
     },
     enableReinitialize: true,
     validationSchema:
-      user.role === "Customer"
+      user.role === 'Customer'
         ? custValidationSchema
-        : user.role === "Staff"
-        ? staffValidationSchema
-        : adminValidationSchema,
+        : user.role === 'Staff'
+          ? staffValidationSchema
+          : adminValidationSchema,
     onSubmit: async (values) => {
       try {
         const updatedUser = {
@@ -142,19 +143,19 @@ function EditUser() {
           email: values.email.trim(),
           mobileNumber: values.mobileNumber ? values.mobileNumber : null,
           dateofBirth:
-            values.dateofBirth != "Not set" ? values.dateofBirth : null,
-          pfpURL: user.pfpURL || "",
+            values.dateofBirth != 'Not set' ? values.dateofBirth : null,
+          pfpURL: user.pfpURL || '',
         };
         const response = await http.put(`/user/${id}`, {
           userId: id,
           ...updatedUser,
         });
-        console.log("User updated successfully:", response.data); // Added logging
-        toast.success("User updated successfully"); // Optional toast message
-        navigate("/admin/users");
+        console.log('User updated successfully:', response.data); // Added logging
+        toast.success('User updated successfully'); // Optional toast message
+        navigate('/admin/users');
       } catch (error) {
-        console.error("Error updating user:", error);
-        toast.error("Failed to update user");
+        console.error('Error updating user:', error);
+        toast.error('Failed to update user');
       }
     },
   });
@@ -165,9 +166,9 @@ function EditUser() {
 
   return (
     <>
-      <Box sx={{ display: "flex", alignItems: "center", mb: 3 }}>
+      <Box sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
         <IconButton
-          sx={{ cursor: "pointer" }}
+          sx={{ cursor: 'pointer' }}
           onClick={() => navigate(`/admin/users/${id}/view`)}
         >
           <ArrowBack fontSize="large" />
@@ -179,17 +180,17 @@ function EditUser() {
         elevation={3}
         sx={{
           p: 4,
-          borderRadius: "16px",
-          position: "relative",
+          borderRadius: '16px',
+          position: 'relative',
         }}
       >
         <Box component="form" onSubmit={formik.handleSubmit}>
           <Box
             sx={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "center",
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
               mb: 3,
             }}
           >
@@ -198,7 +199,7 @@ function EditUser() {
                 width: 100,
                 height: 100,
               }}
-              src={user.pfpURL || ""}
+              src={user.pfpURL || ''}
               alt={`${user.firstName} ${user.lastName}`}
             />
             <Typography variant="h5" sx={{ mt: 2 }}>
@@ -210,7 +211,7 @@ function EditUser() {
             Personal Information
           </Typography>
 
-          {user.role === "Customer" && (
+          {user.role === 'Customer' && (
             <>
               <Grid container spacing={2}>
                 <Grid item xs={12} sm={6}>
@@ -310,7 +311,7 @@ function EditUser() {
             </>
           )}
 
-          {user.role === "Admin" && (
+          {user.role === 'Admin' && (
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
@@ -363,7 +364,7 @@ function EditUser() {
             </Grid>
           )}
 
-          {user.role === "Staff" && (
+          {user.role === 'Staff' && (
             <>
               <Grid container spacing={2}>
                 <Grid item xs={12} sm={6}>
@@ -550,8 +551,8 @@ function EditUser() {
 
           <Box
             sx={{
-              display: "flex",
-              justifyContent: "flex-end",
+              display: 'flex',
+              justifyContent: 'flex-end',
               gap: 2,
               mt: 2,
             }}

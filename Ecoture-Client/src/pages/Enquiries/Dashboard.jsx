@@ -1,14 +1,15 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import http from 'utils/http';
+
 import {
   Box,
+  Button,
   Card,
   CardContent,
-  Typography,
-  Button,
   Grid2,
-} from "@mui/material";
-import { useNavigate } from "react-router-dom";
-import http from "utils/http";
+  Typography,
+} from '@mui/material';
 
 function Dashboard() {
   const [enquiryStats, setEnquiryStats] = useState({
@@ -22,63 +23,63 @@ function Dashboard() {
 
   useEffect(() => {
     http
-      .get("/Enquiry/Summary")
+      .get('/Enquiry/Summary')
       .then((res) => {
         setEnquiryStats(res.data);
       })
-      .catch((err) => console.error("Error fetching enquiry summary:", err));
+      .catch((err) => console.error('Error fetching enquiry summary:', err));
   }, []);
 
   return (
     <Box
       sx={{
-        padding: "40px",
-        minHeight: "100vh",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        backgroundColor: "#f5f5f5",
+        padding: '40px',
+        minHeight: '100vh',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        backgroundColor: '#f5f5f5',
       }}
     >
       <Grid2
         container
         spacing={3}
         sx={{
-          width: "100%",
-          maxWidth: "1200px",
-          justifyContent: "center",
+          width: '100%',
+          maxWidth: '1200px',
+          justifyContent: 'center',
         }}
       >
         {[
           {
-            title: "Total Enquiries",
+            title: 'Total Enquiries',
             count: enquiryStats.total,
-            bgColor: "#e3f2fd",
+            bgColor: '#e3f2fd',
           },
-          { title: "Open", count: enquiryStats.open, bgColor: "#c8e6c9" },
-          { title: "Closed", count: enquiryStats.closed, bgColor: "#ffcdd2" },
+          { title: 'Open', count: enquiryStats.open, bgColor: '#c8e6c9' },
+          { title: 'Closed', count: enquiryStats.closed, bgColor: '#ffcdd2' },
           {
-            title: "In Progress",
+            title: 'In Progress',
             count: enquiryStats.inProgress,
-            bgColor: "#fff9c4",
+            bgColor: '#fff9c4',
           },
         ].map((stat, index) => (
           <Grid2 xs={12} sm={6} md={3} key={index}>
             <Card
               sx={{
                 backgroundColor: stat.bgColor,
-                textAlign: "center",
+                textAlign: 'center',
                 boxShadow: 3,
-                padding: "20px",
+                padding: '20px',
 
-                width: "200px",
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
+                width: '200px',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
               }}
             >
               <CardContent>
-                <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+                <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
                   {stat.title}
                 </Typography>
                 <Typography variant="h4">{stat.count}</Typography>
@@ -90,26 +91,26 @@ function Dashboard() {
 
       <Box
         sx={{
-          marginTop: "40px",
-          display: "flex",
-          justifyContent: "center",
-          width: "100%",
+          marginTop: '40px',
+          display: 'flex',
+          justifyContent: 'center',
+          width: '100%',
         }}
       >
         <Button
           variant="outlined"
           color="primary"
           sx={{
-            textTransform: "none",
-            fontSize: "1rem",
-            borderColor: "black",
-            color: "black",
-            ":hover": {
-              backgroundColor: "rgba(0, 0, 0, 0.04)",
-              borderColor: "black",
+            textTransform: 'none',
+            fontSize: '1rem',
+            borderColor: 'black',
+            color: 'black',
+            ':hover': {
+              backgroundColor: 'rgba(0, 0, 0, 0.04)',
+              borderColor: 'black',
             },
           }}
-          onClick={() => navigate("/enquiries")}
+          onClick={() => navigate('/enquiries')}
         >
           View Enquiries
         </Button>

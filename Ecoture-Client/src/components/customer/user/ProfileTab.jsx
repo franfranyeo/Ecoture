@@ -1,67 +1,69 @@
 /* eslint-disable react/prop-types */
+import { useFormik } from 'formik';
+import { useContext, useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
+import http from 'utils/http';
+import * as yup from 'yup';
+
+import { Lock } from '@mui/icons-material';
+import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
+import EditIcon from '@mui/icons-material/Edit';
 import {
   Avatar,
   Box,
+  Button,
   Divider,
   Grid,
   IconButton,
   Paper,
-  Typography,
-  TextField,
-  Button,
   Stack,
-} from "@mui/material";
-import EditIcon from "@mui/icons-material/Edit";
-import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
-import { styled } from "@mui/material/styles";
-import React, { useState, useContext, useEffect } from "react";
-import { toast } from "react-toastify";
-import http from "utils/http";
-import UserContext from "contexts/UserContext";
-import { useFormik } from "formik";
-import * as yup from "yup";
-import { Lock } from "@mui/icons-material";
-import { Modal, CircularProgress, Dialog } from "@mui/material";
+  TextField,
+  Typography,
+} from '@mui/material';
+import { CircularProgress, Dialog, Modal } from '@mui/material';
+import { styled } from '@mui/material/styles';
 
-const UploadInput = styled("input")({
-  display: "none",
+import UserContext from 'contexts/UserContext';
+
+const UploadInput = styled('input')({
+  display: 'none',
 });
 
 const validationSchema = yup.object({
   firstName: yup
     .string()
-    .required("First name is required")
-    .min(2, "First name must be at least 2 characters")
-    .max(100, "First name must be at most 100 characters")
+    .required('First name is required')
+    .min(2, 'First name must be at least 2 characters')
+    .max(100, 'First name must be at most 100 characters')
     .matches(
       /^[A-Za-z\s'-.,]+$/,
       "Only letters, spaces, and characters: ' - , . are allowed"
     ),
   lastName: yup
     .string()
-    .required("Last name is required")
-    .min(2, "Last name must be at least 2 characters")
-    .max(100, "Last name must be at most 100 characters")
+    .required('Last name is required')
+    .min(2, 'Last name must be at least 2 characters')
+    .max(100, 'Last name must be at most 100 characters')
     .matches(
       /^[A-Za-z\s'-.,]+$/,
       "Only letters, spaces, and characters: ' - , . are allowed"
     ),
   email: yup
     .string()
-    .email("Invalid email address")
-    .max(50, "Email must be at most 50 characters")
-    .required("Email is required"),
+    .email('Invalid email address')
+    .max(50, 'Email must be at most 50 characters')
+    .required('Email is required'),
   mobileNo: yup
     .string()
     .matches(
       /^\+65 [89]\d{3} \d{4}$/,
-      "Phone number must be in format: +65 XXXX XXXX"
+      'Phone number must be in format: +65 XXXX XXXX'
     )
     .nullable(),
   dateofBirth: yup
     .date()
     .nullable()
-    .test("futureDate", "Date of birth must be before today", (value) => {
+    .test('futureDate', 'Date of birth must be before today', (value) => {
       if (!value) return true;
       return new Date(value).getTime() < new Date().setHours(0, 0, 0, 0);
     }),
@@ -77,11 +79,11 @@ const ProfileTab = ({ user }) => {
   // Add these states to your ProfileTab component
   const [modalConfig, setModalConfig] = useState({
     open: false,
-    type: "", // 'email' or 'phone'
+    type: '', // 'email' or 'phone'
     otpSent: false,
     loading: false,
-    otp: "",
-    newValue: "", // Store new email/phone temporarily
+    otp: '',
+    newValue: '', // Store new email/phone temporarily
   });
 
   const [showPasswordDialog, setShowPasswordDialog] = useState(false);
@@ -89,44 +91,44 @@ const ProfileTab = ({ user }) => {
   // Add password change formik
   const passwordFormik = useFormik({
     initialValues: {
-      currentPassword: "",
-      newPassword: "",
-      confirmPassword: "",
+      currentPassword: '',
+      newPassword: '',
+      confirmPassword: '',
     },
     validationSchema: yup.object({
       currentPassword: yup
         .string()
-        .min(8, "Password must be at least 8 characters")
+        .min(8, 'Password must be at least 8 characters')
         .matches(
           /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-])/,
-          "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character"
+          'Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character'
         )
-        .required("Current password is required"),
+        .required('Current password is required'),
       newPassword: yup
         .string()
-        .min(8, "Password must be at least 8 characters")
+        .min(8, 'Password must be at least 8 characters')
         .matches(
           /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-])/,
-          "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character"
+          'Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character'
         )
-        .required("New password is required"),
+        .required('New password is required'),
       confirmPassword: yup
         .string()
-        .oneOf([yup.ref("newPassword"), null], "Passwords must match")
-        .required("Confirm password is required"),
+        .oneOf([yup.ref('newPassword'), null], 'Passwords must match')
+        .required('Confirm password is required'),
     }),
     onSubmit: async (values) => {
       try {
-        await http.post("/user/change-password", {
+        await http.post('/user/change-password', {
           currentPassword: values.currentPassword,
           newPassword: values.newPassword,
         });
-        toast.success("Password changed successfully");
+        toast.success('Password changed successfully');
         setShowPasswordDialog(false);
         passwordFormik.resetForm();
       } catch (error) {
         toast.error(
-          error.response?.data?.message || "Failed to change password"
+          error.response?.data?.message || 'Failed to change password'
         );
       }
     },
@@ -159,18 +161,18 @@ const ProfileTab = ({ user }) => {
 
   const formik = useFormik({
     initialValues: {
-      firstName: user.firstName || "",
-      lastName: user.lastName || "",
-      email: user.email || "",
-      mobileNo: user.mobileNo || "",
-      dateofBirth: user.dateofBirth ? user.dateofBirth.split("T")[0] : "",
-      pfpURL: user.pfpURL || "",
+      firstName: user.firstName || '',
+      lastName: user.lastName || '',
+      email: user.email || '',
+      mobileNo: user.mobileNo || '',
+      dateofBirth: user.dateofBirth ? user.dateofBirth.split('T')[0] : '',
+      pfpURL: user.pfpURL || '',
     },
     validationSchema,
     onSubmit: async (values) => {
       if (!formik.dirty) {
         setIsEditing(false);
-        toast.info("No changes detected"); // Changed to info message
+        toast.info('No changes detected'); // Changed to info message
         return;
       }
 
@@ -178,7 +180,7 @@ const ProfileTab = ({ user }) => {
       const submitValues = { ...values };
 
       // Handle date formatting
-      if (submitValues.dateofBirth === "") {
+      if (submitValues.dateofBirth === '') {
         submitValues.dateofBirth = null;
       } else if (submitValues.dateofBirth) {
         // Ensure the date is in ISO format
@@ -189,23 +191,23 @@ const ProfileTab = ({ user }) => {
 
       // Check if email has changed and needs verification
       if (submitValues.email !== user.email) {
-        handleVerificationNeeded("email", submitValues.email);
+        handleVerificationNeeded('email', submitValues.email);
         return;
       }
 
       // Check if phone number has changed and needs verification
       if (submitValues.mobileNo !== user.mobileNo) {
-        handleVerificationNeeded("phone", submitValues.mobileNo);
+        handleVerificationNeeded('phone', submitValues.mobileNo);
         return;
       }
 
       try {
-        const response = await http.post("/user/edit-profile", submitValues);
+        const response = await http.post('/user/edit-profile', submitValues);
 
         if (response.data.user) {
           const fullName =
             `${response.data.user.firstName} ${response.data.user.lastName}`
-              .replace("Empty", "")
+              .replace('Empty', '')
               .trim();
 
           const updatedUser = {
@@ -214,13 +216,13 @@ const ProfileTab = ({ user }) => {
             fullName,
           };
           setUser(updatedUser);
-          localStorage.setItem("user", JSON.stringify(updatedUser));
-          toast.success("Profile updated successfully");
+          localStorage.setItem('user', JSON.stringify(updatedUser));
+          toast.success('Profile updated successfully');
           setIsEditing(false);
         }
       } catch (error) {
         toast.error(
-          error.response?.data?.message || "Failed to update profile"
+          error.response?.data?.message || 'Failed to update profile'
         );
       }
     },
@@ -228,13 +230,13 @@ const ProfileTab = ({ user }) => {
 
   // Add these handlers for verification
   const handleVerificationNeeded = (type, newValue) => {
-    console.log("Opening modal for:", type, newValue); // Debug log
+    console.log('Opening modal for:', type, newValue); // Debug log
     setModalConfig({
       open: true,
       type,
       otpSent: false,
       loading: false,
-      otp: "",
+      otp: '',
       newValue,
     });
   };
@@ -243,23 +245,23 @@ const ProfileTab = ({ user }) => {
     setModalConfig((prev) => ({ ...prev, loading: true }));
     try {
       const endpoint =
-        modalConfig.type === "email" ? "/verify/change-email" : "/verify/phone";
+        modalConfig.type === 'email' ? '/verify/change-email' : '/verify/phone';
       const payload = {
         userId: user.userId,
         email: user.email,
-        ...(modalConfig.type === "email" && {
+        ...(modalConfig.type === 'email' && {
           newEmail: modalConfig.newValue,
         }),
-        ...(modalConfig.type === "phone" && {
-          phoneNo: modalConfig.newValue.replaceAll(" ", "").trim(),
+        ...(modalConfig.type === 'phone' && {
+          phoneNo: modalConfig.newValue.replaceAll(' ', '').trim(),
         }),
       };
 
       await http.post(endpoint, payload);
       setModalConfig((prev) => ({ ...prev, otpSent: true }));
-      toast.success("OTP sent successfully");
+      toast.success('OTP sent successfully');
     } catch (error) {
-      toast.error("Failed to send OTP");
+      toast.error('Failed to send OTP');
     } finally {
       setModalConfig((prev) => ({ ...prev, loading: false }));
     }
@@ -269,15 +271,15 @@ const ProfileTab = ({ user }) => {
     setModalConfig((prev) => ({ ...prev, loading: true }));
     try {
       const endpoint =
-        modalConfig.type === "email"
-          ? "/verify/change-email-otp"
-          : "/verify/phone-otp";
+        modalConfig.type === 'email'
+          ? '/verify/change-email-otp'
+          : '/verify/phone-otp';
       const payload = {
         userId: user.userId,
         email: user.email,
         otp: modalConfig.otp,
-        ...(modalConfig.type === "phone" && {
-          phoneNo: modalConfig.newValue.replaceAll(" ", "").trim(),
+        ...(modalConfig.type === 'phone' && {
+          phoneNo: modalConfig.newValue.replaceAll(' ', '').trim(),
         }),
       };
 
@@ -286,7 +288,7 @@ const ProfileTab = ({ user }) => {
         // After successful verification, update the profile
         const submitValues = {
           ...formik.values,
-          [modalConfig.type === "email" ? "email" : "mobileNo"]:
+          [modalConfig.type === 'email' ? 'email' : 'mobileNo']:
             modalConfig.newValue,
           dateofBirth: formik.values.dateofBirth
             ? new Date(formik.values.dateofBirth).toISOString()
@@ -295,7 +297,7 @@ const ProfileTab = ({ user }) => {
 
         // Make the profile update API call
         const updateResponse = await http.post(
-          "/user/edit-profile",
+          '/user/edit-profile',
           submitValues
         );
 
@@ -303,7 +305,7 @@ const ProfileTab = ({ user }) => {
           // Add fullName construction here
           const fullName =
             `${updateResponse.data.user.firstName} ${updateResponse.data.user.lastName}`
-              .replace("Empty", "")
+              .replace('Empty', '')
               .trim();
 
           const updatedUser = {
@@ -312,15 +314,15 @@ const ProfileTab = ({ user }) => {
             fullName,
           };
           setUser(updatedUser);
-          localStorage.setItem("user", JSON.stringify(updatedUser));
-          toast.success("Profile updated successfully");
+          localStorage.setItem('user', JSON.stringify(updatedUser));
+          toast.success('Profile updated successfully');
           setIsEditing(false);
         }
 
         handleCloseModal();
       }
     } catch (error) {
-      toast.error(error.response?.data?.message || "Failed to verify OTP");
+      toast.error(error.response?.data?.message || 'Failed to verify OTP');
     } finally {
       setModalConfig((prev) => ({ ...prev, loading: false }));
     }
@@ -331,7 +333,7 @@ const ProfileTab = ({ user }) => {
       ...prev,
       open: false,
       otpSent: false,
-      otp: "",
+      otp: '',
     }));
   };
 
@@ -347,28 +349,28 @@ const ProfileTab = ({ user }) => {
 
   const handlePhoneNumberChange = (e) => {
     let { value } = e.target;
-    if (!value.startsWith("+65 ")) {
-      value = "+65 " + value.slice(4);
+    if (!value.startsWith('+65 ')) {
+      value = '+65 ' + value.slice(4);
     }
-    let numericValue = value.slice(4).replace(/\D/g, "");
+    let numericValue = value.slice(4).replace(/\D/g, '');
     if (numericValue.length > 4) {
-      numericValue = numericValue.slice(0, 4) + " " + numericValue.slice(4, 8);
+      numericValue = numericValue.slice(0, 4) + ' ' + numericValue.slice(4, 8);
     }
-    const formattedNumber = "+65 " + numericValue;
-    formik.setFieldValue("mobileNo", formattedNumber);
+    const formattedNumber = '+65 ' + numericValue;
+    formik.setFieldValue('mobileNo', formattedNumber);
   };
 
   const handleImageChange = async (event) => {
     if (event.target.files && event.target.files[0]) {
       const file = event.target.files[0];
 
-      if (!file.type.startsWith("image/")) {
-        toast.error("Please upload an image file");
+      if (!file.type.startsWith('image/')) {
+        toast.error('Please upload an image file');
         return;
       }
 
       if (file.size > 5000000) {
-        toast.error("File size should be less than 5MB");
+        toast.error('File size should be less than 5MB');
         return;
       }
 
@@ -380,24 +382,24 @@ const ProfileTab = ({ user }) => {
 
       try {
         const formData = new FormData();
-        formData.append("image", file);
+        formData.append('image', file);
 
         const response = await http.post(
-          "/user/upload-profile-image",
+          '/user/upload-profile-image',
           formData,
           {
             headers: {
-              "Content-Type": "multipart/form-data",
+              'Content-Type': 'multipart/form-data',
             },
           }
         );
 
         if (response.data.imageUrl) {
-          formik.setFieldValue("pfpURL", response.data.imageUrl);
-          toast.success("Profile image uploaded successfully");
+          formik.setFieldValue('pfpURL', response.data.imageUrl);
+          toast.success('Profile image uploaded successfully');
         }
       } catch (error) {
-        toast.error("Failed to upload image");
+        toast.error('Failed to upload image');
         setImagePreview(null);
       }
     }
@@ -423,9 +425,9 @@ const ProfileTab = ({ user }) => {
                   variant="contained"
                   onClick={formik.handleSubmit}
                   sx={{
-                    backgroundColor: "primary.main",
-                    "&:hover": {
-                      backgroundColor: "primary.light",
+                    backgroundColor: 'primary.main',
+                    '&:hover': {
+                      backgroundColor: 'primary.light',
                     },
                   }}
                 >
@@ -438,7 +440,7 @@ const ProfileTab = ({ user }) => {
             )}
           </Box>
 
-          <Box display={"flex"} flexDirection={"row"} gap={3} mb={4} mt={2}>
+          <Box display={'flex'} flexDirection={'row'} gap={3} mb={4} mt={2}>
             <Box position="relative">
               {imagePreview || formik.values.pfpURL ? (
                 <img
@@ -447,8 +449,8 @@ const ProfileTab = ({ user }) => {
                   style={{
                     width: 80,
                     height: 80,
-                    borderRadius: "50%",
-                    objectFit: "cover",
+                    borderRadius: '50%',
+                    objectFit: 'cover',
                   }}
                 />
               ) : (
@@ -460,9 +462,9 @@ const ProfileTab = ({ user }) => {
                   bottom={-10}
                   right={-10}
                   sx={{
-                    backgroundColor: "white",
-                    borderRadius: "50%",
-                    padding: "4px",
+                    backgroundColor: 'white',
+                    borderRadius: '50%',
+                    padding: '4px',
                     boxShadow: 1,
                   }}
                 >
@@ -530,7 +532,7 @@ const ProfileTab = ({ user }) => {
                 </>
               ) : (
                 <Typography variant="body1">
-                  Name:{" "}
+                  Name:{' '}
                   {`${formik.values.firstName} ${formik.values.lastName}`.trim()}
                 </Typography>
               )}
@@ -568,7 +570,7 @@ const ProfileTab = ({ user }) => {
                   }
                   helperText={
                     (formik.touched.mobileNo && formik.errors.mobileNo) ||
-                    "Format: +65 XXXX XXXX"
+                    'Format: +65 XXXX XXXX'
                   }
                   margin="normal"
                   inputProps={{
@@ -577,7 +579,7 @@ const ProfileTab = ({ user }) => {
                 />
               ) : (
                 <Typography variant="body1">
-                  Mobile Number: {formik.values.mobileNo || "Not set"}
+                  Mobile Number: {formik.values.mobileNo || 'Not set'}
                 </Typography>
               )}
             </Grid>
@@ -605,10 +607,10 @@ const ProfileTab = ({ user }) => {
                 />
               ) : (
                 <Typography variant="body1">
-                  Date of Birth:{" "}
+                  Date of Birth:{' '}
                   {formik.values.dateofBirth
                     ? new Date(formik.values.dateofBirth).toLocaleDateString()
-                    : "Not set"}
+                    : 'Not set'}
                 </Typography>
               )}
             </Grid>
@@ -644,12 +646,12 @@ const ProfileTab = ({ user }) => {
       <Modal open={modalConfig.open} onClose={handleCloseModal}>
         <Box
           sx={{
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
             width: 400,
-            bgcolor: "background.paper",
+            bgcolor: 'background.paper',
             boxShadow: 24,
             p: 4,
             borderRadius: 2,
@@ -657,7 +659,7 @@ const ProfileTab = ({ user }) => {
         >
           <Typography variant="h6" component="h2" gutterBottom>
             {`Verify ${
-              modalConfig.type === "email" ? "Email" : "Phone Number"
+              modalConfig.type === 'email' ? 'Email' : 'Phone Number'
             }`}
           </Typography>
 
@@ -676,7 +678,7 @@ const ProfileTab = ({ user }) => {
                 {modalConfig.loading ? (
                   <CircularProgress size={24} color="inherit" />
                 ) : (
-                  "Send Verification Code"
+                  'Send Verification Code'
                 )}
               </Button>
             </>
@@ -696,8 +698,8 @@ const ProfileTab = ({ user }) => {
               />
               <Box
                 sx={{
-                  display: "flex",
-                  justifyContent: "flex-end",
+                  display: 'flex',
+                  justifyContent: 'flex-end',
                   mt: 1,
                   mb: 2,
                 }}
@@ -711,10 +713,10 @@ const ProfileTab = ({ user }) => {
                     variant="body2"
                     color="primary"
                     sx={{
-                      cursor: canResend ? "pointer" : "default",
-                      "&:hover": canResend
+                      cursor: canResend ? 'pointer' : 'default',
+                      '&:hover': canResend
                         ? {
-                            textDecoration: "underline",
+                            textDecoration: 'underline',
                           }
                         : {},
                     }}
@@ -734,7 +736,7 @@ const ProfileTab = ({ user }) => {
                 {modalConfig.loading ? (
                   <CircularProgress size={24} color="inherit" />
                 ) : (
-                  "Verify"
+                  'Verify'
                 )}
               </Button>
             </>
@@ -805,8 +807,8 @@ const ProfileTab = ({ user }) => {
             <Box
               sx={{
                 mt: 2,
-                display: "flex",
-                justifyContent: "flex-end",
+                display: 'flex',
+                justifyContent: 'flex-end',
                 gap: 1,
               }}
             >
