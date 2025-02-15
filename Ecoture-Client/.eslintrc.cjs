@@ -1,4 +1,5 @@
 module.exports = {
+  root: true,
   env: { browser: true, es2020: true },
   extends: [
     'eslint:recommended',
@@ -6,10 +7,20 @@ module.exports = {
     'plugin:react/jsx-runtime',
     'plugin:react-hooks/recommended',
   ],
-  parserOptions: { ecmaVersion: 'latest', sourceType: 'module' },
-  settings: { react: { version: '18.2' } },
-  plugins: ['react-refresh'],
+  ignorePatterns: ['dist', '.eslintrc.cjs'],
+  plugins: ['react-refresh', 'eslint-plugin-unused-imports'],
   rules: {
     'react-refresh/only-export-components': 'warn',
+    'react-hooks/exhaustive-deps': 'off',
+    'react/prop-types': 'off',
+    'unused-imports/no-unused-imports': 'warn',
+    quotes: ['warn', 'single', { avoidEscape: true }],
+    camelcase: ['error', { ignoreImports: true }],
+    complexity: ['warn', 30],
+    'max-depth': ['error', 3],
+    'max-nested-callbacks': ['error', 3],
+    'max-lines': ['warn', { max: 600, skipBlankLines: true }],
   },
-}
+  settings: { react: { version: '18.2' } },
+  parserOptions: { ecmaVersion: 'latest', sourceType: 'module' },
+};

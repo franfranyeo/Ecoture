@@ -1,111 +1,111 @@
-import React, { useContext } from "react";
+import { useContext } from 'react';
+import { useState } from 'react';
+
+import { AccessTime, MonetizationOn } from '@mui/icons-material';
 import {
   Box,
-  Paper,
-  Typography,
-  IconButton,
-  Divider,
-  Grid,
   Button,
-  TextField,
-  Avatar,
-  Tabs,
-  Tab,
   Card,
   CardContent,
-} from "@mui/material";
-import { useState } from "react";
-import ContentCopyIcon from "@mui/icons-material/ContentCopy";
-import DataTable from "../../DataTable";
-import { AccessTime, MonetizationOn } from "@mui/icons-material";
-import UserContext from "contexts/UserContext";
-import ProgressBar from "./ProgressBar";
+  Divider,
+  Grid,
+  Paper,
+  Tab,
+  Tabs,
+  TextField,
+  Typography,
+} from '@mui/material';
+
+import UserContext from 'contexts/UserContext';
+
+import DataTable from '../../DataTable';
+import ProgressBar from './ProgressBar';
 
 const MembershipTab = () => {
   const { user } = useContext(UserContext);
-  const [vouchers, setVouchers] = useState([
+  const [vouchers] = useState([
     {
-      voucherCode: "V12345",
-      customerName: "John Doe",
-      rewardType: "Discount",
-      amount: "15%",
-      expiryDate: "2025-06-30",
-      status: "Active",
+      voucherCode: 'V12345',
+      customerName: 'John Doe',
+      rewardType: 'Discount',
+      amount: '15%',
+      expiryDate: '2025-06-30',
+      status: 'Active',
     },
     {
-      voucherCode: "V23456",
-      customerName: "Jane Smith",
-      rewardType: "Cashback",
-      amount: "$10",
-      expiryDate: "2025-03-15",
-      status: "Redeemed",
+      voucherCode: 'V23456',
+      customerName: 'Jane Smith',
+      rewardType: 'Cashback',
+      amount: '$10',
+      expiryDate: '2025-03-15',
+      status: 'Redeemed',
     },
     {
-      voucherCode: "V34567",
-      customerName: "Alice Johnson",
-      rewardType: "Free Item",
-      amount: "Free Coffee",
-      expiryDate: "2025-12-01",
-      status: "Active",
+      voucherCode: 'V34567',
+      customerName: 'Alice Johnson',
+      rewardType: 'Free Item',
+      amount: 'Free Coffee',
+      expiryDate: '2025-12-01',
+      status: 'Active',
     },
     {
-      voucherCode: "V45678",
-      customerName: "Bob Williams",
-      rewardType: "Discount",
-      amount: "25%",
-      expiryDate: "2025-07-20",
-      status: "Expired",
+      voucherCode: 'V45678',
+      customerName: 'Bob Williams',
+      rewardType: 'Discount',
+      amount: '25%',
+      expiryDate: '2025-07-20',
+      status: 'Expired',
     },
     {
-      voucherCode: "V56789",
-      customerName: "Charlie Brown",
-      rewardType: "Cashback",
-      amount: "$20",
-      expiryDate: "2025-04-10",
-      status: "Active",
+      voucherCode: 'V56789',
+      customerName: 'Charlie Brown',
+      rewardType: 'Cashback',
+      amount: '$20',
+      expiryDate: '2025-04-10',
+      status: 'Active',
     },
     {
-      voucherCode: "V67890",
-      customerName: "Diana Green",
-      rewardType: "Free Item",
-      amount: "Free Shipping",
-      expiryDate: "2025-05-10",
-      status: "Active",
+      voucherCode: 'V67890',
+      customerName: 'Diana Green',
+      rewardType: 'Free Item',
+      amount: 'Free Shipping',
+      expiryDate: '2025-05-10',
+      status: 'Active',
     },
     {
-      voucherCode: "V78901",
-      customerName: "Eve White",
-      rewardType: "Discount",
-      amount: "30%",
-      expiryDate: "2025-11-01",
-      status: "Redeemed",
+      voucherCode: 'V78901',
+      customerName: 'Eve White',
+      rewardType: 'Discount',
+      amount: '30%',
+      expiryDate: '2025-11-01',
+      status: 'Redeemed',
     },
   ]);
 
   const columns = [
     {
-      accessorKey: "voucherCode",
-      header: "Voucher Code",
+      accessorKey: 'voucherCode',
+      header: 'Voucher Code',
     },
     {
-      accessorKey: "customerName",
-      header: "Customer Name",
+      accessorKey: 'customerName',
+      header: 'Customer Name',
     },
     {
-      accessorKey: "rewardType",
-      header: "Reward Type",
+      accessorKey: 'rewardType',
+      header: 'Reward Type',
     },
     {
-      accessorKey: "amount",
-      header: "Amount / Value",
+      accessorKey: 'amount',
+      header: 'Amount / Value',
     },
     {
-      accessorKey: "expiryDate",
-      header: "Expiry Date",
+      accessorKey: 'expiryDate',
+      header: 'Expiry Date',
     },
     {
-      accessorKey: "status",
-      header: "Status",
+      accessorKey: 'status',
+      header: 'Status',
     },
   ];
 
@@ -124,7 +124,7 @@ const MembershipTab = () => {
 
         <Box mt={4} mb={2}>
           <Typography variant="h6">
-            You are a {user.membership ? user.membership.tier : "Bronze"} Member
+            You are a {user.membership ? user.membership.tier : 'Bronze'} Member
           </Typography>
           <ProgressBar
             totalSpent={user.totalSpending.toFixed(2)}
@@ -132,7 +132,7 @@ const MembershipTab = () => {
           />
           <Box display="flex" justifyContent="space-between" mt={2}>
             <Typography variant="body1">
-              {user.membership ? user.membership.tier : "Bronze"}
+              {user.membership ? user.membership.tier : 'Bronze'}
             </Typography>
             <Typography variant="body1">Silver</Typography>
           </Box>
@@ -142,19 +142,19 @@ const MembershipTab = () => {
           <Grid item xs={12} sm={4}>
             <Card
               sx={{
-                height: "100%",
-                bgcolor: "white",
-                border: "1px solid",
-                borderColor: "grey.200",
+                height: '100%',
+                bgcolor: 'white',
+                border: '1px solid',
+                borderColor: 'grey.200',
                 borderRadius: 2,
-                boxShadow: "none",
+                boxShadow: 'none',
               }}
             >
               <CardContent sx={{ p: 3 }}>
                 <Typography
                   variant="subtitle1"
                   sx={{
-                    color: "text.secondary",
+                    color: 'text.secondary',
                     fontWeight: 500,
                     mb: 1,
                   }}
@@ -164,8 +164,8 @@ const MembershipTab = () => {
                 <Typography
                   variant="h3"
                   sx={{
-                    color: "#1a237e",
-                    fontWeight: "bold",
+                    color: '#1a237e',
+                    fontWeight: 'bold',
                   }}
                 >
                   {user.totalPoints}
@@ -180,19 +180,19 @@ const MembershipTab = () => {
               <Grid item>
                 <Card
                   sx={{
-                    bgcolor: "#1a237e",
-                    color: "white",
+                    bgcolor: '#1a237e',
+                    color: 'white',
                     borderRadius: 2,
-                    boxShadow: "none",
+                    boxShadow: 'none',
                   }}
                 >
                   <CardContent
                     sx={{
                       p: 2,
-                      display: "flex",
-                      alignItems: "center",
+                      display: 'flex',
+                      alignItems: 'center',
                       gap: 1,
-                      "&:last-child": { pb: 2 },
+                      '&:last-child': { pb: 2 },
                     }}
                   >
                     <AccessTime />
@@ -205,19 +205,19 @@ const MembershipTab = () => {
               <Grid item>
                 <Card
                   sx={{
-                    bgcolor: "#1a237e",
-                    color: "white",
+                    bgcolor: '#1a237e',
+                    color: 'white',
                     borderRadius: 2,
-                    boxShadow: "none",
+                    boxShadow: 'none',
                   }}
                 >
                   <CardContent
                     sx={{
                       p: 2,
-                      display: "flex",
-                      alignItems: "center",
+                      display: 'flex',
+                      alignItems: 'center',
                       gap: 1,
-                      "&:last-child": { pb: 2 },
+                      '&:last-child': { pb: 2 },
                     }}
                   >
                     <MonetizationOn />
@@ -267,8 +267,8 @@ const MembershipTab = () => {
                       elevation={1}
                       sx={{
                         padding: 2,
-                        border: "1px solid",
-                        borderColor: "grey.400",
+                        border: '1px solid',
+                        borderColor: 'grey.400',
                       }}
                     >
                       <Typography variant="body1">{voucher.name}</Typography>

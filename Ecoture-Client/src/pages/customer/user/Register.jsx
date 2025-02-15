@@ -1,23 +1,26 @@
-import React from "react";
+import { useFormik } from 'formik';
+import React from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+// Ensure you have this package installed
+import * as yup from 'yup';
+
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 import {
-  Grid,
-  TextField,
-  Typography,
+  Box,
   Button,
   Checkbox,
   FormControlLabel,
-  Box,
+  Grid,
   IconButton,
-} from "@mui/material";
-import { Link, useNavigate } from "react-router-dom";
-import { useFormik } from "formik";
-import * as yup from "yup";
-import GoogleLoginButton from "components/customer/user/GoogleLoginButton"; // Ensure you have this package installed
-import http from "utils/http";
-import { toast } from "react-toastify";
-import { Visibility, VisibilityOff } from "@mui/icons-material";
-import AuthLayout from "components/customer/user/AuthLayout";
-import { authService } from "../../../services/auth.service";
+  TextField,
+  Typography,
+} from '@mui/material';
+
+import AuthLayout from 'components/customer/user/AuthLayout';
+import GoogleLoginButton from 'components/customer/user/GoogleLoginButton';
+
+import { authService } from '../../../services/auth.service';
 
 const Register = () => {
   const [showPassword, setShowPassword] = React.useState(false);
@@ -35,61 +38,61 @@ const Register = () => {
   const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {
-      firstName: "",
-      lastName: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
+      firstName: '',
+      lastName: '',
+      email: '',
+      password: '',
+      confirmPassword: '',
       agreeToTerms: false,
     },
     validationSchema: yup.object({
       firstName: yup
         .string()
-        .required("First name is required")
-        .min(2, "First name must be at least 2 characters")
-        .max(100, "First name must be at most 100 characters")
+        .required('First name is required')
+        .min(2, 'First name must be at least 2 characters')
+        .max(100, 'First name must be at most 100 characters')
         .matches(
           /^[A-Za-z\s'-.,]+$/,
           "Only letters, spaces, and characters: ' - , . are allowed"
         ),
       lastName: yup
         .string()
-        .required("Last name is required")
-        .min(2, "Last name must be at least 2 characters")
-        .max(100, "Last name must be at most 100 characters")
+        .required('Last name is required')
+        .min(2, 'Last name must be at least 2 characters')
+        .max(100, 'Last name must be at most 100 characters')
         .matches(
           /^[A-Za-z\s'-.,]+$/,
           "Only letters, spaces, and characters: ' - , . are allowed"
         ),
       email: yup
         .string()
-        .email("Invalid email address")
-        .max(50, "Email must be at most 50 characters")
-        .required("Email is required"),
+        .email('Invalid email address')
+        .max(50, 'Email must be at most 50 characters')
+        .required('Email is required'),
       password: yup
         .string()
         .trim()
-        .min(8, "Password must be at least 8 characters")
-        .max(50, "Password must be at most 50 characters")
-        .required("Password is required")
+        .min(8, 'Password must be at least 8 characters')
+        .max(50, 'Password must be at most 50 characters')
+        .required('Password is required')
         .matches(
           /^(?=.*?[a-zA-Z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/,
-          "Password must contain at least 1 uppercase letter, 1 lowercase letter, 1 number, and 1 special character."
+          'Password must contain at least 1 uppercase letter, 1 lowercase letter, 1 number, and 1 special character.'
         ),
       confirmPassword: yup
         .string()
-        .oneOf([yup.ref("password"), null], "Passwords must match")
-        .required("Confirm password is required"),
+        .oneOf([yup.ref('password'), null], 'Passwords must match')
+        .required('Confirm password is required'),
       agreeToTerms: yup
         .boolean()
-        .oneOf([true], "You must accept the terms and conditions"),
+        .oneOf([true], 'You must accept the terms and conditions'),
     }),
     onSubmit: async (data) => {
       try {
         const response = await authService.register(data);
         if (response) {
-          toast.success("Account created successfully");
-          navigate("/login");
+          toast.success('Account created successfully');
+          navigate('/login');
         }
       } catch (err) {
         toast.error(err.response.data.message);
@@ -153,7 +156,7 @@ const Register = () => {
               fullWidth
               margin="dense"
               autoComplete="off"
-              type={showPassword ? "text" : "password"}
+              type={showPassword ? 'text' : 'password'}
               label="Password"
               name="password"
               value={formik.values.password}
@@ -167,7 +170,7 @@ const Register = () => {
                     edge="end"
                     onClick={handleClickShowPassword}
                     aria-label="toggle password visibility"
-                    sx={{ color: "action.active" }}
+                    sx={{ color: 'action.active' }}
                   >
                     {showPassword ? <VisibilityOff /> : <Visibility />}
                   </IconButton>
@@ -180,7 +183,7 @@ const Register = () => {
               fullWidth
               margin="dense"
               autoComplete="off"
-              type={showConfirmPassword ? "text" : "password"}
+              type={showConfirmPassword ? 'text' : 'password'}
               label="Confirm Password"
               name="confirmPassword"
               value={formik.values.confirmPassword}
@@ -199,7 +202,7 @@ const Register = () => {
                     edge="end"
                     onClick={handleClickShowConfirmPassword}
                     aria-label="toggle confirm password visibility"
-                    sx={{ color: "action.active" }}
+                    sx={{ color: 'action.active' }}
                   >
                     {showConfirmPassword ? <VisibilityOff /> : <Visibility />}
                   </IconButton>
@@ -219,24 +222,24 @@ const Register = () => {
               }
               label={
                 <Typography variant="body2">
-                  I agree to the{" "}
+                  I agree to the{' '}
                   <Link
                     target="_blank"
                     to="/terms-of-use"
                     style={{
-                      textDecoration: "none",
-                      color: "#1976d2",
+                      textDecoration: 'none',
+                      color: '#1976d2',
                     }}
                   >
                     terms of use
-                  </Link>{" "}
-                  and{" "}
+                  </Link>{' '}
+                  and{' '}
                   <Link
                     target="_blank"
                     to="/privacy-policy"
                     style={{
-                      textDecoration: "none",
-                      color: "#1976d2",
+                      textDecoration: 'none',
+                      color: '#1976d2',
                     }}
                   >
                     privacy policy
@@ -261,9 +264,9 @@ const Register = () => {
           color="primary"
           sx={{
             mt: 3,
-            backgroundColor: "primary.main",
-            "&:hover": {
-              backgroundColor: "primary.light",
+            backgroundColor: 'primary.main',
+            '&:hover': {
+              backgroundColor: 'primary.light',
             },
           }}
         >
@@ -273,10 +276,10 @@ const Register = () => {
         {/* Divider with text */}
         <Box
           sx={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            width: "100%",
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            width: '100%',
             my: 3, // Margin on Y-axis
           }}
         >
@@ -284,8 +287,8 @@ const Register = () => {
           <Box
             sx={{
               flex: 1,
-              height: "1px",
-              backgroundColor: "grey",
+              height: '1px',
+              backgroundColor: 'grey',
               marginRight: 1,
             }}
           ></Box>
@@ -299,8 +302,8 @@ const Register = () => {
           <Box
             sx={{
               flex: 1,
-              height: "1px",
-              backgroundColor: "grey",
+              height: '1px',
+              backgroundColor: 'grey',
               marginLeft: 1,
             }}
           ></Box>
@@ -311,8 +314,8 @@ const Register = () => {
 
         {/* Footer Links */}
         <Typography variant="body2" align="center" sx={{ mt: 2, mb: 1 }}>
-          Already have an account?{" "}
-          <Link to="/login" style={{ textDecoration: "none" }}>
+          Already have an account?{' '}
+          <Link to="/login" style={{ textDecoration: 'none' }}>
             Log In
           </Link>
         </Typography>

@@ -1,33 +1,34 @@
-import React, { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import http from 'utils/http';
+
 import {
   Box,
-  Select,
-  MenuItem,
   Button,
-  Typography,
   FormControl,
   InputLabel,
-} from "@mui/material";
-import http from "utils/http";
+  MenuItem,
+  Select,
+  Typography,
+} from '@mui/material';
 
 // Mapping enums
 const statusEnum = {
-  0: "Open",
-  1: "Closed",
-  2: "In Progress",
+  0: 'Open',
+  1: 'Closed',
+  2: 'In Progress',
 };
 
 const reverseStatusEnum = {
   Open: 0,
   Closed: 1,
-  "In Progress": 2,
+  'In Progress': 2,
 };
 
 function UpdateEnquiry() {
   const navigate = useNavigate();
   const { id } = useParams();
-  const [status, setStatus] = useState("");
+  const [status, setStatus] = useState('');
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -37,7 +38,7 @@ function UpdateEnquiry() {
         setStatus(res.data.status); // Convert to string representation
         setLoading(false);
       })
-      .catch((err) => console.error("Error fetching enquiry:", err));
+      .catch((err) => console.error('Error fetching enquiry:', err));
   }, [id]);
 
   const handleUpdate = () => {
@@ -45,10 +46,10 @@ function UpdateEnquiry() {
     http
       .put(`/Enquiry/${id}`, updatedEnquiry)
       .then(() => {
-        alert("Status updated successfully!");
-        navigate("/enquiries");
+        alert('Status updated successfully!');
+        navigate('/enquiries');
       })
-      .catch((err) => console.error("Error updating enquiry:", err));
+      .catch((err) => console.error('Error updating enquiry:', err));
   };
 
   if (loading) {
@@ -56,11 +57,11 @@ function UpdateEnquiry() {
   }
 
   return (
-    <Box sx={{ maxWidth: "600px", margin: "auto", padding: "20px" }}>
+    <Box sx={{ maxWidth: '600px', margin: 'auto', padding: '20px' }}>
       <Typography variant="h4" gutterBottom>
         Update Status
       </Typography>
-      <FormControl fullWidth sx={{ marginBottom: "20px" }}>
+      <FormControl fullWidth sx={{ marginBottom: '20px' }}>
         <InputLabel id="status-label">Status</InputLabel>
         <Select
           labelId="status-label"
@@ -76,19 +77,19 @@ function UpdateEnquiry() {
         </Select>
       </FormControl>
       <Box
-        sx={{ display: "flex", justifyContent: "space-between", gap: "10px" }}
+        sx={{ display: 'flex', justifyContent: 'space-between', gap: '10px' }}
       >
         <Button
           variant="outlined"
           color="primary"
           sx={{
-            textTransform: "none",
-            fontSize: "1rem",
-            borderColor: "black",
-            color: "black",
-            ":hover": {
-              backgroundColor: "rgba(0, 0, 0, 0.04)",
-              borderColor: "black",
+            textTransform: 'none',
+            fontSize: '1rem',
+            borderColor: 'black',
+            color: 'black',
+            ':hover': {
+              backgroundColor: 'rgba(0, 0, 0, 0.04)',
+              borderColor: 'black',
             },
           }}
           onClick={handleUpdate}
@@ -100,16 +101,16 @@ function UpdateEnquiry() {
           variant="outlined"
           color="primary"
           sx={{
-            textTransform: "none",
-            fontSize: "1rem",
-            borderColor: "black",
-            color: "red",
-            ":hover": {
-              backgroundColor: "rgba(0, 0, 0, 0.04)",
-              borderColor: "black",
+            textTransform: 'none',
+            fontSize: '1rem',
+            borderColor: 'black',
+            color: 'red',
+            ':hover': {
+              backgroundColor: 'rgba(0, 0, 0, 0.04)',
+              borderColor: 'black',
             },
           }}
-          onClick={() => navigate("/enquiries")}
+          onClick={() => navigate('/enquiries')}
         >
           Cancel
         </Button>

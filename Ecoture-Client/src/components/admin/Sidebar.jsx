@@ -1,52 +1,53 @@
-import React, { useContext, useEffect, useState } from "react";
-import {
-  Box,
-  List,
-  ListItem,
-  ListItemText,
-  Divider,
-  Collapse,
-  Tooltip,
-} from "@mui/material";
+import React, { useContext, useEffect, useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
+
 import {
   ChevronLeft,
   ChevronRight,
   ExpandLess,
   ExpandMore,
-} from "@mui/icons-material";
-import { Link, useLocation } from "react-router-dom";
-import UserContext from "contexts/UserContext";
+} from '@mui/icons-material';
+import {
+  Box,
+  Collapse,
+  Divider,
+  List,
+  ListItem,
+  ListItemText,
+  Tooltip,
+} from '@mui/material';
 
 // Icons for the sidebar options
-import dashboardIcon from "assets/icons/dashboard.svg";
-import usersIcon from "assets/icons/users.svg";
+import dashboardIcon from 'assets/icons/dashboard.svg';
+import usersIcon from 'assets/icons/users.svg';
+import UserContext from 'contexts/UserContext';
 
 // Sidebar menu options
 const sideMenuOptions = [
   {
-    name: "Dashboard",
+    name: 'Dashboard',
     icon: dashboardIcon,
-    path: "/admin/dashboard",
+    path: '/admin/dashboard',
   },
   {
-    name: "Users",
+    name: 'Users',
     icon: usersIcon,
-    path: "/admin/users",
+    path: '/admin/users',
   },
   {
-    name: "Rewards",
+    name: 'Rewards',
     icon: usersIcon,
-    path: "/admin/rewards",
+    path: '/admin/rewards',
   },
   {
-    name: "Products",
+    name: 'Products',
     icon: usersIcon,
-    path: "/",
+    path: '/admin/products',
   },
   {
-    name: "Enquiries",
+    name: 'Enquiries',
     icon: usersIcon,
-    path: "/dashboard",
+    path: '/admin/enquiries',
   },
 ];
 
@@ -54,12 +55,12 @@ function Sidebar() {
   const { user } = useContext(UserContext);
   const location = useLocation();
   const [isMinimized, setIsMinimized] = useState(() => {
-    const storedState = localStorage.getItem("snMinimized");
+    const storedState = localStorage.getItem('snMinimized');
     return storedState ? JSON.parse(storedState) : false;
   });
 
   useEffect(() => {
-    localStorage.setItem("snMinimized", JSON.stringify(isMinimized));
+    localStorage.setItem('snMinimized', JSON.stringify(isMinimized));
   }, [isMinimized]);
 
   const [open, setOpen] = useState({});
@@ -80,58 +81,60 @@ function Sidebar() {
     <Box
       sx={{
         px: 1.5,
-        borderRight: "1px solid lightgrey",
-        width: isMinimized ? 60 : "35%",
+        borderRight: '1px solid lightgrey',
+        width: isMinimized ? 60 : '35%',
         maxWidth: isMinimized ? 60 : 290,
-        transition: "all 0.3s ease",
+        transition: 'all 0.3s ease',
       }}
     >
       <List>
         <ListItem
           sx={{
-            display: "flex",
-            gap: "30px",
+            display: 'flex',
+            gap: '30px',
             my: 1,
-            alignItems: "center",
+            alignItems: 'center',
           }}
         >
           <Box
             component="a"
             onClick={() => setIsMinimized(!isMinimized)}
-            sx={{ ":hover": { cursor: "pointer" } }}
+            sx={{ ':hover': { cursor: 'pointer' } }}
           >
             {isMinimized ? <ChevronRight /> : <ChevronLeft />}
           </Box>
           <ListItemText
             primary={`Welcome, ${user.fullName}`}
             sx={{
-              whiteSpace: "nowrap",
+              whiteSpace: 'nowrap',
               opacity: isMinimized ? 0 : 1,
-              visibility: isMinimized ? "hidden" : "visible",
-              transition: "opacity 0.1s ease-in-out, visibility 0s linear 0.1s",
+              visibility: isMinimized ? 'hidden' : 'visible',
+              transition: 'opacity 0.1s ease-in-out, visibility 0s linear 0.1s',
             }}
           />
         </ListItem>
         <Divider />
         {sideMenuOptions.map((option) => (
-          <React.Fragment key={option.name}>
+          <React.Fragment
+            key={option.name}
+            onClick={() => handleClick(option.name)}
+          >
             <ListItem
               button
               onClick={() => option.subOptions && handleClick(option.name)}
               sx={{
                 my: 1,
                 borderRadius: 1,
-                backgroundColor:
-                isActive(option.path) 
-                ? "primary.main"
-                : "transparent",
+                backgroundColor: isActive(option.path)
+                  ? 'primary.main'
+                  : 'transparent',
                 // || isParentActive(option.subOptions)
-                "&:hover": {
-                  backgroundColor: "primary.light",
-                  cursor: "pointer",
-                  "& .MuiTypography-root, a, img": {
-                    color: "white",
-                    filter: "brightness(0) invert(1)",
+                '&:hover': {
+                  backgroundColor: 'primary.light',
+                  cursor: 'pointer',
+                  '& .MuiTypography-root, a, img': {
+                    color: 'white',
+                    filter: 'brightness(0) invert(1)',
                   },
                 },
               }}
@@ -140,22 +143,22 @@ function Sidebar() {
                 <Link
                   to={option.path}
                   style={{
-                    textDecoration: "none",
-                    display: "flex",
-                    gap: "30px",
-                    color: isActive(option.path) ? "white" : "black",
-                    width: "100%",
-                    alignItems: "center",
-                    whiteSpace: "nowrap",
+                    textDecoration: 'none',
+                    display: 'flex',
+                    gap: '30px',
+                    color: isActive(option.path) ? 'white' : 'black',
+                    width: '100%',
+                    alignItems: 'center',
+                    whiteSpace: 'nowrap',
                   }}
                 >
                   <Box
                     sx={{
-                      display: "flex",
-                      gap: "30px",
-                      width: "100%",
-                      alignItems: "center",
-                      whiteSpace: "nowrap",
+                      display: 'flex',
+                      gap: '30px',
+                      width: '100%',
+                      alignItems: 'center',
+                      whiteSpace: 'nowrap',
                     }}
                   >
                     <Tooltip title={option.name}>
@@ -167,9 +170,9 @@ function Sidebar() {
                         height={26}
                         sx={{
                           filter: isActive(option.path)
-                            ? "brightness(0) invert(1)"
-                            : "none",
-                          transition: "filter 0.3s ease",
+                            ? 'brightness(0) invert(1)'
+                            : 'none',
+                          transition: 'filter 0.3s ease',
                         }}
                       />
                     </Tooltip>
@@ -177,11 +180,11 @@ function Sidebar() {
                       primary={option.name}
                       sx={{
                         opacity: isMinimized ? 0 : 1,
-                        visibility: isMinimized ? "hidden" : "visible",
+                        visibility: isMinimized ? 'hidden' : 'visible',
                         transition:
-                          "opacity 0.1s ease-in-out, visibility 0s linear 0.1s",
-                        "& .MuiTypography-root": {
-                          color: isActive(option.path) ? "white" : "inherit",
+                          'opacity 0.1s ease-in-out, visibility 0s linear 0.1s',
+                        '& .MuiTypography-root': {
+                          color: isActive(option.path) ? 'white' : 'inherit',
                         },
                       }}
                     />
@@ -190,12 +193,12 @@ function Sidebar() {
               ) : (
                 <Box
                   sx={{
-                    display: "flex",
-                    gap: "30px",
-                    width: "100%",
-                    alignItems: "center",
-                    whiteSpace: "nowrap",
-                    cursor: "pointer",
+                    display: 'flex',
+                    gap: '30px',
+                    width: '100%',
+                    alignItems: 'center',
+                    whiteSpace: 'nowrap',
+                    cursor: 'pointer',
                   }}
                 >
                   <Tooltip title={option.name}>
@@ -207,9 +210,9 @@ function Sidebar() {
                       height={26}
                       sx={{
                         filter: isParentActive(option.subOptions)
-                          ? "brightness(0) invert(1)"
-                          : "none",
-                        transition: "filter 0.3s ease",
+                          ? 'brightness(0) invert(1)'
+                          : 'none',
+                        transition: 'filter 0.3s ease',
                       }}
                     />
                   </Tooltip>
@@ -217,13 +220,13 @@ function Sidebar() {
                     primary={option.name}
                     sx={{
                       opacity: isMinimized ? 0 : 1,
-                      visibility: isMinimized ? "hidden" : "visible",
+                      visibility: isMinimized ? 'hidden' : 'visible',
                       transition:
-                        "opacity 0.1s ease-in-out, visibility 0s linear 0.1s",
-                      "& .MuiTypography-root": {
+                        'opacity 0.1s ease-in-out, visibility 0s linear 0.1s',
+                      '& .MuiTypography-root': {
                         color: isParentActive(option.subOptions)
-                          ? "white"
-                          : "inherit",
+                          ? 'white'
+                          : 'inherit',
                       },
                     }}
                   />
@@ -231,8 +234,8 @@ function Sidebar() {
                     <Box
                       sx={{
                         color: isParentActive(option.subOptions)
-                          ? "white"
-                          : "inherit",
+                          ? 'white'
+                          : 'inherit',
                       }}
                     >
                       {open[option.name] ? <ExpandLess /> : <ExpandMore />}
@@ -247,7 +250,7 @@ function Sidebar() {
                   {option.subOptions
                     .filter(
                       (subOption) =>
-                        !subOption.adminOnly || (user && user.role === "Admin")
+                        !subOption.adminOnly || (user && user.role === 'Admin')
                     )
                     .map((subOption) => (
                       <ListItem
@@ -257,13 +260,13 @@ function Sidebar() {
                           my: 1,
                           borderRadius: 1,
                           backgroundColor: isActive(subOption.path)
-                            ? "primary.main"
-                            : "transparent",
-                          "&:hover": {
-                            backgroundColor: "primary.light",
-                            cursor: "pointer",
-                            "& .MuiTypography-root, a": {
-                              color: "white",
+                            ? 'primary.main'
+                            : 'transparent',
+                          '&:hover': {
+                            backgroundColor: 'primary.light',
+                            cursor: 'pointer',
+                            '& .MuiTypography-root, a': {
+                              color: 'white',
                             },
                           },
                         }}
@@ -271,26 +274,26 @@ function Sidebar() {
                         <Link
                           to={subOption.path}
                           style={{
-                            textDecoration: "none",
-                            display: "flex",
-                            gap: "30px",
-                            color: isActive(subOption.path) ? "white" : "black",
-                            width: "100%",
-                            alignItems: "center",
-                            whiteSpace: "nowrap",
+                            textDecoration: 'none',
+                            display: 'flex',
+                            gap: '30px',
+                            color: isActive(subOption.path) ? 'white' : 'black',
+                            width: '100%',
+                            alignItems: 'center',
+                            whiteSpace: 'nowrap',
                           }}
                         >
                           <ListItemText
                             primary={subOption.name}
                             sx={{
                               opacity: isMinimized ? 0 : 1,
-                              visibility: isMinimized ? "hidden" : "visible",
+                              visibility: isMinimized ? 'hidden' : 'visible',
                               transition:
-                                "opacity 0.1s ease-in-out, visibility 0s linear 0.1s",
-                              "& .MuiTypography-root": {
+                                'opacity 0.1s ease-in-out, visibility 0s linear 0.1s',
+                              '& .MuiTypography-root': {
                                 color: isActive(subOption.path)
-                                  ? "white"
-                                  : "inherit",
+                                  ? 'white'
+                                  : 'inherit',
                               },
                             }}
                           />

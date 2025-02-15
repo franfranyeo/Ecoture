@@ -1,45 +1,41 @@
-import React, { useState } from "react";
+import { useFormik } from 'formik';
+import { useState } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import http from 'utils/http';
+import * as yup from 'yup';
+
+import { AddCircleOutline, RemoveCircleOutline } from '@mui/icons-material';
 import {
   Box,
-  Typography,
-  TextField,
   Button,
-  Grid,
   Card,
   CardActions,
-  ToggleButtonGroup,
-  ToggleButton,
-  IconButton,
   Chip,
-  FormGroup,
   FormControl,
+  Grid,
+  IconButton,
   InputLabel,
-  Select,
   MenuItem,
-  Checkbox,
-  FormControlLabel,
-} from "@mui/material";
-import { AddCircleOutline, RemoveCircleOutline } from "@mui/icons-material";
-import { useFormik } from "formik";
-import * as yup from "yup";
-import http from "utils/http";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+  Select,
+  TextField,
+  Typography,
+} from '@mui/material';
 
 function AddProduct() {
   const [imageFile, setImageFile] = useState(null);
-  const [imageError, setImageError] = useState("");
+  const [imageError, setImageError] = useState('');
   const [isUploading, setIsUploading] = useState(false);
-  const [sizes, setSizes] = useState([{ sizeName: "", stockQuantity: "" }]);
+  const [sizes, setSizes] = useState([{ sizeName: '', stockQuantity: '' }]);
   const [colors, setColors] = useState([]);
-  const [colorInput, setColorInput] = useState("");
+  const [colorInput, setColorInput] = useState('');
 
   const formik = useFormik({
     initialValues: {
-      title: "",
-      description: "",
-      longDescription: "",
-      price: "",
+      title: '',
+      description: '',
+      longDescription: '',
+      price: '',
       categories: [],
       fits: [],
     },
@@ -47,46 +43,46 @@ function AddProduct() {
       title: yup
         .string()
         .trim()
-        .min(3, "Title must be at least 3 characters")
-        .max(100, "Title must be at most 100 characters")
-        .required("Title is required"),
+        .min(3, 'Title must be at least 3 characters')
+        .max(100, 'Title must be at most 100 characters')
+        .required('Title is required'),
       description: yup
         .string()
         .trim()
-        .min(3, "Description must be at least 3 characters")
-        .max(500, "Description must be at most 500 characters")
-        .required("Description is required"),
+        .min(3, 'Description must be at least 3 characters')
+        .max(500, 'Description must be at most 500 characters')
+        .required('Description is required'),
       longDescription: yup
         .string()
         .trim()
-        .min(3, "Long description must be at least 3 characters")
-        .max(1000, "Long description must be at most 1000 characters")
-        .required("Long description is required"),
+        .min(3, 'Long description must be at least 3 characters')
+        .max(1000, 'Long description must be at most 1000 characters')
+        .required('Long description is required'),
       price: yup
         .number()
-        .min(0.01, "Price must be greater than zero")
-        .required("Price is required"),
-      categories: yup.array().min(1, "At least one category is required"),
-      fits: yup.array().min(1, "At least one fit is required"),
+        .min(0.01, 'Price must be greater than zero')
+        .required('Price is required'),
+      categories: yup.array().min(1, 'At least one category is required'),
+      fits: yup.array().min(1, 'At least one fit is required'),
       sizes: yup.array().of(
         yup.object().shape({
-          sizeName: yup.string().trim().required("Size name is required"),
+          sizeName: yup.string().trim().required('Size name is required'),
           stockQuantity: yup
             .number()
-            .min(1, "Stock quantity must be at least 1")
-            .required("Stock quantity is required"),
+            .min(1, 'Stock quantity must be at least 1')
+            .required('Stock quantity is required'),
         })
       ),
     }),
     onSubmit: (data) => {
       // Automatically determine price range based on price input
-      const priceRangeMap = {
-        1: "$10-$20",
-        2: "$20-$30",
-        3: "$30-$40",
-        4: "$40-$50",
-        5: "$50+",
-      };
+      // const priceRangeMap = {
+      //   1: '$10-$20',
+      //   2: '$20-$30',
+      //   3: '$30-$40',
+      //   4: '$40-$50',
+      //   5: '$50+',
+      // };
 
       if (data.price < 20) data.priceRange = 1;
       else if (data.price < 30) data.priceRange = 2;
@@ -107,59 +103,57 @@ function AddProduct() {
         colorName: size.selectedColor, // Single selected color
         stockQuantity: parseInt(size.stockQuantity, 10),
       }));
-      
 
       data.categories = formik.values.categories || [];
       data.fits = formik.values.fits || [];
 
       http
-        .post("/product", data)
+        .post('/product', data)
         .then(() => {
           formik.resetForm();
-          setSizes([{ sizeName: "", stockQuantity: "" }]);
+          setSizes([{ sizeName: '', stockQuantity: '' }]);
           setImageFile(null);
           setColors([]);
-          toast.success("Product added successfully!");
-          window.location.href = "/";
+          toast.success('Product added successfully!');
+          window.location.href = '/';
         })
         .catch((error) => {
           console.error(
-            "Error adding product:",
+            'Error adding product:',
             error.response?.data || error.message
           );
           toast.error(
             error.response?.data?.message ||
-              "Failed to add product. Please try again."
+              'Failed to add product. Please try again.'
           );
         });
     },
   });
 
   const onFileChange = (e) => {
-    setImageError("");
+    setImageError('');
     const file = e.target.files[0];
     if (file) {
-  
-      const validTypes = ["image/jpeg", "image/png", "image/webp"];
+      const validTypes = ['image/jpeg', 'image/png', 'image/webp'];
       if (!validTypes.includes(file.type)) {
         setImageError(
-          "Invalid file type. Please upload a JPG, PNG, or WebP file."
+          'Invalid file type. Please upload a JPG, PNG, or WebP file.'
         );
         return;
       }
 
       if (file.size > 1024 * 1024) {
-        setImageError("Maximum file size is 1MB");
+        setImageError('Maximum file size is 1MB');
         return;
       }
 
       const formData = new FormData();
-      formData.append("file", file);
+      formData.append('file', file);
       setIsUploading(true);
       http
-        .post("/file/upload", formData, {
+        .post('/file/upload', formData, {
           headers: {
-            "Content-Type": "multipart/form-data",
+            'Content-Type': 'multipart/form-data',
           },
         })
         .then((res) => {
@@ -167,7 +161,7 @@ function AddProduct() {
           setIsUploading(false);
         })
         .catch(() => {
-          setImageError("Failed to upload image. Please try again.");
+          setImageError('Failed to upload image. Please try again.');
           setIsUploading(false);
         });
     }
@@ -176,7 +170,7 @@ function AddProduct() {
   const addColor = () => {
     if (colorInput.trim() && !colors.includes(colorInput.trim())) {
       setColors([...colors, colorInput.trim()]);
-      setColorInput("");
+      setColorInput('');
 
       // Update sizes with new color selection array
       setSizes((prevSizes) =>
@@ -192,7 +186,7 @@ function AddProduct() {
   const addSizeField = () => {
     setSizes([
       ...sizes,
-      { sizeName: "", stockQuantity: "", selectedColors: [] },
+      { sizeName: '', stockQuantity: '', selectedColors: [] },
     ]);
   };
 
@@ -220,37 +214,36 @@ function AddProduct() {
     });
     setSizes(updatedSizes);
   };
-  
 
   return (
     <Box
       sx={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "flex-start",
-        minHeight: "90vh",
-        backgroundColor: "#f4f4f4",
-        padding: "20px",
-        paddingTop: "40px",
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'flex-start',
+        minHeight: '90vh',
+        backgroundColor: '#f4f4f4',
+        padding: '20px',
+        paddingTop: '40px',
       }}
     >
       <Card
         sx={{
-          width: "100%",
-          maxWidth: "1000px",
-          padding: "20px",
-          borderRadius: "12px",
-          boxShadow: "0 4px 12px rgba(0, 0, 0, 0.15)",
-          backgroundColor: "#ffffff",
+          width: '100%',
+          maxWidth: '1000px',
+          padding: '20px',
+          borderRadius: '12px',
+          boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
+          backgroundColor: '#ffffff',
         }}
       >
         <Typography
           variant="h4"
           sx={{
             mb: 4,
-            color: "#2c3e50",
-            fontWeight: "bold",
-            textAlign: "center",
+            color: '#2c3e50',
+            fontWeight: 'bold',
+            textAlign: 'center',
           }}
         >
           Add a New Product
@@ -341,7 +334,7 @@ function AddProduct() {
                       label="Size"
                       value={size.sizeName}
                       onChange={(e) =>
-                        handleSizeChange(index, "sizeName", e.target.value)
+                        handleSizeChange(index, 'sizeName', e.target.value)
                       }
                     />
                   </Grid>
@@ -354,12 +347,12 @@ function AddProduct() {
                       type="number"
                       value={size.stockQuantity}
                       onChange={(e) =>
-                        handleSizeChange(index, "stockQuantity", e.target.value)
+                        handleSizeChange(index, 'stockQuantity', e.target.value)
                       }
                     />
                   </Grid>
 
-                  <Grid item xs={2} sx={{ textAlign: "center" }}>
+                  <Grid item xs={2} sx={{ textAlign: 'center' }}>
                     {sizes.length > 1 && (
                       <IconButton
                         color="error"
@@ -384,7 +377,7 @@ function AddProduct() {
                     <FormControl fullWidth>
                       <InputLabel>Select Color</InputLabel>
                       <Select
-                        value={size.selectedColor || ""}
+                        value={size.selectedColor || ''}
                         onChange={(e) =>
                           handleColorSelection(index, e.target.value)
                         }
@@ -403,7 +396,7 @@ function AddProduct() {
               <Typography variant="subtitle1" sx={{ mt: 2, mb: 1 }}>
                 Colors:
               </Typography>
-              <Box sx={{ display: "flex", gap: 1, mb: 2 }}>
+              <Box sx={{ display: 'flex', gap: 1, mb: 2 }}>
                 <TextField
                   fullWidth
                   placeholder="Enter color"
@@ -414,7 +407,7 @@ function AddProduct() {
                   Add
                 </Button>
               </Box>
-              <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1 }}>
+              <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
                 {colors.map((color, index) => (
                   <Chip
                     key={index}
@@ -428,22 +421,22 @@ function AddProduct() {
               <Typography variant="subtitle1" sx={{ mt: 2, mb: 1 }}>
                 Category Name:
               </Typography>
-              <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1 }}>
+              <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
                 {[
-                  "Landing",
-                  "New arrivals",
-                  "Trending",
-                  "Women",
-                  "Men",
-                  "Girls",
-                  "Boys",
+                  'Landing',
+                  'New arrivals',
+                  'Trending',
+                  'Women',
+                  'Men',
+                  'Girls',
+                  'Boys',
                 ].map((category) => (
                   <Button
                     key={category}
                     variant={
                       formik.values.categories.includes(category)
-                        ? "contained"
-                        : "outlined"
+                        ? 'contained'
+                        : 'outlined'
                     }
                     onClick={() => {
                       const selected = formik.values.categories.includes(
@@ -452,22 +445,22 @@ function AddProduct() {
                         ? formik.values.categories.filter((c) => c !== category)
                         : [...formik.values.categories, category];
 
-                      formik.setFieldValue("categories", selected); // This line updates the formik values for categories
+                      formik.setFieldValue('categories', selected); // This line updates the formik values for categories
                     }}
                     sx={{
-                      borderRadius: "20px",
-                      border: "1px solid #ccc",
+                      borderRadius: '20px',
+                      border: '1px solid #ccc',
                       backgroundColor: formik.values.categories.includes(
                         category
                       )
-                        ? "#555"
-                        : "#fff",
+                        ? '#555'
+                        : '#fff',
                       color: formik.values.categories.includes(category)
-                        ? "#fff"
-                        : "#000",
-                      "&:hover": { backgroundColor: "#f0f0f0", color: "#000" },
-                      padding: "8px 16px",
-                      textTransform: "none",
+                        ? '#fff'
+                        : '#000',
+                      '&:hover': { backgroundColor: '#f0f0f0', color: '#000' },
+                      padding: '8px 16px',
+                      textTransform: 'none',
                     }}
                   >
                     {category}
@@ -478,38 +471,38 @@ function AddProduct() {
               <Typography variant="subtitle1" sx={{ mt: 2, mb: 1 }}>
                 Fit:
               </Typography>
-              <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1 }}>
-                {["Regular Tapered", "Skinny Tapered", "Seasonal Fit"].map(
+              <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
+                {['Regular Tapered', 'Skinny Tapered', 'Seasonal Fit'].map(
                   (fit) => (
                     <Button
                       key={fit}
                       variant={
                         formik.values.fits.includes(fit)
-                          ? "contained"
-                          : "outlined"
+                          ? 'contained'
+                          : 'outlined'
                       }
                       onClick={() => {
                         const selected = formik.values.fits.includes(fit)
                           ? formik.values.fits.filter((f) => f !== fit)
                           : [...formik.values.fits, fit];
 
-                        formik.setFieldValue("fits", selected);
+                        formik.setFieldValue('fits', selected);
                       }}
                       sx={{
-                        borderRadius: "20px",
-                        border: "1px solid #ccc",
+                        borderRadius: '20px',
+                        border: '1px solid #ccc',
                         backgroundColor: formik.values.fits.includes(fit)
-                          ? "#555"
-                          : "#fff",
+                          ? '#555'
+                          : '#fff',
                         color: formik.values.fits.includes(fit)
-                          ? "#fff"
-                          : "#000",
-                        "&:hover": {
-                          backgroundColor: "#f0f0f0",
-                          color: "#000",
+                          ? '#fff'
+                          : '#000',
+                        '&:hover': {
+                          backgroundColor: '#f0f0f0',
+                          color: '#000',
                         },
-                        padding: "8px 16px",
-                        textTransform: "none",
+                        padding: '8px 16px',
+                        textTransform: 'none',
                       }}
                     >
                       {fit}
@@ -522,12 +515,12 @@ function AddProduct() {
             <Grid item xs={12} md={4}>
               <Box
                 sx={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  textAlign: "center",
-                  height: "100%",
-                  justifyContent: "center",
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  textAlign: 'center',
+                  height: '100%',
+                  justifyContent: 'center',
                   gap: 2,
                 }}
               >
@@ -535,8 +528,8 @@ function AddProduct() {
                   variant="contained"
                   component="label"
                   sx={{
-                    backgroundColor: "#4caf50",
-                    "&:hover": { backgroundColor: "#45a049" },
+                    backgroundColor: '#4caf50',
+                    '&:hover': { backgroundColor: '#45a049' },
                   }}
                 >
                   Upload Image
@@ -560,11 +553,11 @@ function AddProduct() {
                   imageFile && (
                     <Box
                       sx={{
-                        width: "200px",
-                        height: "200px",
-                        border: "1px solid #ddd",
-                        borderRadius: "4px",
-                        overflow: "hidden",
+                        width: '200px',
+                        height: '200px',
+                        border: '1px solid #ddd',
+                        borderRadius: '4px',
+                        overflow: 'hidden',
                       }}
                     >
                       <img
@@ -573,9 +566,9 @@ function AddProduct() {
                           import.meta.env.VITE_FILE_BASE_URL
                         }${imageFile}`}
                         style={{
-                          width: "100%",
-                          height: "100%",
-                          objectFit: "cover",
+                          width: '100%',
+                          height: '100%',
+                          objectFit: 'cover',
                         }}
                       />
                     </Box>
@@ -587,8 +580,8 @@ function AddProduct() {
 
           <CardActions
             sx={{
-              display: "flex",
-              justifyContent: "flex-end",
+              display: 'flex',
+              justifyContent: 'flex-end',
               mt: 4,
             }}
           >
@@ -596,13 +589,13 @@ function AddProduct() {
               variant="contained"
               type="submit"
               sx={{
-                backgroundColor: isUploading ? "#ccc" : "#007bff",
-                "&:hover": isUploading ? "#ccc" : "#0056b3",
-                padding: "10px 20px",
+                backgroundColor: isUploading ? '#ccc' : '#007bff',
+                '&:hover': isUploading ? '#ccc' : '#0056b3',
+                padding: '10px 20px',
               }}
               disabled={isUploading || !formik.isValid || !formik.dirty}
             >
-              {isUploading ? "Uploading..." : "Add Product"}
+              {isUploading ? 'Uploading...' : 'Add Product'}
             </Button>
           </CardActions>
         </Box>
