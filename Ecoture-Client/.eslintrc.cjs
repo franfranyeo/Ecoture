@@ -8,7 +8,7 @@ module.exports = {
     'plugin:react-hooks/recommended',
   ],
   ignorePatterns: ['dist', '.eslintrc.cjs'],
-  plugins: ['react-refresh'],
+  plugins: ['react-refresh', 'eslint-plugin-unused-imports'],
   rules: {
     'react-refresh/only-export-components': 'warn',
     quotes: ['warn', 'single', { avoidEscape: true }],
@@ -18,6 +18,7 @@ module.exports = {
     'max-nested-callbacks': ['error', 3],
     'max-lines': ['warn', { max: 600, skipBlankLines: true }],
     'react-hooks/exhaustive-deps': 'off',
+    'unused-imports/no-unused-imports': 'warn',
   },
   settings: { react: { version: '18.2' } },
   parserOptions: { ecmaVersion: 'latest', sourceType: 'module' },
