@@ -43,7 +43,9 @@ import UpdateEnquiry from "./pages/Enquiries/UpdateEnquiry";
 import EnquiriesDashboard from "./pages/Enquiries/Dashboard";
 import SelectContent from './pages/Newsletter/SelectContent';
 import CreateNewsletter from './pages/Newsletter/CreateNewsletter';
-
+import Chat from "./pages/LiveChat/Chat";
+import AdminChat from "./pages/LiveChat/AdminChat";
+import ChatWidget from "./components/ChatWidget";
 // Fran Imports
 import Account from "./pages/customer/user/Account";
 import ResetPassword from "./pages/customer/user/ResetPassword";
@@ -301,7 +303,11 @@ function App() {
                 {/* Newsletter Management */}
                 <Route path="/createnewsletter" element={<CreateNewsletter />} />
                 <Route path="/selectcontent" element={<SelectContent />} />
+
+                <Route path="/livechat" element={<Chat />} />
+                <Route path="/adminchat" element={<AdminChat />} />
               </Routes>
+              <ChatWidget />
             </Box>
           </ThemeProvider>
         </Router>
