@@ -24,6 +24,76 @@ import {
   Typography,
 } from '@mui/material';
 
+const custValidationSchema = yup.object().shape({
+  firstName: yup
+    .string()
+    .trim()
+    .min(2, 'First name must be at least 2 characters')
+    .max(50, "First name can't be longer than 50 characters")
+    .required('First name is required'),
+  lastName: yup
+    .string()
+    .trim()
+    .min(2, 'Last name must be at least 2 characters')
+    .max(50, "Last name can't be longer than 50 characters")
+    .nullable(),
+  email: yup
+    .string()
+    .trim()
+    .lowercase()
+    .email('Enter a valid email')
+    .max(50, "Email can't be longer than 50 characters")
+    .required('Email is required'),
+
+  mobileNumber: yup.string().trim(),
+});
+
+const staffValidationSchema = yup.object().shape({
+  firstName: yup
+    .string()
+    .trim()
+    .min(2, 'First name must be at least 2 characters')
+    .max(50, "First name can't be longer than 50 characters")
+    .required('First name is required'),
+  lastName: yup
+    .string()
+    .trim()
+    .min(2, 'Last name must be at least 2 characters')
+    .max(50, "Last name can't be longer than 50 characters")
+    .nullable(),
+
+  email: yup
+    .string()
+    .trim()
+    .lowercase()
+    .email('Enter a valid email')
+    .max(50, "Email can't be longer than 50 characters")
+    .required('Email is required'),
+  mobileNumber: yup.string().nullable(),
+});
+
+const adminValidationSchema = yup.object().shape({
+  firstName: yup
+    .string()
+    .trim()
+    .min(2, 'First name must be at least 2 characters')
+    .max(50, "First name can't be longer than 50 characters")
+    .required('First name is required'),
+  lastName: yup
+    .string()
+    .trim()
+    .min(2, 'Last name must be at least 2 characters')
+    .max(50, "Last name can't be longer than 50 characters")
+    .nullable(),
+  email: yup
+    .string()
+    .trim()
+    .lowercase()
+    .email('Enter a valid email')
+    .max(50, "Email can't be longer than 50 characters")
+    .required('Email is required'),
+});
+
 function EditUser() {
   const navigate = useNavigate();
   const { id } = useParams();
@@ -51,76 +121,6 @@ function EditUser() {
       setLoading(false);
     });
   }, [id]);
-
-  const custValidationSchema = yup.object().shape({
-    firstName: yup
-      .string()
-      .trim()
-      .min(2, 'First name must be at least 2 characters')
-      .max(50, "First name can't be longer than 50 characters")
-      .required('First name is required'),
-    lastName: yup
-      .string()
-      .trim()
-      .min(2, 'Last name must be at least 2 characters')
-      .max(50, "Last name can't be longer than 50 characters")
-      .nullable(),
-    email: yup
-      .string()
-      .trim()
-      .lowercase()
-      .email('Enter a valid email')
-      .max(50, "Email can't be longer than 50 characters")
-      .required('Email is required'),
-
-    mobileNumber: yup.string().trim(),
-  });
-
-  const staffValidationSchema = yup.object().shape({
-    firstName: yup
-      .string()
-      .trim()
-      .min(2, 'First name must be at least 2 characters')
-      .max(50, "First name can't be longer than 50 characters")
-      .required('First name is required'),
-    lastName: yup
-      .string()
-      .trim()
-      .min(2, 'Last name must be at least 2 characters')
-      .max(50, "Last name can't be longer than 50 characters")
-      .nullable(),
-
-    email: yup
-      .string()
-      .trim()
-      .lowercase()
-      .email('Enter a valid email')
-      .max(50, "Email can't be longer than 50 characters")
-      .required('Email is required'),
-    mobileNumber: yup.string().nullable(),
-  });
-
-  const adminValidationSchema = yup.object().shape({
-    firstName: yup
-      .string()
-      .trim()
-      .min(2, 'First name must be at least 2 characters')
-      .max(50, "First name can't be longer than 50 characters")
-      .required('First name is required'),
-    lastName: yup
-      .string()
-      .trim()
-      .min(2, 'Last name must be at least 2 characters')
-      .max(50, "Last name can't be longer than 50 characters")
-      .nullable(),
-    email: yup
-      .string()
-      .trim()
-      .lowercase()
-      .email('Enter a valid email')
-      .max(50, "Email can't be longer than 50 characters")
-      .required('Email is required'),
-  });
 
   const formik = useFormik({
     initialValues: {

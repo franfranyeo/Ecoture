@@ -35,7 +35,7 @@ function Choice() {
 
   const handleNext = () => {
     if (selectedAddress && selectedCard) {
-      navigate(`/confirmation`, { state: state });
+      navigate('/confirmation', { state: state });
     } else {
       alert('Please select both an address and a credit card.');
     }

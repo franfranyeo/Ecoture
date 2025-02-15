@@ -118,7 +118,7 @@ function AddReward() {
       <Box sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
         <IconButton
           sx={{ cursor: 'pointer' }}
-          onClick={() => navigate(`/admin/rewards`)}
+          onClick={() => navigate('/admin/rewards')}
         >
           <ArrowBack fontSize="large" />
         </IconButton>

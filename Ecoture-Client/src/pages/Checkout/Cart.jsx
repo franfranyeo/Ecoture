@@ -114,7 +114,7 @@ function Cart() {
         Promise.all(deletePromises)
           .then(() => {
             fetchCart();
-            navigate(`/choice`, { state: { orderId: orderId } });
+            navigate('/choice', { state: { orderId: orderId } });
           })
           .catch(() => alert('Failed to remove selected items from the cart.'));
       })

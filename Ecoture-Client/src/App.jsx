@@ -124,7 +124,7 @@ function App() {
             mfaMethods: user.mfaMethods,
           };
 
-          const res = await http.post(`/user/edit-profile`, updateData);
+          const res = await http.post('/user/edit-profile', updateData);
 
           if (res.data.user) {
             // Update localStorage with the returned user data

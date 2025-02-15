@@ -7,7 +7,7 @@
     "start": "vite",
     "dev": "vite",
     "build": "vite build",
-    "lint": "eslint . --ext js,jsx --report-unused-disable-directives --quiet",
+    "lint": "eslint . --ext js,jsx --report-unused-disable-directives",
     "prettier": "npx prettier --write .",
     "preview": "vite preview"
   },
