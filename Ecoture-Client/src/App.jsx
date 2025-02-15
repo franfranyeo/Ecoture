@@ -20,8 +20,8 @@ import EditProduct from "./pages/EditProduct";
 import ProductDetail from "./pages/ProductDetail";
 import Reviews from "./pages/Reviews";
 import Products from "./pages/Products";
-import CustomerLanding from './pages/CustomerLanding';
-import StaffDashboard from './pages/StaffView';
+import CustomerLanding from "./pages/CustomerLanding";
+import StaffDashboard from "./pages/admin/products/AdminProducts";
 
 // AHMED IMPORTS
 import Addresses from "./pages/Checkout/Addresses";
@@ -33,7 +33,7 @@ import EditCreditCard from "./pages/Checkout/EditCreditCard";
 import MyForm from "./pages/Checkout/MyForm";
 import Choice from "./pages/Checkout/Choice";
 import Confirmation from "./pages/Checkout/Confirmation";
-import Cart from './pages/Checkout/Cart';
+import Cart from "./pages/Checkout/Cart";
 
 // Amelia Imports
 import Enquiries from "./pages/Enquiries/Enquiries";
@@ -41,8 +41,8 @@ import AddEnquiry from "./pages/Enquiries/AddEnquiry";
 import AddResponse from "./pages/Enquiries/AddResponse";
 import UpdateEnquiry from "./pages/Enquiries/UpdateEnquiry";
 import EnquiriesDashboard from "./pages/Enquiries/Dashboard";
-import SelectContent from './pages/Newsletter/SelectContent';
-import CreateNewsletter from './pages/Newsletter/CreateNewsletter';
+import SelectContent from "./pages/Newsletter/SelectContent";
+import CreateNewsletter from "./pages/Newsletter/CreateNewsletter";
 
 // Fran Imports
 import Account from "./pages/customer/user/Account";
@@ -64,7 +64,7 @@ import { Box } from "@mui/material";
 import AddReward from "./pages/admin/rewards/AddReward";
 import EditReward from "./pages/admin/rewards/EditReward";
 import ViewReward from "./pages/admin/rewards/ViewReward";
-
+import AdminProducts from "./pages/admin/products/AdminProducts";
 
 function App() {
   // update in the user context too
@@ -208,10 +208,14 @@ function App() {
       url: "/admin/rewards/:id/view",
       component: ViewReward,
     },
-    // {
-    //   url: "/admin/rewards/:id/view",
-    //   component: ViewReward,
-    // }
+    {
+      url: "/admin/products",
+      component: AdminProducts,
+    },
+    {
+      url: "/admin/enquiries",
+      component: Enquiries,
+    },
   ];
 
   const logout = () => {
@@ -236,7 +240,16 @@ function App() {
               <Navbar onLogout={logout} />
 
               <Routes>
-                <Route path="/" element={user?.role == "Admin" ? <StaffDashboard /> : <CustomerLanding />} />
+                <Route
+                  path="/"
+                  element={
+                    user?.role == "Admin" ? (
+                      <StaffDashboard />
+                    ) : (
+                      <CustomerLanding />
+                    )
+                  }
+                />
 
                 {sharedRoutes.map((route, index) => (
                   <Route
@@ -290,7 +303,7 @@ function App() {
                 <Route path="/choice" element={<Choice />} />
                 <Route path="/confirmation" element={<Confirmation />} />
                 <Route path="/cart" element={<Cart />} />
-                
+
                 {/* Enquiry Management */}
                 <Route path="/dashboard" element={<EnquiriesDashboard />} />
                 <Route path="/enquiries" element={<Enquiries />} />
@@ -299,7 +312,10 @@ function App() {
                 <Route path="/updateenquiry/:id" element={<UpdateEnquiry />} />
 
                 {/* Newsletter Management */}
-                <Route path="/createnewsletter" element={<CreateNewsletter />} />
+                <Route
+                  path="/createnewsletter"
+                  element={<CreateNewsletter />}
+                />
                 <Route path="/selectcontent" element={<SelectContent />} />
               </Routes>
             </Box>
