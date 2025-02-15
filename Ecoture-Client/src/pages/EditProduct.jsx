@@ -18,12 +18,14 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
+
   FormControl,
   Grid,
   IconButton,
   InputLabel,
   MenuItem,
   Select,
+
   TextField,
   Typography,
 } from '@mui/material';
@@ -99,6 +101,7 @@ function EditProduct() {
         // Set image and sizes
         setImageFile(data.imageFile);
 
+
         setSizes(
           (data.SizeColors || []).map((size) => ({
             sizeName: size.sizeName || '',
@@ -113,10 +116,12 @@ function EditProduct() {
             : []
         );
 
+
         setLoading(false);
       })
       .catch(() => {
         toast.error('Failed to load product data.');
+
         setLoading(false);
       });
   }, [id]);

@@ -172,6 +172,7 @@ function AddProduct() {
       setColors([...colors, colorInput.trim()]);
       setColorInput('');
 
+
       // Update sizes with new color selection array
       setSizes((prevSizes) =>
         prevSizes.map((size) => ({ ...size, selectedColors: [] }))
@@ -184,10 +185,12 @@ function AddProduct() {
   };
 
   const addSizeField = () => {
+
     setSizes([
       ...sizes,
       { sizeName: '', stockQuantity: '', selectedColors: [] },
     ]);
+
   };
 
   const removeSizeField = (index) => {
