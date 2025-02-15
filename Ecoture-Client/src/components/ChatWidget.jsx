@@ -6,7 +6,6 @@ const ChatWidget = () => {
 
     return (
         <div>
-            {/* Floating Chat Button */}
             {!isChatOpen && (
                 <button
                     onClick={() => setIsChatOpen(true)}
@@ -29,11 +28,11 @@ const ChatWidget = () => {
                 </button>
             )}
 
-            {/* Chat Window */}
             {isChatOpen && (
                 <div
                     style={{
                         position: "fixed",
+                        bottom:0,
                         right: "20px",
                         width: "420px",
                         height: "480px",

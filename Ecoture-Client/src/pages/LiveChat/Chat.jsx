@@ -9,7 +9,7 @@ const Chat = () => {
     const [message, setMessage] = useState("");
     const { user } = useContext(UserContext);
 
-    const userId = user ? `User ${user.userId}` : "Guest " + Math.floor(Math.random() * 1000)
+    const userId = user ? `${user.firstName} ${user.lastName}` : "Guest " + Math.floor(Math.random() * 1000)
 
     useEffect(() => {
         const newConnection = new signalR.HubConnectionBuilder()

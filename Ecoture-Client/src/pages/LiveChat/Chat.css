@@ -1,10 +1,17 @@
+/* Chat Container */
 .chat-container {
-    width: 400px;
+    width: 100%;
+    max-width: 400px;
     margin: 20px auto;
     border-radius: 8px;
     overflow: hidden;
+    background: white;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
 
+/* Chat Header */
 .chat-header {
     background: #007bff;
     color: white;
@@ -15,42 +22,45 @@
     border-radius: 8px 8px 0 0;
 }
 
+/* Chat Box */
 .chat-box {
-    height: 300px;
+    flex-grow: 1;
     overflow-y: auto;
     padding: 10px;
     display: flex;
     flex-direction: column;
-    background: #fff; /* Remove unnecessary border */
+    background: white;
+    max-height: 350px;
 }
 
+/* Message Bubbles */
 .message {
     max-width: 70%;
-    padding: 8px;
+    padding: 8px 12px;
     margin: 5px;
-    border-radius: 8px;
+    border-radius: 10px;
     word-wrap: break-word;
+    font-size: 14px;
 }
 
+/* Sent Messages */
 .sent {
     align-self: flex-end;
     background: #dcf8c6;
-    padding: 10px;
-    border-radius: 10px;
 }
 
+/* Received Messages */
 .received {
     align-self: flex-start;
     background: #f1f1f1;
-    padding: 10px;
-    border-radius: 10px;
 }
 
+/* Chat Input */
 .chat-input {
     display: flex;
     padding: 10px;
-    background: #fff;
-    border: none; 
+    background: white;
+    border-top: 1px solid #ddd;
 }
 
 .chat-input input {
@@ -59,6 +69,7 @@
     border: 1px solid #ddd;
     border-radius: 20px;
     outline: none;
+    font-size: 14px;
 }
 
 .send-btn {
@@ -75,3 +86,24 @@
 .send-btn:hover {
     background: #0056b3;
 }
+
+.chat-box::-webkit-scrollbar {
+    width: 8px; 
+    border-radius: 10px;
+}
+
+.chat-box::-webkit-scrollbar-track {
+    background: transparent; 
+}
+
+.chat-box::-webkit-scrollbar-thumb {
+    background: rgba(72, 72, 72, 0.8); 
+    border-radius: 20px; 
+    border: 2px solid white; 
+}
+
+.chat-box::-webkit-scrollbar-thumb:hover {
+    background: rgb(55, 55, 55); 
+}
+
+
