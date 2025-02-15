@@ -1,7 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Ecoture.Model.Request;  // ✅ Import SizeColorRequest
 
 namespace Ecoture.Model.Request
 {
+    /// <summary>
+    /// Request model to add a new product.
+    /// </summary>
     public class AddProductRequest
     {
         [Required, MinLength(3), MaxLength(100)]
@@ -16,23 +20,28 @@ namespace Ecoture.Model.Request
         [Required, Range(0.01, double.MaxValue, ErrorMessage = "Price must be greater than zero.")]
         public decimal Price { get; set; }
 
-        // Support multiple categories instead of a single one
+        /// <summary>
+        /// List of product categories.
+        /// </summary>
         [Required, MinLength(1, ErrorMessage = "At least one category must be provided.")]
         public List<string> Categories { get; set; } = new();
 
-        // Support multiple colors
-        [Required, MinLength(1, ErrorMessage = "At least one color must be provided.")]
-        public List<string> Colors { get; set; } = new();
-
-        // Support multiple fits instead of a single one
+        /// <summary>
+        /// List of product fits.
+        /// </summary>
         [Required, MinLength(1, ErrorMessage = "At least one fit must be provided.")]
         public List<string> Fits { get; set; } = new();
 
+        /// <summary>
+        /// Image file URL or path.
+        /// </summary>
         [MaxLength(255)]
         public string? ImageFile { get; set; }
 
-        // New property to handle multiple sizes and their stock quantities
-        [Required]
-        public List<SizeRequest> Sizes { get; set; } = new(); // Reference the centralized SizeRequest class
+        /// <summary>
+        /// List of size and color combinations with stock quantities.
+        /// </summary>
+        [Required, MinLength(1, ErrorMessage = "At least one size-color combination must be provided.")]
+        public List<SizeColorRequest> SizeColors { get; set; } = new();
     }
 }
