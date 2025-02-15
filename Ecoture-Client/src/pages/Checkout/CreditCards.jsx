@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import http from 'utils/http';
 
@@ -10,7 +10,6 @@ import {
   Card,
   CardContent,
   Grid,
-  Tooltip,
   Typography,
 } from '@mui/material';
 

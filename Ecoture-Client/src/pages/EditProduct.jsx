@@ -1,5 +1,5 @@
 import { useFormik } from 'formik';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -21,8 +21,6 @@ import {
   Grid,
   IconButton,
   TextField,
-  ToggleButton,
-  ToggleButtonGroup,
   Typography,
 } from '@mui/material';
 import { Chip } from '@mui/material';
@@ -62,9 +60,9 @@ function EditProduct() {
     5: '$50+',
   };
 
-  const reversePriceRangeMap = Object.fromEntries(
-    Object.entries(priceRangeMap).map(([k, v]) => [v, parseInt(k)])
-  );
+  // const reversePriceRangeMap = Object.fromEntries(
+  //   Object.entries(priceRangeMap).map(([k, v]) => [v, parseInt(k)])
+  // );
 
   useEffect(() => {
     http
@@ -162,7 +160,7 @@ function EditProduct() {
       // Make the API call
       http
         .put(`/product/${id}`, requestBody)
-        .then((response) => {
+        .then(() => {
           toast.success('Product updated successfully!');
           navigate('/');
         })

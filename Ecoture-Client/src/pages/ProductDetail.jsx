@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import ReactImageMagnify from 'react-image-magnify';
 import { useNavigate, useParams } from 'react-router-dom';
 import http from 'utils/http';
 
 import { ArrowBack } from '@mui/icons-material';
-import { Box, Button, CardMedia, Chip, Grid, Typography } from '@mui/material';
+import { Box, Button, Chip, Grid, Typography } from '@mui/material';
 
 function ProductDetail() {
   const { id } = useParams();

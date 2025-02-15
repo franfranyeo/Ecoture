@@ -1,17 +1,14 @@
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import { useState } from 'react';
 
 import { AccessTime, MonetizationOn } from '@mui/icons-material';
-import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import {
-  Avatar,
   Box,
   Button,
   Card,
   CardContent,
   Divider,
   Grid,
-  IconButton,
   Paper,
   Tab,
   Tabs,
@@ -26,7 +23,7 @@ import ProgressBar from './ProgressBar';
 
 const MembershipTab = () => {
   const { user } = useContext(UserContext);
-  const [vouchers, setVouchers] = useState([
+  const [vouchers] = useState([
     {
       voucherCode: 'V12345',
       customerName: 'John Doe',

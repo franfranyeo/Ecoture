@@ -1,5 +1,5 @@
 // components/MFAVerification.jsx
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { authService } from 'services/auth.service';
 
@@ -65,7 +65,7 @@ function MFAVerification({ userData, onCancel, onSuccess }) {
 
   const handleVerify = async () => {
     try {
-      const response = await authService.verifyMFACode({
+      await authService.verifyMFACode({
         email: userData.email,
         method: selectedMethod,
         otp,

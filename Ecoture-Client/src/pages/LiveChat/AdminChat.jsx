@@ -3,12 +3,12 @@ import * as signalR from "@microsoft/signalr";
 import "./AdminChat.css";
 
 const AdminChat = () => {
-    const [connection, setConnection] = useState(null);
-    const [messages, setMessages] = useState([]);
-    const [message, setMessage] = useState("");
-    const [user, setUser] = useState("Admin");
-    const [targetUser, setTargetUser] = useState("");
-    const [users, setUsers] = useState([]);
+  const [connection, setConnection] = useState(null);
+  const [messages, setMessages] = useState([]);
+  const [message, setMessage] = useState('');
+  const [user, setUser] = useState('Admin');
+  const [targetUser, setTargetUser] = useState('');
+  const [users, setUsers] = useState([]);
 
     useEffect(() => {
         const storedMessages = JSON.parse(localStorage.getItem("adminChatMessages")) || [];

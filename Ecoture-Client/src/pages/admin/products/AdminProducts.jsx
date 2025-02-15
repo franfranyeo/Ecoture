@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 import AddProduct from '../../AddProduct';
-import Dashboard from '../../Dashboard';
 import Products from '../../Products';
 
 // Products component to manage and display products

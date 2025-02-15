@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import http from 'utils/http';
 
@@ -9,7 +9,6 @@ import {
   Card,
   CardContent,
   CardMedia,
-  Chip,
   Dialog,
   DialogActions,
   DialogContent,

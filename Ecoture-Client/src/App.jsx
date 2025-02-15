@@ -41,7 +41,6 @@ import EnquiriesDashboard from './pages/Enquiries/Dashboard';
 import Enquiries from './pages/Enquiries/Enquiries';
 import UpdateEnquiry from './pages/Enquiries/UpdateEnquiry';
 import AdminChat from './pages/LiveChat/AdminChat';
-import Chat from './pages/LiveChat/Chat';
 import CreateNewsletter from './pages/Newsletter/CreateNewsletter';
 import SelectContent from './pages/Newsletter/SelectContent';
 import ProductDetail from './pages/ProductDetail';

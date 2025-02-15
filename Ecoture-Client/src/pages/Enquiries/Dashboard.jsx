@@ -1,15 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 import http from 'utils/http';
 
-import {
-  Box,
-  Button,
-  Card,
-  CardContent,
-  Grid2,
-  Typography,
-} from '@mui/material';
+import { Box, Card, CardContent, Grid2, Typography } from '@mui/material';
 
 function Dashboard() {
   const [enquiryStats, setEnquiryStats] = useState({
@@ -19,7 +11,7 @@ function Dashboard() {
     inProgress: 0,
   });
 
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   useEffect(() => {
     http

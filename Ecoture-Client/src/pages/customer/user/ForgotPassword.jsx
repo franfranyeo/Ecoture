@@ -1,5 +1,5 @@
 import { useFormik } from 'formik';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -17,7 +17,6 @@ import {
   DialogTitle,
   Grid,
   IconButton,
-  Modal,
   TextField,
   Typography,
 } from '@mui/material';
@@ -61,7 +60,7 @@ function ForgotPassword() {
       data.email = data.email.trim().toLowerCase();
       setEmail(data.email); // Save the email for resending
       try {
-        const res = await http.post('/user/forgot-password', data);
+        await http.post('/user/forgot-password', data);
         setIsModalOpen(true); // Show modal on successful response
       } catch (err) {
         console.error(err);

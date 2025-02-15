@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import http from 'utils/http';
 
@@ -254,7 +254,7 @@ const SecurityTab = () => {
         }),
       };
 
-      const res = await http.post(endpoint, payload);
+      await http.post(endpoint, payload);
       updateModalState({ otpSent: true });
       toast.success('OTP sent successfully');
     } catch (error) {

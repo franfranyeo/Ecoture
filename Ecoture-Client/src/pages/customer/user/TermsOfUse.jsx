@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { Box, Container, Divider, Typography } from '@mui/material';
 
 const TermsOfUse = () => {

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 // Update with the actual image path
 import { toast } from 'react-toastify';
@@ -13,7 +13,6 @@ import {
   Container,
   Drawer,
   IconButton,
-  List,
   ListItem,
   ListItemText,
   Menu,

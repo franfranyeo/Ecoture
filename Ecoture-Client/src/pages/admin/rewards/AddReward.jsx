@@ -1,5 +1,4 @@
 import { useFormik } from 'formik';
-import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -8,13 +7,10 @@ import * as yup from 'yup';
 
 import { ArrowBack } from '@mui/icons-material';
 import {
-  Avatar,
   Box,
   Button,
-  Divider,
   FormControl,
   FormHelperText,
-  Grid,
   IconButton,
   InputLabel,
   MenuItem,
