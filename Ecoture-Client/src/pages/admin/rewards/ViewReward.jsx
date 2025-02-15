@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import http from 'utils/http';
 
-import { ArrowBack, Delete, Edit } from '@mui/icons-material';
+import { ArrowBack, Edit } from '@mui/icons-material';
 import {
   Avatar,
   Box,

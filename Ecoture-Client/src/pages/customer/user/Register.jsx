@@ -3,7 +3,6 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 // Ensure you have this package installed
-import http from 'utils/http';
 import * as yup from 'yup';
 
 import { Visibility, VisibilityOff } from '@mui/icons-material';

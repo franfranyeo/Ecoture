@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useFormik } from 'formik';
-import React, { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import http from 'utils/http';
 import * as yup from 'yup';

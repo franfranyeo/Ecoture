@@ -1,5 +1,5 @@
 import { useFormik } from 'formik';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -8,11 +8,9 @@ import * as yup from 'yup';
 
 import { ArrowBack, Delete } from '@mui/icons-material';
 import {
-  Alert,
   Box,
   Button,
   Card,
-  CardContent,
   Dialog,
   DialogActions,
   DialogContent,

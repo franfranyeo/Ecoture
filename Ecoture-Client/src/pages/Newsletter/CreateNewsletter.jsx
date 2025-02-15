@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import EmailEditor from 'react-email-editor';
 import http from 'utils/http';
 
