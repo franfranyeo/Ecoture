@@ -1,33 +1,35 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
+import http from 'utils/http';
+
+import { Close } from '@mui/icons-material';
+import EditIcon from '@mui/icons-material/Edit';
 import {
   Box,
-  Paper,
-  Typography,
   Button,
-  Divider,
-  Switch,
-  Stack,
   Chip,
-  IconButton,
-  Link,
-  TextField,
-  Modal,
-  FormControl,
   CircularProgress,
   Dialog,
-  DialogTitle,
+  DialogActions,
   DialogContent,
   DialogContentText,
-  DialogActions,
-} from "@mui/material";
-import EditIcon from "@mui/icons-material/Edit";
-import UserContext from "contexts/UserContext";
-import http from "utils/http";
-import { toast } from "react-toastify";
-import { Close } from "@mui/icons-material";
+  DialogTitle,
+  Divider,
+  FormControl,
+  IconButton,
+  Link,
+  Modal,
+  Paper,
+  Stack,
+  Switch,
+  TextField,
+  Typography,
+} from '@mui/material';
+
+import UserContext from 'contexts/UserContext';
 
 const SecurityTab = () => {
-  const AVAILABLE_METHODS = ["SMS", "Email"];
+  const AVAILABLE_METHODS = ['SMS', 'Email'];
   const { user, setUser } = useContext(UserContext);
 
   const [securityState, setSecurityState] = useState({
@@ -40,14 +42,14 @@ const SecurityTab = () => {
 
   const [modalState, setModalState] = useState({
     open: false,
-    type: "",
+    type: '',
     otpSent: false,
     loading: false,
-    otp: "",
+    otp: '',
     isChange: false,
   });
 
-  const [phoneNumber, setPhoneNumber] = useState("+65 ");
+  const [phoneNumber, setPhoneNumber] = useState('+65 ');
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
   const [countdown, setCountdown] = useState(30);
   const [canResend, setCanResend] = useState(false);
@@ -89,11 +91,11 @@ const SecurityTab = () => {
     try {
       const mfaMethods = user.mfaMethods;
       const activeMethods = Object.keys(mfaMethods).filter(
-        (key) => mfaMethods[key] && key !== "userId"
+        (key) => mfaMethods[key] && key !== 'userId'
       );
       updateSecurityState({ authMethods: activeMethods });
     } catch (error) {
-      toast.error("Failed to fetch authentication methods");
+      toast.error('Failed to fetch authentication methods');
     }
   };
 
@@ -111,7 +113,7 @@ const SecurityTab = () => {
       isEmailVerified: securityState.tempUser.isEmailVerified,
       isPhoneVerified: securityState.tempUser.isPhoneVerified,
     };
-    const res = await http.post("/user/edit-profile", payload);
+    const res = await http.post('/user/edit-profile', payload);
     if (res.data) {
       setUser({ ...user, ...res.data.user });
       return res;
@@ -130,8 +132,8 @@ const SecurityTab = () => {
   const checkMethodVerification = () => {
     for (const method of securityState.authMethods) {
       if (
-        (method === "sms" && !securityState.tempUser.isPhoneVerified) ||
-        (method === "email" && !securityState.tempUser.isEmailVerified)
+        (method === 'sms' && !securityState.tempUser.isPhoneVerified) ||
+        (method === 'email' && !securityState.tempUser.isEmailVerified)
       ) {
         return {
           isValid: false,
@@ -176,7 +178,7 @@ const SecurityTab = () => {
   const handleSaveClick = async () => {
     if (securityState.is2FAEnabled && securityState.authMethods.length === 0) {
       updateSecurityState({
-        error: "You must select at least one authentication method.",
+        error: 'You must select at least one authentication method.',
       });
       return;
     }
@@ -199,10 +201,10 @@ const SecurityTab = () => {
           error: null,
           isEditing: false,
         });
-        toast.success("Settings updated successfully");
+        toast.success('Settings updated successfully');
       }
     } catch (error) {
-      handleError("Failed to update settings");
+      handleError('Failed to update settings');
     }
   };
 
@@ -216,14 +218,14 @@ const SecurityTab = () => {
   // Phone and Email Verification Handlers
   const handlePhoneNumberChange = (e) => {
     let { value } = e.target;
-    if (!value.startsWith("+65 ")) {
-      value = "+65 " + value.slice(4);
+    if (!value.startsWith('+65 ')) {
+      value = '+65 ' + value.slice(4);
     }
-    let numericValue = value.slice(4).replace(/\D/g, "");
+    let numericValue = value.slice(4).replace(/\D/g, '');
     if (numericValue.length > 4) {
-      numericValue = numericValue.slice(0, 4) + " " + numericValue.slice(4, 8);
+      numericValue = numericValue.slice(0, 4) + ' ' + numericValue.slice(4, 8);
     }
-    setPhoneNumber("+65 " + numericValue);
+    setPhoneNumber('+65 ' + numericValue);
   };
 
   const handleOpenModal = (type, isChange = false) => {
@@ -232,7 +234,7 @@ const SecurityTab = () => {
       type,
       otpSent: false,
       loading: false,
-      otp: "",
+      otp: '',
       isChange,
     });
   };
@@ -244,19 +246,19 @@ const SecurityTab = () => {
   const handleOtpSend = async (type) => {
     updateModalState({ loading: true });
     try {
-      const endpoint = type === "email" ? "/verify/email" : "/verify/phone";
+      const endpoint = type === 'email' ? '/verify/email' : '/verify/phone';
       const payload = {
         email: user.email,
-        ...(type === "phone" && {
-          phoneNo: phoneNumber.replaceAll(" ", "").trim(),
+        ...(type === 'phone' && {
+          phoneNo: phoneNumber.replaceAll(' ', '').trim(),
         }),
       };
 
       const res = await http.post(endpoint, payload);
       updateModalState({ otpSent: true });
-      toast.success("OTP sent successfully");
+      toast.success('OTP sent successfully');
     } catch (error) {
-      handleError("Failed to send OTP");
+      handleError('Failed to send OTP');
     } finally {
       updateModalState({ loading: false });
     }
@@ -266,19 +268,19 @@ const SecurityTab = () => {
     updateModalState({ loading: true });
     try {
       const endpoint =
-        type === "email" ? "/verify/email-otp" : "/verify/phone-otp";
+        type === 'email' ? '/verify/email-otp' : '/verify/phone-otp';
       const payload = {
         email: user.email,
         otp: modalState.otp,
-        ...(type === "phone" && {
-          phoneNo: phoneNumber.replaceAll(" ", "").trim(),
+        ...(type === 'phone' && {
+          phoneNo: phoneNumber.replaceAll(' ', '').trim(),
         }),
       };
 
       const res = await http.post(endpoint, payload);
       if (res.data) {
         const updates =
-          type === "email"
+          type === 'email'
             ? { isEmailVerified: true }
             : { isPhoneVerified: true, mobileNo: phoneNumber };
 
@@ -287,10 +289,10 @@ const SecurityTab = () => {
           tempUser: { ...securityState.tempUser, ...updates },
         });
         handleCloseModal();
-        toast.success("Verification successful");
+        toast.success('Verification successful');
       }
     } catch (error) {
-      handleError("Failed to verify OTP");
+      handleError('Failed to verify OTP');
     } finally {
       updateModalState({ loading: false });
     }
@@ -309,13 +311,13 @@ const SecurityTab = () => {
     try {
       await http.post(`/user/${user.userId}/delete-request`);
       toast.success(
-        "Your account will be disabled for 30 days before permanent deletion. You can undo this action by logging in again within this period."
+        'Your account will be disabled for 30 days before permanent deletion. You can undo this action by logging in again within this period.'
       );
       localStorage.clear();
       setUser(null);
-      window.location.href = "/";
+      window.location.href = '/';
     } catch (error) {
-      toast.error("Error requesting account deletion.");
+      toast.error('Error requesting account deletion.');
     } finally {
       setOpenDeleteDialog(false);
     }
@@ -327,18 +329,18 @@ const SecurityTab = () => {
       <Box
         sx={{
           width: 400,
-          margin: "auto",
+          margin: 'auto',
           padding: 4,
-          backgroundColor: "white",
+          backgroundColor: 'white',
           borderRadius: 2,
-          position: "absolute",
-          top: "50%",
-          left: "50%",
-          transform: "translate(-50%, -50%)",
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
         }}
       >
         <IconButton
-          sx={{ position: "absolute", top: 8, right: 8 }}
+          sx={{ position: 'absolute', top: 8, right: 8 }}
           onClick={handleCloseModal}
         >
           <Close />
@@ -355,7 +357,7 @@ const SecurityTab = () => {
               }`}
         </Typography>
 
-        {modalState.type === "phone" && (
+        {modalState.type === 'phone' && (
           <Box sx={{ marginBottom: 2 }}>
             <FormControl fullWidth>
               <TextField
@@ -372,7 +374,7 @@ const SecurityTab = () => {
           </Box>
         )}
 
-        {modalState.type === "email" && (
+        {modalState.type === 'email' && (
           <Box sx={{ marginBottom: 2 }}>
             {!modalState.otpSent ? (
               <Typography>An OTP will be sent to {user.email}.</Typography>
@@ -395,8 +397,8 @@ const SecurityTab = () => {
             />
             <Box
               sx={{
-                display: "flex",
-                justifyContent: "flex-end",
+                display: 'flex',
+                justifyContent: 'flex-end',
                 mt: 1,
                 mb: 2,
               }}
@@ -410,10 +412,10 @@ const SecurityTab = () => {
                   variant="body2"
                   color="primary"
                   sx={{
-                    cursor: canResend ? "pointer" : "default",
-                    "&:hover": canResend
+                    cursor: canResend ? 'pointer' : 'default',
+                    '&:hover': canResend
                       ? {
-                          textDecoration: "underline",
+                          textDecoration: 'underline',
                         }
                       : {},
                   }}
@@ -437,7 +439,7 @@ const SecurityTab = () => {
             {modalState.loading ? (
               <CircularProgress size={24} color="inherit" />
             ) : (
-              `Send OTP to ${modalState.type === "email" ? "Email" : "Phone"}`
+              `Send OTP to ${modalState.type === 'email' ? 'Email' : 'Phone'}`
             )}
           </Button>
         ) : (
@@ -451,7 +453,7 @@ const SecurityTab = () => {
             {modalState.loading ? (
               <CircularProgress size={24} color="inherit" />
             ) : (
-              "Verify OTP"
+              'Verify OTP'
             )}
           </Button>
         )}
@@ -461,7 +463,7 @@ const SecurityTab = () => {
 
   const renderDeleteDialog = () => (
     <Dialog open={openDeleteDialog} onClose={handleCloseDeleteDialog}>
-      <DialogTitle sx={{ color: "#e2160f", fontWeight: "bold" }}>
+      <DialogTitle sx={{ color: '#e2160f', fontWeight: 'bold' }}>
         Delete Account?
       </DialogTitle>
       <DialogContent>
@@ -508,11 +510,11 @@ const SecurityTab = () => {
                 color="primary"
                 onClick={handleSaveClick}
                 sx={{
-                  backgroundColor: "primary.main",
-                  "&:hover": {
-                    backgroundColor: "primary.light",
+                  backgroundColor: 'primary.main',
+                  '&:hover': {
+                    backgroundColor: 'primary.light',
                   },
-                  textTransform: "none",
+                  textTransform: 'none',
                 }}
               >
                 SAVE
@@ -537,7 +539,7 @@ const SecurityTab = () => {
             mt={1}
           >
             <Typography>
-              {securityState.is2FAEnabled ? "Enabled" : "Disabled"}
+              {securityState.is2FAEnabled ? 'Enabled' : 'Disabled'}
             </Typography>
             {securityState.isEditing && (
               <Switch
@@ -566,8 +568,8 @@ const SecurityTab = () => {
                   label={method}
                   color={
                     securityState.authMethods.includes(method.toLowerCase())
-                      ? "primary"
-                      : "default"
+                      ? 'primary'
+                      : 'default'
                   }
                   onClick={() =>
                     securityState.isEditing &&
@@ -576,17 +578,17 @@ const SecurityTab = () => {
                   clickable={securityState.isEditing}
                   variant={
                     securityState.authMethods.includes(method.toLowerCase())
-                      ? "filled"
-                      : "outlined"
+                      ? 'filled'
+                      : 'outlined'
                   }
                 />
               ))}
             </Box>
 
             <Box mt={3}>
-              {securityState.authMethods.includes("sms") && (
+              {securityState.authMethods.includes('sms') && (
                 <Box mb={2}>
-                  <Typography variant="subtitle1" sx={{ fontWeight: "600" }}>
+                  <Typography variant="subtitle1" sx={{ fontWeight: '600' }}>
                     SMS
                   </Typography>
                   {securityState.tempUser.mobileNo ? (
@@ -594,8 +596,8 @@ const SecurityTab = () => {
                       <Typography>
                         {securityState.tempUser.mobileNo}(
                         {securityState.tempUser.isPhoneVerified
-                          ? "Verified"
-                          : "Unverified"}
+                          ? 'Verified'
+                          : 'Unverified'}
                         )
                       </Typography>
                       {securityState.isEditing && (
@@ -603,36 +605,36 @@ const SecurityTab = () => {
                           component="button"
                           onClick={() =>
                             handleOpenModal(
-                              "phone",
+                              'phone',
                               securityState.tempUser.isPhoneVerified
                             )
                           }
                           sx={{
-                            textDecoration: "none",
-                            color: "primary.main",
-                            fontWeight: "bold",
-                            fontSize: "0.875rem",
-                            transition: "color 0.2s ease-in-out",
-                            "&:hover": {
-                              color: "primary.light",
-                              textDecoration: "underline",
+                            textDecoration: 'none',
+                            color: 'primary.main',
+                            fontWeight: 'bold',
+                            fontSize: '0.875rem',
+                            transition: 'color 0.2s ease-in-out',
+                            '&:hover': {
+                              color: 'primary.light',
+                              textDecoration: 'underline',
                             },
                           }}
                         >
                           {securityState.tempUser.isPhoneVerified
-                            ? "Change"
-                            : "Verify"}
+                            ? 'Change'
+                            : 'Verify'}
                         </Link>
                       )}
                     </Box>
                   ) : (
                     <Typography color="error">
-                      No mobile number set.{" "}
+                      No mobile number set.{' '}
                       <Link
-                        onClick={() => handleOpenModal("phone")}
+                        onClick={() => handleOpenModal('phone')}
                         sx={{
-                          textDecoration: "none",
-                          cursor: "pointer",
+                          textDecoration: 'none',
+                          cursor: 'pointer',
                         }}
                       >
                         Set up
@@ -642,9 +644,9 @@ const SecurityTab = () => {
                 </Box>
               )}
 
-              {securityState.authMethods.includes("email") && (
+              {securityState.authMethods.includes('email') && (
                 <Box mb={2}>
-                  <Typography variant="subtitle1" sx={{ fontWeight: "600" }}>
+                  <Typography variant="subtitle1" sx={{ fontWeight: '600' }}>
                     Email
                   </Typography>
                   {securityState.tempUser.email ? (
@@ -652,8 +654,8 @@ const SecurityTab = () => {
                       <Typography>
                         {securityState.tempUser.email}(
                         {securityState.tempUser.isEmailVerified
-                          ? "Verified"
-                          : "Unverified"}
+                          ? 'Verified'
+                          : 'Unverified'}
                         )
                       </Typography>
                       {securityState.isEditing && (
@@ -661,25 +663,25 @@ const SecurityTab = () => {
                           component="button"
                           onClick={() =>
                             handleOpenModal(
-                              "email",
+                              'email',
                               securityState.tempUser.isEmailVerified
                             )
                           }
                           sx={{
-                            textDecoration: "none",
-                            color: "primary.main",
-                            fontWeight: "bold",
-                            fontSize: "0.875rem",
-                            transition: "color 0.2s ease-in-out",
-                            "&:hover": {
-                              color: "primary.light",
-                              textDecoration: "underline",
+                            textDecoration: 'none',
+                            color: 'primary.main',
+                            fontWeight: 'bold',
+                            fontSize: '0.875rem',
+                            transition: 'color 0.2s ease-in-out',
+                            '&:hover': {
+                              color: 'primary.light',
+                              textDecoration: 'underline',
                             },
                           }}
                         >
                           {securityState.tempUser.isEmailVerified
-                            ? "Change"
-                            : "Verify"}
+                            ? 'Change'
+                            : 'Verify'}
                         </Link>
                       )}
                     </Box>

@@ -1,68 +1,69 @@
-import React, { useState } from "react";
+import dayjs from 'dayjs';
+import { useFormik } from 'formik';
+import React, { useState } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import http from 'utils/http';
+import * as yup from 'yup';
+
 import {
   Box,
-  Typography,
-  TextField,
   Button,
   Grid2 as Grid,
-} from "@mui/material";
+  TextField,
+  Typography,
+} from '@mui/material';
 import {
   FormControl,
-  InputLabel,
   FormHelperText,
-  Select,
+  InputLabel,
   MenuItem,
-} from "@mui/material";
-import { Checkbox, FormControlLabel } from "@mui/material";
-import { useFormik } from "formik";
-import * as yup from "yup";
-import dayjs from "dayjs";
-import http from "utils/http";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+  Select,
+} from '@mui/material';
+import { Checkbox, FormControlLabel } from '@mui/material';
 // npm install @mui/x-date-pickers
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { TimePicker } from "@mui/x-date-pickers/TimePicker";
-import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 
 function MyForm() {
   const [imageFile, setImageFile] = useState(null);
 
   const formik = useFormik({
     initialValues: {
-      title: "My title",
-      description: "My description",
+      title: 'My title',
+      description: 'My description',
       price: 0,
-      option: "A",
-      date: dayjs().add(1, "day"),
+      option: 'A',
+      date: dayjs().add(1, 'day'),
       time: dayjs().minute(0),
-      datetime: dayjs().add(1, "day").minute(0),
+      datetime: dayjs().add(1, 'day').minute(0),
       tnc: true,
     },
     validationSchema: yup.object({
       title: yup
         .string()
         .trim()
-        .min(3, "Title must be at least 3 characters")
-        .max(100, "Title must be at most 100 characters")
-        .required("Title is required"),
+        .min(3, 'Title must be at least 3 characters')
+        .max(100, 'Title must be at most 100 characters')
+        .required('Title is required'),
       description: yup
         .string()
         .trim()
-        .min(3, "Description must be at least 3 characters")
-        .max(500, "Description must be at most 500 characters")
-        .required("Description is required"),
-      price: yup.number().min(0).required("Price is required"),
-      option: yup.string().required("Option is required"),
-      date: yup.date().typeError("Invalid date").required("Date is required"),
-      time: yup.date().typeError("Invalid time").required("Time is required"),
+        .min(3, 'Description must be at least 3 characters')
+        .max(500, 'Description must be at most 500 characters')
+        .required('Description is required'),
+      price: yup.number().min(0).required('Price is required'),
+      option: yup.string().required('Option is required'),
+      date: yup.date().typeError('Invalid date').required('Date is required'),
+      time: yup.date().typeError('Invalid time').required('Time is required'),
       datetime: yup
         .date()
-        .typeError("Invalid date time")
-        .required("Date Time is required"),
-      tnc: yup.boolean().oneOf([true], "Accept Terms & Conditions is required"),
+        .typeError('Invalid date time')
+        .required('Date Time is required'),
+      tnc: yup.boolean().oneOf([true], 'Accept Terms & Conditions is required'),
     }),
     onSubmit: (data) => {
       if (imageFile) {
@@ -72,10 +73,10 @@ function MyForm() {
       let dataToSubmit = { ...data };
       dataToSubmit.title = data.title.trim();
       dataToSubmit.description = data.description.trim();
-      dataToSubmit.date = data.date.format("YYYY-MM-DD");
-      dataToSubmit.time = data.time.format("HH:mm");
+      dataToSubmit.date = data.date.format('YYYY-MM-DD');
+      dataToSubmit.time = data.time.format('HH:mm');
       console.log(dataToSubmit);
-      toast.success("Form submitted successfully");
+      toast.success('Form submitted successfully');
     },
   });
 
@@ -83,16 +84,16 @@ function MyForm() {
     let file = e.target.files[0];
     if (file) {
       if (file.size > 1024 * 1024) {
-        toast.error("Maximum file size is 1MB");
+        toast.error('Maximum file size is 1MB');
         return;
       }
 
       let formData = new FormData();
-      formData.append("file", file);
+      formData.append('file', file);
       http
-        .post("/file/upload", formData, {
+        .post('/file/upload', formData, {
           headers: {
-            "Content-Type": "multipart/form-data",
+            'Content-Type': 'multipart/form-data',
           },
         })
         .then((res) => {
@@ -180,10 +181,10 @@ function MyForm() {
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                 >
-                  <MenuItem value={"A"}>Option A</MenuItem>
-                  <MenuItem value={"B"}>Option B</MenuItem>
-                  <MenuItem value={"C"}>Option C</MenuItem>
-                  <MenuItem value={"D"}>Option D</MenuItem>
+                  <MenuItem value={'A'}>Option A</MenuItem>
+                  <MenuItem value={'B'}>Option B</MenuItem>
+                  <MenuItem value={'C'}>Option C</MenuItem>
+                  <MenuItem value={'D'}>Option D</MenuItem>
                 </Select>
                 <FormHelperText>
                   {formik.touched.option && formik.errors.option}
@@ -198,8 +199,8 @@ function MyForm() {
                     label="Select Date"
                     name="date"
                     value={formik.values.date}
-                    onChange={(date) => formik.setFieldValue("date", date)}
-                    onBlur={() => formik.setFieldTouched("date", true)}
+                    onChange={(date) => formik.setFieldValue('date', date)}
+                    onBlur={() => formik.setFieldTouched('date', true)}
                     slotProps={{
                       textField: {
                         error:
@@ -218,8 +219,8 @@ function MyForm() {
                     label="Select Time"
                     name="time"
                     value={formik.values.time}
-                    onChange={(time) => formik.setFieldValue("time", time)}
-                    onBlur={() => formik.setFieldTouched("time", true)}
+                    onChange={(time) => formik.setFieldValue('time', time)}
+                    onBlur={() => formik.setFieldTouched('time', true)}
                     slotProps={{
                       textField: {
                         error:
@@ -240,9 +241,9 @@ function MyForm() {
                     name="datetime"
                     value={formik.values.datetime}
                     onChange={(datetime) =>
-                      formik.setFieldValue("datetime", datetime)
+                      formik.setFieldValue('datetime', datetime)
                     }
-                    onBlur={() => formik.setFieldTouched("datetime", true)}
+                    onBlur={() => formik.setFieldTouched('datetime', true)}
                     slotProps={{
                       textField: {
                         error:
@@ -259,7 +260,7 @@ function MyForm() {
           </Grid>
 
           <Grid size={{ xs: 12, md: 6, lg: 4 }}>
-            <Box sx={{ textAlign: "center", mt: 2 }}>
+            <Box sx={{ textAlign: 'center', mt: 2 }}>
               <Button variant="contained" component="label">
                 Upload Image
                 <input

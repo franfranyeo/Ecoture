@@ -1,27 +1,28 @@
-import React, { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useFormik } from 'formik';
+import React, { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import http from 'utils/http';
+import * as yup from 'yup';
+
+import { ArrowBack, Delete } from '@mui/icons-material';
 import {
+  Alert,
   Box,
-  Typography,
-  TextField,
   Button,
-  Grid,
   Card,
   CardContent,
-  IconButton,
   Dialog,
-  DialogTitle,
+  DialogActions,
   DialogContent,
   DialogContentText,
-  DialogActions,
-  Alert,
-} from "@mui/material";
-import { ArrowBack, Delete } from "@mui/icons-material";
-import http from "utils/http";
-import { useFormik } from "formik";
-import * as yup from "yup";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+  DialogTitle,
+  Grid,
+  IconButton,
+  TextField,
+  Typography,
+} from '@mui/material';
 
 // formating help from ai
 function EditAddress() {
@@ -29,8 +30,8 @@ function EditAddress() {
   const navigate = useNavigate();
 
   const [address, setAddress] = useState({
-    title: "",
-    description: "",
+    title: '',
+    description: '',
   });
   const [imageFile, setImageFile] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -46,7 +47,7 @@ function EditAddress() {
         setLoading(false);
       })
       .catch(() => {
-        toast.error("Failed to fetch address details.");
+        toast.error('Failed to fetch address details.');
         setLoading(false);
       });
   }, [id]);
@@ -58,15 +59,15 @@ function EditAddress() {
       title: yup
         .string()
         .trim()
-        .min(3, "Title must be at least 3 characters")
-        .max(100, "Title must be at most 100 characters")
-        .required("Title is required"),
+        .min(3, 'Title must be at least 3 characters')
+        .max(100, 'Title must be at most 100 characters')
+        .required('Title is required'),
       description: yup
         .string()
         .trim()
-        .min(3, "Description must be at least 3 characters")
-        .max(500, "Description must be at most 500 characters")
-        .required("Description is required"),
+        .min(3, 'Description must be at least 3 characters')
+        .max(500, 'Description must be at most 500 characters')
+        .required('Description is required'),
     }),
     onSubmit: (data) => {
       if (imageFile) {
@@ -82,7 +83,7 @@ function EditAddress() {
           navigate('/choice');
         })
         .catch(() => {
-          toast.error("Failed to update the address.");
+          toast.error('Failed to update the address.');
         });
     },
   });
@@ -95,7 +96,7 @@ function EditAddress() {
         navigate('/choice');
       })
       .catch(() => {
-        toast.error("Failed to delete the address.");
+        toast.error('Failed to delete the address.');
       });
   };
 
@@ -103,30 +104,30 @@ function EditAddress() {
     const file = e.target.files[0];
     if (file) {
       if (file.size > 1024 * 1024) {
-        toast.error("Maximum file size is 1MB");
+        toast.error('Maximum file size is 1MB');
         return;
       }
 
       const formData = new FormData();
-      formData.append("file", file);
+      formData.append('file', file);
       http
-        .post("/file/upload", formData, {
+        .post('/file/upload', formData, {
           headers: {
-            "Content-Type": "multipart/form-data",
+            'Content-Type': 'multipart/form-data',
           },
         })
         .then((res) => {
           setImageFile(res.data.filename);
-          toast.success("Image uploaded successfully.");
+          toast.success('Image uploaded successfully.');
         })
         .catch(() => {
-          toast.error("Failed to upload image.");
+          toast.error('Failed to upload image.');
         });
     }
   };
 
   return (
-    <Box sx={{ maxWidth: 800, mx: "auto", mt: 4 }}>
+    <Box sx={{ maxWidth: 800, mx: 'auto', mt: 4 }}>
       <IconButton onClick={() => navigate(-1)} sx={{ mb: 2 }}>
         <ArrowBack />
       </IconButton>
@@ -134,7 +135,7 @@ function EditAddress() {
       <Card elevation={3} sx={{ padding: 3 }}>
         <Typography
           variant="h5"
-          sx={{ mb: 2, fontWeight: "bold", textAlign: "center" }}
+          sx={{ mb: 2, fontWeight: 'bold', textAlign: 'center' }}
         >
           Edit Address
         </Typography>
@@ -176,19 +177,19 @@ function EditAddress() {
 
               {/* Image Upload */}
               <Grid item xs={12} md={6}>
-                <Box sx={{ textAlign: "center" }}>
+                <Box sx={{ textAlign: 'center' }}>
                   {imageFile && (
                     <Box
                       component="img"
                       alt="Uploaded Address"
                       src={`${import.meta.env.VITE_FILE_BASE_URL}${imageFile}`}
                       sx={{
-                        width: "100%",
-                        maxWidth: "200px",
-                        height: "150px",
-                        objectFit: "cover",
+                        width: '100%',
+                        maxWidth: '200px',
+                        height: '150px',
+                        objectFit: 'cover',
                         borderRadius: 2,
-                        border: "1px solid #ddd",
+                        border: '1px solid #ddd',
                         mb: 2,
                       }}
                     />
@@ -207,7 +208,7 @@ function EditAddress() {
             </Grid>
 
             <Box
-              sx={{ display: "flex", justifyContent: "space-between", mt: 4 }}
+              sx={{ display: 'flex', justifyContent: 'space-between', mt: 4 }}
             >
               <Button
                 variant="contained"
@@ -221,8 +222,8 @@ function EditAddress() {
                 onClick={() => setDeleteDialogOpen(true)}
                 color="error"
                 sx={{
-                  backgroundColor: "#fce4ec",
-                  "&:hover": { backgroundColor: "#f8bbd0" },
+                  backgroundColor: '#fce4ec',
+                  '&:hover': { backgroundColor: '#f8bbd0' },
                 }}
               >
                 <Delete />

@@ -1,29 +1,30 @@
-import React from "react";
-import { LinearProgress } from "@mui/material";
-import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
+import React from 'react';
+
+import { LinearProgress } from '@mui/material';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 
 const ProgressBar = ({ totalSpent, target }) => {
   const progress = Math.min((totalSpent / target) * 100, 100);
 
   return (
     <Box
-      sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
+      sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
     >
       <Box
-        sx={{ display: "flex", justifyContent: "space-between", width: "100%" }}
+        sx={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}
       >
         <Typography color="textSecondary">Bronze</Typography>
         <Typography color="textSecondary">Silver</Typography>
       </Box>
-      <Box sx={{ width: "100%", mt: 2 }}>
+      <Box sx={{ width: '100%', mt: 2 }}>
         <LinearProgress variant="determinate" value={progress} />
       </Box>
       <Box
         sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          width: "100%",
+          display: 'flex',
+          justifyContent: 'space-between',
+          width: '100%',
           mt: 2,
         }}
       >

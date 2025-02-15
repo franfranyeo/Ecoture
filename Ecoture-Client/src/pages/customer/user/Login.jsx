@@ -1,12 +1,14 @@
 // components/Login.jsx
-import React, { useContext, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import LoginForm from "components/customer/user/LoginForm";
-import MFAVerification from "components/customer/user/MFAVerification";
-import AuthLayout from "components/customer/user/AuthLayout";
-import { authService } from "services/auth.service";
-import { toast } from "react-toastify";
-import UserContext from "contexts/UserContext";
+import React, { useContext, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { authService } from 'services/auth.service';
+
+import AuthLayout from 'components/customer/user/AuthLayout';
+import LoginForm from 'components/customer/user/LoginForm';
+import MFAVerification from 'components/customer/user/MFAVerification';
+
+import UserContext from 'contexts/UserContext';
 
 function Login() {
   const navigate = useNavigate();
@@ -14,22 +16,22 @@ function Login() {
   const [userData, setUserData] = useState(null);
   const { setUser } = useContext(UserContext);
 
-  const handleLoginSuccess = (user, accessToken = "", mfaMethods) => {
+  const handleLoginSuccess = (user, accessToken = '', mfaMethods) => {
     if (user.accessToken) {
       accessToken = user.accessToken;
       delete user.accessToken;
     }
     const userToStore = { ...user, mfaMethods };
     setUser(userToStore);
-    localStorage.setItem("user", JSON.stringify(userToStore));
-    localStorage.setItem("accessToken", accessToken);
+    localStorage.setItem('user', JSON.stringify(userToStore));
+    localStorage.setItem('accessToken', accessToken);
 
-    toast.success("Logged in successfully");
-    if (user.role === "Admin" || user.role === "Staff") {
+    toast.success('Logged in successfully');
+    if (user.role === 'Admin' || user.role === 'Staff') {
       // staff or admin role
-      navigate("/admin/dashboard");
+      navigate('/admin/dashboard');
     } else {
-      navigate("/");
+      navigate('/');
     }
   };
 
@@ -45,7 +47,7 @@ function Login() {
         handleLoginSuccess(user, accessToken, mfaMethods);
       }
     } catch (error) {
-      toast.error(error.response?.data?.message || "Login failed");
+      toast.error(error.response?.data?.message || 'Login failed');
     }
   };
 
@@ -59,7 +61,7 @@ function Login() {
   };
 
   return (
-    <AuthLayout title={showMFA ? "TWO-FACTOR AUTHENTICATION" : "WELCOME BACK"}>
+    <AuthLayout title={showMFA ? 'TWO-FACTOR AUTHENTICATION' : 'WELCOME BACK'}>
       {!showMFA ? (
         <LoginForm onSubmit={handleLoginSubmit} />
       ) : (

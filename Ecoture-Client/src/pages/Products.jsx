@@ -1,53 +1,55 @@
-import React, { useEffect, useState, useContext } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import React, { useContext, useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import http from 'utils/http';
+
+import { Clear, Search } from '@mui/icons-material';
 import {
   Box,
-  Typography,
-  Grid,
+  Button,
   Card,
   CardContent,
   CardMedia,
-  Button,
-  InputBase,
-  IconButton,
+  Chip,
   Dialog,
-  DialogTitle,
+  DialogActions,
   DialogContent,
   DialogContentText,
-  DialogActions,
+  DialogTitle,
+  FormControl,
+  Grid,
+  IconButton,
+  InputBase,
+  InputLabel,
   MenuItem,
   Select,
-  FormControl,
-  InputLabel,
-  Chip,
-} from "@mui/material";
-import { Search, Clear } from "@mui/icons-material";
-import http from "utils/http";
-import UserContext from "../contexts/UserContext";
+  Typography,
+} from '@mui/material';
+
+import UserContext from '../contexts/UserContext';
 
 function Products({ onAddProductClick }) {
   const [productList, setProductList] = useState([]);
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState('');
   const { user } = useContext(UserContext);
   const navigate = useNavigate();
 
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [productToDelete, setProductToDelete] = useState(null);
 
-  const [reviewText, setReviewText] = useState("");
-  const [reviewRating, setReviewRating] = useState("");
+  const [reviewText, setReviewText] = useState('');
+  const [reviewRating, setReviewRating] = useState('');
   const [reviewFormOpen, setReviewFormOpen] = useState(null);
 
   const { categoryName } = useParams(); // Get category from URL
-  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState('');
 
   useEffect(() => {
-    setSelectedCategory(categoryName || ""); // Sync category from URL
+    setSelectedCategory(categoryName || ''); // Sync category from URL
   }, [categoryName]);
 
   const getProducts = () => {
     http
-      .get("/product") // Fetch all products first
+      .get('/product') // Fetch all products first
       .then((res) => {
         let filteredProducts = res.data;
 
@@ -68,7 +70,7 @@ function Products({ onAddProductClick }) {
         setProductList(filteredProducts);
       })
       .catch((err) => {
-        console.error("Error fetching products:", err);
+        console.error('Error fetching products:', err);
       });
   };
 
@@ -84,7 +86,7 @@ function Products({ onAddProductClick }) {
     if (newCategory) {
       navigate(`/category/${newCategory}`);
     } else {
-      navigate("/");
+      navigate('/');
     }
   };
 
@@ -95,7 +97,7 @@ function Products({ onAddProductClick }) {
         setProductList(res.data);
       })
       .catch((err) => {
-        console.error("Error searching products:", err);
+        console.error('Error searching products:', err);
       });
   };
 
@@ -104,7 +106,7 @@ function Products({ onAddProductClick }) {
   };
 
   const onSearchKeyDown = (e) => {
-    if (e.key === "Enter") {
+    if (e.key === 'Enter') {
       searchProducts();
     }
   };
@@ -114,7 +116,7 @@ function Products({ onAddProductClick }) {
   };
 
   const onClickClear = () => {
-    setSearch("");
+    setSearch('');
     getProducts();
   };
 
@@ -139,14 +141,14 @@ function Products({ onAddProductClick }) {
           closeDeleteDialog();
         })
         .catch(() => {
-          alert("Failed to delete product. Please try again.");
+          alert('Failed to delete product. Please try again.');
         });
     }
   };
 
   const getSizeRange = (sizes) => {
-    if (!sizes || sizes.length === 0) return "";
-    const sizeOrder = ["XS", "S", "M", "L", "XL", "XXL", "XXXL"];
+    if (!sizes || sizes.length === 0) return '';
+    const sizeOrder = ['XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL'];
     const sortedSizes = sizes
       .map((size) => size.sizeName)
       .filter((name) => sizeOrder.includes(name))
@@ -165,7 +167,7 @@ function Products({ onAddProductClick }) {
   const submitReview = (productId, e) => {
     e.stopPropagation();
     if (!reviewText || !reviewRating) {
-      alert("Please provide valid review text and a rating.");
+      alert('Please provide valid review text and a rating.');
       return;
     }
 
@@ -173,19 +175,19 @@ function Products({ onAddProductClick }) {
       productId,
       comment: reviewText,
       rating: reviewRating,
-      username: user?.name || "Anonymous",
+      username: user?.name || 'Anonymous',
     };
 
     http
-      .post("/reviews", reviewData)
+      .post('/reviews', reviewData)
       .then(() => {
-        setReviewText("");
-        setReviewRating("");
+        setReviewText('');
+        setReviewRating('');
         setReviewFormOpen(null);
       })
       .catch((err) => {
-        console.error("Error adding review:", err);
-        alert("Failed to add review. Please try again.");
+        console.error('Error adding review:', err);
+        alert('Failed to add review. Please try again.');
       });
   };
 
@@ -200,8 +202,8 @@ function Products({ onAddProductClick }) {
         variant="h4"
         sx={{
           marginBottom: 3,
-          textAlign: "center",
-          fontWeight: "bold",
+          textAlign: 'center',
+          fontWeight: 'bold',
         }}
       >
         Our Products
@@ -212,20 +214,20 @@ function Products({ onAddProductClick }) {
           maxWidth: 220,
           marginBottom: 2,
           marginTop: 1,
-          backgroundColor: "#fff",
-          borderRadius: "8px",
-          boxShadow: "0px 2px 4px rgba(0,0,0,0.1)",
-          "& .MuiInputLabel-root": {
-            fontSize: "14px",
-            color: "#555",
-            transform: "translate(14px, -9px) scale(0.75)", // Adjusted label position
-            backgroundColor: "#fff",
-            padding: "0 4px",
+          backgroundColor: '#fff',
+          borderRadius: '8px',
+          boxShadow: '0px 2px 4px rgba(0,0,0,0.1)',
+          '& .MuiInputLabel-root': {
+            fontSize: '14px',
+            color: '#555',
+            transform: 'translate(14px, -9px) scale(0.75)', // Adjusted label position
+            backgroundColor: '#fff',
+            padding: '0 4px',
           },
         }}
       >
         {/* Only render the dropdown if the user is logged in */}
-        {user && user.role && user.role == "Admin" && (
+        {user && user.role && user.role == 'Admin' && (
           <>
             <InputLabel shrink>Category</InputLabel>
             <Select
@@ -233,19 +235,19 @@ function Products({ onAddProductClick }) {
               onChange={handleCategoryChange} // Updates the URL dynamically
               displayEmpty
               sx={{
-                textAlign: "left",
-                padding: "12px",
-                fontSize: "14px",
-                "& .MuiSelect-select": {
-                  padding: "10px",
-                  display: "flex",
-                  alignItems: "center",
+                textAlign: 'left',
+                padding: '12px',
+                fontSize: '14px',
+                '& .MuiSelect-select': {
+                  padding: '10px',
+                  display: 'flex',
+                  alignItems: 'center',
                 },
-                "& .MuiOutlinedInput-notchedOutline": {
-                  borderColor: "#ddd",
+                '& .MuiOutlinedInput-notchedOutline': {
+                  borderColor: '#ddd',
                 },
-                "&:hover .MuiOutlinedInput-notchedOutline": {
-                  borderColor: "#888",
+                '&:hover .MuiOutlinedInput-notchedOutline': {
+                  borderColor: '#888',
                 },
               }}
             >
@@ -263,9 +265,9 @@ function Products({ onAddProductClick }) {
 
       <Box
         sx={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
           marginBottom: 4,
           gap: 1,
         }}
@@ -276,9 +278,9 @@ function Products({ onAddProductClick }) {
           onChange={onSearchChange}
           onKeyDown={onSearchKeyDown}
           sx={{
-            border: "1px solid #ccc",
-            borderRadius: "50px",
-            padding: "0.5rem 1rem",
+            border: '1px solid #ccc',
+            borderRadius: '50px',
+            padding: '0.5rem 1rem',
             flex: 1,
             maxWidth: 400,
           }}
@@ -289,12 +291,12 @@ function Products({ onAddProductClick }) {
         <IconButton color="secondary" onClick={onClickClear}>
           <Clear />
         </IconButton>
-        {user && user.role && user.role == "Admin" && (
+        {user && user.role && user.role == 'Admin' && (
           <Button
             variant="contained"
             color="primary"
             onClick={onAddProductClick}
-            sx={{ borderRadius: "50px" }}
+            sx={{ borderRadius: '50px' }}
           >
             Add Product
           </Button>
@@ -307,17 +309,17 @@ function Products({ onAddProductClick }) {
             <Grid item xs={12} sm={6} md={4} lg={3} key={product.id}>
               <Card
                 sx={{
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "space-between",
-                  height: "100%",
-                  borderRadius: "12px",
-                  boxShadow: "none",
-                  border: "1px solid #e0e0e0",
-                  transition: "transform 0.2s",
-                  "&:hover": {
-                    transform: "scale(1.03)",
-                    boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'space-between',
+                  height: '100%',
+                  borderRadius: '12px',
+                  boxShadow: 'none',
+                  border: '1px solid #e0e0e0',
+                  transition: 'transform 0.2s',
+                  '&:hover': {
+                    transform: 'scale(1.03)',
+                    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
                   },
                 }}
                 onClick={() => navigate(`/product/${product.id}`)}
@@ -329,22 +331,22 @@ function Products({ onAddProductClick }) {
                     image={`${import.meta.env.VITE_FILE_BASE_URL}${
                       product.imageFile
                     }`}
-                    sx={{ height: 250, objectFit: "cover" }}
+                    sx={{ height: 250, objectFit: 'cover' }}
                   />
                 )}
                 <CardContent>
                   <Box
                     sx={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
                     }}
                   >
                     {product.sizes?.length > 0 && (
                       <Typography
                         variant="body2"
                         color="text.secondary"
-                        sx={{ fontWeight: "bold" }}
+                        sx={{ fontWeight: 'bold' }}
                       >
                         {getSizeRange(product.sizes)}
                       </Typography>
@@ -352,7 +354,7 @@ function Products({ onAddProductClick }) {
                   </Box>
                   <Typography
                     variant="h6"
-                    sx={{ fontWeight: "bold", marginBottom: 1 }}
+                    sx={{ fontWeight: 'bold', marginBottom: 1 }}
                   >
                     {product.title}
                   </Typography>
@@ -360,9 +362,9 @@ function Products({ onAddProductClick }) {
                     <Typography
                       variant="body2"
                       color="text.secondary"
-                      sx={{ fontWeight: "bold", marginBottom: 1 }}
+                      sx={{ fontWeight: 'bold', marginBottom: 1 }}
                     >
-                      Total Quantity Available:{" "}
+                      Total Quantity Available:{' '}
                       {product.sizes.reduce(
                         (total, size) => total + size.stockQuantity,
                         0
@@ -375,8 +377,8 @@ function Products({ onAddProductClick }) {
                         variant="body2"
                         color="text.secondary"
                         sx={{
-                          textDecoration: "line-through",
-                          fontSize: "0.9rem",
+                          textDecoration: 'line-through',
+                          fontSize: '0.9rem',
                         }}
                       >
                         ${product.originalPrice?.toFixed(2)}
@@ -384,7 +386,7 @@ function Products({ onAddProductClick }) {
                       <Typography
                         variant="h6"
                         color="primary"
-                        sx={{ fontWeight: "bold" }}
+                        sx={{ fontWeight: 'bold' }}
                       >
                         ${product.discountedPrice.toFixed(2)}
                       </Typography>
@@ -393,7 +395,7 @@ function Products({ onAddProductClick }) {
                     <Typography
                       variant="h6"
                       color="primary"
-                      sx={{ fontWeight: "bold" }}
+                      sx={{ fontWeight: 'bold' }}
                     >
                       ${product.price?.toFixed(2)}
                     </Typography>
@@ -409,8 +411,8 @@ function Products({ onAddProductClick }) {
                       sx={{ marginTop: 1 }}
                     >
                       {reviewFormOpen === product.id
-                        ? "Cancel"
-                        : "Write a Review"}
+                        ? 'Cancel'
+                        : 'Write a Review'}
                     </Button>
                   )}
 
@@ -424,11 +426,11 @@ function Products({ onAddProductClick }) {
                         value={reviewText}
                         onChange={(e) => setReviewText(e.target.value)}
                         sx={{
-                          border: "1px solid #ccc",
-                          borderRadius: "8px",
-                          padding: "0.5rem",
+                          border: '1px solid #ccc',
+                          borderRadius: '8px',
+                          padding: '0.5rem',
                           marginBottom: 1,
-                          width: "100%",
+                          width: '100%',
                         }}
                       />
                       <FormControl
@@ -469,11 +471,11 @@ function Products({ onAddProductClick }) {
                   </Button>
                 </Box>
 
-                {user && user.role && user.role == "Admin" && (
+                {user && user.role && user.role == 'Admin' && (
                   <Box
                     sx={{
-                      display: "flex",
-                      justifyContent: "space-between",
+                      display: 'flex',
+                      justifyContent: 'space-between',
                       padding: 1,
                     }}
                   >
@@ -484,7 +486,7 @@ function Products({ onAddProductClick }) {
                         e.stopPropagation();
                         navigate(`/editproduct/${product.id}`);
                       }}
-                      sx={{ fontSize: "0.8rem" }}
+                      sx={{ fontSize: '0.8rem' }}
                     >
                       Edit
                     </Button>
@@ -495,7 +497,7 @@ function Products({ onAddProductClick }) {
                         e.stopPropagation();
                         openDeleteDialog(product);
                       }}
-                      sx={{ fontSize: "0.8rem" }}
+                      sx={{ fontSize: '0.8rem' }}
                     >
                       Delete
                     </Button>
@@ -509,7 +511,7 @@ function Products({ onAddProductClick }) {
         <Typography
           variant="h6"
           color="text.secondary"
-          sx={{ textAlign: "center", marginTop: 4 }}
+          sx={{ textAlign: 'center', marginTop: 4 }}
         >
           No products found in this category.
         </Typography>

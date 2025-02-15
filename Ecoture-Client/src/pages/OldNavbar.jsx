@@ -1,20 +1,25 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import http from 'utils/http';
+
 import {
   AppBar,
-  Toolbar,
   Box,
   Container,
-  Typography,
   Menu,
   MenuItem,
-} from "@mui/material";
-import { Link, useNavigate } from "react-router-dom";
-import UserContext from "../contexts/UserContext";
-import ProfileIcon from "../assets/Profile.png";
-import ShoppingCartIcon from "../assets/ShoppingCart.png";
-import EcoTureLogo from "../assets/Ecoture6.png";
-import "/navbar.css";
-import http from "utils/http"; // Ensure you have an HTTP helper
+  Toolbar,
+  Typography,
+} from '@mui/material';
+
+import EcoTureLogo from '../assets/Ecoture6.png';
+import ProfileIcon from '../assets/Profile.png';
+import ShoppingCartIcon from '../assets/ShoppingCart.png';
+import UserContext from '../contexts/UserContext';
+
+import '/navbar.css';
+
+// Ensure you have an HTTP helper
 
 function Navbar({ onLogout }) {
   const { user } = useContext(UserContext);
@@ -22,25 +27,22 @@ function Navbar({ onLogout }) {
   const navigate = useNavigate();
   const [cart, setCart] = useState([]); // Manage cart data locally
 
- 
-
-
-//   // Fetch cart data from API
-//   useEffect(() => {
-//     http.get("/cart")
-//         .then((response) => {
-//             setCart(response.data);
-//         })
-//         .catch(() => {
-//             console.error("Failed to fetch cart data");
-//         });
-// }, []); // Empty dependency array ensures this runs once on mount
+  //   // Fetch cart data from API
+  //   useEffect(() => {
+  //     http.get("/cart")
+  //         .then((response) => {
+  //             setCart(response.data);
+  //         })
+  //         .catch(() => {
+  //             console.error("Failed to fetch cart data");
+  //         });
+  // }, []); // Empty dependency array ensures this runs once on mount
 
   const handleMenuOpen = (event) => {
     if (user) {
       setAnchorEl(event.currentTarget);
     } else {
-      navigate("/login");
+      navigate('/login');
     }
   };
 
@@ -54,9 +56,9 @@ function Navbar({ onLogout }) {
         <Toolbar
           disableGutters
           style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
           }}
         >
           {/* EcoTure Logo */}
@@ -89,7 +91,7 @@ function Navbar({ onLogout }) {
           </div>
 
           {/* Profile and Cart Section */}
-          <Box sx={{ display: "flex", alignItems: "center", gap: "16px" }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
             <Link to="/cart">
               <img
                 src={ShoppingCartIcon}
@@ -102,21 +104,21 @@ function Navbar({ onLogout }) {
             </Link>
 
             {/* Profile Section */}
-            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
               <img
                 src={ProfileIcon}
                 alt="Profile"
                 className="nav-icon"
-                style={{ cursor: "pointer" }}
+                style={{ cursor: 'pointer' }}
                 onClick={handleMenuOpen}
               />
               {user && (
                 <>
                   <Typography
                     sx={{
-                      color: "#000",
-                      fontWeight: "bold",
-                      cursor: "pointer",
+                      color: '#000',
+                      fontWeight: 'bold',
+                      cursor: 'pointer',
                     }}
                     onClick={handleMenuOpen}
                   >
@@ -129,7 +131,7 @@ function Navbar({ onLogout }) {
                     open={Boolean(anchorEl)}
                     onClose={handleMenuClose}
                     MenuListProps={{
-                      "aria-labelledby": "basic-button",
+                      'aria-labelledby': 'basic-button',
                     }}
                   >
                     <MenuItem onClick={onLogout}>Logout</MenuItem>

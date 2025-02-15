@@ -1,65 +1,67 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import http from 'utils/http';
+
+import {
+  Clear,
+  Delete,
+  Edit,
+  FilterList,
+  Search,
+  Sort,
+  Visibility,
+} from '@mui/icons-material';
 import {
   Box,
-  Typography,
-  TableContainer,
-  Table,
-  TableHead,
-  TableRow,
-  TableCell,
-  TableBody,
-  Paper,
-  IconButton,
-  Tooltip,
+  Button,
+  Chip,
+  CircularProgress,
   Dialog,
-  DialogTitle,
+  DialogActions,
   DialogContent,
   DialogContentText,
-  DialogActions,
-  Button,
+  DialogTitle,
+  IconButton,
+  Input,
+  InputAdornment,
   Menu,
   MenuItem,
-  Input,
-  Chip,
-  InputAdornment,
-  CircularProgress,
   Pagination,
-} from "@mui/material";
-import {
-  Sort,
-  FilterList,
-  Visibility,
-  Edit,
-  Delete,
-  Search,
-  Clear,
-} from "@mui/icons-material";
-import { Link } from "react-router-dom";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import http from "utils/http";
-import UserContext from "contexts/UserContext";
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Tooltip,
+  Typography,
+} from '@mui/material';
+
+import UserContext from 'contexts/UserContext';
 
 // Constants
 const REWARD_TYPES = [
-  "All Rewards",
-  "Discount",
-  "Free Shipping",
-  "Cashback",
-  "Charity",
+  'All Rewards',
+  'Discount',
+  'Free Shipping',
+  'Cashback',
+  'Charity',
 ];
-const SORT_OPTIONS = ["Default", "Newest", "Oldest", "Alphabetical"];
+const SORT_OPTIONS = ['Default', 'Newest', 'Oldest', 'Alphabetical'];
 
 const Rewards = () => {
   const [rewards, setRewards] = useState([]);
   const [filteredRewards, setFilteredRewards] = useState([]);
   const [rewardId, setRewardId] = useState(null);
-  const [filterRewardType, setFilterRewardType] = useState("");
-  const [sortOrder, setSortOrder] = useState("default");
+  const [filterRewardType, setFilterRewardType] = useState('');
+  const [sortOrder, setSortOrder] = useState('default');
   const [open, setOpen] = useState(false);
   const [anchorElSort, setAnchorElSort] = useState(null);
   const [anchorElRewardType, setAnchorElRewardType] = useState(null);
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState('');
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const { user: loggedInUser } = useContext(UserContext);
@@ -69,13 +71,13 @@ const Rewards = () => {
   useEffect(() => {
     const fetchRewards = async () => {
       try {
-        const response = await http.get("/rewards");
+        const response = await http.get('/rewards');
         const cleanedReward = response.data;
         setRewards(cleanedReward);
         setFilteredRewards(cleanedReward);
       } catch (error) {
-        console.error("Error fetching rewards:", error);
-        toast.error("Failed to fetch rewards");
+        console.error('Error fetching rewards:', error);
+        toast.error('Failed to fetch rewards');
       } finally {
         setLoading(false);
       }
@@ -104,10 +106,10 @@ const Rewards = () => {
       try {
         await http.delete(`/rewards/${rewardId}`);
         setRewards(rewards.filter((reward) => reward.rewardId !== rewardId));
-        toast.success("Reward deleted successfully");
+        toast.success('Reward deleted successfully');
       } catch (error) {
-        console.error("Error deleting reward:", error);
-        toast.error("Failed to delete reward");
+        console.error('Error deleting reward:', error);
+        toast.error('Failed to delete reward');
       } finally {
         setOpen(false);
         setRewardId(null);
@@ -120,7 +122,7 @@ const Rewards = () => {
   };
 
   const onClickClear = () => {
-    setSearch("");
+    setSearch('');
     applyFilters();
   };
 
@@ -138,9 +140,9 @@ const Rewards = () => {
   };
 
   const handleFilterChange = (value, type) => {
-    if (type === "rewardType") {
+    if (type === 'rewardType') {
       setFilterRewardType(value);
-    } else if (type === "sort") {
+    } else if (type === 'sort') {
       setSortOrder(value);
     }
     handleFilterClose();
@@ -168,22 +170,22 @@ const Rewards = () => {
 
     // Sort rewards
     switch (sortOrder) {
-      case "newest":
+      case 'newest':
         updatedRewards.sort(
           (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
         );
         break;
-      case "oldest":
+      case 'oldest':
         updatedRewards.sort(
           (a, b) => new Date(a.createdAt) - new Date(b.createdAt)
         );
         break;
-      case "alphabetical":
+      case 'alphabetical':
         updatedRewards.sort((a, b) =>
           a.rewardTitle.localeCompare(b.rewardTitle)
         );
         break;
-      case "default":
+      case 'default':
       default:
         updatedRewards.sort((a, b) => a.rewardId - b.rewardId);
         break;
@@ -202,7 +204,7 @@ const Rewards = () => {
 
   return (
     <>
-      <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+      <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
         <Typography variant="h4">Rewards</Typography>
 
         {/* Add Reward Button */}
@@ -218,27 +220,27 @@ const Rewards = () => {
       </Box>
       <Box
         sx={{
-          minHeight: "100vh",
+          minHeight: '100vh',
           py: 3,
-          borderRadius: "8px",
+          borderRadius: '8px',
         }}
       >
         <Box
           sx={{
-            display: "flex",
-            alignItems: "center",
-            flexDirection: { xs: "column", md: "row" },
-            justifyContent: "space-between",
+            display: 'flex',
+            alignItems: 'center',
+            flexDirection: { xs: 'column', md: 'row' },
+            justifyContent: 'space-between',
             mb: 2,
           }}
         >
           {/* Filters */}
           <Box
             sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              width: "100%",
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              width: '100%',
             }}
           >
             {/* Search Bar */}
@@ -262,16 +264,16 @@ const Rewards = () => {
               }
               sx={{
                 mr: 2,
-                width: "300px",
-                borderBottom: "1px solid gray",
+                width: '300px',
+                borderBottom: '1px solid gray',
               }}
             />
             {/* Reward Type Filter */}
-            <Box sx={{ display: "flex", alignItems: "center" }}>
+            <Box sx={{ display: 'flex', alignItems: 'center' }}>
               <Box
                 sx={{
-                  display: "flex",
-                  alignItems: "center",
+                  display: 'flex',
+                  alignItems: 'center',
                   mr: 2,
                 }}
               >
@@ -290,7 +292,7 @@ const Rewards = () => {
                     <MenuItem
                       key={type}
                       onClick={() => {
-                        setFilterRewardType(type === "All Rewards" ? "" : type);
+                        setFilterRewardType(type === 'All Rewards' ? '' : type);
                         setAnchorElRewardType(null);
                       }}
                     >
@@ -302,8 +304,8 @@ const Rewards = () => {
 
               <Box
                 sx={{
-                  display: "flex",
-                  alignItems: "center",
+                  display: 'flex',
+                  alignItems: 'center',
                   ml: 2,
                 }}
               >
@@ -323,7 +325,7 @@ const Rewards = () => {
                     <MenuItem
                       key={option}
                       onClick={() =>
-                        handleFilterChange(option.toLowerCase(), "sort")
+                        handleFilterChange(option.toLowerCase(), 'sort')
                       }
                     >
                       {option}
@@ -340,16 +342,16 @@ const Rewards = () => {
           {filterRewardType && (
             <Chip
               label={`Reward Type: ${filterRewardType}`}
-              onDelete={() => setFilterRewardType("")}
+              onDelete={() => setFilterRewardType('')}
               sx={{ mr: 1 }}
             />
           )}
-          {sortOrder !== "default" && (
+          {sortOrder !== 'default' && (
             <Chip
               label={`Sort: ${
                 sortOrder.charAt(0).toUpperCase() + sortOrder.slice(1)
               }`}
-              onDelete={() => setSortOrder("default")}
+              onDelete={() => setSortOrder('default')}
               sx={{ mr: 1 }}
             />
           )}
@@ -357,7 +359,7 @@ const Rewards = () => {
 
         {/* Loading State */}
         {loading ? (
-          <Box sx={{ display: "flex", justifyContent: "center", mt: 5 }}>
+          <Box sx={{ display: 'flex', justifyContent: 'center', mt: 5 }}>
             <CircularProgress />
           </Box>
         ) : filteredRewards.length === 0 ? (
@@ -385,7 +387,7 @@ const Rewards = () => {
                       <TableCell>{reward.rewardDescription}</TableCell>
                       <TableCell>{reward.rewardType}</TableCell>
                       <TableCell>
-                        {reward.expirationDate.split("T")[0]}
+                        {reward.expirationDate.split('T')[0]}
                       </TableCell>
                       <TableCell>
                         <Tooltip title="View">
@@ -423,7 +425,7 @@ const Rewards = () => {
               count={Math.ceil(filteredRewards.length / rewardsPerPage)}
               page={currentPage}
               onChange={handlePageChange}
-              sx={{ mt: 2, display: "flex", justifyContent: "center" }}
+              sx={{ mt: 2, display: 'flex', justifyContent: 'center' }}
             />
           </>
         )}

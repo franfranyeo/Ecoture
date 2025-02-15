@@ -1,4 +1,7 @@
 /* eslint-disable react/prop-types */
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import {
   Avatar,
   Box,
@@ -8,21 +11,19 @@ import {
   ListItemText,
   Paper,
   Typography,
-} from "@mui/material";
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+} from '@mui/material';
 
 const AccountSidePanel = ({ user, selected, setSelected }) => {
   const navigate = useNavigate();
 
-  const menuItems = ["Profile", "Membership", "Security", "Notifications"];
+  const menuItems = ['Profile', 'Membership', 'Security', 'Notifications'];
   const handleNavigation = (text) => {
     navigate(`/account/${text.toLowerCase()}`);
   };
 
   useEffect(() => {
     const currentPath = window.location.pathname;
-    const lastPart = currentPath.split("/").pop();
+    const lastPart = currentPath.split('/').pop();
     setSelected(lastPart.charAt(0).toUpperCase() + lastPart.slice(1));
   });
 
@@ -30,12 +31,12 @@ const AccountSidePanel = ({ user, selected, setSelected }) => {
     <Paper
       elevation={2}
       sx={{
-        width: "300px",
+        width: '300px',
         padding: 3,
         borderRadius: 2,
-        height: "fit-content",
-        position: "sticky",
-        top: "20px",
+        height: 'fit-content',
+        position: 'sticky',
+        top: '20px',
       }}
     >
       <Box display="flex" flexDirection="column" alignItems="center" mb={4}>
@@ -46,7 +47,7 @@ const AccountSidePanel = ({ user, selected, setSelected }) => {
             style={{
               width: 100,
               height: 100,
-              borderRadius: "50%",
+              borderRadius: '50%',
             }}
           />
         ) : (
@@ -70,12 +71,12 @@ const AccountSidePanel = ({ user, selected, setSelected }) => {
                 borderRadius: 1,
                 mb: 1,
                 backgroundColor:
-                  selected === text ? "primary.main" : "transparent",
-                "&:hover": {
-                  backgroundColor: "primary.light",
-                  cursor: "pointer",
-                  "& .MuiTypography-root": {
-                    color: "white",
+                  selected === text ? 'primary.main' : 'transparent',
+                '&:hover': {
+                  backgroundColor: 'primary.light',
+                  cursor: 'pointer',
+                  '& .MuiTypography-root': {
+                    color: 'white',
                   },
                 },
               }}
@@ -83,9 +84,9 @@ const AccountSidePanel = ({ user, selected, setSelected }) => {
               <ListItemText
                 primary={text}
                 sx={{
-                  color: selected === text ? "white" : "black",
-                  "&:hover": {
-                    color: "white",
+                  color: selected === text ? 'white' : 'black',
+                  '&:hover': {
+                    color: 'white',
                   },
                 }}
               />
