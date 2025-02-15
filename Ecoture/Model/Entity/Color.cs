@@ -1,5 +1,6 @@
 ﻿// Model/Color.cs
 using System.ComponentModel.DataAnnotations;
+using System.Collections.Generic;
 
 namespace Ecoture.Model.Entity
 {
@@ -11,6 +12,6 @@ namespace Ecoture.Model.Entity
         public string Name { get; set; } = string.Empty;
 
         // Navigation property for many-to-many relationship with products
-        public List<ProductColor> ProductColors { get; set; } = new();
+        public List<ProductSizeColor> ProductSizeColors { get; set; } = new();
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Ecoture.Model.Request;  // ✅ Import SizeColorRequest
 
 namespace Ecoture.Model.Request
 {
@@ -32,25 +33,14 @@ namespace Ecoture.Model.Request
         public decimal? Price { get; set; }
 
         /// <summary>
-        /// Quantity of the product in stock (optional, must be a non-negative value if provided).
-        /// </summary>
-        [Range(0, int.MaxValue, ErrorMessage = "StockQuantity must be a non-negative value.")]
-        public int? StockQuantity { get; set; }
-
-        /// <summary>
         /// List of product categories (optional, at least one category if provided).
         /// </summary>
-        public List<string>? Categories { get; set; } // List of categories for the product
-
-        /// <summary>
-        /// List of product colors (optional, at least one color if provided).
-        /// </summary>
-        public List<string>? Colors { get; set; } // List of colors for the product
+        public List<string>? Categories { get; set; }
 
         /// <summary>
         /// List of product fits (optional, at least one fit if provided).
         /// </summary>
-        public List<string>? Fits { get; set; } // List of fits for the product
+        public List<string>? Fits { get; set; }
 
         /// <summary>
         /// Image file name (optional, must not exceed 255 characters if provided).
@@ -59,8 +49,8 @@ namespace Ecoture.Model.Request
         public string? ImageFile { get; set; }
 
         /// <summary>
-        /// List of sizes and their stock quantities (optional).
+        /// List of size and color combinations with stock quantities (optional).
         /// </summary>
-        public List<SizeRequest>? Sizes { get; set; } // Reference the centralized SizeRequest class
+        public List<SizeColorRequest>? SizeColors { get; set; }
     }
 }
