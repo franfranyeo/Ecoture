@@ -43,32 +43,40 @@ namespace Ecoture.Controllers
         {
             try
             {
+                // ✅ Start query with necessary includes
                 IQueryable<Product> query = _context.Products
-                    .Include(t => t.User)
-                    .Include(t => t.ProductSizes)
-                        .ThenInclude(ps => ps.Size)
-                    .Include(p => p.ProductColors)
-                        .ThenInclude(pc => pc.Color)
+                    .AsNoTracking()
+                    .Include(p => p.User)
+                    .Include(p => p.ProductSizeColors)
+                        .ThenInclude(psc => psc.Size)
+                    .Include(p => p.ProductSizeColors)
+                        .ThenInclude(psc => psc.Color)
                     .Include(p => p.ProductFits)
                         .ThenInclude(pf => pf.Fit)
                     .Include(p => p.ProductCategories)
                         .ThenInclude(pc => pc.Category);
 
-                // Apply search filtering if provided
+                // ✅ Apply search filtering (case-insensitive)
                 if (!string.IsNullOrWhiteSpace(search))
                 {
-                    query = query.Where(x => x.Title.Contains(search) || x.Description.Contains(search));
+                    string searchLower = search.ToLower();
+                    query = query.Where(p => p.Title.ToLower().Contains(searchLower) ||
+                                             p.Description.ToLower().Contains(searchLower));
                 }
 
-                // Apply category filtering if provided
+                // ✅ Apply category filtering (supports multiple categories)
                 if (!string.IsNullOrWhiteSpace(category))
                 {
-                    query = query.Where(p => p.ProductCategories.Any(pc => pc.Category.Name == category));
+                    var categoryList = category.Split(',').Select(c => c.Trim().ToLower()).ToList();
+                    query = query.Where(p => p.ProductCategories.Any(pc => categoryList.Contains(pc.Category.Name.ToLower())));
                 }
 
-                var result = await query.OrderByDescending(x => x.CreatedAt).ToListAsync();
-                var data = result.Select(_mapper.Map<ProductDTO>);
-                return Ok(data);
+                // ✅ Fetch the filtered data
+                var products = await query.OrderByDescending(p => p.CreatedAt).ToListAsync();
+
+                // ✅ Map to DTOs and return result
+                var productDTOs = _mapper.Map<List<ProductDTO>>(products);
+                return Ok(productDTOs);
             }
             catch (Exception ex)
             {
@@ -85,35 +93,42 @@ namespace Ecoture.Controllers
 
 
 
+
+
         [HttpGet("{id}")]
         [ProducesResponseType(typeof(ProductDTO), StatusCodes.Status200OK)]
         public async Task<IActionResult> GetProduct(int id)
         {
             try
             {
+                // ✅ Fetch the product with related data (without tracking)
                 var product = await _context.Products
-                    .Include(t => t.User)
-                    .Include(p => p.ProductSizes)
-                        .ThenInclude(ps => ps.Size)
-                    .Include(p => p.ProductColors) // Include ProductColors
-                        .ThenInclude(pc => pc.Color) // Include related Color 
-                    .Include(p => p.ProductFits) // ✅ Include ProductFits relationship
-                        .ThenInclude(pf => pf.Fit) // ✅ Include related Fit data
-                    .Include(p => p.ProductCategories) // ✅ Include ProductCategories relationship
-                        .ThenInclude(pc => pc.Category) // ✅ Include related Category data
-                    .SingleOrDefaultAsync(t => t.Id == id);
+                    .AsNoTracking()
+                    .Include(p => p.User)
+                    .Include(p => p.ProductSizeColors)
+                        .ThenInclude(psc => psc.Size)
+                    .Include(p => p.ProductSizeColors)
+                        .ThenInclude(psc => psc.Color)
+                    .Include(p => p.ProductFits)
+                        .ThenInclude(pf => pf.Fit)
+                    .Include(p => p.ProductCategories)
+                        .ThenInclude(pc => pc.Category)
+                    .FirstOrDefaultAsync(p => p.Id == id);
 
+                // ✅ If product does not exist, return 404
                 if (product == null)
                 {
-                    return NotFound("Product not found.");
+                    return NotFound(new { Message = $"Product with ID {id} not found." });
                 }
 
+                // ✅ Convert to DTO
                 var productDTO = _mapper.Map<ProductDTO>(product);
+
                 return Ok(productDTO);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"Error when getting product with ID {id}");
+                _logger.LogError(ex, $"Error retrieving product with ID {id}");
                 return StatusCode(500, new
                 {
                     Message = "An error occurred while retrieving the product.",
@@ -124,153 +139,161 @@ namespace Ecoture.Controllers
             }
         }
 
+
+
         [HttpPost, Authorize]
         [ProducesResponseType(typeof(ProductDTO), StatusCodes.Status200OK)]
         public async Task<IActionResult> AddProduct([FromBody] AddProductRequest product)
         {
-            if (product.Sizes == null || !product.Sizes.Any())
+            if (product.SizeColors == null || !product.SizeColors.Any())
             {
-                return BadRequest("At least one size must be provided.");
-            }
-
-            if (product.Colors == null || !product.Colors.Any())
-            {
-                return BadRequest("At least one color must be provided.");
+                return BadRequest(new { Message = "At least one size-color combination must be provided." });
             }
 
             if (product.Categories == null || !product.Categories.Any())
             {
-                return BadRequest("At least one category must be provided.");
+                return BadRequest(new { Message = "At least one category must be provided." });
             }
 
             if (product.Fits == null || !product.Fits.Any())
             {
-                return BadRequest("At least one fit must be provided.");
+                return BadRequest(new { Message = "At least one fit must be provided." });
             }
 
-            // Get user ID from the current authenticated user
-            int userId = GetUserId();
-            var now = DateTime.Now;
-
-            // Determine Price Range based on Price
+            int userId = GetUserId(); // Get authenticated user ID
+            var now = DateTime.UtcNow;
             var calculatedPriceRange = DeterminePriceRange(product.Price);
 
+            // ✅ Step 1: Create Product (WITH StockQuantity Calculation)
             var myProduct = new Product
             {
                 Title = product.Title.Trim(),
                 Description = product.Description.Trim(),
                 LongDescription = product.LongDescription.Trim(),
                 Price = product.Price,
-                StockQuantity = product.Sizes.Sum(s => s.StockQuantity),
                 PriceRange = calculatedPriceRange,
                 ImageFile = product.ImageFile ?? string.Empty,
                 CreatedAt = now,
                 UpdatedAt = now,
-                UserId = userId
+                UserId = userId,
+                StockQuantity = product.SizeColors.Sum(sc => sc.StockQuantity) // ✅ Compute StockQuantity
             };
 
-            // **Step 1: Save Product First**
-            await _context.Products.AddAsync(myProduct);
-            await _context.SaveChangesAsync(); // Ensures Product ID is generated
-
-            // **Step 2: Add Sizes**
-            foreach (var sizeRequest in product.Sizes)
+            try
             {
-                var size = await _context.Sizes.FirstOrDefaultAsync(s => s.Name == sizeRequest.SizeName)
-                            ?? new Size { Name = sizeRequest.SizeName };
+                using var transaction = await _context.Database.BeginTransactionAsync(); // ✅ Ensure atomicity
 
-                if (size.Id == 0)
+                await _context.Products.AddAsync(myProduct);
+                await _context.SaveChangesAsync(); // ✅ Ensure Product ID is generated
+
+                // ✅ Step 2: Process Sizes & Colors
+                var existingSizes = await _context.Sizes.ToListAsync();
+                var existingColors = await _context.Colors.ToListAsync();
+                var productSizeColors = new List<ProductSizeColor>();
+
+                foreach (var sizeColorRequest in product.SizeColors)
                 {
-                    _context.Sizes.Add(size);
-                    await _context.SaveChangesAsync(); // Save new size if it was added
+                    var size = existingSizes.FirstOrDefault(s => s.Name == sizeColorRequest.SizeName)
+                                ?? new Size { Name = sizeColorRequest.SizeName };
+
+                    if (size.Id == 0) _context.Sizes.Add(size);
+
+                    var color = existingColors.FirstOrDefault(c => c.Name == sizeColorRequest.ColorName)
+                                ?? new Color { Name = sizeColorRequest.ColorName };
+
+                    if (color.Id == 0) _context.Colors.Add(color);
+
+                    await _context.SaveChangesAsync(); // ✅ Save new sizes & colors before linking
+
+                    productSizeColors.Add(new ProductSizeColor
+                    {
+                        ProductId = myProduct.Id,
+                        SizeId = size.Id,
+                        ColorId = color.Id,
+                        StockQuantity = sizeColorRequest.StockQuantity
+                    });
                 }
 
-                var newProductSize = new ProductSize
+                await _context.ProductSizeColors.AddRangeAsync(productSizeColors);
+
+                // ✅ Step 3: Process Categories
+                var existingCategories = await _context.Categories.ToListAsync();
+                var productCategories = new List<ProductCategory>();
+
+                foreach (var categoryName in product.Categories)
                 {
-                    ProductId = myProduct.Id,
-                    SizeId = size.Id,
-                    StockQuantity = sizeRequest.StockQuantity
-                };
+                    var category = existingCategories.FirstOrDefault(c => c.Name == categoryName)
+                                    ?? new Category { Name = categoryName };
 
-                _context.ProductSizes.Add(newProductSize);
-            }
+                    if (category.Id == 0) _context.Categories.Add(category);
 
-            // **Step 3: Add Colors**
-            foreach (var colorName in product.Colors)
-            {
-                var color = await _context.Colors.FirstOrDefaultAsync(c => c.Name == colorName)
-                            ?? new Color { Name = colorName };
+                    await _context.SaveChangesAsync(); // ✅ Save new category before linking
 
-                if (color.Id == 0)
-                {
-                    _context.Colors.Add(color);
-                    await _context.SaveChangesAsync(); // Save new color if it was added
+                    productCategories.Add(new ProductCategory
+                    {
+                        ProductId = myProduct.Id,
+                        CategoryId = category.Id
+                    });
                 }
 
-                var newProductColor = new ProductColor
+                await _context.ProductCategories.AddRangeAsync(productCategories);
+
+                // ✅ Step 4: Process Fits
+                var existingFits = await _context.Fits.ToListAsync();
+                var productFits = new List<ProductFit>();
+
+                foreach (var fitName in product.Fits)
                 {
-                    ProductId = myProduct.Id,
-                    ColorId = color.Id
-                };
+                    var fit = existingFits.FirstOrDefault(f => f.Name == fitName)
+                                ?? new Fit { Name = fitName };
 
-                _context.ProductColors.Add(newProductColor);
-            }
+                    if (fit.Id == 0) _context.Fits.Add(fit);
 
-            // **Step 4: Add Categories**
-            foreach (var categoryName in product.Categories)
-            {
-                var category = await _context.Categories.FirstOrDefaultAsync(c => c.Name == categoryName)
-                                ?? new Category { Name = categoryName };
+                    await _context.SaveChangesAsync(); // ✅ Save new fit before linking
 
-                if (category.Id == 0)
-                {
-                    _context.Categories.Add(category);
-                    await _context.SaveChangesAsync(); // Save new category if it was added
+                    productFits.Add(new ProductFit
+                    {
+                        ProductId = myProduct.Id,
+                        FitId = fit.Id
+                    });
                 }
 
-                var newProductCategory = new ProductCategory
-                {
-                    ProductId = myProduct.Id,
-                    CategoryId = category.Id
-                };
+                await _context.ProductFits.AddRangeAsync(productFits);
 
-                _context.ProductCategories.Add(newProductCategory);
+                await _context.SaveChangesAsync(); // ✅ Final save
+                await transaction.CommitAsync();  // ✅ Commit transaction
+
+                // ✅ Fetch product with all related data (for response)
+                var newProduct = await _context.Products
+                    .Include(p => p.User)
+                    .Include(p => p.ProductSizeColors).ThenInclude(psc => psc.Size)
+                    .Include(p => p.ProductSizeColors).ThenInclude(psc => psc.Color)
+                    .Include(p => p.ProductFits).ThenInclude(pf => pf.Fit)
+                    .Include(p => p.ProductCategories).ThenInclude(pc => pc.Category)
+                    .AsNoTracking()
+                    .FirstOrDefaultAsync(p => p.Id == myProduct.Id);
+
+                var productDTO = _mapper.Map<ProductDTO>(newProduct);
+                return Ok(productDTO);
             }
-
-            // **Step 5: Add Fits**
-            foreach (var fitName in product.Fits)
+            catch (Exception ex)
             {
-                var fit = await _context.Fits.FirstOrDefaultAsync(f => f.Name == fitName)
-                          ?? new Fit { Name = fitName };
+                _logger.LogError(ex, "Error adding product");
 
-                if (fit.Id == 0)
+                await _context.Database.RollbackTransactionAsync(); // ✅ Rollback in case of error
+
+                return StatusCode(500, new
                 {
-                    _context.Fits.Add(fit);
-                    await _context.SaveChangesAsync(); // Save new fit if it was added
-                }
-
-                var newProductFit = new ProductFit
-                {
-                    ProductId = myProduct.Id,
-                    FitId = fit.Id
-                };
-
-                _context.ProductFits.Add(newProductFit);
+                    Message = "An error occurred while adding the product.",
+                    Error = ex.Message,
+                    InnerError = ex.InnerException?.Message,
+                    StackTrace = ex.StackTrace
+                });
             }
-
-            await _context.SaveChangesAsync(); // Final save for sizes, colors, categories, and fits
-
-            var newProduct = await _context.Products
-                .Include(p => p.User)
-                .Include(p => p.ProductSizes).ThenInclude(ps => ps.Size)
-                .Include(p => p.ProductColors).ThenInclude(pc => pc.Color)
-                .Include(p => p.ProductFits).ThenInclude(pf => pf.Fit) // ✅ Include Fits
-                .Include(p => p.ProductCategories).ThenInclude(pc => pc.Category) // ✅ Include Categories
-                .FirstOrDefaultAsync(p => p.Id == myProduct.Id);
-
-            var productDTO = _mapper.Map<ProductDTO>(newProduct);
-            return Ok(productDTO);
         }
+
+
+
 
 
 
@@ -279,108 +302,93 @@ namespace Ecoture.Controllers
         {
             try
             {
+                using var transaction = await _context.Database.BeginTransactionAsync(); // ✅ Ensure atomicity
+
                 var myProduct = await _context.Products
-                    .Include(p => p.ProductSizes).ThenInclude(ps => ps.Size)
-                    .Include(p => p.ProductColors).ThenInclude(pc => pc.Color)
-                    .Include(p => p.ProductFits).ThenInclude(pf => pf.Fit) // ✅ Include Fits
-                    .Include(p => p.ProductCategories).ThenInclude(pc => pc.Category) // ✅ Include Categories
+                    .Include(p => p.ProductSizeColors).ThenInclude(psc => psc.Size)
+                    .Include(p => p.ProductSizeColors).ThenInclude(psc => psc.Color)
+                    .Include(p => p.ProductFits).ThenInclude(pf => pf.Fit)
+                    .Include(p => p.ProductCategories).ThenInclude(pc => pc.Category)
                     .FirstOrDefaultAsync(p => p.Id == id);
 
                 if (myProduct == null)
                 {
-                    return NotFound("Product not found.");
+                    return NotFound(new { Message = "Product not found." });
                 }
 
                 int userId = GetUserId();
                 if (myProduct.UserId != userId)
                 {
-                    return Forbid("You are not authorized to update this product.");
+                    return Forbid();
                 }
 
-                // **Update product properties**
+                // ✅ Step 1: Update Product Properties
                 if (!string.IsNullOrWhiteSpace(product.Title)) myProduct.Title = product.Title.Trim();
                 if (!string.IsNullOrWhiteSpace(product.Description)) myProduct.Description = product.Description.Trim();
                 if (!string.IsNullOrWhiteSpace(product.LongDescription)) myProduct.LongDescription = product.LongDescription.Trim();
-                if (product.Price.HasValue) myProduct.Price = product.Price.Value;
-                if (product.Price.HasValue) myProduct.PriceRange = DeterminePriceRange(product.Price.Value);
+                if (product.Price.HasValue)
+                {
+                    myProduct.Price = product.Price.Value;
+                    myProduct.PriceRange = DeterminePriceRange(product.Price.Value);
+                }
                 if (!string.IsNullOrWhiteSpace(product.ImageFile)) myProduct.ImageFile = product.ImageFile;
 
-                // **Update Sizes**
-                if (product.Sizes != null && product.Sizes.Any())
+                // ✅ Step 2: Update Size-Color Combinations & StockQuantity
+                if (product.SizeColors != null && product.SizeColors.Any())
                 {
-                    var sizesToRemove = myProduct.ProductSizes
-                        .Where(ps => !product.Sizes.Any(s => s.SizeName == ps.Size.Name))
+                    var existingSizeColors = myProduct.ProductSizeColors.ToList();
+                    var newStockQuantity = 0;
+
+                    // **Find and remove size-color combinations not in the updated list**
+                    var sizeColorsToRemove = existingSizeColors
+                        .Where(psc => !product.SizeColors.Any(sc => sc.SizeName == psc.Size.Name && sc.ColorName == psc.Color.Name))
                         .ToList();
-                    _context.ProductSizes.RemoveRange(sizesToRemove);
+                    _context.ProductSizeColors.RemoveRange(sizeColorsToRemove);
 
-                    foreach (var sizeRequest in product.Sizes)
+                    var existingSizes = await _context.Sizes.ToListAsync();
+                    var existingColors = await _context.Colors.ToListAsync();
+
+                    foreach (var sizeColorRequest in product.SizeColors)
                     {
-                        var size = await _context.Sizes.FirstOrDefaultAsync(s => s.Name == sizeRequest.SizeName)
-                                    ?? new Size { Name = sizeRequest.SizeName };
+                        var size = existingSizes.FirstOrDefault(s => s.Name == sizeColorRequest.SizeName)
+                                    ?? new Size { Name = sizeColorRequest.SizeName };
 
-                        if (size.Id == 0)
+                        if (size.Id == 0) _context.Sizes.Add(size);
+
+                        var color = existingColors.FirstOrDefault(c => c.Name == sizeColorRequest.ColorName)
+                                    ?? new Color { Name = sizeColorRequest.ColorName };
+
+                        if (color.Id == 0) _context.Colors.Add(color);
+
+                        await _context.SaveChangesAsync(); // ✅ Save new sizes & colors before linking
+
+                        var existingSizeColor = existingSizeColors
+                            .FirstOrDefault(psc => psc.Size.Name == sizeColorRequest.SizeName && psc.Color.Name == sizeColorRequest.ColorName);
+
+                        if (existingSizeColor != null)
                         {
-                            _context.Sizes.Add(size);
-                            await _context.SaveChangesAsync(); // Save new size if added
-                        }
-
-                        var existingSize = myProduct.ProductSizes
-                            .FirstOrDefault(ps => ps.Size.Name == sizeRequest.SizeName);
-
-                        if (existingSize != null)
-                        {
-                            existingSize.StockQuantity = sizeRequest.StockQuantity;
+                            existingSizeColor.StockQuantity = sizeColorRequest.StockQuantity;
                         }
                         else
                         {
-                            var newProductSize = new ProductSize
+                            _context.ProductSizeColors.Add(new ProductSizeColor
                             {
                                 ProductId = myProduct.Id,
                                 SizeId = size.Id,
-                                StockQuantity = sizeRequest.StockQuantity
-                            };
-
-                            _context.ProductSizes.Add(newProductSize);
+                                ColorId = color.Id,
+                                StockQuantity = sizeColorRequest.StockQuantity
+                            });
                         }
+
+                        // ✅ Accumulate stock quantity
+                        newStockQuantity += sizeColorRequest.StockQuantity;
                     }
+
+                    // ✅ Update StockQuantity in the Product entity
+                    myProduct.StockQuantity = newStockQuantity;
                 }
 
-                // **Update Colors**
-                if (product.Colors != null && product.Colors.Any())
-                {
-                    var colorsToRemove = myProduct.ProductColors
-                        .Where(pc => !product.Colors.Contains(pc.Color.Name))
-                        .ToList();
-                    _context.ProductColors.RemoveRange(colorsToRemove);
-
-                    foreach (var colorName in product.Colors)
-                    {
-                        var color = await _context.Colors.FirstOrDefaultAsync(c => c.Name == colorName)
-                                    ?? new Color { Name = colorName };
-
-                        if (color.Id == 0)
-                        {
-                            _context.Colors.Add(color);
-                            await _context.SaveChangesAsync(); // Save new color if added
-                        }
-
-                        var existingColor = myProduct.ProductColors
-                            .FirstOrDefault(pc => pc.Color.Name == colorName);
-
-                        if (existingColor == null)
-                        {
-                            var productColor = new ProductColor
-                            {
-                                ProductId = myProduct.Id,
-                                ColorId = color.Id
-                            };
-
-                            _context.ProductColors.Add(productColor);
-                        }
-                    }
-                }
-
-                // **Update Categories**
+                // ✅ Step 3: Update Categories
                 if (product.Categories != null && product.Categories.Any())
                 {
                     var categoriesToRemove = myProduct.ProductCategories
@@ -388,31 +396,29 @@ namespace Ecoture.Controllers
                         .ToList();
                     _context.ProductCategories.RemoveRange(categoriesToRemove);
 
+                    var existingCategories = await _context.Categories.ToListAsync();
+
                     foreach (var categoryName in product.Categories)
                     {
-                        var category = await _context.Categories.FirstOrDefaultAsync(c => c.Name == categoryName)
+                        var category = existingCategories.FirstOrDefault(c => c.Name == categoryName)
                                         ?? new Category { Name = categoryName };
 
-                        if (category.Id == 0)
-                        {
-                            _context.Categories.Add(category);
-                            await _context.SaveChangesAsync(); // Save new category if added
-                        }
+                        if (category.Id == 0) _context.Categories.Add(category);
+
+                        await _context.SaveChangesAsync(); // ✅ Save new category before linking
 
                         if (!myProduct.ProductCategories.Any(pc => pc.Category.Name == categoryName))
                         {
-                            var productCategory = new ProductCategory
+                            _context.ProductCategories.Add(new ProductCategory
                             {
                                 ProductId = myProduct.Id,
                                 CategoryId = category.Id
-                            };
-
-                            _context.ProductCategories.Add(productCategory);
+                            });
                         }
                     }
                 }
 
-                // **Update Fits**
+                // ✅ Step 4: Update Fits
                 if (product.Fits != null && product.Fits.Any())
                 {
                     var fitsToRemove = myProduct.ProductFits
@@ -420,41 +426,42 @@ namespace Ecoture.Controllers
                         .ToList();
                     _context.ProductFits.RemoveRange(fitsToRemove);
 
+                    var existingFits = await _context.Fits.ToListAsync();
+
                     foreach (var fitName in product.Fits)
                     {
-                        var fit = await _context.Fits.FirstOrDefaultAsync(f => f.Name == fitName)
-                                  ?? new Fit { Name = fitName };
+                        var fit = existingFits.FirstOrDefault(f => f.Name == fitName)
+                                    ?? new Fit { Name = fitName };
 
-                        if (fit.Id == 0)
-                        {
-                            _context.Fits.Add(fit);
-                            await _context.SaveChangesAsync(); // Save new fit if added
-                        }
+                        if (fit.Id == 0) _context.Fits.Add(fit);
+
+                        await _context.SaveChangesAsync(); // ✅ Save new fit before linking
 
                         if (!myProduct.ProductFits.Any(pf => pf.Fit.Name == fitName))
                         {
-                            var productFit = new ProductFit
+                            _context.ProductFits.Add(new ProductFit
                             {
                                 ProductId = myProduct.Id,
                                 FitId = fit.Id
-                            };
-
-                            _context.ProductFits.Add(productFit);
+                            });
                         }
                     }
                 }
 
-                // **Recalculate stock quantity and update timestamps**
-                myProduct.StockQuantity = myProduct.ProductSizes.Sum(ps => ps.StockQuantity);
+                // ✅ Step 5: Update timestamps
                 myProduct.UpdatedAt = DateTime.UtcNow;
 
                 await _context.SaveChangesAsync();
+                await transaction.CommitAsync();
 
                 return Ok(new { Message = "Product updated successfully." });
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error updating product {ProductId}", id);
+
+                await _context.Database.RollbackTransactionAsync(); // ✅ Rollback in case of error
+
                 return StatusCode(500, new
                 {
                     Message = "An error occurred while updating the product.",
@@ -468,44 +475,66 @@ namespace Ecoture.Controllers
 
 
 
+
+
+
+
         [HttpDelete("{id}"), Authorize]
         public async Task<IActionResult> DeleteProduct(int id)
         {
             try
             {
+                using var transaction = await _context.Database.BeginTransactionAsync(); // ✅ Ensure atomic deletion
+
                 var myProduct = await _context.Products
-                    .Include(p => p.ProductSizes)
-                    .Include(p => p.ProductColors)
+                    .Include(p => p.ProductSizeColors) // ✅ Include Size-Color mappings
                     .Include(p => p.ProductFits) // ✅ Include Fits
                     .Include(p => p.ProductCategories) // ✅ Include Categories
                     .FirstOrDefaultAsync(p => p.Id == id);
 
                 if (myProduct == null)
                 {
-                    return NotFound("Product not found.");
+                    return NotFound(new { Message = "Product not found." });
                 }
 
                 int userId = GetUserId();
                 if (myProduct.UserId != userId)
                 {
-                    return Forbid("You are not authorized to delete this product.");
+                    return Forbid();
                 }
 
-                // **Remove related data before deleting the product**
-                _context.ProductSizes.RemoveRange(myProduct.ProductSizes);
-                _context.ProductColors.RemoveRange(myProduct.ProductColors);
-                _context.ProductFits.RemoveRange(myProduct.ProductFits); // ✅ Remove associated fits
-                _context.ProductCategories.RemoveRange(myProduct.ProductCategories); // ✅ Remove associated categories
+                // ✅ Step 1: Remove related data before deleting the product
+                if (myProduct.ProductSizeColors.Any())
+                {
+                    _context.ProductSizeColors.RemoveRange(myProduct.ProductSizeColors);
+                }
 
-                // **Remove the product itself**
+                if (myProduct.ProductFits.Any())
+                {
+                    _context.ProductFits.RemoveRange(myProduct.ProductFits);
+                }
+
+                if (myProduct.ProductCategories.Any())
+                {
+                    _context.ProductCategories.RemoveRange(myProduct.ProductCategories);
+                }
+
+                // ✅ Step 2: Remove the product itself
                 _context.Products.Remove(myProduct);
-                await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync(); // ✅ Commit all changes
 
-                return Ok("Product deleted successfully.");
+                await transaction.CommitAsync(); // ✅ Ensure atomic deletion
+
+                _logger.LogInformation($"Product ID {id} deleted successfully by User ID {userId}");
+
+                return Ok(new { Message = "Product deleted successfully." });
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, $"Error when deleting product with ID {id}");
+
+                await _context.Database.RollbackTransactionAsync(); // ✅ Rollback in case of error
+
                 return StatusCode(500, new
                 {
                     Message = "An error occurred while deleting the product.",
@@ -515,6 +544,8 @@ namespace Ecoture.Controllers
                 });
             }
         }
+
+
 
 
         private int GetUserId()

@@ -252,25 +252,29 @@ function ProductDetail() {
           <Box
             sx={{ display: 'flex', gap: 1, flexWrap: 'wrap', marginBottom: 2 }}
           >
-            {product.colors && product.colors.length > 0 ? (
-              product.colors.map((color, index) => (
+            {/* Extract unique colors from SizeColors */}
+            {product.sizeColors && product.sizeColors.length > 0 ? (
+              [
+                ...new Set(product.sizeColors.map((item) => item.colorName)),
+              ].map((color, index) => (
                 <Chip
                   key={index}
-                  label={color.colorName}
-                  color={
-                    selectedColor === color.colorName ? 'secondary' : 'default'
-                  } // Turns green when selected
+                  label={color}
+                  color={selectedColor === color ? 'secondary' : 'default'}
                   sx={{
                     backgroundColor:
-                      selectedColor === color.colorName ? 'green' : '#f0f0f0', // Green when selected, grey otherwise
-                    color: selectedColor === color.colorName ? '#fff' : '#555', // White text when selected, grey when not selected
+                      selectedColor === color ? 'green' : '#f0f0f0',
+                    color: selectedColor === color ? '#fff' : '#555',
                     cursor: 'pointer',
                     '&:hover': {
                       backgroundColor:
-                        selectedColor === color.colorName ? 'green' : '#e0e0e0',
+                        selectedColor === color ? 'green' : '#e0e0e0',
                     },
                   }}
-                  onClick={() => setSelectedColor(color.colorName)}
+                  onClick={() => {
+                    setSelectedColor(color); // Select the new color
+                    setSelectedSize(null); // Reset size when color changes
+                  }}
                 />
               ))
             ) : (
@@ -288,29 +292,52 @@ function ProductDetail() {
           <Box
             sx={{ display: 'flex', gap: 1, flexWrap: 'wrap', marginBottom: 2 }}
           >
-            {product.sizes && product.sizes.length > 0 ? (
-              product.sizes.map((size, index) => (
-                <Chip
-                  key={index}
-                  label={`${size.sizeName} (${size.stockQuantity} in stock)`}
-                  color={
-                    selectedSize === size.sizeName ? 'secondary' : 'default'
-                  } // Turns green when selected
-                  sx={{
-                    backgroundColor:
-                      selectedSize === size.sizeName ? 'green' : '#f0f0f0', // Green when selected, grey otherwise
-                    color: selectedSize === size.sizeName ? '#fff' : '#555', // White text when selected, grey when not selected
-                    cursor: 'pointer',
-                    '&:hover': {
-                      backgroundColor:
-                        selectedSize === size.sizeName ? 'green' : '#e0e0e0',
-                    },
-                  }}
-                  onClick={() => setSelectedSize(size.sizeName)}
-                />
-              ))
+            {/* Filter unique sizes for the selected color */}
+            {selectedColor ? (
+              <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
+                {/* Aggregate the stock quantities for each size and color */}
+                {[
+                  ...new Map(
+                    product.sizeColors
+                      .filter((item) => item.colorName === selectedColor)
+                      .map((size) => [size.sizeName, size]) // Ensures unique sizes
+                  ).values(),
+                ].map((size, index) => {
+                  // Aggregate stock quantities for the same size and color combination
+                  const totalStock = product.sizeColors
+                    .filter(
+                      (item) =>
+                        item.sizeName === size.sizeName &&
+                        item.colorName === selectedColor
+                    )
+                    .reduce((sum, item) => sum + item.stockQuantity, 0); // Sum stock quantities
+
+                  return (
+                    <Chip
+                      key={index}
+                      label={`${size.sizeName} (${totalStock} in stock)`} // Display aggregated quantity
+                      color={
+                        selectedSize === size.sizeName ? 'secondary' : 'default'
+                      }
+                      sx={{
+                        backgroundColor:
+                          selectedSize === size.sizeName ? 'green' : '#f0f0f0',
+                        color: selectedSize === size.sizeName ? '#fff' : '#555',
+                        cursor: 'pointer',
+                        '&:hover': {
+                          backgroundColor:
+                            selectedSize === size.sizeName
+                              ? 'green'
+                              : '#e0e0e0',
+                        },
+                      }}
+                      onClick={() => setSelectedSize(size.sizeName)}
+                    />
+                  );
+                })}
+              </Box>
             ) : (
-              <Typography variant="body2">No sizes available</Typography>
+              <Typography variant="body2">Select a color first</Typography>
             )}
           </Box>
 
@@ -324,7 +351,16 @@ function ProductDetail() {
               fontWeight: 'bold',
               borderRadius: '8px',
             }}
-            disabled={!selectedColor || !selectedSize}
+            disabled={
+              !selectedColor ||
+              !selectedSize ||
+              !product.sizeColors.some(
+                (item) =>
+                  item.colorName === selectedColor &&
+                  item.sizeName === selectedSize &&
+                  item.stockQuantity > 0
+              )
+            }
             onClick={handleAddToCart} //  Fix: Call function when clicked
           >
             Add to Cart

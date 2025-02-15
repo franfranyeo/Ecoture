@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Ecoture.Model.Entity;
+using System.Linq;
 using Ecoture.Model.Entity;
 using Ecoture.Model.Enum;
 
@@ -24,8 +24,9 @@ namespace Ecoture.Model.Entity
         [Required, Column(TypeName = "decimal(10, 2)")]
         public decimal Price { get; set; }
 
-        [Required, Range(0, int.MaxValue, ErrorMessage = "Stock Quantity must be a non-negative value.")]
-        public int StockQuantity { get; set; }
+        public int StockQuantity { get; set; }  // ✅ Now stored in DB, needs manual updates
+
+
 
         [Required(ErrorMessage = "Price Range is required.")]
         public PriceRange PriceRange { get; set; } // Enum for Price Range
@@ -45,11 +46,8 @@ namespace Ecoture.Model.Entity
         // Navigation property to represent the one-to-many relationship with User
         public virtual User? User { get; set; }
 
-        // Navigation property for the many-to-many relationship with Sizes
-        public virtual List<ProductSize> ProductSizes { get; set; } = new();
-
-        // Navigation property for the many-to-many relationship with Colors
-        public virtual List<ProductColor> ProductColors { get; set; } = new();
+        // Navigation property for the many-to-many relationship with Sizes & Colors
+        public virtual List<ProductSizeColor> ProductSizeColors { get; set; } = new();
 
         // Navigation property for the many-to-many relationship with Fits
         public virtual List<ProductFit> ProductFits { get; set; } = new();
@@ -59,5 +57,5 @@ namespace Ecoture.Model.Entity
 
         // Navigation property for the one-to-many relationship with Reviews
         public virtual List<Review> Reviews { get; set; } = new();
-	}
+    }
 }

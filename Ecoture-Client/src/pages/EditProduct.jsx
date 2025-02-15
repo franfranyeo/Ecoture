@@ -18,8 +18,14 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
+
+  FormControl,
   Grid,
   IconButton,
+  InputLabel,
+  MenuItem,
+  Select,
+
   TextField,
   Typography,
 } from '@mui/material';
@@ -64,6 +70,7 @@ function EditProduct() {
   //   Object.entries(priceRangeMap).map(([k, v]) => [v, parseInt(k)])
   // );
 
+  // CHANGE FROM (around line 83 in EditProduct.jsx):
   useEffect(() => {
     http
       .get(`/product/${id}`)
@@ -72,11 +79,11 @@ function EditProduct() {
 
         // Function to determine price range based on price
         const determinePriceRange = (price) => {
-          if (price <= 20) return 1; // "$10-$20"
-          if (price <= 30) return 2; // "$20-$30"
-          if (price <= 40) return 3; // "$30-$40"
-          if (price <= 50) return 4; // "$40-$50"
-          return 5; // "$50+"
+          if (price <= 20) return 1;
+          if (price <= 30) return 2;
+          if (price <= 40) return 3;
+          if (price <= 50) return 4;
+          return 5;
         };
 
         // Assign calculated priceRange
@@ -84,19 +91,98 @@ function EditProduct() {
 
         setProduct({
           ...data,
-          priceRange: computedPriceRange, // Store calculated price range
+          priceRange: computedPriceRange,
           fits: data.fits ? data.fits.map((f) => f.fitName) : [],
           categories: data.categories
             ? data.categories.map((c) => c.categoryName)
             : [],
         });
 
+        // Set image and sizes
         setImageFile(data.imageFile);
-        setSizes(data.sizes || [{ sizeName: '', stockQuantity: '' }]);
-        setColors(data.colors ? data.colors.map((c) => c.colorName) : []);
+
+
+        setSizes(
+          (data.SizeColors || []).map((size) => ({
+            sizeName: size.sizeName || '',
+            stockQuantity: size.stockQuantity || 0,
+            selectedColor: size.colorName || '',
+          }))
+        );
+
+        setColors(
+          data.SizeColors
+            ? [...new Set(data.SizeColors.map((size) => size.colorName))]
+            : []
+        );
+
+
         setLoading(false);
       })
       .catch(() => {
+        toast.error('Failed to load product data.');
+
+        setLoading(false);
+      });
+  }, [id]);
+
+  // TO:
+  useEffect(() => {
+    http
+      .get(`/product/${id}`)
+      .then((res) => {
+        const data = res.data;
+        console.log('API Response:', data); // Add this for debugging
+
+        // Function to determine price range based on price
+        const determinePriceRange = (price) => {
+          if (price <= 20) return 1;
+          if (price <= 30) return 2;
+          if (price <= 40) return 3;
+          if (price <= 50) return 4;
+          return 5;
+        };
+
+        // Assign calculated priceRange
+        const computedPriceRange = determinePriceRange(data.price);
+
+        setProduct({
+          ...data,
+          priceRange: computedPriceRange,
+          fits: data.fits ? data.fits.map((f) => f.fitName) : [],
+          categories: data.categories
+            ? data.categories.map((c) => c.categoryName)
+            : [],
+        });
+
+        // Set image
+        setImageFile(data.imageFile);
+
+        // Set sizes with their colors and quantities
+        if (data.sizeColors && data.sizeColors.length > 0) {
+          setSizes(
+            data.sizeColors.map((item) => ({
+              sizeName: item.sizeName,
+              stockQuantity: item.stockQuantity,
+              selectedColor: item.colorName,
+            }))
+          );
+
+          // Extract unique colors from sizeColors
+          const uniqueColors = [
+            ...new Set(data.sizeColors.map((item) => item.colorName)),
+          ];
+          setColors(uniqueColors);
+        } else {
+          // If no existing data, set default empty state
+          setSizes([{ sizeName: '', stockQuantity: '', selectedColor: '' }]);
+          setColors([]);
+        }
+
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error('Error loading product:', error);
         toast.error('Failed to load product data.');
         setLoading(false);
       });
@@ -141,31 +227,30 @@ function EditProduct() {
     }),
 
     onSubmit: (values) => {
-      // Create the request body
       const requestBody = {
         title: values.title,
         description: values.description,
         longDescription: values.longDescription,
         price: parseFloat(values.price),
-        categories: values.categories, // Support multiple categories
-        fits: values.fits, // Support multiple fits
+        categories: values.categories,
+        fits: values.fits,
         imageFile: imageFile,
-        sizes: sizes.map((s) => ({
+        SizeColors: sizes.map((s) => ({
           sizeName: s.sizeName.trim(),
           stockQuantity: parseInt(s.stockQuantity, 10),
+          colorName: s.selectedColor,
         })),
         colors: colors,
       };
 
-      // Make the API call
+      // Make the API call to update the product
       http
         .put(`/product/${id}`, requestBody)
-        .then(() => {
+        .then((response) => {
           toast.success('Product updated successfully!');
-          navigate('/');
+          navigate('/'); // Redirect after success
         })
         .catch((error) => {
-          console.error('Update failed:', error);
           toast.error(
             error.response?.data?.message || 'Failed to update product'
           );
@@ -212,9 +297,15 @@ function EditProduct() {
   };
 
   const handleSizeChange = (index, field, value) => {
-    const updatedSizes = sizes.map((size, i) =>
-      i === index ? { ...size, [field]: value } : size
-    );
+    const updatedSizes = sizes.map((size, i) => {
+      if (i === index) {
+        return {
+          ...size,
+          [field]: field === 'stockQuantity' ? parseInt(value) || 0 : value,
+        };
+      }
+      return size;
+    });
     setSizes(updatedSizes);
   };
 
@@ -230,6 +321,16 @@ function EditProduct() {
     setOpen(false);
   };
 
+  const handleColorSelection = (sizeIndex, color) => {
+    const updatedSizes = sizes.map((size, i) => {
+      if (i === sizeIndex) {
+        return { ...size, selectedColor: color }; // Update selected color for this size
+      }
+      return size;
+    });
+    setSizes(updatedSizes);
+  };
+
   const deleteProduct = () => {
     http
       .delete(`/product/${id}`)
@@ -243,7 +344,7 @@ function EditProduct() {
   };
 
   if (loading) {
-    return <Typography>Loading...</Typography>;
+    return <Typography>Loading...</Typography>; // This ensures the form doesn't load prematurely.
   }
 
   return (
@@ -402,6 +503,26 @@ function EditProduct() {
                       }
                     />
                   </Grid>
+                  <Grid item xs={12}>
+                    <Typography variant="subtitle2">
+                      Select Color for this Size:
+                    </Typography>
+                    <FormControl fullWidth>
+                      <InputLabel>Select Color</InputLabel>
+                      <Select
+                        value={size.selectedColor || ''}
+                        onChange={(e) =>
+                          handleColorSelection(index, e.target.value)
+                        }
+                      >
+                        {colors.map((color, colorIndex) => (
+                          <MenuItem key={colorIndex} value={color}>
+                            {color}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
+                  </Grid>
                   <Grid item xs={2} sx={{ textAlign: 'center' }}>
                     {sizes.length > 1 && (
                       <IconButton
@@ -419,6 +540,31 @@ function EditProduct() {
                   </Grid>
                 </Grid>
               ))}
+
+              <Typography variant="subtitle1" sx={{ mt: 2, mb: 1 }}>
+                Colors:
+              </Typography>
+              <Box sx={{ display: 'flex', gap: 1, mb: 2 }}>
+                <TextField
+                  fullWidth
+                  placeholder="Enter color"
+                  value={colorInput}
+                  onChange={(e) => setColorInput(e.target.value)}
+                />
+                <Button variant="contained" onClick={addColor}>
+                  Add
+                </Button>
+              </Box>
+              <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
+                {colors.map((color, index) => (
+                  <Chip
+                    key={index}
+                    label={color} // This label will now only show the color name
+                    onDelete={() => removeColor(color)} // Removes the color when clicked
+                    color="primary"
+                  />
+                ))}
+              </Box>
 
               <Typography variant="subtitle1" sx={{ mt: 2, mb: 1 }}>
                 Categories:
@@ -467,31 +613,6 @@ function EditProduct() {
                   >
                     {category}
                   </Button>
-                ))}
-              </Box>
-
-              <Typography variant="subtitle1" sx={{ mt: 2, mb: 1 }}>
-                Colors:
-              </Typography>
-              <Box sx={{ display: 'flex', gap: 1, mb: 2 }}>
-                <TextField
-                  fullWidth
-                  placeholder="Enter color"
-                  value={colorInput}
-                  onChange={(e) => setColorInput(e.target.value)}
-                />
-                <Button variant="contained" onClick={addColor}>
-                  Add
-                </Button>
-              </Box>
-              <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
-                {colors.map((color, index) => (
-                  <Chip
-                    key={index}
-                    label={color} // Ensure this is a string
-                    onDelete={() => removeColor(color)}
-                    color="primary"
-                  />
                 ))}
               </Box>
 

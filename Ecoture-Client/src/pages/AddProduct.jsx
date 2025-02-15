@@ -12,8 +12,12 @@ import {
   Card,
   CardActions,
   Chip,
+  FormControl,
   Grid,
   IconButton,
+  InputLabel,
+  MenuItem,
+  Select,
   TextField,
   Typography,
 } from '@mui/material';
@@ -94,12 +98,11 @@ function AddProduct() {
       data.description = data.description.trim();
       data.colors = colors;
 
-      data.sizes = sizes
-        .filter((s) => s.sizeName.trim() && s.stockQuantity)
-        .map((s) => ({
-          sizeName: s.sizeName.trim(),
-          stockQuantity: parseInt(s.stockQuantity, 10),
-        }));
+      data.SizeColors = sizes.map((size) => ({
+        sizeName: size.sizeName.trim(),
+        colorName: size.selectedColor, // Single selected color
+        stockQuantity: parseInt(size.stockQuantity, 10),
+      }));
 
       data.categories = formik.values.categories || [];
       data.fits = formik.values.fits || [];
@@ -131,6 +134,14 @@ function AddProduct() {
     setImageError('');
     const file = e.target.files[0];
     if (file) {
+      const validTypes = ['image/jpeg', 'image/png', 'image/webp'];
+      if (!validTypes.includes(file.type)) {
+        setImageError(
+          'Invalid file type. Please upload a JPG, PNG, or WebP file.'
+        );
+        return;
+      }
+
       if (file.size > 1024 * 1024) {
         setImageError('Maximum file size is 1MB');
         return;
@@ -160,6 +171,12 @@ function AddProduct() {
     if (colorInput.trim() && !colors.includes(colorInput.trim())) {
       setColors([...colors, colorInput.trim()]);
       setColorInput('');
+
+
+      // Update sizes with new color selection array
+      setSizes((prevSizes) =>
+        prevSizes.map((size) => ({ ...size, selectedColors: [] }))
+      );
     }
   };
 
@@ -168,7 +185,12 @@ function AddProduct() {
   };
 
   const addSizeField = () => {
-    setSizes([...sizes, { sizeName: '', stockQuantity: '' }]);
+
+    setSizes([
+      ...sizes,
+      { sizeName: '', stockQuantity: '', selectedColors: [] },
+    ]);
+
   };
 
   const removeSizeField = (index) => {
@@ -180,6 +202,19 @@ function AddProduct() {
     const updatedSizes = sizes.map((size, i) =>
       i === index ? { ...size, [field]: value } : size
     );
+    setSizes(updatedSizes);
+  };
+
+  const handleColorSelection = (sizeIndex, color) => {
+    const updatedSizes = sizes.map((size, i) => {
+      if (i === sizeIndex) {
+        return {
+          ...size,
+          selectedColor: color, // Store only one selected color
+        };
+      }
+      return size;
+    });
     setSizes(updatedSizes);
   };
 
@@ -306,6 +341,7 @@ function AddProduct() {
                       }
                     />
                   </Grid>
+
                   <Grid item xs={5}>
                     <TextField
                       fullWidth
@@ -318,6 +354,7 @@ function AddProduct() {
                       }
                     />
                   </Grid>
+
                   <Grid item xs={2} sx={{ textAlign: 'center' }}>
                     {sizes.length > 1 && (
                       <IconButton
@@ -332,6 +369,29 @@ function AddProduct() {
                         <AddCircleOutline />
                       </IconButton>
                     )}
+                  </Grid>
+
+                  {/* FIX: Color Selection UI */}
+                  <Grid item xs={12}>
+                    {/* Select Color for this Size */}
+                    <Typography variant="subtitle2">
+                      Select Color for this Size:
+                    </Typography>
+                    <FormControl fullWidth>
+                      <InputLabel>Select Color</InputLabel>
+                      <Select
+                        value={size.selectedColor || ''}
+                        onChange={(e) =>
+                          handleColorSelection(index, e.target.value)
+                        }
+                      >
+                        {colors.map((color, colorIndex) => (
+                          <MenuItem key={colorIndex} value={color}>
+                            {color}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
                   </Grid>
                 </Grid>
               ))}
