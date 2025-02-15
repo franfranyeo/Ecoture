@@ -1,4 +1,3 @@
-
 import { Box, Typography } from '@mui/material';
 
 import loginImage from 'assets/images/login.png';

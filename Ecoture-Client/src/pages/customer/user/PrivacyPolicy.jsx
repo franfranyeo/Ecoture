@@ -1,4 +1,3 @@
-
 import { Box, Container, Divider, Typography } from '@mui/material';
 
 const PrivacyPolicy = () => {
