@@ -85,8 +85,21 @@ namespace Ecoture.Services
             // Add user to the database
             await _context.Users.AddAsync(user);
             await _context.MfaResponses.AddAsync(mfaResponse);
-            await _context.SaveChangesAsync();
 
+            // Add welcome points
+            var welcomePoints = new PointsTransaction
+            {
+                UserId = user.UserId,
+                PointsEarned = 500, // Welcome bonus points
+                PointsSpent = 0,
+                TransactionType = "Welcome",
+                CreatedAt = now,
+                ExpiryDate = now.AddYears(1)
+            };
+            await _context.PointsTransactions.AddAsync(welcomePoints);
+            user.TotalPoints += welcomePoints.PointsEarned;
+
+            await _context.SaveChangesAsync();
 
             // Handle referral if provided
             if (!string.IsNullOrEmpty(request.ReferralCode))

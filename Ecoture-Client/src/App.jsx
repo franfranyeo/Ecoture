@@ -23,9 +23,16 @@ import UserContext from './contexts/UserContext';
 import AddProduct from './pages/AddProduct';
 import AddAddress from './pages/Checkout/AddAddress';
 import AddCreditCard from './pages/Checkout/AddCreditCard';
+
+import Wishlist from './pages/Wishlist';
+
+
 // AHMED IMPORTS
 import Addresses from './pages/Checkout/Addresses';
 import Cart from './pages/Checkout/Cart';
+import OrderHistory from "./pages/Checkout/OrderHistory";
+import RefundRequests from "./pages/Checkout/Refund";
+import RefundApproval from "./pages/admin/RefundApproval";
 import Choice from './pages/Checkout/Choice';
 import Confirmation from './pages/Checkout/Confirmation';
 import CreditCards from './pages/Checkout/CreditCards';
@@ -37,6 +44,7 @@ import EditProduct from './pages/EditProduct';
 import AddEnquiry from './pages/Enquiries/AddEnquiry';
 import AddResponse from './pages/Enquiries/AddResponse';
 import EnquiriesDashboard from './pages/Enquiries/Dashboard';
+
 // Amelia Imports
 import Enquiries from './pages/Enquiries/Enquiries';
 import UpdateEnquiry from './pages/Enquiries/UpdateEnquiry';
@@ -46,6 +54,7 @@ import SelectContent from './pages/Newsletter/SelectContent';
 import AddNewsletter from './pages/Newsletter/AddNewsletter';
 import ProductDetail from './pages/ProductDetail';
 import Products from './pages/Products';
+
 import Reviews from './pages/Reviews';
 import Dashboard from './pages/admin/Dashboard';
 import StaffDashboard from './pages/admin/products/AdminProducts';
@@ -256,6 +265,8 @@ function App() {
               {/* Navbar is always rendered */}
               <Navbar onLogout={logout} />
 
+
+
               <Routes>
                 <Route
                   path="/"
@@ -305,6 +316,9 @@ function App() {
                 <Route path="/editproduct/:id" element={<EditProduct />} />
                 <Route path="/product/:id" element={<ProductDetail />} />
                 <Route path="/reviews/:productId" element={<Reviews />} />
+                <Route path="/wishlist" element={<Wishlist />} />
+
+               
 
                 {/* AHMED CODES */}
                 <Route path="/addresses" element={<Addresses />} />
@@ -319,8 +333,11 @@ function App() {
                 <Route path="/form" element={<MyForm />} />
                 <Route path="/choice" element={<Choice />} />
                 <Route path="/confirmation" element={<Confirmation />} />
+                <Route path="/order-history" element={<OrderHistory />} />
+                <Route path="/refund-requests" element={<RefundRequests />} />
                 <Route path="/cart" element={<Cart />} />
-
+                <Route path="/admin/refund-approval" element={<ProtectedRoute element={RefundApproval} />} />
+                
                 {/* Enquiry Management */}
                 <Route path="/dashboard" element={<EnquiriesDashboard />} />
                 <Route path="/enquiries" element={<Enquiries />} />

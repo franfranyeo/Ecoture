@@ -1,8 +1,10 @@
+/* eslint-disable complexity */
 import { useFormik } from 'formik';
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { formatDateForInput, formatDateForSubmission } from 'utils/helper';
 import http from 'utils/http';
 import * as yup from 'yup';
 
@@ -12,14 +14,9 @@ import {
   Box,
   Button,
   Divider,
-  FormControl,
-  FormHelperText,
   Grid,
   IconButton,
-  InputLabel,
-  MenuItem,
   Paper,
-  Select,
   TextField,
   Typography,
 } from '@mui/material';
@@ -102,7 +99,7 @@ function EditUser() {
   const [user, setUser] = useState({
     firstName: '',
     lastName: '',
-    dateofBirth: '',
+    dateOfBirth: '',
     email: '',
     mobileNumber: '',
   });
@@ -111,11 +108,11 @@ function EditUser() {
     http.get(`/user/${id}`).then((res) => {
       const cleanedUser = {
         ...res.data,
-        dateofBirth: res.data.dateofBirth
-          ? res.data.dateofBirth.split('T')[0]
-          : 'Not set',
+        dateOfBirth: formatDateForInput(res.data.dateOfBirth),
         mobileNumber: res.data.mobileNumber || 'Not set',
       };
+
+      console.log('User fetched:', cleanedUser); // Added logging
       setUser(cleanedUser);
       setLoading(false);
     });
@@ -124,7 +121,7 @@ function EditUser() {
   const formik = useFormik({
     initialValues: {
       ...user,
-      dateofBirth: user.dateofBirth ? user.dateofBirth.split('T')[0] : null,
+      dateOfBirth: user.dateOfBirth || '',
     },
     enableReinitialize: true,
     validationSchema:
@@ -141,8 +138,7 @@ function EditUser() {
           lastName: values.lastName.trim(),
           email: values.email.trim(),
           mobileNumber: values.mobileNumber ? values.mobileNumber : null,
-          dateofBirth:
-            values.dateofBirth != 'Not set' ? values.dateofBirth : null,
+          dateOfBirth: formatDateForSubmission(values.dateOfBirth),
           pfpURL: user.pfpURL || '',
         };
         const response = await http.put(`/user/${id}`, {
@@ -253,16 +249,16 @@ function EditUser() {
                     margin="dense"
                     type="date"
                     label="Date of Birth"
-                    name="dateofBirth"
-                    value={formik.values.dateofBirth}
+                    name="dateOfBirth"
+                    value={formik.values.dateOfBirth}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     error={
-                      formik.touched.dateofBirth &&
-                      Boolean(formik.errors.dateofBirth)
+                      formik.touched.dateOfBirth &&
+                      Boolean(formik.errors.dateOfBirth)
                     }
                     helperText={
-                      formik.touched.dateofBirth && formik.errors.dateofBirth
+                      formik.touched.dateOfBirth && formik.errors.dateOfBirth
                     }
                     InputLabelProps={{ shrink: true }}
                     variant="outlined"
@@ -406,16 +402,16 @@ function EditUser() {
                     margin="dense"
                     type="date"
                     label="Date of Birth"
-                    name="dateofBirth"
-                    value={formik.values.dateofBirth}
+                    name="dateOfBirth"
+                    value={formik.values.dateOfBirth}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     error={
-                      formik.touched.dateofBirth &&
-                      Boolean(formik.errors.dateofBirth)
+                      formik.touched.dateOfBirth &&
+                      Boolean(formik.errors.dateOfBirth)
                     }
                     helperText={
-                      formik.touched.dateofBirth && formik.errors.dateofBirth
+                      formik.touched.dateOfBirth && formik.errors.dateOfBirth
                     }
                     InputLabelProps={{ shrink: true }}
                     variant="outlined"

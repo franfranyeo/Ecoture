@@ -48,7 +48,10 @@ namespace Ecoture
         public required DbSet<ProductCategory> ProductCategories { get; set; }
         public required DbSet<Category> Categories { get; set; }
 
-         // ✅ Additional DbSets (if needed)
+        public required DbSet<Wishlist> Wishlists { get; set; }
+
+
+        // ✅ Additional DbSets (if needed)
         public required DbSet<Address> Addresses { get; set; }
         public required DbSet<CreditCard> CreditCards { get; set; }
 
@@ -57,6 +60,8 @@ namespace Ecoture
 
         // Order Items Table
         public required DbSet<OrderItem> OrderItems { get; set; }
+        public required DbSet<RefundRequest> RefundRequests { get; set; }
+
 
         // FRAN DB CONTEXT
         public required DbSet<User> Users { get; set; }
@@ -182,6 +187,8 @@ namespace Ecoture
             ConfigureProductSizeColorRelationship(modelBuilder); //  New Configuration
             ConfigureProductFitRelationship(modelBuilder);
             ConfigureProductCategoryRelationship(modelBuilder);
+            ConfigureWishlistRelationship(modelBuilder);
+
 
 
             //  Configure one-to-many relationships
@@ -245,6 +252,24 @@ namespace Ecoture
                 .WithMany(c => c.ProductSizeColors) // ✅ Define explicit navigation property in Color
                 .HasForeignKey(psc => psc.ColorId)
                 .OnDelete(DeleteBehavior.Restrict);
+        }
+
+        private void ConfigureWishlistRelationship(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Wishlist>()
+                .HasKey(w => w.Id); // Primary key
+
+            modelBuilder.Entity<Wishlist>()
+                .HasOne(w => w.User)
+                .WithMany(static u => u.Wishlists) // A user can have multiple wishlisted products
+                .HasForeignKey(w => w.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Wishlist>()
+                .HasOne(w => w.Product)
+                .WithMany() // Products don’t need to reference wishlists
+                .HasForeignKey(w => w.ProductId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
 
 
