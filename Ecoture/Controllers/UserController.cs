@@ -833,6 +833,18 @@ namespace Ecoture.Controllers
                 user.MembershipId = 3;
             }
 
+            var transaction = new PointsTransaction
+            {
+                UserId = user.UserId,
+                PointsEarned = request.Points,
+                PointsSpent = 0,
+                TransactionType = "Spending",
+                CreatedAt = DateTime.UtcNow,
+                ExpiryDate = DateTime.UtcNow.AddYears(1)
+            };
+
+            await _context.PointsTransactions.AddAsync(transaction);
+
             await _context.SaveChangesAsync();
 
             return Ok(new { message = "Spending updated successfully." });
