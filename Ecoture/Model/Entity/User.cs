@@ -52,6 +52,8 @@ namespace Ecoture.Model.Entity
 
         public int MembershipId { get; set; } = 1;
 
+        public DateTime? LastClaimTime { get; set; }
+
         public DateTime MembershipStartDate { get; set; } // When the user enrolled
         public DateTime? MembershipEndDate { get; set; } // For paid memberships with expiration
 

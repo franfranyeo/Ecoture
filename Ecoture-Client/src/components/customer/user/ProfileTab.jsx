@@ -616,7 +616,7 @@ const ProfileTab = ({ user }) => {
               )}
             </Grid>
             <Grid item xs={6}>
-              {!isEditing && (
+              {!isEditing && !user.isGoogleLogin && (
                 <Button
                   startIcon={<Lock />}
                   onClick={() => setShowPasswordDialog(true)}

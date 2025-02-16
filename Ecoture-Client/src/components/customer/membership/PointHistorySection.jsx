@@ -1,11 +1,19 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { History as HistoryIcon } from '@mui/icons-material';
 import { Box, Paper, Typography } from '@mui/material';
 
 import ActivityItem from './ActivityItem';
 
-const PointHistorySection = ({ transactions, totalPoints }) => {
+const PointHistorySection = ({
+  transactions,
+  totalPoints,
+  fetchPointHistory,
+}) => {
+  useEffect(() => {
+    fetchPointHistory();
+  }, []);
+
   return (
     <Box>
       {/* Header */}

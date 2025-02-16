@@ -25,7 +25,6 @@ namespace Ecoture.Controllers
                     .Include(pt => pt.Reward)
                     .Include(pt => pt.Referral)
                     .OrderByDescending(pt => pt.CreatedAt)
-  
                     .ToListAsync();
 
                 return Ok(pointHistory);
@@ -33,6 +32,51 @@ namespace Ecoture.Controllers
             catch (Exception ex)
             {
                 return StatusCode(500, "An error occurred while fetching points history.");
+            }
+        }
+
+        [HttpPost("claim-points")]
+        public async Task<IActionResult> ClaimPoints()
+        {
+            try
+            {
+                // Get user id from claims
+                var userId = Convert.ToInt32(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+                var user = await _context.Users.FindAsync(userId);
+                if (user == null)
+                {
+                    return NotFound("User not found.");
+                }
+                // Check if user can claim
+                if (user.LastClaimTime.HasValue)
+                {
+                    var lastClaim = user.LastClaimTime.Value;
+                    var now = DateTime.UtcNow;
+
+                    // If last claim was today, return error
+                    if (lastClaim.Date == now.Date)
+                    {
+                        return BadRequest(new { message = "Already claimed today" });
+                    }
+                }
+                user.LastClaimTime = DateTime.UtcNow;
+                user.TotalPoints += 5;
+
+                var transaction = new PointsTransaction
+                {
+                    UserId = userId,
+                    PointsEarned = 5,
+                    TransactionType = "Daily Check-in",
+                    CreatedAt = DateTime.UtcNow,
+                    ExpiryDate = DateTime.UtcNow.AddYears(1)
+                };
+                await _context.PointsTransactions.AddAsync(transaction);
+                await _context.SaveChangesAsync();
+                return Ok("Reward claimed successfully.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "An error occurred while claiming reward.");
             }
         }
 

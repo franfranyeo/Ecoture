@@ -50,18 +50,10 @@ import Products from './pages/Products';
 import Reviews from './pages/Reviews';
 import Wishlist from './pages/Wishlist';
 import AdminChat from './pages/admin/AdminChat';
-import Dashboard from './pages/admin/Dashboard';
 import RefundApproval from './pages/admin/RefundApproval';
 import StaffDashboard from './pages/admin/products/AdminProducts';
 import AdminProducts from './pages/admin/products/AdminProducts';
-import AddReward from './pages/admin/rewards/AddReward';
-import EditReward from './pages/admin/rewards/EditReward';
-import Rewards from './pages/admin/rewards/Rewards';
-import ViewReward from './pages/admin/rewards/ViewReward';
-import AddUser from './pages/admin/user/AddUser';
-import EditUser from './pages/admin/user/EditUser';
-import Users from './pages/admin/user/Users';
-import ViewUser from './pages/admin/user/ViewUser';
+
 // Fran Imports
 import Account from './pages/customer/user/Account';
 import ForgotPassword from './pages/customer/user/ForgotPassword';
@@ -70,6 +62,16 @@ import PrivacyPolicy from './pages/customer/user/PrivacyPolicy';
 import Register from './pages/customer/user/Register';
 import ResetPassword from './pages/customer/user/ResetPassword';
 import TermsOfUse from './pages/customer/user/TermsOfUse';
+import AddReward from './pages/admin/rewards/AddReward';
+import EditReward from './pages/admin/rewards/EditReward';
+import Rewards from './pages/admin/rewards/Rewards';
+import ViewReward from './pages/admin/rewards/ViewReward';
+import AddUser from './pages/admin/user/AddUser';
+import EditUser from './pages/admin/user/EditUser';
+import Users from './pages/admin/user/Users';
+import ViewUser from './pages/admin/user/ViewUser';
+import Dashboard from './pages/admin/Dashboard';
+
 
 import './App.css';
 import MyTheme from './themes/MyTheme';

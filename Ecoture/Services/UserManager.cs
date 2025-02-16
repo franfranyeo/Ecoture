@@ -74,7 +74,8 @@ namespace Ecoture.Services
                     Password = BCrypt.Net.BCrypt.HashPassword(request.Password),
                     CreatedAt = now,
                     UpdatedAt = now,
-                    MembershipId = 1
+                    MembershipId = 1,
+                    ReferralCode = RandomReferralCode.Generate(),
                 };
 
                 // Add user to the database and save to get UserId
