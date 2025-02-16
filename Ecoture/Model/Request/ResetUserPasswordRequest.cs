@@ -2,5 +2,6 @@
 {
     public class ResetUserPasswordRequest
     {
+        public int UserId { get; set; }
     }
 }
