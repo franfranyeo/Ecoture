@@ -35,6 +35,7 @@ function ProductDetail() {
   // Use this hook at the top of your component
   const { user } = useContext(UserContext);
   const [wishlistStatus, setWishlistStatus] = useState(false);
+  const [quantity, setQuantity] = useState(1);
 
   useEffect(() => {
     if (user && product) {
@@ -108,7 +109,7 @@ function ProductDetail() {
       color: selectedColor,
       size: selectedSize,
       imageFile: product.imageFile || '', // Ensure it's not null
-      quantity: 1,
+      quantity: quantity,
     };
 
     try {
@@ -412,6 +413,38 @@ function ProductDetail() {
             )}
           </Box>
 
+          {/* Quantity Selection */}
+          <Typography
+            variant="body2"
+            sx={{ fontWeight: 'bold', marginBottom: 1 }}
+          >
+            Quantity:
+          </Typography>
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: 2,
+              marginBottom: 2,
+            }}
+          >
+            <Button
+              variant="outlined"
+              color="primary"
+              onClick={() => setQuantity(quantity > 1 ? quantity - 1 : 1)}
+            >
+              -
+            </Button>
+            <Typography variant="body1">{quantity}</Typography>
+            <Button
+              variant="outlined"
+              color="primary"
+              onClick={() => setQuantity(quantity + 1)}
+            >
+              +
+            </Button>
+          </Box>
+
           {/* Add to Cart Button */}
           <Button
             variant="contained"
@@ -425,14 +458,14 @@ function ProductDetail() {
             disabled={
               !selectedColor ||
               !selectedSize ||
-              !product.sizeColors.some(
-                (item) =>
-                  item.colorName === selectedColor &&
-                  item.sizeName === selectedSize &&
-                  item.stockQuantity > 0
-              )
+              quantity >
+                product.sizeColors.find(
+                  (item) =>
+                    item.colorName === selectedColor &&
+                    item.sizeName === selectedSize
+                )?.stockQuantity
             }
-            onClick={handleAddToCart} //  Fix: Call function when clicked
+            onClick={handleAddToCart} // Call function when clicked
           >
             Add to Cart
           </Button>
