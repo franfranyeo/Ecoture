@@ -85,6 +85,11 @@ namespace Ecoture.Model.Entity
         [JsonIgnore]
         public List<Product>? Products { get; set; }
 
+        // Navigation property for Wishlist (One-to-Many)
+        [JsonIgnore]
+        public List<Wishlist>? Wishlists { get; set; } = new();
+
+
         // Computed property for full name with capitalization
         public string FullName
         {
