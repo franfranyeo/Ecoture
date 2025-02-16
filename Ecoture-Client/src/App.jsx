@@ -4,7 +4,7 @@ import {
   Navigate,
   Route,
   BrowserRouter as Router,
-  Routes,
+  Routes
 } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import http from 'utils/http';
@@ -40,7 +40,7 @@ import EnquiriesDashboard from './pages/Enquiries/Dashboard';
 // Amelia Imports
 import Enquiries from './pages/Enquiries/Enquiries';
 import UpdateEnquiry from './pages/Enquiries/UpdateEnquiry';
-import AdminChat from './pages/LiveChat/AdminChat';
+import AdminChat from './pages/admin/AdminChat';
 import CreateNewsletter from './pages/Newsletter/CreateNewsletter';
 import SelectContent from './pages/Newsletter/SelectContent';
 import ProductDetail from './pages/ProductDetail';
@@ -224,7 +224,8 @@ function App() {
     localStorage.clear();
     window.location = '/';
   };
-
+  const isAdmin = user?.role === "Admin";
+  const isAdminRoute = window.location.pathname.startsWith("/admin");
   return (
     <GoogleOAuthProvider clientId="455480585598-3f0qgcm01cbr2qp4rm9or035u1g75ur8.apps.googleusercontent.com">
       <UserContext.Provider value={value}>
@@ -320,10 +321,11 @@ function App() {
                 />
                 <Route path="/selectcontent" element={<SelectContent />} />
 
-                <Route path="/adminchat" element={<AdminChat />} />
+                <Route path="/admin/livechat" element={<ProtectedRoute element={AdminChat} />} />
+
               </Routes>
 
-              <ChatWidget />
+              {!isAdmin && !isAdminRoute && <ChatWidget />}
             </Box>
           </ThemeProvider>
         </Router>

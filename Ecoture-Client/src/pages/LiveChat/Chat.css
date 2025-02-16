@@ -33,26 +33,31 @@
   max-height: 350px;
 }
 
-/* Message Bubbles */
 .message {
-  max-width: 70%;
-  padding: 8px 12px;
-  margin: 5px;
-  border-radius: 10px;
+  position: relative;        
+  padding: 10px 15px;        
+  padding-bottom: 24px;    
+  margin-bottom: 10px;
+  max-width: 65%;
+  border-radius: 15px;
   word-wrap: break-word;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease-in-out;
   font-size: 14px;
 }
+
 
 /* Sent Messages */
 .sent {
   align-self: flex-end;
-  background: #dcf8c6;
+  background: #57cff04e;
 }
 
 /* Received Messages */
 .received {
   align-self: flex-start;
-  background: #f1f1f1;
+  background-color: #0056b3;
+  color: white;
 }
 
 /* Chat Input */
@@ -72,19 +77,19 @@
   font-size: 14px;
 }
 
-.send-btn {
-  background: #007bff;
+#send-btn {
+  background: #27236D;
   color: white;
   border: none;
   padding: 10px 15px;
   margin-left: 8px;
   cursor: pointer;
-  border-radius: 20px;
+  border-radius: 8px;
   transition: 0.2s;
 }
 
-.send-btn:hover {
-  background: #0056b3;
+#send-btn:hover {
+  background: #2e25df;
 }
 
 .chat-box::-webkit-scrollbar {
@@ -104,4 +109,18 @@
 
 .chat-box::-webkit-scrollbar-thumb:hover {
   background: rgb(55, 55, 55);
+}
+.message-text {
+  display: block;
+  margin-top: 4px;
+  /* If you want the message text to be right aligned: */
+  /* text-align: right; */
+}
+
+.timestamp {
+  position: absolute;
+  bottom: 4px;
+  right: 8px;
+  font-size: 0.75rem;
+  opacity: 0.8;
 }

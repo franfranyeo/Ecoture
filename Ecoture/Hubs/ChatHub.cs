@@ -18,6 +18,10 @@ namespace Ecoture.Hubs
 
             userConnections[userId] = Context.ConnectionId;
 
+            await Clients.Others.SendAsync("ReceiveMessage", "System", $"{userId} connected");
+            await Clients.Others.SendAsync("Connections", userConnections.Keys);
+            await Clients.Client(Context.ConnectionId).SendAsync("ReceiveMessage", "Admin", "Hi, welcome to Ecoture live chat. How may I help you today?");
+
             await base.OnConnectedAsync();
         }
 
@@ -45,6 +49,8 @@ namespace Ecoture.Hubs
             if (user != null)
             {
                 userConnections.Remove(user);
+                await Clients.Others.SendAsync("ReceiveMessage", "System", $"{user} disconnected");
+                await Clients.Others.SendAsync("Connections", userConnections.Keys);
             }
 
             await base.OnDisconnectedAsync(exception);
