@@ -59,11 +59,10 @@ const EarningActivityCard = ({ activity, user, onEarnPoints }) => {
     if (activity.id !== 'daily-login') return true;
     if (!user.lastLogin) return true;
 
-    const lastCheckIn = new Date(user.lastLogin);
-    const now = new Date();
-    const hoursSinceLastCheckIn = (now - lastCheckIn) / (1000 * 60 * 60);
+    const lastLoginDate = new Date(user.lastLogin).toLocaleDateString();
+    const today = new Date().toLocaleDateString();
 
-    return hoursSinceLastCheckIn >= 24;
+    return lastLoginDate !== today;
   }, [activity.id, user.lastLogin]);
 
   const buttonText = useMemo(() => {
@@ -73,6 +72,7 @@ const EarningActivityCard = ({ activity, user, onEarnPoints }) => {
     }
     return 'Earn';
   }, [activity.id, canCheckIn]);
+
   return (
     <Card
       sx={{

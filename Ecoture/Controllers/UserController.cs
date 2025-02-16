@@ -567,7 +567,7 @@ namespace Ecoture.Controllers
         public async Task<IActionResult> GetUsers()
         {
 
-            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+            var userId = Convert.ToInt32(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
 
             if (User.IsInRole("Admin") || User.IsInRole("Staff"))
             {
@@ -613,7 +613,7 @@ namespace Ecoture.Controllers
         [HttpGet("profile"), Authorize]
         public async Task<IActionResult> GetProfile()
         {
-            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+            var userId = Convert.ToInt32(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
             var user = await _context.Users
                         .Include(u => u.Membership) // Include Membership to avoid null reference
                         .FirstOrDefaultAsync(u => u.UserId == userId);
