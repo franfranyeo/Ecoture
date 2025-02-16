@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import http from 'utils/http';
 
 import { Clear, Search } from '@mui/icons-material';
@@ -9,6 +10,7 @@ import {
   Card,
   CardContent,
   CardMedia,
+  Chip,
   Dialog,
   DialogActions,
   DialogContent,
@@ -175,7 +177,7 @@ function Products({ onAddProductClick }) {
           closeDeleteDialog();
         })
         .catch(() => {
-          alert('Failed to delete product. Please try again.');
+          toast.error('Failed to delete product. Please try again.');
         });
     }
   };
@@ -204,7 +206,7 @@ function Products({ onAddProductClick }) {
   const submitReview = (productId, e) => {
     e.stopPropagation();
     if (!reviewText || !reviewRating) {
-      alert('Please provide valid review text and a rating.');
+      toast.error('Please provide valid review text and a rating.');
       return;
     }
 
@@ -224,7 +226,7 @@ function Products({ onAddProductClick }) {
       })
       .catch((err) => {
         console.error('Error adding review:', err);
-        alert('Failed to add review. Please try again.');
+        toast.error('Failed to add review. Please try again.');
       });
   };
 

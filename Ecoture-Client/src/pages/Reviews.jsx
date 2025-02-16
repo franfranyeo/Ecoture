@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import http from 'utils/http';
 
 import { Cancel, Delete, Edit, Save } from '@mui/icons-material';
@@ -59,7 +60,7 @@ const Reviews = () => {
         })
         .catch((err) => {
           console.error('Error deleting review:', err);
-          alert('Failed to delete review. Please try again.');
+          toast.error('Failed to delete review. Please try again.');
         });
     }
   };
@@ -90,7 +91,7 @@ const Reviews = () => {
       })
       .catch((err) => {
         console.error('Error updating review:', err);
-        alert('Failed to update review. Please try again.');
+        toast.error('Failed to update review. Please try again.');
       });
   };
 

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import http from 'utils/http';
 
 import { Box, Button, Card, CardContent, Typography } from '@mui/material';
@@ -12,7 +13,7 @@ function Confirmation() {
 
   useEffect(() => {
     if (!state || !state.orderId) {
-      alert('Error: Order ID is missing.');
+      toast.error('Order ID is missing.');
       navigate('/cart');
       return;
     }
@@ -20,7 +21,7 @@ function Confirmation() {
     http
       .get(`/order/${state.orderId}`)
       .then((res) => setOrder(res.data))
-      .catch(() => alert('Failed to fetch order details.'))
+      .catch(() => toast.error('Failed to fetch order details.'))
       .finally(() => setLoading(false));
   }, [state, navigate]);
 
