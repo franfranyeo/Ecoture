@@ -23,6 +23,7 @@ import UserContext from './contexts/UserContext';
 import AddProduct from './pages/AddProduct';
 import AddAddress from './pages/Checkout/AddAddress';
 import AddCreditCard from './pages/Checkout/AddCreditCard';
+
 // AHMED IMPORTS
 import Addresses from './pages/Checkout/Addresses';
 import Cart from './pages/Checkout/Cart';
@@ -45,6 +46,7 @@ import CreateNewsletter from './pages/Newsletter/CreateNewsletter';
 import SelectContent from './pages/Newsletter/SelectContent';
 import ProductDetail from './pages/ProductDetail';
 import Products from './pages/Products';
+
 import Reviews from './pages/Reviews';
 import Dashboard from './pages/admin/Dashboard';
 import StaffDashboard from './pages/admin/products/AdminProducts';
@@ -240,7 +242,8 @@ function App() {
               }}
             >
               {/* Navbar is always rendered */}
-              <Navbar onLogout={logout} />
+              <Navbar onLogout={logout} user={user} />  
+
 
               <Routes>
                 <Route
@@ -291,6 +294,7 @@ function App() {
                 <Route path="/editproduct/:id" element={<EditProduct />} />
                 <Route path="/product/:id" element={<ProductDetail />} />
                 <Route path="/reviews/:productId" element={<Reviews />} />
+               
 
                 {/* AHMED CODES */}
                 <Route path="/addresses" element={<Addresses />} />

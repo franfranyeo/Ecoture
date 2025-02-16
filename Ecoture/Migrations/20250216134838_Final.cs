@@ -9,7 +9,7 @@ using MySql.EntityFrameworkCore.Metadata;
 namespace Ecoture.Migrations
 {
     /// <inheritdoc />
-    public partial class init : Migration
+    public partial class Final : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -184,7 +184,7 @@ namespace Ecoture.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(type: "longtext", nullable: false)
+                    Name = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -394,23 +394,11 @@ namespace Ecoture.Migrations
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
                     referrerUserId = table.Column<int>(type: "int", nullable: false),
                     refereeUserId = table.Column<int>(type: "int", nullable: false),
-                    referralDate = table.Column<DateTime>(type: "datetime", nullable: false),
-                    UserId = table.Column<int>(type: "int", nullable: true),
-                    UserId1 = table.Column<int>(type: "int", nullable: true)
+                    referralDate = table.Column<DateTime>(type: "datetime", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Referrals", x => x.referralId);
-                    table.ForeignKey(
-                        name: "FK_Referrals_Users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Users",
-                        principalColumn: "UserId");
-                    table.ForeignKey(
-                        name: "FK_Referrals_Users_UserId1",
-                        column: x => x.UserId1,
-                        principalTable: "Users",
-                        principalColumn: "UserId");
                     table.ForeignKey(
                         name: "FK_Referrals_Users_refereeUserId",
                         column: x => x.refereeUserId,
@@ -456,26 +444,26 @@ namespace Ecoture.Migrations
                 name: "UserRedemptions",
                 columns: table => new
                 {
-                    redemptionId = table.Column<int>(type: "int", nullable: false)
+                    RedemptionId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
-                    userId = table.Column<int>(type: "int", nullable: false),
-                    voucherId = table.Column<int>(type: "int", nullable: false),
-                    pointsUsed = table.Column<int>(type: "int", nullable: false),
-                    redemptionDate = table.Column<DateTime>(type: "datetime", nullable: false),
-                    status = table.Column<int>(type: "int", maxLength: 50, nullable: false)
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    RewardId = table.Column<int>(type: "int", nullable: false),
+                    PointsUsed = table.Column<int>(type: "int", nullable: false),
+                    RedemptionDate = table.Column<DateTime>(type: "datetime", nullable: false),
+                    Status = table.Column<int>(type: "int", maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserRedemptions", x => x.redemptionId);
+                    table.PrimaryKey("PK_UserRedemptions", x => x.RedemptionId);
                     table.ForeignKey(
-                        name: "FK_UserRedemptions_Rewards_voucherId",
-                        column: x => x.voucherId,
+                        name: "FK_UserRedemptions_Rewards_RewardId",
+                        column: x => x.RewardId,
                         principalTable: "Rewards",
                         principalColumn: "RewardId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_UserRedemptions_Users_userId",
-                        column: x => x.userId,
+                        name: "FK_UserRedemptions_Users_UserId",
+                        column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "UserId",
                         onDelete: ReferentialAction.Cascade);
@@ -569,33 +557,6 @@ namespace Ecoture.Migrations
                 .Annotation("MySQL:Charset", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "ProductColors",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
-                    ProductId = table.Column<int>(type: "int", nullable: false),
-                    ColorId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ProductColors", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_ProductColors_Colors_ColorId",
-                        column: x => x.ColorId,
-                        principalTable: "Colors",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_ProductColors_Products_ProductId",
-                        column: x => x.ProductId,
-                        principalTable: "Products",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySQL:Charset", "utf8mb4");
-
-            migrationBuilder.CreateTable(
                 name: "ProductFits",
                 columns: table => new
                 {
@@ -623,26 +584,33 @@ namespace Ecoture.Migrations
                 .Annotation("MySQL:Charset", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "ProductSizes",
+                name: "ProductSizeColors",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
                     ProductId = table.Column<int>(type: "int", nullable: false),
+                    ColorId = table.Column<int>(type: "int", nullable: false),
                     SizeId = table.Column<int>(type: "int", nullable: false),
                     StockQuantity = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ProductSizes", x => x.Id);
+                    table.PrimaryKey("PK_ProductSizeColors", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ProductSizes_Products_ProductId",
+                        name: "FK_ProductSizeColors_Colors_ColorId",
+                        column: x => x.ColorId,
+                        principalTable: "Colors",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_ProductSizeColors_Products_ProductId",
                         column: x => x.ProductId,
                         principalTable: "Products",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ProductSizes_Sizes_SizeId",
+                        name: "FK_ProductSizeColors_Sizes_SizeId",
                         column: x => x.SizeId,
                         principalTable: "Sizes",
                         principalColumn: "Id",
@@ -724,10 +692,10 @@ namespace Ecoture.Migrations
                 columns: new[] { "MembershipId", "CreatedAt", "SpendingRequired", "Tier", "UpdatedAt" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2025, 2, 11, 3, 3, 14, 182, DateTimeKind.Utc).AddTicks(9640), 0.00m, 1, new DateTime(2025, 2, 11, 3, 3, 14, 182, DateTimeKind.Utc).AddTicks(9641) },
-                    { 2, new DateTime(2025, 2, 11, 3, 3, 14, 182, DateTimeKind.Utc).AddTicks(9644), 2000.00m, 2, new DateTime(2025, 2, 11, 3, 3, 14, 182, DateTimeKind.Utc).AddTicks(9645) },
-                    { 3, new DateTime(2025, 2, 11, 3, 3, 14, 182, DateTimeKind.Utc).AddTicks(9646), 4000.00m, 3, new DateTime(2025, 2, 11, 3, 3, 14, 182, DateTimeKind.Utc).AddTicks(9647) },
-                    { 4, new DateTime(2025, 2, 11, 3, 3, 14, 182, DateTimeKind.Utc).AddTicks(9649), 0.00m, 0, new DateTime(2025, 2, 11, 3, 3, 14, 182, DateTimeKind.Utc).AddTicks(9649) }
+                    { 1, new DateTime(2025, 2, 16, 13, 48, 37, 497, DateTimeKind.Utc).AddTicks(8009), 0.00m, 1, new DateTime(2025, 2, 16, 13, 48, 37, 497, DateTimeKind.Utc).AddTicks(8010) },
+                    { 2, new DateTime(2025, 2, 16, 13, 48, 37, 497, DateTimeKind.Utc).AddTicks(8012), 2000.00m, 2, new DateTime(2025, 2, 16, 13, 48, 37, 497, DateTimeKind.Utc).AddTicks(8013) },
+                    { 3, new DateTime(2025, 2, 16, 13, 48, 37, 497, DateTimeKind.Utc).AddTicks(8015), 4000.00m, 3, new DateTime(2025, 2, 16, 13, 48, 37, 497, DateTimeKind.Utc).AddTicks(8015) },
+                    { 4, new DateTime(2025, 2, 16, 13, 48, 37, 497, DateTimeKind.Utc).AddTicks(8017), 0.00m, 0, new DateTime(2025, 2, 16, 13, 48, 37, 497, DateTimeKind.Utc).AddTicks(8018) }
                 });
 
             migrationBuilder.CreateIndex(
@@ -786,16 +754,6 @@ namespace Ecoture.Migrations
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProductColors_ColorId",
-                table: "ProductColors",
-                column: "ColorId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ProductColors_ProductId",
-                table: "ProductColors",
-                column: "ProductId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_ProductFits_FitId",
                 table: "ProductFits",
                 column: "FitId");
@@ -821,13 +779,18 @@ namespace Ecoture.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProductSizes_ProductId",
-                table: "ProductSizes",
+                name: "IX_ProductSizeColors_ColorId",
+                table: "ProductSizeColors",
+                column: "ColorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProductSizeColors_ProductId",
+                table: "ProductSizeColors",
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProductSizes_SizeId",
-                table: "ProductSizes",
+                name: "IX_ProductSizeColors_SizeId",
+                table: "ProductSizeColors",
                 column: "SizeId");
 
             migrationBuilder.CreateIndex(
@@ -839,16 +802,6 @@ namespace Ecoture.Migrations
                 name: "IX_Referrals_referrerUserId",
                 table: "Referrals",
                 column: "referrerUserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Referrals_UserId",
-                table: "Referrals",
-                column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Referrals_UserId1",
-                table: "Referrals",
-                column: "UserId1");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Responses_enquiryId",
@@ -871,14 +824,14 @@ namespace Ecoture.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserRedemptions_userId",
+                name: "IX_UserRedemptions_RewardId",
                 table: "UserRedemptions",
-                column: "userId");
+                column: "RewardId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserRedemptions_voucherId",
+                name: "IX_UserRedemptions_UserId",
                 table: "UserRedemptions",
-                column: "voucherId");
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Users_MembershipId",
@@ -919,13 +872,10 @@ namespace Ecoture.Migrations
                 name: "ProductCategories");
 
             migrationBuilder.DropTable(
-                name: "ProductColors");
-
-            migrationBuilder.DropTable(
                 name: "ProductFits");
 
             migrationBuilder.DropTable(
-                name: "ProductSizes");
+                name: "ProductSizeColors");
 
             migrationBuilder.DropTable(
                 name: "Responses");
@@ -955,10 +905,10 @@ namespace Ecoture.Migrations
                 name: "Categories");
 
             migrationBuilder.DropTable(
-                name: "Colors");
+                name: "Fits");
 
             migrationBuilder.DropTable(
-                name: "Fits");
+                name: "Colors");
 
             migrationBuilder.DropTable(
                 name: "Sizes");
