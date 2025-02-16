@@ -139,7 +139,7 @@ function AddReward() {
               }
             >
               <MenuItem value="Discount">Discount</MenuItem>
-              <MenuItem value="FreeShipping">Free Shipping</MenuItem>
+              <MenuItem value="Free Shipping">Free Shipping</MenuItem>
               <MenuItem value="Cashback">Cashback</MenuItem>
               <MenuItem value="Cashback">Charity</MenuItem>
             </Select>

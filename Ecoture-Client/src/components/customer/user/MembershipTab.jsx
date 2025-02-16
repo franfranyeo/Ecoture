@@ -1,7 +1,10 @@
-import { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { useState } from 'react';
+import { toast } from 'react-toastify';
+import http from 'utils/http';
 
 import { AccessTime, MonetizationOn } from '@mui/icons-material';
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import {
   Box,
   Button,
@@ -12,7 +15,6 @@ import {
   Paper,
   Tab,
   Tabs,
-  TextField,
   Typography,
 } from '@mui/material';
 
@@ -23,97 +25,161 @@ import ProgressBar from './ProgressBar';
 
 const MembershipTab = () => {
   const { user } = useContext(UserContext);
-  const [vouchers] = useState([
-    {
-      voucherCode: 'V12345',
-      customerName: 'John Doe',
-      rewardType: 'Discount',
-      amount: '15%',
-      expiryDate: '2025-06-30',
-      status: 'Active',
-    },
-    {
-      voucherCode: 'V23456',
-      customerName: 'Jane Smith',
-      rewardType: 'Cashback',
-      amount: '$10',
-      expiryDate: '2025-03-15',
-      status: 'Redeemed',
-    },
-    {
-      voucherCode: 'V34567',
-      customerName: 'Alice Johnson',
-      rewardType: 'Free Item',
-      amount: 'Free Coffee',
-      expiryDate: '2025-12-01',
-      status: 'Active',
-    },
-    {
-      voucherCode: 'V45678',
-      customerName: 'Bob Williams',
-      rewardType: 'Discount',
-      amount: '25%',
-      expiryDate: '2025-07-20',
-      status: 'Expired',
-    },
-    {
-      voucherCode: 'V56789',
-      customerName: 'Charlie Brown',
-      rewardType: 'Cashback',
-      amount: '$20',
-      expiryDate: '2025-04-10',
-      status: 'Active',
-    },
-    {
-      voucherCode: 'V67890',
-      customerName: 'Diana Green',
-      rewardType: 'Free Item',
-      amount: 'Free Shipping',
-      expiryDate: '2025-05-10',
-      status: 'Active',
-    },
-    {
-      voucherCode: 'V78901',
-      customerName: 'Eve White',
-      rewardType: 'Discount',
-      amount: '30%',
-      expiryDate: '2025-11-01',
-      status: 'Redeemed',
-    },
-  ]);
-
-  const columns = [
-    {
-      accessorKey: 'voucherCode',
-      header: 'Voucher Code',
-    },
-    {
-      accessorKey: 'customerName',
-      header: 'Customer Name',
-    },
-    {
-      accessorKey: 'rewardType',
-      header: 'Reward Type',
-    },
-    {
-      accessorKey: 'amount',
-      header: 'Amount / Value',
-    },
-    {
-      accessorKey: 'expiryDate',
-      header: 'Expiry Date',
-    },
-    {
-      accessorKey: 'status',
-      header: 'Status',
-    },
-  ];
+  const [rewards, setRewards] = useState([]);
+  const [userRedemptions, setUserRedemptions] = useState([]);
 
   const [tabIndex, setTabIndex] = useState(0);
 
   const handleTabChange = (event, newIndex) => {
     setTabIndex(newIndex);
   };
+
+  const claimReward = async (rewardId) => {
+    // Add your API call or claim logic here
+    try {
+      await http.post(`rewards/claim/${rewardId}`);
+      toast.success('Reward claimed successfully!');
+      fetchRewards();
+    } catch (error) {
+      console.error('Failed to claim reward:', error);
+    }
+  };
+
+  const fetchRewards = async () => {
+    const response = await http.get('/rewards');
+    const urresponse = await http.get('/rewards/userredemptions');
+    const { data } = response;
+    const { data: urdata } = urresponse;
+    const finalUR = urdata.map((ur) => ({ ...ur, ...ur.reward }));
+    setRewards(data);
+    console.log(finalUR);
+    setUserRedemptions(finalUR);
+  };
+
+  const generateColumns = (data, isUserRedemptions = false) => {
+    if (!data || data.length === 0) return [];
+
+    // Define the relevant keys for rewards and user redemptions
+    const rewardKeys = [
+      'rewardTitle',
+      'rewardDescription',
+      'rewardType', // Added for filtering
+      'loyaltyPointsRequired',
+      'expirationDate',
+      'status',
+    ];
+
+    const userRedemptionKeys = [
+      'rewardTitle',
+      'rewardDescription',
+      'rewardType', // Added for filtering
+      'redemptionDate',
+      'status',
+    ];
+
+    // Use the appropriate keys based on the data type
+    const relevantKeys = isUserRedemptions ? userRedemptionKeys : rewardKeys;
+
+    // Custom header labels for better readability
+    const headerMapping = {
+      rewardTitle: 'Reward',
+      rewardDescription: 'Description',
+      rewardType: 'Type', // Added for filtering
+      loyaltyPointsRequired: 'Points Required',
+      expirationDate: 'Expiration Date',
+      status: 'Status',
+      redemptionDate: 'Claimed At',
+    };
+
+    // Create base columns for relevant keys
+    const baseColumns = relevantKeys.map((key) => ({
+      accessorKey: key,
+      header: headerMapping[key],
+      cell: ({ row }) => {
+        const value = row.original[key];
+
+        // Format dates
+        if (key === 'expirationDate' || key === 'redemptionDate') {
+          return value ? new Date(value).toLocaleDateString() : '-';
+        }
+
+        // Format loyalty points
+        if (key === 'loyaltyPointsRequired') {
+          return value !== null && value !== undefined ? value : '0';
+        }
+
+        // Handle null or undefined values
+        if (value === null || value === undefined) {
+          return '-';
+        }
+
+        return value;
+      },
+    }));
+
+    // Add action column for rewards (not for user redemptions)
+    if (!isUserRedemptions) {
+      const actionColumn = {
+        id: 'actions',
+        header: 'Actions',
+        cell: ({ row }) => {
+          const reward = row.original;
+          const isExpired = new Date(reward.expirationDate) < new Date();
+          const hasEnoughPoints =
+            reward.loyaltyPointsRequired === null ||
+            user.totalPoints >= reward.loyaltyPointsRequired;
+          const isActive = reward.status === 'Active';
+
+          const handleClaim = async () => {
+            try {
+              await claimReward(reward.rewardId);
+            } catch (error) {
+              console.error('Failed to claim reward:', error);
+            }
+          };
+
+          return (
+            <Button
+              onClick={handleClaim}
+              disabled={isExpired || !hasEnoughPoints || !isActive}
+              variant="contained"
+              color={
+                isExpired || !hasEnoughPoints || !isActive
+                  ? 'inherit'
+                  : 'primary'
+              }
+              size="small"
+            >
+              {isExpired
+                ? 'Expired'
+                : !hasEnoughPoints
+                  ? 'Insufficient Points'
+                  : !isActive
+                    ? 'Inactive'
+                    : 'Claim'}
+            </Button>
+          );
+        },
+      };
+
+      // Return all columns including the action column
+      return [...baseColumns, actionColumn];
+    }
+
+    // Return only base columns for user redemptions
+    return baseColumns;
+  };
+
+  // Generate columns dynamically
+  const columns = generateColumns(rewards);
+
+  useEffect(() => {
+    try {
+      fetchRewards();
+    } catch (error) {
+      console.error(error);
+    }
+  }, []);
 
   return (
     <Box sx={{ flex: 1 }}>
@@ -244,47 +310,29 @@ const MembershipTab = () => {
         </Tabs>
 
         {tabIndex === 0 && (
-          <Box>
-            <Box>
-              <Typography variant="h6" gutterBottom>
-                My Rewards
-              </Typography>
-              <TextField
-                fullWidth
-                placeholder="Search"
-                variant="outlined"
-                sx={{ mb: 2 }}
-              />
-              <Box>
-                <Button variant="outlined" sx={{ mr: 1 }}>
-                  Filter
-                </Button>
-              </Box>
-              <Grid container spacing={2}>
-                {vouchers.map((voucher, index) => (
-                  <Grid item xs={12} key={index}>
-                    <Paper
-                      elevation={1}
-                      sx={{
-                        padding: 2,
-                        border: '1px solid',
-                        borderColor: 'grey.400',
-                      }}
-                    >
-                      <Typography variant="body1">{voucher.name}</Typography>
-                      <Typography variant="body2" color="textSecondary">
-                        {voucher.value}
-                      </Typography>
-                    </Paper>
-                  </Grid>
-                ))}
-              </Grid>
-            </Box>
-          </Box>
+          <DataTable
+            data={userRedemptions}
+            columns={generateColumns(userRedemptions, true)}
+            searchKeys={['rewardTitle', 'rewardDescription']}
+            filterOptions={{
+              key: 'rewardType',
+              values: ['All', 'Discount', 'Free Shipping', 'Cashback'],
+            }}
+            sortOptions={['Default', 'Newest', 'Oldest', 'Alphabetical']}
+          />
         )}
         {tabIndex === 1 && (
           // Display the user's vouchers and rewards
-          <DataTable data={vouchers} columns={columns} />
+          <DataTable
+            data={rewards}
+            columns={columns}
+            searchKeys={['rewardTitle', 'rewardDescription']} // Specify searchable keys
+            filterOptions={{
+              key: 'rewardType',
+              values: ['All', 'Discount', 'Free Shipping', 'Cashback'],
+            }}
+            sortOptions={['Default', 'Newest', 'Oldest', 'Alphabetical']}
+          />
         )}
       </Paper>
     </Box>
