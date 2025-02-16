@@ -34,7 +34,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Migrations\" />
     <Folder Include="Model\Enum\" />
     <Folder Include="wwwroot\uploads\" />
   </ItemGroup>
