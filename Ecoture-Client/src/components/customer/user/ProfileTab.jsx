@@ -22,6 +22,7 @@ import {
 import { CircularProgress, Dialog, Modal } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
+import GoogleLogo from 'assets/images/google-logo.svg';
 import UserContext from 'contexts/UserContext';
 
 const UploadInput = styled('input')({
@@ -625,7 +626,39 @@ const ProfileTab = ({ user }) => {
             </Grid>
             <Grid item xs={6}>
               {!isEditing && user.isGoogleLogin && (
-                <Typography variant="body1">Logged in with Google</Typography>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    backgroundColor: '#f7f7f7',
+                    padding: '10px 20px',
+                    borderRadius: '8px',
+                    border: '1px solid #007bff',
+                  }}
+                >
+                  <img
+                    src={GoogleLogo}
+                    alt="Google Logo"
+                    style={{
+                      width: '20px',
+                      height: '20px',
+                      marginRight: '10px',
+                    }}
+                  />
+
+                  <Typography
+                    variant="body1"
+                    sx={{
+                      fontWeight: 500,
+                      fontSize: '1rem',
+                      color: '#007bff',
+                      textAlign: 'center',
+                    }}
+                  >
+                    Logged in with Google
+                  </Typography>
+                </Box>
               )}
             </Grid>
           </Grid>
