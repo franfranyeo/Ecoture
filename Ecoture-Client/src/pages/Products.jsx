@@ -4,6 +4,9 @@ import { toast } from 'react-toastify';
 import http from 'utils/http';
 
 import { Clear, Search } from '@mui/icons-material';
+// Wishlist icon
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import {
   Box,
   Button,
@@ -28,6 +31,8 @@ import {
 
 import UserContext from '../contexts/UserContext';
 
+// Filled Wishlist icon for toggle state
+
 function Products({ onAddProductClick }) {
   const [productList, setProductList] = useState([]);
   const [search, setSearch] = useState('');
@@ -48,6 +53,53 @@ function Products({ onAddProductClick }) {
   const [selectedSize, setSelectedSize] = useState('');
   const [selectedFit, setSelectedFit] = useState('');
   const [selectedPriceRange, setSelectedPriceRange] = useState('');
+
+  const [wishlistStatus, setWishlistStatus] = useState({}); // Track wishlist status for each product
+
+  const handleAddToWishlist = async (productId) => {
+    if (!user) {
+      toast.error('You must be logged in to add items to your wishlist.');
+      return;
+    }
+
+    try {
+      if (wishlistStatus[productId]) {
+        // Remove from wishlist
+        await http.delete(`/wishlist/${productId}`);
+        setWishlistStatus((prev) => ({ ...prev, [productId]: false }));
+        toast.success('Product removed from wishlist!');
+      } else {
+        // Add to wishlist
+        await http.post('/wishlist', { productId });
+        setWishlistStatus((prev) => ({ ...prev, [productId]: true }));
+        toast.success('Product added to wishlist!');
+      }
+
+      // Dispatch the wishlistUpdated event to notify Navbar
+      window.dispatchEvent(new Event('wishlistUpdated'));
+    } catch (error) {
+      console.error('Error handling wishlist operation:', error);
+      toast.error('Failed to update wishlist.');
+    }
+  };
+
+  useEffect(() => {
+    if (user) {
+      const fetchWishlistStatus = async () => {
+        try {
+          const response = await http.get('/wishlist');
+          const wishlist = response.data.reduce((acc, item) => {
+            acc[item.productId] = true;
+            return acc;
+          }, {});
+          setWishlistStatus(wishlist);
+        } catch (error) {
+          console.error('Error fetching wishlist status:', error);
+        }
+      };
+      fetchWishlistStatus();
+    }
+  }, [user]);
 
   useEffect(() => {
     setSelectedCategory(categoryName || ''); // Sync category from URL
@@ -250,94 +302,190 @@ function Products({ onAddProductClick }) {
       <Box
         sx={{
           display: 'flex',
-          gap: 2,
           flexWrap: 'wrap',
           justifyContent: 'center',
-          marginBottom: 2,
+          gap: 2,
+          marginBottom: 3,
+          padding: '16px 24px',
+          backgroundColor: '#f9f9f9',
+          borderRadius: '12px',
+          boxShadow: '0 4px 10px rgba(0,0,0,0.08)',
         }}
       >
         {/* Category Filter */}
-        <FormControl sx={{ minWidth: 180 }}>
-          <InputLabel shrink>Category</InputLabel>
-          <Select
-            value={selectedCategory}
-            onChange={handleCategoryChange}
-            displayEmpty
+        <Box sx={{ display: 'flex', flexDirection: 'column', minWidth: 200 }}>
+          <Typography
+            variant="body2"
+            sx={{
+              fontWeight: 'bold',
+              color: '#333',
+              marginBottom: '6px',
+            }}
           >
-            <MenuItem value="">All Categories</MenuItem>
-            <MenuItem value="Men">Men</MenuItem>
-            <MenuItem value="Women">Women</MenuItem>
-            <MenuItem value="Trending">Trending</MenuItem>
-            <MenuItem value="New arrivals">New Arrivals</MenuItem>
-            <MenuItem value="Girls">Girls</MenuItem>
-            <MenuItem value="Boys">Boys</MenuItem>
-          </Select>
-        </FormControl>
+            Category
+          </Typography>
+          <FormControl fullWidth>
+            <Select
+              value={selectedCategory}
+              onChange={handleCategoryChange}
+              displayEmpty
+              sx={{
+                padding: '10px',
+                borderRadius: '8px',
+                backgroundColor: '#fff',
+                '&:hover': { backgroundColor: '#f4f4f4' },
+              }}
+            >
+              <MenuItem value="">All Categories</MenuItem>
+              <MenuItem value="Men">Men</MenuItem>
+              <MenuItem value="Women">Women</MenuItem>
+              <MenuItem value="Trending">Trending</MenuItem>
+              <MenuItem value="New Arrivals">New Arrivals</MenuItem>
+              <MenuItem value="Boys">Boys</MenuItem>
+              <MenuItem value="Girls">Girls</MenuItem>
+            </Select>
+          </FormControl>
+        </Box>
 
-        {/* ✅ Fix: Color Filter (Overlapping Text Fixed) */}
-        <FormControl sx={{ minWidth: 180 }}>
-          <InputLabel shrink>Color</InputLabel>
-          <Select
-            value={selectedColor}
-            onChange={(e) => setSelectedColor(e.target.value)}
-            displayEmpty
+        {/* Color Filter */}
+        <Box sx={{ display: 'flex', flexDirection: 'column', minWidth: 200 }}>
+          <Typography
+            variant="body2"
+            sx={{
+              fontWeight: 'bold',
+              color: '#333',
+              marginBottom: '6px',
+            }}
           >
-            <MenuItem value="">All Colors</MenuItem>
-            <MenuItem value="Blue">Blue</MenuItem>
-            <MenuItem value="Black">Black</MenuItem>
-            <MenuItem value="Red">Red</MenuItem>
-            <MenuItem value="White">White</MenuItem>
-          </Select>
-        </FormControl>
+            Color
+          </Typography>
+          <FormControl fullWidth>
+            <Select
+              value={selectedColor}
+              onChange={(e) => setSelectedColor(e.target.value)}
+              displayEmpty
+              sx={{
+                padding: '10px',
+                borderRadius: '8px',
+                backgroundColor: '#fff',
+                '&:hover': { backgroundColor: '#f4f4f4' },
+              }}
+            >
+              <MenuItem value="">All Colors</MenuItem>
+              {Array.from(
+                new Set(
+                  productList.flatMap(
+                    (product) =>
+                      product.sizeColors?.map((sc) => sc.colorName) || []
+                  )
+                )
+              ).map((color, index) => (
+                <MenuItem key={index} value={color}>
+                  {color}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </Box>
 
         {/* Size Filter */}
-        <FormControl sx={{ minWidth: 150 }}>
-          <InputLabel shrink>Size</InputLabel>
-          <Select
-            value={selectedSize}
-            onChange={(e) => setSelectedSize(e.target.value)}
-            displayEmpty
+        <Box sx={{ display: 'flex', flexDirection: 'column', minWidth: 200 }}>
+          <Typography
+            variant="body2"
+            sx={{
+              fontWeight: 'bold',
+              color: '#333',
+              marginBottom: '6px',
+            }}
           >
-            <MenuItem value="">All Sizes</MenuItem>
-            <MenuItem value="S">S</MenuItem>
-            <MenuItem value="M">M</MenuItem>
-            <MenuItem value="L">L</MenuItem>
-            <MenuItem value="XL">XL</MenuItem>
-            <MenuItem value="XXL">XXL</MenuItem>
-          </Select>
-        </FormControl>
+            Size
+          </Typography>
+          <FormControl fullWidth>
+            <Select
+              value={selectedSize}
+              onChange={(e) => setSelectedSize(e.target.value)}
+              displayEmpty
+              sx={{
+                padding: '10px',
+                borderRadius: '8px',
+                backgroundColor: '#fff',
+                '&:hover': { backgroundColor: '#f4f4f4' },
+              }}
+            >
+              <MenuItem value="">All Sizes</MenuItem>
+              <MenuItem value="S">S</MenuItem>
+              <MenuItem value="M">M</MenuItem>
+              <MenuItem value="L">L</MenuItem>
+              <MenuItem value="XL">XL</MenuItem>
+              <MenuItem value="XXL">XXL</MenuItem>
+            </Select>
+          </FormControl>
+        </Box>
 
         {/* Fit Filter */}
-        <FormControl sx={{ minWidth: 180 }}>
-          <InputLabel shrink>Fit</InputLabel>
-          <Select
-            value={selectedFit}
-            onChange={(e) => setSelectedFit(e.target.value)}
-            displayEmpty
+        <Box sx={{ display: 'flex', flexDirection: 'column', minWidth: 200 }}>
+          <Typography
+            variant="body2"
+            sx={{
+              fontWeight: 'bold',
+              color: '#333',
+              marginBottom: '6px',
+            }}
           >
-            <MenuItem value="">All Fits</MenuItem>
-            <MenuItem value="Regular Tapered">Regular Tapered</MenuItem>
-            <MenuItem value="Skinny Tapered">Skinny Tapered</MenuItem>
-            <MenuItem value="Seasonal Fit">Seasonal Fit</MenuItem>
-          </Select>
-        </FormControl>
+            Fit
+          </Typography>
+          <FormControl fullWidth>
+            <Select
+              value={selectedFit}
+              onChange={(e) => setSelectedFit(e.target.value)}
+              displayEmpty
+              sx={{
+                padding: '10px',
+                borderRadius: '8px',
+                backgroundColor: '#fff',
+                '&:hover': { backgroundColor: '#f4f4f4' },
+              }}
+            >
+              <MenuItem value="">All Fits</MenuItem>
+              <MenuItem value="Regular Tapered">Regular Tapered</MenuItem>
+              <MenuItem value="Skinny Tapered">Skinny Tapered</MenuItem>
+              <MenuItem value="Seasonal Fit">Seasonal Fit</MenuItem>
+            </Select>
+          </FormControl>
+        </Box>
 
-     
-        <FormControl sx={{ minWidth: 180 }}>
-          <InputLabel shrink>Price Range</InputLabel>
-          <Select
-            value={selectedPriceRange}
-            onChange={(e) => setSelectedPriceRange(e.target.value)}
-            displayEmpty
+        {/* Price Filter */}
+        <Box sx={{ display: 'flex', flexDirection: 'column', minWidth: 200 }}>
+          <Typography
+            variant="body2"
+            sx={{
+              fontWeight: 'bold',
+              color: '#333',
+              marginBottom: '6px',
+            }}
           >
-            <MenuItem value="">All Prices</MenuItem>
-            <MenuItem value="1">$10 - $20</MenuItem>
-            <MenuItem value="2">$20 - $30</MenuItem>
-            <MenuItem value="3">$30 - $40</MenuItem>
-            <MenuItem value="4">$40 - $50</MenuItem>
-            <MenuItem value="5">$50+</MenuItem>
-          </Select>
-        </FormControl>
+            Price Range
+          </Typography>
+          <FormControl fullWidth>
+            <Select
+              value={selectedPriceRange}
+              onChange={(e) => setSelectedPriceRange(e.target.value)}
+              displayEmpty
+              sx={{
+                padding: '10px',
+                borderRadius: '8px',
+                backgroundColor: '#fff',
+                '&:hover': { backgroundColor: '#f4f4f4' },
+              }}
+            >
+              <MenuItem value="">All Prices</MenuItem>
+              <MenuItem value="1">$10 - $20</MenuItem>
+              <MenuItem value="2">$20 - $30</MenuItem>
+              <MenuItem value="3">$30 - $40</MenuItem>
+              <MenuItem value="4">$40 - $50</MenuItem>
+            </Select>
+          </FormControl>
+        </Box>
       </Box>
 
       <Box
@@ -399,7 +547,7 @@ function Products({ onAddProductClick }) {
                     boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
                   },
                 }}
-                onClick={() => navigate(`/product/${product.id}`)}
+                onClick={(e) => e.stopPropagation()} // <-- Prevent navigation when clicking on card
               >
                 {product.imageFile && (
                   <CardMedia
@@ -470,6 +618,24 @@ function Products({ onAddProductClick }) {
                     )}
                   </Box>
                 </CardContent>
+                {/* Wishlist Button */}
+                <Button
+                  variant="outlined"
+                  color={wishlistStatus[product.id] ? 'secondary' : 'primary'}
+                  startIcon={
+                    wishlistStatus[product.id] ? (
+                      <FavoriteIcon />
+                    ) : (
+                      <FavoriteBorderIcon />
+                    )
+                  }
+                  onClick={(e) => handleAddToWishlist(product.id, e)} // <-- Pass the event to handleAddToWishlist
+                  sx={{ marginTop: 1 }}
+                >
+                  {wishlistStatus[product.id]
+                    ? 'Remove from Wishlist'
+                    : 'Add to Wishlist'}
+                </Button>
 
                 <Box sx={{ padding: 2 }}>
                   {user && (

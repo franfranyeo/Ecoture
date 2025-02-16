@@ -1,10 +1,15 @@
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 // Update with the actual image path
 import { toast } from 'react-toastify';
+import http from 'utils/http';
 
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import MenuIcon from '@mui/icons-material/Menu';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
+// Wishlist icon
+import { Badge } from '@mui/material';
+// Badge component to show count
 import {
   AppBar,
   Avatar,
@@ -23,6 +28,8 @@ import {
 
 import EcoTureLogo from '../assets/images/ecoture-logo.png';
 import UserContext from '../contexts/UserContext';
+
+import Wishlist from '../pages/Wishlist';
 
 function Navbar() {
   const { user, setUser } = useContext(UserContext);
@@ -76,6 +83,39 @@ function Navbar() {
   };
 
   const navItems = adminRoles.includes(user?.role) ? [] : customerNavItems;
+
+  // In Navbar.jsx
+  const [wishlistCount, setWishlistCount] = useState(0);
+
+  const fetchWishlistCount = async () => {
+    try {
+      if (user) {
+        // Add this check to ensure user exists
+        const response = await http.get('/wishlist');
+        setWishlistCount(response.data.length);
+        console.log('Current wishlist count:', response.data.length); // Add this for debugging
+      }
+    } catch (error) {
+      console.error('Error fetching wishlist count:', error);
+    }
+  };
+
+  useEffect(() => {
+    if (user) {
+      fetchWishlistCount(); // Initial fetch
+  
+      // Set up event listener
+      window.addEventListener('wishlistUpdated', fetchWishlistCount);
+  
+      // Cleanup
+      return () => {
+        window.removeEventListener('wishlistUpdated', fetchWishlistCount);
+      };
+    } else {
+      setWishlistCount(0);
+    }
+  }, [user]);
+  
 
   return (
     <AppBar position="relative" sx={{ bgcolor: 'white', boxShadow: 2 }}>
@@ -159,9 +199,22 @@ function Navbar() {
               gap: '16px',
             }}
           >
+            {/* Cart Icon */}
             {user && !adminRoles.includes(user?.role) && (
               <Link to="/cart" className="nav-link">
                 <ShoppingCartOutlinedIcon />
+              </Link>
+            )}
+
+            {user && !adminRoles.includes(user?.role) && (
+              <Link to="/wishlist" className="nav-link">
+                <Badge
+                  badgeContent={wishlistCount}
+                  color="primary"
+                  invisible={wishlistCount === 0} // Add this to hide badge when count is 0
+                >
+                  <FavoriteBorderIcon />
+                </Badge>
               </Link>
             )}
 

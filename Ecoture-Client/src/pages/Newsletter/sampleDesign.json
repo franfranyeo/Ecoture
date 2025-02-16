@@ -1,0 +1,470 @@
+{
+    "counters": {
+        "u_row": 8,
+        "u_column": 13,
+        "u_content_menu": 1,
+        "u_content_text": 25,
+        "u_content_image": 17,
+        "u_content_button": 2,
+        "u_content_divider": 1,
+        "u_content_heading": 3
+    },
+    "body": {
+        "id": "0QFAKPxyzM",
+        "rows": [
+            {
+                "id": "-Pm2fEb9Wp",
+                "cells": [
+                    1
+                ],
+                "columns": [
+                    {
+                        "id": "aREOk3UC4g",
+                        "contents": [
+                            {
+                                "id": "hpEzy7mhvP",
+                                "type": "image",
+                                "values": {
+                                    "containerPadding": "10px",
+                                    "anchor": "",
+                                    "src": {
+                                        "url": "https://assets.unlayer.com/projects/0/1739722587548-Screenshot%202025-02-17%20001617.png",
+                                        "width": 714,
+                                        "height": 457,
+                                        "maxWidth": "32%",
+                                        "autoWidth": false,
+                                        "dynamic": true,
+                                        "contentType": "image/png",
+                                        "size": 268589
+                                    },
+                                    "textAlign": "center",
+                                    "altText": "",
+                                    "action": {
+                                        "name": "web",
+                                        "values": {
+                                            "href": "",
+                                            "target": "_blank"
+                                        }
+                                    },
+                                    "hideDesktop": false,
+                                    "displayCondition": null,
+                                    "_styleGuide": null,
+                                    "_meta": {
+                                        "htmlID": "u_content_image_1",
+                                        "htmlClassNames": "u_content_image"
+                                    },
+                                    "selectable": true,
+                                    "draggable": true,
+                                    "duplicatable": true,
+                                    "deletable": true,
+                                    "hideable": true,
+                                    "locked": false,
+                                    "_override": {
+                                        "mobile": {
+                                            "src": {
+                                                "maxWidth": "20%",
+                                                "autoWidth": false
+                                            }
+                                        }
+                                    },
+                                    "pending": false
+                                }
+                            },
+                            {
+                                "id": "6i1tuFfilF",
+                                "type": "image",
+                                "values": {
+                                    "containerPadding": "10px",
+                                    "anchor": "",
+                                    "src": {
+                                        "url": "https://assets.unlayer.com/projects/0/1739722544058-Screenshot%202025-02-17%20001527.png",
+                                        "width": 1219,
+                                        "height": 698,
+                                        "contentType": "image/png",
+                                        "size": 828526,
+                                        "dynamic": true
+                                    },
+                                    "textAlign": "center",
+                                    "altText": "",
+                                    "action": {
+                                        "name": "web",
+                                        "values": {
+                                            "href": "",
+                                            "target": "_blank"
+                                        }
+                                    },
+                                    "displayCondition": null,
+                                    "_styleGuide": null,
+                                    "_meta": {
+                                        "htmlID": "u_content_image_9",
+                                        "htmlClassNames": "u_content_image"
+                                    },
+                                    "selectable": true,
+                                    "draggable": true,
+                                    "duplicatable": true,
+                                    "deletable": true,
+                                    "hideable": true,
+                                    "pending": false
+                                }
+                            },
+                            {
+                                "id": "LYetrxIvZD",
+                                "type": "text",
+                                "values": {
+                                    "containerPadding": "10px",
+                                    "anchor": "",
+                                    "fontSize": "14px",
+                                    "color": "#000000",
+                                    "textAlign": "left",
+                                    "lineHeight": "140%",
+                                    "linkStyle": {
+                                        "inherit": true,
+                                        "linkColor": "#0000ee",
+                                        "linkHoverColor": "#0000ee",
+                                        "linkUnderline": true,
+                                        "linkHoverUnderline": true
+                                    },
+                                    "displayCondition": null,
+                                    "_styleGuide": null,
+                                    "_meta": {
+                                        "htmlID": "u_content_text_25",
+                                        "htmlClassNames": "u_content_text"
+                                    },
+                                    "selectable": true,
+                                    "draggable": true,
+                                    "duplicatable": true,
+                                    "deletable": true,
+                                    "hideable": true,
+                                    "text": "<p style=\"line-height: 140%;\">Introducing our new collection of clothing, where contemporary design meets sustainable craftsmanship. Each piece is carefully curated to provide both style and comfort. Embracing eco-friendly materials and innovative techniques, this collection is a tribute to modern fashion. Bold silhouettes, vibrant colors, and versatile layers create a wardrobe that transcends seasonal trends. </p>",
+                                    "_languages": {}
+                                }
+                            },
+                            {
+                                "id": "6atbTCjcyc",
+                                "type": "image",
+                                "values": {
+                                    "containerPadding": "10px",
+                                    "anchor": "",
+                                    "src": {
+                                        "url": "https://assets.unlayer.com/projects/0/1739724290786-Screenshot%202025-02-17%20004436.png",
+                                        "width": 1447,
+                                        "height": 975,
+                                        "contentType": "image/png",
+                                        "size": 739784,
+                                        "dynamic": true
+                                    },
+                                    "textAlign": "center",
+                                    "altText": "",
+                                    "action": {
+                                        "name": "web",
+                                        "values": {
+                                            "href": "",
+                                            "target": "_blank"
+                                        }
+                                    },
+                                    "displayCondition": null,
+                                    "_styleGuide": null,
+                                    "_meta": {
+                                        "htmlID": "u_content_image_11",
+                                        "htmlClassNames": "u_content_image"
+                                    },
+                                    "selectable": true,
+                                    "draggable": true,
+                                    "duplicatable": true,
+                                    "deletable": true,
+                                    "hideable": true,
+                                    "pending": false
+                                }
+                            },
+                            {
+                                "id": "B_HOTUeJ8c",
+                                "type": "image",
+                                "values": {
+                                    "containerPadding": "10px",
+                                    "anchor": "",
+                                    "src": {
+                                        "url": "https://assets.unlayer.com/projects/0/1739723227788-Screenshot%202025-02-17%20002637.png",
+                                        "width": 1808,
+                                        "height": 821,
+                                        "contentType": "image/png",
+                                        "size": 369739,
+                                        "dynamic": true
+                                    },
+                                    "textAlign": "center",
+                                    "altText": "",
+                                    "action": {
+                                        "name": "web",
+                                        "values": {
+                                            "href": "",
+                                            "target": "_blank"
+                                        }
+                                    },
+                                    "displayCondition": null,
+                                    "_styleGuide": null,
+                                    "_meta": {
+                                        "htmlID": "u_content_image_14",
+                                        "htmlClassNames": "u_content_image"
+                                    },
+                                    "selectable": true,
+                                    "draggable": true,
+                                    "duplicatable": true,
+                                    "deletable": true,
+                                    "hideable": true,
+                                    "pending": false
+                                }
+                            },
+                            {
+                                "id": "fsNmHCiqNF",
+                                "type": "image",
+                                "values": {
+                                    "containerPadding": "10px",
+                                    "anchor": "",
+                                    "src": {
+                                        "url": "https://assets.unlayer.com/projects/0/1739723658022-Screenshot%202025-02-17%20003347.png",
+                                        "width": 1643,
+                                        "height": 738,
+                                        "contentType": "image/png",
+                                        "size": 770479,
+                                        "dynamic": true
+                                    },
+                                    "textAlign": "center",
+                                    "altText": "",
+                                    "action": {
+                                        "name": "web",
+                                        "values": {
+                                            "href": "",
+                                            "target": "_blank"
+                                        }
+                                    },
+                                    "displayCondition": null,
+                                    "_styleGuide": null,
+                                    "_meta": {
+                                        "htmlID": "u_content_image_15",
+                                        "htmlClassNames": "u_content_image"
+                                    },
+                                    "selectable": true,
+                                    "draggable": true,
+                                    "duplicatable": true,
+                                    "deletable": true,
+                                    "hideable": true,
+                                    "pending": false
+                                }
+                            },
+                            {
+                                "id": "BfJUwoL_2K",
+                                "type": "image",
+                                "values": {
+                                    "containerPadding": "10px",
+                                    "anchor": "",
+                                    "src": {
+                                        "url": "https://assets.unlayer.com/projects/0/1739723876583-Screenshot%202025-02-17%20003737.png",
+                                        "width": 1031,
+                                        "height": 275,
+                                        "contentType": "image/png",
+                                        "size": 47402,
+                                        "dynamic": true
+                                    },
+                                    "textAlign": "center",
+                                    "altText": "",
+                                    "action": {
+                                        "name": "web",
+                                        "values": {
+                                            "href": "",
+                                            "target": "_blank"
+                                        }
+                                    },
+                                    "displayCondition": null,
+                                    "_styleGuide": null,
+                                    "_meta": {
+                                        "htmlID": "u_content_image_16",
+                                        "htmlClassNames": "u_content_image"
+                                    },
+                                    "selectable": true,
+                                    "draggable": true,
+                                    "duplicatable": true,
+                                    "deletable": true,
+                                    "hideable": true,
+                                    "pending": false
+                                }
+                            },
+                            {
+                                "id": "mvApM8ciqp",
+                                "type": "image",
+                                "values": {
+                                    "containerPadding": "10px",
+                                    "anchor": "",
+                                    "src": {
+                                        "url": "https://assets.unlayer.com/projects/0/1739723002262-Screenshot%202025-02-17%20002242.png",
+                                        "width": 1852,
+                                        "height": 451,
+                                        "contentType": "image/png",
+                                        "size": 70857,
+                                        "dynamic": true
+                                    },
+                                    "textAlign": "center",
+                                    "altText": "",
+                                    "action": {
+                                        "name": "web",
+                                        "values": {
+                                            "href": "",
+                                            "target": "_blank"
+                                        }
+                                    },
+                                    "displayCondition": null,
+                                    "_styleGuide": null,
+                                    "_meta": {
+                                        "htmlID": "u_content_image_13",
+                                        "htmlClassNames": "u_content_image"
+                                    },
+                                    "selectable": true,
+                                    "draggable": true,
+                                    "duplicatable": true,
+                                    "deletable": true,
+                                    "hideable": true,
+                                    "pending": false
+                                }
+                            },
+                            {
+                                "id": "JHS5vitEJS",
+                                "type": "image",
+                                "values": {
+                                    "containerPadding": "10px",
+                                    "anchor": "",
+                                    "src": {
+                                        "url": "https://assets.unlayer.com/projects/0/1739724086219-Screenshot%202025-02-17%20004103.png",
+                                        "width": 1841,
+                                        "height": 141,
+                                        "contentType": "image/png",
+                                        "size": 14852,
+                                        "dynamic": true
+                                    },
+                                    "textAlign": "center",
+                                    "altText": "",
+                                    "action": {
+                                        "name": "web",
+                                        "values": {
+                                            "href": "",
+                                            "target": "_blank"
+                                        }
+                                    },
+                                    "displayCondition": null,
+                                    "_styleGuide": null,
+                                    "_meta": {
+                                        "htmlID": "u_content_image_17",
+                                        "htmlClassNames": "u_content_image"
+                                    },
+                                    "selectable": true,
+                                    "draggable": true,
+                                    "duplicatable": true,
+                                    "deletable": true,
+                                    "hideable": true,
+                                    "pending": false
+                                }
+                            }
+                        ],
+                        "values": {
+                            "_meta": {
+                                "htmlID": "u_column_1",
+                                "htmlClassNames": "u_column"
+                            },
+                            "border": {},
+                            "padding": "0px",
+                            "backgroundColor": "",
+                            "deletable": true
+                        }
+                    }
+                ],
+                "values": {
+                    "displayCondition": null,
+                    "columns": false,
+                    "_styleGuide": null,
+                    "backgroundColor": "",
+                    "columnsBackgroundColor": "",
+                    "backgroundImage": {
+                        "url": "",
+                        "fullWidth": true,
+                        "repeat": "no-repeat",
+                        "size": "custom",
+                        "position": "center"
+                    },
+                    "padding": "0px",
+                    "anchor": "",
+                    "hideDesktop": false,
+                    "_meta": {
+                        "htmlID": "u_row_1",
+                        "htmlClassNames": "u_row"
+                    },
+                    "selectable": true,
+                    "draggable": true,
+                    "duplicatable": true,
+                    "deletable": true,
+                    "hideable": true,
+                    "locked": false
+                }
+            }
+        ],
+        "headers": [],
+        "footers": [],
+        "values": {
+            "_styleGuide": null,
+            "popupPosition": "center",
+            "popupWidth": "600px",
+            "popupHeight": "auto",
+            "borderRadius": "10px",
+            "contentAlign": "center",
+            "contentVerticalAlign": "center",
+            "contentWidth": 700,
+            "fontFamily": {
+                "label": "Helvetica",
+                "value": "helvetica,sans-serif",
+                "url": "",
+                "weights": null,
+                "defaultFont": true
+            },
+            "textColor": "#ffffff",
+            "popupBackgroundColor": "#FFFFFF",
+            "popupBackgroundImage": {
+                "url": "",
+                "fullWidth": true,
+                "repeat": "no-repeat",
+                "size": "cover",
+                "position": "center"
+            },
+            "popupOverlay_backgroundColor": "rgba(0, 0, 0, 0.1)",
+            "popupCloseButton_position": "top-right",
+            "popupCloseButton_backgroundColor": "#DDDDDD",
+            "popupCloseButton_iconColor": "#000000",
+            "popupCloseButton_borderRadius": "0px",
+            "popupCloseButton_margin": "0px",
+            "popupCloseButton_action": {
+                "name": "close_popup",
+                "attrs": {
+                    "onClick": "document.querySelector('.u-popup-container').style.display = 'none';"
+                }
+            },
+            "language": {},
+            "backgroundColor": "#ffffff",
+            "preheaderText": "",
+            "linkStyle": {
+                "body": true,
+                "linkColor": "#0071e3",
+                "linkHoverColor": "#0000ee",
+                "linkUnderline": true,
+                "linkHoverUnderline": true,
+                "inherit": false
+            },
+            "backgroundImage": {
+                "url": "",
+                "fullWidth": true,
+                "repeat": "no-repeat",
+                "size": "custom",
+                "position": "center"
+            },
+            "_meta": {
+                "htmlID": "u_body",
+                "htmlClassNames": "u_body"
+            }
+        }
+    },
+    "schemaVersion": 20
+}

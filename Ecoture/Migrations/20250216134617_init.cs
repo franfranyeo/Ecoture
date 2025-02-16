@@ -9,7 +9,7 @@ using MySql.EntityFrameworkCore.Metadata;
 namespace Ecoture.Migrations
 {
     /// <inheritdoc />
-    public partial class init : Migration
+    public partial class Integrated : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -673,6 +673,34 @@ namespace Ecoture.Migrations
                 .Annotation("MySQL:Charset", "utf8mb4");
 
             migrationBuilder.CreateTable(
+                name: "Wishlists",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    ProductId = table.Column<int>(type: "int", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Wishlists", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Wishlists_Products_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "Products",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Wishlists_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySQL:Charset", "utf8mb4");
+
+            migrationBuilder.CreateTable(
                 name: "PointsTransactions",
                 columns: table => new
                 {
@@ -716,10 +744,17 @@ namespace Ecoture.Migrations
                 columns: new[] { "MembershipId", "CreatedAt", "SpendingRequired", "Tier", "UpdatedAt" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2025, 2, 16, 14, 4, 17, 162, DateTimeKind.Utc).AddTicks(4091), 0.00m, 1, new DateTime(2025, 2, 16, 14, 4, 17, 162, DateTimeKind.Utc).AddTicks(4091) },
-                    { 2, new DateTime(2025, 2, 16, 14, 4, 17, 162, DateTimeKind.Utc).AddTicks(4093), 2000.00m, 2, new DateTime(2025, 2, 16, 14, 4, 17, 162, DateTimeKind.Utc).AddTicks(4094) },
-                    { 3, new DateTime(2025, 2, 16, 14, 4, 17, 162, DateTimeKind.Utc).AddTicks(4096), 4000.00m, 3, new DateTime(2025, 2, 16, 14, 4, 17, 162, DateTimeKind.Utc).AddTicks(4096) },
-                    { 4, new DateTime(2025, 2, 16, 14, 4, 17, 162, DateTimeKind.Utc).AddTicks(4098), 0.00m, 0, new DateTime(2025, 2, 16, 14, 4, 17, 162, DateTimeKind.Utc).AddTicks(4098) }
+<<<<<<<< HEAD:Ecoture/Migrations/20250216134617_init.cs
+                    { 1, new DateTime(2025, 2, 16, 13, 46, 15, 63, DateTimeKind.Utc).AddTicks(3238), 0.00m, 1, new DateTime(2025, 2, 16, 13, 46, 15, 63, DateTimeKind.Utc).AddTicks(3238) },
+                    { 2, new DateTime(2025, 2, 16, 13, 46, 15, 63, DateTimeKind.Utc).AddTicks(3240), 2000.00m, 2, new DateTime(2025, 2, 16, 13, 46, 15, 63, DateTimeKind.Utc).AddTicks(3240) },
+                    { 3, new DateTime(2025, 2, 16, 13, 46, 15, 63, DateTimeKind.Utc).AddTicks(3242), 4000.00m, 3, new DateTime(2025, 2, 16, 13, 46, 15, 63, DateTimeKind.Utc).AddTicks(3242) },
+                    { 4, new DateTime(2025, 2, 16, 13, 46, 15, 63, DateTimeKind.Utc).AddTicks(3243), 0.00m, 0, new DateTime(2025, 2, 16, 13, 46, 15, 63, DateTimeKind.Utc).AddTicks(3244) }
+========
+                    { 1, new DateTime(2025, 2, 16, 17, 27, 51, 476, DateTimeKind.Utc).AddTicks(1970), 0.00m, 1, new DateTime(2025, 2, 16, 17, 27, 51, 476, DateTimeKind.Utc).AddTicks(1971) },
+                    { 2, new DateTime(2025, 2, 16, 17, 27, 51, 476, DateTimeKind.Utc).AddTicks(1973), 2000.00m, 2, new DateTime(2025, 2, 16, 17, 27, 51, 476, DateTimeKind.Utc).AddTicks(1974) },
+                    { 3, new DateTime(2025, 2, 16, 17, 27, 51, 476, DateTimeKind.Utc).AddTicks(1976), 4000.00m, 3, new DateTime(2025, 2, 16, 17, 27, 51, 476, DateTimeKind.Utc).AddTicks(1976) },
+                    { 4, new DateTime(2025, 2, 16, 17, 27, 51, 476, DateTimeKind.Utc).AddTicks(1978), 0.00m, 0, new DateTime(2025, 2, 16, 17, 27, 51, 476, DateTimeKind.Utc).AddTicks(1978) }
+>>>>>>>> 9017085f35634596a41b02bcb2c65041e1ecdd63:Ecoture/Migrations/20250216172752_Integrated.cs
                 });
 
             migrationBuilder.CreateIndex(
@@ -828,11 +863,14 @@ namespace Ecoture.Migrations
                 column: "referrerUserId");
 
             migrationBuilder.CreateIndex(
+<<<<<<<< HEAD:Ecoture/Migrations/20250216134617_init.cs
+========
                 name: "IX_RefundRequests_OrderItemId",
                 table: "RefundRequests",
                 column: "OrderItemId");
 
             migrationBuilder.CreateIndex(
+>>>>>>>> 9017085f35634596a41b02bcb2c65041e1ecdd63:Ecoture/Migrations/20250216172752_Integrated.cs
                 name: "IX_Responses_enquiryId",
                 table: "Responses",
                 column: "enquiryId");
@@ -871,6 +909,16 @@ namespace Ecoture.Migrations
                 name: "IX_UserTokens_UserId",
                 table: "UserTokens",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Wishlists_ProductId",
+                table: "Wishlists",
+                column: "ProductId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Wishlists_UserId",
+                table: "Wishlists",
+                column: "UserId");
         }
 
         /// <inheritdoc />
@@ -902,9 +950,12 @@ namespace Ecoture.Migrations
 
             migrationBuilder.DropTable(
                 name: "ProductSizeColors");
+<<<<<<<< HEAD:Ecoture/Migrations/20250216134617_init.cs
+========
 
             migrationBuilder.DropTable(
                 name: "RefundRequests");
+>>>>>>>> 9017085f35634596a41b02bcb2c65041e1ecdd63:Ecoture/Migrations/20250216172752_Integrated.cs
 
             migrationBuilder.DropTable(
                 name: "Responses");
@@ -920,6 +971,9 @@ namespace Ecoture.Migrations
 
             migrationBuilder.DropTable(
                 name: "UserTokens");
+
+            migrationBuilder.DropTable(
+                name: "Wishlists");
 
             migrationBuilder.DropTable(
                 name: "Newsletters");
@@ -946,10 +1000,10 @@ namespace Ecoture.Migrations
                 name: "Enquiries");
 
             migrationBuilder.DropTable(
-                name: "Products");
+                name: "Rewards");
 
             migrationBuilder.DropTable(
-                name: "Rewards");
+                name: "Products");
 
             migrationBuilder.DropTable(
                 name: "Orders");

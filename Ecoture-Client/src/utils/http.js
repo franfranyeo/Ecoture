@@ -41,4 +41,39 @@ instance.interceptors.response.use(
   }
 );
 
+// Wishlist-related functions
+
+// Function to get the user's wishlist
+export const getWishlist = async () => {
+  try {
+    const response = await instance.get('/wishlist');
+    return response.data; // Return the wishlist data
+  } catch (error) {
+    console.error('Error fetching wishlist:', error);
+    throw error;
+  }
+};
+
+// Function to add an item to the wishlist
+export const addToWishlist = async (productId) => {
+  try {
+    const response = await instance.post('/wishlist', { productId });
+    return response.data; // Return the added wishlist item
+  } catch (error) {
+    console.error('Error adding to wishlist:', error);
+    throw error;
+  }
+};
+
+// Function to remove an item from the wishlist
+export const removeFromWishlist = async (productId) => {
+  try {
+    const response = await instance.delete(`/wishlist/${productId}`);
+    return response.data; // Return the updated wishlist after removal
+  } catch (error) {
+    console.error('Error removing from wishlist:', error);
+    throw error;
+  }
+};
+
 export default instance;

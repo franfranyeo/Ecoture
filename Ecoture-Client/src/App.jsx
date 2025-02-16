@@ -24,6 +24,9 @@ import AddProduct from './pages/AddProduct';
 import AddAddress from './pages/Checkout/AddAddress';
 import AddCreditCard from './pages/Checkout/AddCreditCard';
 
+import Wishlist from './pages/Wishlist';
+
+
 // AHMED IMPORTS
 import Addresses from './pages/Checkout/Addresses';
 import Cart from './pages/Checkout/Cart';
@@ -48,8 +51,10 @@ import UpdateEnquiry from './pages/Enquiries/UpdateEnquiry';
 import AdminChat from './pages/admin/AdminChat';
 import CreateNewsletter from './pages/Newsletter/CreateNewsletter';
 import SelectContent from './pages/Newsletter/SelectContent';
+import AddNewsletter from './pages/Newsletter/AddNewsletter';
 import ProductDetail from './pages/ProductDetail';
 import Products from './pages/Products';
+
 import Reviews from './pages/Reviews';
 import Dashboard from './pages/admin/Dashboard';
 import StaffDashboard from './pages/admin/products/AdminProducts';
@@ -260,6 +265,8 @@ function App() {
               {/* Navbar is always rendered */}
               <Navbar onLogout={logout} />
 
+
+
               <Routes>
                 <Route
                   path="/"
@@ -309,6 +316,9 @@ function App() {
                 <Route path="/editproduct/:id" element={<EditProduct />} />
                 <Route path="/product/:id" element={<ProductDetail />} />
                 <Route path="/reviews/:productId" element={<Reviews />} />
+                <Route path="/wishlist" element={<Wishlist />} />
+
+               
 
                 {/* AHMED CODES */}
                 <Route path="/addresses" element={<Addresses />} />
@@ -336,10 +346,8 @@ function App() {
                 <Route path="/updateenquiry/:id" element={<UpdateEnquiry />} />
 
                 {/* Newsletter Management */}
-                <Route
-                  path="/createnewsletter"
-                  element={<CreateNewsletter />}
-                />
+                <Route path="/createnewsletter" element={<CreateNewsletter />}/>
+                <Route path="/addnewsletter" element={<AddNewsletter />}/>
                 <Route path="/selectcontent" element={<SelectContent />} />
 
                 <Route path="/admin/livechat" element={<ProtectedRoute element={AdminChat} />} />
