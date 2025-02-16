@@ -4,6 +4,9 @@ import { toast } from 'react-toastify';
 import http from 'utils/http';
 
 import { Clear, Search } from '@mui/icons-material';
+// Wishlist icon
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import {
   Box,
   Button,
@@ -28,6 +31,8 @@ import {
 
 import UserContext from '../contexts/UserContext';
 
+// Filled Wishlist icon for toggle state
+
 function Products({ onAddProductClick }) {
   const [productList, setProductList] = useState([]);
   const [search, setSearch] = useState('');
@@ -48,6 +53,53 @@ function Products({ onAddProductClick }) {
   const [selectedSize, setSelectedSize] = useState('');
   const [selectedFit, setSelectedFit] = useState('');
   const [selectedPriceRange, setSelectedPriceRange] = useState('');
+
+  const [wishlistStatus, setWishlistStatus] = useState({}); // Track wishlist status for each product
+
+  const handleAddToWishlist = async (productId) => {
+    if (!user) {
+      toast.error('You must be logged in to add items to your wishlist.');
+      return;
+    }
+
+    try {
+      if (wishlistStatus[productId]) {
+        // Remove from wishlist
+        await http.delete(`/wishlist/${productId}`);
+        setWishlistStatus((prev) => ({ ...prev, [productId]: false }));
+        toast.success('Product removed from wishlist!');
+      } else {
+        // Add to wishlist
+        await http.post('/wishlist', { productId });
+        setWishlistStatus((prev) => ({ ...prev, [productId]: true }));
+        toast.success('Product added to wishlist!');
+      }
+
+      // Dispatch the wishlistUpdated event to notify Navbar
+      window.dispatchEvent(new Event('wishlistUpdated'));
+    } catch (error) {
+      console.error('Error handling wishlist operation:', error);
+      toast.error('Failed to update wishlist.');
+    }
+  };
+
+  useEffect(() => {
+    if (user) {
+      const fetchWishlistStatus = async () => {
+        try {
+          const response = await http.get('/wishlist');
+          const wishlist = response.data.reduce((acc, item) => {
+            acc[item.productId] = true;
+            return acc;
+          }, {});
+          setWishlistStatus(wishlist);
+        } catch (error) {
+          console.error('Error fetching wishlist status:', error);
+        }
+      };
+      fetchWishlistStatus();
+    }
+  }, [user]);
 
   useEffect(() => {
     setSelectedCategory(categoryName || ''); // Sync category from URL
@@ -288,6 +340,9 @@ function Products({ onAddProductClick }) {
               <MenuItem value="Men">Men</MenuItem>
               <MenuItem value="Women">Women</MenuItem>
               <MenuItem value="Trending">Trending</MenuItem>
+              <MenuItem value="New Arrivals">New Arrivals</MenuItem>
+              <MenuItem value="Boys">Boys</MenuItem>
+              <MenuItem value="Girls">Girls</MenuItem>
             </Select>
           </FormControl>
         </Box>
@@ -361,6 +416,8 @@ function Products({ onAddProductClick }) {
               <MenuItem value="S">S</MenuItem>
               <MenuItem value="M">M</MenuItem>
               <MenuItem value="L">L</MenuItem>
+              <MenuItem value="XL">XL</MenuItem>
+              <MenuItem value="XXL">XXL</MenuItem>
             </Select>
           </FormControl>
         </Box>
@@ -392,6 +449,7 @@ function Products({ onAddProductClick }) {
               <MenuItem value="">All Fits</MenuItem>
               <MenuItem value="Regular Tapered">Regular Tapered</MenuItem>
               <MenuItem value="Skinny Tapered">Skinny Tapered</MenuItem>
+              <MenuItem value="Seasonal Fit">Seasonal Fit</MenuItem>
             </Select>
           </FormControl>
         </Box>
@@ -489,7 +547,7 @@ function Products({ onAddProductClick }) {
                     boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
                   },
                 }}
-                onClick={() => navigate(`/product/${product.id}`)}
+                onClick={(e) => e.stopPropagation()} // <-- Prevent navigation when clicking on card
               >
                 {product.imageFile && (
                   <CardMedia
@@ -560,6 +618,24 @@ function Products({ onAddProductClick }) {
                     )}
                   </Box>
                 </CardContent>
+                {/* Wishlist Button */}
+                <Button
+                  variant="outlined"
+                  color={wishlistStatus[product.id] ? 'secondary' : 'primary'}
+                  startIcon={
+                    wishlistStatus[product.id] ? (
+                      <FavoriteIcon />
+                    ) : (
+                      <FavoriteBorderIcon />
+                    )
+                  }
+                  onClick={(e) => handleAddToWishlist(product.id, e)} // <-- Pass the event to handleAddToWishlist
+                  sx={{ marginTop: 1 }}
+                >
+                  {wishlistStatus[product.id]
+                    ? 'Remove from Wishlist'
+                    : 'Add to Wishlist'}
+                </Button>
 
                 <Box sx={{ padding: 2 }}>
                   {user && (

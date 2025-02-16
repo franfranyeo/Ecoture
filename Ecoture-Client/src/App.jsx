@@ -42,11 +42,13 @@ import EnquiriesDashboard from './pages/Enquiries/Dashboard';
 // Amelia Imports
 import Enquiries from './pages/Enquiries/Enquiries';
 import UpdateEnquiry from './pages/Enquiries/UpdateEnquiry';
+import AddNewsletter from './pages/Newsletter/AddNewsletter';
 import CreateNewsletter from './pages/Newsletter/CreateNewsletter';
 import SelectContent from './pages/Newsletter/SelectContent';
 import ProductDetail from './pages/ProductDetail';
 import Products from './pages/Products';
 import Reviews from './pages/Reviews';
+import Wishlist from './pages/Wishlist';
 import AdminChat from './pages/admin/AdminChat';
 import Dashboard from './pages/admin/Dashboard';
 import RefundApproval from './pages/admin/RefundApproval';
@@ -307,6 +309,7 @@ function App() {
                 <Route path="/editproduct/:id" element={<EditProduct />} />
                 <Route path="/product/:id" element={<ProductDetail />} />
                 <Route path="/reviews/:productId" element={<Reviews />} />
+                <Route path="/wishlist" element={<Wishlist />} />
 
                 {/* AHMED CODES */}
                 <Route path="/addresses" element={<Addresses />} />
@@ -341,6 +344,7 @@ function App() {
                   path="/createnewsletter"
                   element={<CreateNewsletter />}
                 />
+                <Route path="/addnewsletter" element={<AddNewsletter />} />
                 <Route path="/selectcontent" element={<SelectContent />} />
 
                 <Route

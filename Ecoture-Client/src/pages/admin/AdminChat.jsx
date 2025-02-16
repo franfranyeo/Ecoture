@@ -1,4 +1,4 @@
-import React, { useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import * as signalR from '@microsoft/signalr';
 import './AdminChat.css';
 
@@ -137,6 +137,13 @@ const AdminChat = () => {
     }
   };
 
+  const chatBoxRef = useRef(null);
+  useEffect(() => {
+    if (chatBoxRef.current) {
+      chatBoxRef.current.scrollTop = chatBoxRef.current.scrollHeight;
+    }
+  }, [messages]);
+
   return (
     <div className="admin-chat-container">
       <div className="sidebar">
@@ -186,7 +193,7 @@ const AdminChat = () => {
           <p>Select a chat to view messages</p>
         </div>
       ) : (
-        <div className="chat-window">
+        <div className="chat-window" >
           <h3>Chat with {targetUser}</h3>
           <div className="chat-messages">
             {(messages[targetUser] || []).map((msg, index) => (
