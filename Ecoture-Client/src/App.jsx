@@ -53,6 +53,7 @@ import AddReward from './pages/admin/rewards/AddReward';
 import EditReward from './pages/admin/rewards/EditReward';
 import Rewards from './pages/admin/rewards/Rewards';
 import ViewReward from './pages/admin/rewards/ViewReward';
+import AddUser from './pages/admin/user/AddUser';
 import EditUser from './pages/admin/user/EditUser';
 import Users from './pages/admin/user/Users';
 import ViewUser from './pages/admin/user/ViewUser';
@@ -161,7 +162,15 @@ function App() {
     },
     {
       url: '/account',
-      component: <Navigate to="/account/profile" />,
+      component: (
+        <Navigate
+          to={
+            user && user.role == 'Customer'
+              ? '/account/profile'
+              : '/account/security'
+          }
+        />
+      ),
     },
     {
       url: '/account/:tab',
@@ -189,6 +198,10 @@ function App() {
     {
       url: '/admin/users/:id/view',
       component: ViewUser,
+    },
+    {
+      url: '/admin/users/add',
+      component: AddUser,
     },
     {
       url: '/admin/users/:id/edit',
