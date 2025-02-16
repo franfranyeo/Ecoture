@@ -4,7 +4,7 @@ import {
   Navigate,
   Route,
   BrowserRouter as Router,
-  Routes
+  Routes,
 } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import http from 'utils/http';
@@ -23,36 +23,33 @@ import UserContext from './contexts/UserContext';
 import AddProduct from './pages/AddProduct';
 import AddAddress from './pages/Checkout/AddAddress';
 import AddCreditCard from './pages/Checkout/AddCreditCard';
-
 // AHMED IMPORTS
 import Addresses from './pages/Checkout/Addresses';
 import Cart from './pages/Checkout/Cart';
-import OrderHistory from "./pages/Checkout/OrderHistory";
-import RefundRequests from "./pages/Checkout/Refund";
-import RefundApproval from "./pages/admin/RefundApproval";
 import Choice from './pages/Checkout/Choice';
 import Confirmation from './pages/Checkout/Confirmation';
 import CreditCards from './pages/Checkout/CreditCards';
 import EditAddress from './pages/Checkout/EditAddress';
 import EditCreditCard from './pages/Checkout/EditCreditCard';
 import MyForm from './pages/Checkout/MyForm';
+import OrderHistory from './pages/Checkout/OrderHistory';
+import RefundRequests from './pages/Checkout/Refund';
 import CustomerLanding from './pages/CustomerLanding';
 import EditProduct from './pages/EditProduct';
 import AddEnquiry from './pages/Enquiries/AddEnquiry';
 import AddResponse from './pages/Enquiries/AddResponse';
 import EnquiriesDashboard from './pages/Enquiries/Dashboard';
-
 // Amelia Imports
 import Enquiries from './pages/Enquiries/Enquiries';
 import UpdateEnquiry from './pages/Enquiries/UpdateEnquiry';
-import AdminChat from './pages/admin/AdminChat';
 import CreateNewsletter from './pages/Newsletter/CreateNewsletter';
 import SelectContent from './pages/Newsletter/SelectContent';
 import ProductDetail from './pages/ProductDetail';
 import Products from './pages/Products';
-
 import Reviews from './pages/Reviews';
+import AdminChat from './pages/admin/AdminChat';
 import Dashboard from './pages/admin/Dashboard';
+import RefundApproval from './pages/admin/RefundApproval';
 import StaffDashboard from './pages/admin/products/AdminProducts';
 import AdminProducts from './pages/admin/products/AdminProducts';
 import AddReward from './pages/admin/rewards/AddReward';
@@ -243,8 +240,8 @@ function App() {
     localStorage.clear();
     window.location = '/';
   };
-  const isAdmin = user?.role === "Admin";
-  const isAdminRoute = window.location.pathname.startsWith("/admin");
+  const isAdmin = user?.role === 'Admin';
+  const isAdminRoute = window.location.pathname.startsWith('/admin');
   return (
     <GoogleOAuthProvider clientId="455480585598-3f0qgcm01cbr2qp4rm9or035u1g75ur8.apps.googleusercontent.com">
       <UserContext.Provider value={value}>
@@ -259,8 +256,7 @@ function App() {
               }}
             >
               {/* Navbar is always rendered */}
-              <Navbar onLogout={logout} user={user} />  
-
+              <Navbar onLogout={logout} user={user} />
 
               <Routes>
                 <Route
@@ -311,7 +307,6 @@ function App() {
                 <Route path="/editproduct/:id" element={<EditProduct />} />
                 <Route path="/product/:id" element={<ProductDetail />} />
                 <Route path="/reviews/:productId" element={<Reviews />} />
-               
 
                 {/* AHMED CODES */}
                 <Route path="/addresses" element={<Addresses />} />
@@ -329,8 +324,11 @@ function App() {
                 <Route path="/order-history" element={<OrderHistory />} />
                 <Route path="/refund-requests" element={<RefundRequests />} />
                 <Route path="/cart" element={<Cart />} />
-                <Route path="/admin/refund-approval" element={<ProtectedRoute element={RefundApproval} />} />
-                
+                <Route
+                  path="/admin/refund-approval"
+                  element={<ProtectedRoute element={RefundApproval} />}
+                />
+
                 {/* Enquiry Management */}
                 <Route path="/dashboard" element={<EnquiriesDashboard />} />
                 <Route path="/enquiries" element={<Enquiries />} />
@@ -345,8 +343,10 @@ function App() {
                 />
                 <Route path="/selectcontent" element={<SelectContent />} />
 
-                <Route path="/admin/livechat" element={<ProtectedRoute element={AdminChat} />} />
-
+                <Route
+                  path="/admin/livechat"
+                  element={<ProtectedRoute element={AdminChat} />}
+                />
               </Routes>
 
               {!isAdmin && !isAdminRoute && <ChatWidget />}

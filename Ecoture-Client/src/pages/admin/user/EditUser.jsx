@@ -42,7 +42,7 @@ const custValidationSchema = yup.object().shape({
     .max(50, "Email can't be longer than 50 characters")
     .required('Email is required'),
 
-  mobileNumber: yup.string().trim(),
+  mobileNo: yup.string().trim(),
 });
 
 const staffValidationSchema = yup.object().shape({
@@ -66,7 +66,7 @@ const staffValidationSchema = yup.object().shape({
     .email('Enter a valid email')
     .max(50, "Email can't be longer than 50 characters")
     .required('Email is required'),
-  mobileNumber: yup.string().nullable(),
+  mobileNo: yup.string().nullable(),
 });
 
 const adminValidationSchema = yup.object().shape({
@@ -101,7 +101,7 @@ function EditUser() {
     lastName: '',
     dateofBirth: '',
     email: '',
-    mobileNumber: '',
+    mobileNo: '',
   });
 
   useEffect(() => {
@@ -109,7 +109,7 @@ function EditUser() {
       const cleanedUser = {
         ...res.data,
         dateofBirth: formatDateForInput(res.data.dateofBirth),
-        mobileNumber: res.data.mobileNumber || 'Not set',
+        mobileNo: res.data.mobileNo || 'Not set',
       };
 
       console.log('User fetched:', cleanedUser); // Added logging
@@ -137,7 +137,7 @@ function EditUser() {
           firstName: values.firstName.trim(),
           lastName: values.lastName.trim(),
           email: values.email.trim(),
-          mobileNumber: values.mobileNumber ? values.mobileNumber : null,
+          mobileNo: values.mobileNo ? values.mobileNo : null,
           dateofBirth: formatDateForSubmission(values.dateofBirth),
           pfpURL: user.pfpURL || '',
         };
@@ -156,13 +156,13 @@ function EditUser() {
   });
 
   const handleCancel = () => {
-    navigate(`/admin/users/${id}/view`);
+    navigate(-1);
   };
 
   return (
     <>
       <Box sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
-        <IconButton sx={{ cursor: 'pointer' }} onClick={() => navigate(-1)}>
+        <IconButton sx={{ cursor: 'pointer' }} onClick={handleCancel}>
           <ArrowBack fontSize="large" />
         </IconButton>
         <Typography variant="h4">Edit User</Typography>
@@ -286,16 +286,15 @@ function EditUser() {
                     fullWidth
                     margin="dense"
                     label="Mobile Number"
-                    name="mobileNumber"
-                    value={formik.values.mobileNumber}
+                    name="mobileNo"
+                    value={formik.values.mobileNo}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     error={
-                      formik.touched.mobileNumber &&
-                      Boolean(formik.errors.mobileNumber)
+                      formik.touched.mobileNo && Boolean(formik.errors.mobileNo)
                     }
                     helperText={
-                      formik.touched.mobileNumber && formik.errors.mobileNumber
+                      formik.touched.mobileNo && formik.errors.mobileNo
                     }
                     variant="outlined"
                   />
@@ -460,16 +459,15 @@ function EditUser() {
                     fullWidth
                     margin="dense"
                     label="Mobile Number"
-                    name="mobileNumber"
-                    value={formik.values.mobileNumber}
+                    name="mobileNo"
+                    value={formik.values.mobileNo}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     error={
-                      formik.touched.mobileNumber &&
-                      Boolean(formik.errors.mobileNumber)
+                      formik.touched.mobileNo && Boolean(formik.errors.mobileNo)
                     }
                     helperText={
-                      formik.touched.mobileNumber && formik.errors.mobileNumber
+                      formik.touched.mobileNo && formik.errors.mobileNo
                     }
                     variant="outlined"
                   />
