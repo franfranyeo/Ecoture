@@ -34,6 +34,9 @@ import MyForm from "./pages/Checkout/MyForm";
 import Choice from "./pages/Checkout/Choice";
 import Confirmation from "./pages/Checkout/Confirmation";
 import Cart from './pages/Checkout/Cart';
+import OrderHistory from "./pages/Checkout/OrderHistory";
+import RefundRequests from "./pages/Checkout/Refund";
+import RefundApproval from "./pages/admin/RefundApproval";
 
 // Amelia Imports
 import Enquiries from "./pages/Enquiries/Enquiries";
@@ -289,7 +292,10 @@ function App() {
                 <Route path="/form" element={<MyForm />} />
                 <Route path="/choice" element={<Choice />} />
                 <Route path="/confirmation" element={<Confirmation />} />
+                <Route path="/order-history" element={<OrderHistory />} />
+                <Route path="/refund-requests" element={<RefundRequests />} />
                 <Route path="/cart" element={<Cart />} />
+                <Route path="/admin/refund-approval" element={<ProtectedRoute element={RefundApproval} />} />
                 
                 {/* Enquiry Management */}
                 <Route path="/dashboard" element={<EnquiriesDashboard />} />

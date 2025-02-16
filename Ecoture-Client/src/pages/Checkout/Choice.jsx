@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext} from "react";
 import {
   Box,
   Typography,
@@ -12,6 +12,7 @@ import {
 } from "@mui/material";
 import { useLocation, useNavigate, Link } from "react-router-dom";
 import http from "utils/http";
+import UserContext from "contexts/UserContext";
 
 function Choice() {
   const [addresses, setAddresses] = useState([]);
@@ -21,6 +22,8 @@ function Choice() {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
   const { state } = useLocation();
+  const { user } = useContext(UserContext);
+  
 
   useEffect(() => {
     // Fetching addresses and credit cards
@@ -32,13 +35,26 @@ function Choice() {
       .catch(() => setError("Failed to load data. Please try again later."));
   }, []);
 
-  const handleNext = () => {
-    if (selectedAddress && selectedCard) {
-      navigate(`/confirmation`, { state: state });
-    } else {
-      alert("Please select both an address and a credit card.");
-    }
-  };
+const handleNext = () => {
+  if (selectedAddress && selectedCard) {
+    const orderConfirmationRequest = {
+      userId: user.userId,  // ✅ Pass the logged-in user ID
+      orderId: state.orderId,  // ✅ Pass the latest order ID
+    };
+
+    http.post("/order/confirm", orderConfirmationRequest)
+      .then(() => {
+        navigate(`/confirmation`, { state: state });
+      })
+      .catch((error) => {
+        console.error("Error confirming order:", error);
+        alert("Failed to confirm order.");
+      });
+  } else {
+    alert("Please select both an address and a credit card.");
+  }
+};
+
 
   if (error) {
     return <Alert severity="error">{error}</Alert>;
@@ -220,3 +236,4 @@ function Choice() {
 }
 
 export default Choice;
+

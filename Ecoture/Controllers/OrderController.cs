@@ -5,14 +5,13 @@ using System.Security.Claims;
 using System.Collections.Generic;
 using System.Linq;
 using System;
+using System.Threading.Tasks;
 
 using AutoMapper;
 using Microsoft.Extensions.Logging;
 using Ecoture.Model.Entity;
 using Ecoture.Model.DTO;
-using Ecoture.Model;
-using Ecoture.Model.DTO;
-using Mysqlx.Crud;
+using Ecoture.Services;
 
 namespace Ecoture.Controllers
 {
@@ -23,12 +22,14 @@ namespace Ecoture.Controllers
         private readonly MyDbContext _context;
         private readonly IMapper _mapper;
         private readonly ILogger<OrderController> _logger;
+        private readonly IEmailService _emailService;
 
-        public OrderController(MyDbContext context, IMapper mapper, ILogger<OrderController> logger)
+        public OrderController(MyDbContext context, IMapper mapper, ILogger<OrderController> logger, IEmailService emailService)
         {
             _context = context;
             _mapper = mapper;
             _logger = logger;
+            _emailService = emailService;
         }
 
         // ✅ Place a new order
@@ -73,6 +74,44 @@ namespace Ecoture.Controllers
                 _logger.LogError(ex, "Error when placing order");
                 return StatusCode(500, new { message = "Internal server error while placing order." });
             }
+        }
+
+        // ✅ Order Confirmation Email
+        [HttpPost("confirm"), Authorize]
+        public async Task<IActionResult> ConfirmOrder([FromBody] OrderConfirmationRequest request)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.UserId == request.UserId);
+            if (user == null) return NotFound(new { message = "User not found." });
+
+            var latestOrder = await _context.Orders
+                .Where(o => o.UserId == request.UserId)
+                .OrderByDescending(o => o.CreatedAt)
+                .FirstOrDefaultAsync();
+
+            if (latestOrder == null) return NotFound(new { message = "No recent order found." });
+
+            // ✅ Send Order Confirmation Email
+            string emailBody = $@"
+                <html>
+                <body>
+                    <h2>Order Confirmation</h2>
+                    <p>Dear {user.FirstName},</p>
+                    <p>Thank you for your order! Your order (ID: {latestOrder.Id}) has been successfully placed.</p>
+                    <p>Total Amount: <strong>${latestOrder.TotalPrice:F2}</strong></p>
+                    <p>We will notify you once your order is shipped.</p>
+                    <br>
+                    <p>Best Regards,<br>Ecoture Team</p>
+                </body>
+                </html>
+            ";
+
+            await _emailService.SendAsync(
+                user.Email,
+                "Your Order Has Been Confirmed!",
+                emailBody
+            );
+
+            return Ok(new { message = "Order confirmed and email sent!" });
         }
 
         // ✅ Get Order Details using DTO and AutoMapper
@@ -168,5 +207,11 @@ namespace Ecoture.Controllers
         {
             return int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
         }
+    }
+
+    // ✅ Order Confirmation Request DTO
+    public class OrderConfirmationRequest
+    {
+        public int UserId { get; set; }
     }
 }

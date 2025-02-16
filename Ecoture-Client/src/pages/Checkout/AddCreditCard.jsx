@@ -53,7 +53,7 @@ function AddCreditCard() {
       http
         .post("/creditcard", data)
         .then(() => {
-          navigate("/creditcards");
+          navigate("/choice");
         })
         .catch(() => {
           alert(

@@ -48,6 +48,13 @@ const sideMenuOptions = [
     icon: usersIcon,
     path: "/dashboard",
   },
+  // Ahmed refund HERE IS WHERE I WANT TO ADD THE REFUND APPROVAL
+  {
+    name: "Refund Approval",
+    icon: usersIcon,
+    path: "/admin/refund-approval",
+  },
+
 ];
 
 function Sidebar() {

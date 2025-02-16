@@ -69,7 +69,11 @@ function Confirmation() {
                 <Typography>No items in this order.</Typography>
             )}
 
+            {/* Buttons for Navigation */}
             <Box sx={{ textAlign: "center", mt: 4 }}>
+                <Button variant="contained" onClick={() => navigate("/order-history")} sx={{ mr: 2 }}>
+                    View Order History
+                </Button>
                 <Button variant="contained" onClick={() => navigate("/")}>
                     Back to Home
                 </Button>
