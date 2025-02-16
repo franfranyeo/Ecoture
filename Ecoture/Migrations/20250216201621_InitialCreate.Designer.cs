@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Ecoture.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20250216172752_Integrated")]
-    partial class Integrated
+    [Migration("20250216201621_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -286,34 +286,34 @@ namespace Ecoture.Migrations
                         new
                         {
                             MembershipId = 1,
-                            CreatedAt = new DateTime(2025, 2, 16, 17, 27, 51, 476, DateTimeKind.Utc).AddTicks(1970),
+                            CreatedAt = new DateTime(2025, 2, 16, 20, 16, 21, 130, DateTimeKind.Utc).AddTicks(8761),
                             SpendingRequired = 0.00m,
                             Tier = 1,
-                            UpdatedAt = new DateTime(2025, 2, 16, 17, 27, 51, 476, DateTimeKind.Utc).AddTicks(1971)
+                            UpdatedAt = new DateTime(2025, 2, 16, 20, 16, 21, 130, DateTimeKind.Utc).AddTicks(8762)
                         },
                         new
                         {
                             MembershipId = 2,
-                            CreatedAt = new DateTime(2025, 2, 16, 17, 27, 51, 476, DateTimeKind.Utc).AddTicks(1973),
+                            CreatedAt = new DateTime(2025, 2, 16, 20, 16, 21, 130, DateTimeKind.Utc).AddTicks(8764),
                             SpendingRequired = 2000.00m,
                             Tier = 2,
-                            UpdatedAt = new DateTime(2025, 2, 16, 17, 27, 51, 476, DateTimeKind.Utc).AddTicks(1974)
+                            UpdatedAt = new DateTime(2025, 2, 16, 20, 16, 21, 130, DateTimeKind.Utc).AddTicks(8765)
                         },
                         new
                         {
                             MembershipId = 3,
-                            CreatedAt = new DateTime(2025, 2, 16, 17, 27, 51, 476, DateTimeKind.Utc).AddTicks(1976),
+                            CreatedAt = new DateTime(2025, 2, 16, 20, 16, 21, 130, DateTimeKind.Utc).AddTicks(8767),
                             SpendingRequired = 4000.00m,
                             Tier = 3,
-                            UpdatedAt = new DateTime(2025, 2, 16, 17, 27, 51, 476, DateTimeKind.Utc).AddTicks(1976)
+                            UpdatedAt = new DateTime(2025, 2, 16, 20, 16, 21, 130, DateTimeKind.Utc).AddTicks(8768)
                         },
                         new
                         {
                             MembershipId = 4,
-                            CreatedAt = new DateTime(2025, 2, 16, 17, 27, 51, 476, DateTimeKind.Utc).AddTicks(1978),
+                            CreatedAt = new DateTime(2025, 2, 16, 20, 16, 21, 130, DateTimeKind.Utc).AddTicks(8770),
                             SpendingRequired = 0.00m,
                             Tier = 0,
-                            UpdatedAt = new DateTime(2025, 2, 16, 17, 27, 51, 476, DateTimeKind.Utc).AddTicks(1978)
+                            UpdatedAt = new DateTime(2025, 2, 16, 20, 16, 21, 130, DateTimeKind.Utc).AddTicks(8770)
                         });
                 });
 

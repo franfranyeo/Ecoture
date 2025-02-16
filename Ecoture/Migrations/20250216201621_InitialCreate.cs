@@ -9,7 +9,7 @@ using MySql.EntityFrameworkCore.Metadata;
 namespace Ecoture.Migrations
 {
     /// <inheritdoc />
-    public partial class Integrated : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -744,17 +744,10 @@ namespace Ecoture.Migrations
                 columns: new[] { "MembershipId", "CreatedAt", "SpendingRequired", "Tier", "UpdatedAt" },
                 values: new object[,]
                 {
-<<<<<<<< HEAD:Ecoture/Migrations/20250216134617_init.cs
-                    { 1, new DateTime(2025, 2, 16, 13, 46, 15, 63, DateTimeKind.Utc).AddTicks(3238), 0.00m, 1, new DateTime(2025, 2, 16, 13, 46, 15, 63, DateTimeKind.Utc).AddTicks(3238) },
-                    { 2, new DateTime(2025, 2, 16, 13, 46, 15, 63, DateTimeKind.Utc).AddTicks(3240), 2000.00m, 2, new DateTime(2025, 2, 16, 13, 46, 15, 63, DateTimeKind.Utc).AddTicks(3240) },
-                    { 3, new DateTime(2025, 2, 16, 13, 46, 15, 63, DateTimeKind.Utc).AddTicks(3242), 4000.00m, 3, new DateTime(2025, 2, 16, 13, 46, 15, 63, DateTimeKind.Utc).AddTicks(3242) },
-                    { 4, new DateTime(2025, 2, 16, 13, 46, 15, 63, DateTimeKind.Utc).AddTicks(3243), 0.00m, 0, new DateTime(2025, 2, 16, 13, 46, 15, 63, DateTimeKind.Utc).AddTicks(3244) }
-========
-                    { 1, new DateTime(2025, 2, 16, 17, 27, 51, 476, DateTimeKind.Utc).AddTicks(1970), 0.00m, 1, new DateTime(2025, 2, 16, 17, 27, 51, 476, DateTimeKind.Utc).AddTicks(1971) },
-                    { 2, new DateTime(2025, 2, 16, 17, 27, 51, 476, DateTimeKind.Utc).AddTicks(1973), 2000.00m, 2, new DateTime(2025, 2, 16, 17, 27, 51, 476, DateTimeKind.Utc).AddTicks(1974) },
-                    { 3, new DateTime(2025, 2, 16, 17, 27, 51, 476, DateTimeKind.Utc).AddTicks(1976), 4000.00m, 3, new DateTime(2025, 2, 16, 17, 27, 51, 476, DateTimeKind.Utc).AddTicks(1976) },
-                    { 4, new DateTime(2025, 2, 16, 17, 27, 51, 476, DateTimeKind.Utc).AddTicks(1978), 0.00m, 0, new DateTime(2025, 2, 16, 17, 27, 51, 476, DateTimeKind.Utc).AddTicks(1978) }
->>>>>>>> 9017085f35634596a41b02bcb2c65041e1ecdd63:Ecoture/Migrations/20250216172752_Integrated.cs
+                    { 1, new DateTime(2025, 2, 16, 20, 16, 21, 130, DateTimeKind.Utc).AddTicks(8761), 0.00m, 1, new DateTime(2025, 2, 16, 20, 16, 21, 130, DateTimeKind.Utc).AddTicks(8762) },
+                    { 2, new DateTime(2025, 2, 16, 20, 16, 21, 130, DateTimeKind.Utc).AddTicks(8764), 2000.00m, 2, new DateTime(2025, 2, 16, 20, 16, 21, 130, DateTimeKind.Utc).AddTicks(8765) },
+                    { 3, new DateTime(2025, 2, 16, 20, 16, 21, 130, DateTimeKind.Utc).AddTicks(8767), 4000.00m, 3, new DateTime(2025, 2, 16, 20, 16, 21, 130, DateTimeKind.Utc).AddTicks(8768) },
+                    { 4, new DateTime(2025, 2, 16, 20, 16, 21, 130, DateTimeKind.Utc).AddTicks(8770), 0.00m, 0, new DateTime(2025, 2, 16, 20, 16, 21, 130, DateTimeKind.Utc).AddTicks(8770) }
                 });
 
             migrationBuilder.CreateIndex(
@@ -863,14 +856,11 @@ namespace Ecoture.Migrations
                 column: "referrerUserId");
 
             migrationBuilder.CreateIndex(
-<<<<<<<< HEAD:Ecoture/Migrations/20250216134617_init.cs
-========
                 name: "IX_RefundRequests_OrderItemId",
                 table: "RefundRequests",
                 column: "OrderItemId");
 
             migrationBuilder.CreateIndex(
->>>>>>>> 9017085f35634596a41b02bcb2c65041e1ecdd63:Ecoture/Migrations/20250216172752_Integrated.cs
                 name: "IX_Responses_enquiryId",
                 table: "Responses",
                 column: "enquiryId");
@@ -950,12 +940,9 @@ namespace Ecoture.Migrations
 
             migrationBuilder.DropTable(
                 name: "ProductSizeColors");
-<<<<<<<< HEAD:Ecoture/Migrations/20250216134617_init.cs
-========
 
             migrationBuilder.DropTable(
                 name: "RefundRequests");
->>>>>>>> 9017085f35634596a41b02bcb2c65041e1ecdd63:Ecoture/Migrations/20250216172752_Integrated.cs
 
             migrationBuilder.DropTable(
                 name: "Responses");
