@@ -195,7 +195,7 @@ namespace Ecoture.Controllers
                     return BadRequest("User not found.");
                 }
 
-                userToUpdate.IsEmailVerified = true;
+                userToUpdate.IsPhoneVerified = true;
                 _context.Users.Update(userToUpdate);
 
                 await _context.SaveChangesAsync();
@@ -323,6 +323,7 @@ namespace Ecoture.Controllers
             string oldEmail = user.Email;
             user.Email = newEmail;
             latestOtp.IsVerified = true;
+            user.IsEmailVerified = true;
             await _context.SaveChangesAsync();
 
             // Send confirmation emails

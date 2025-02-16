@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 
 import {
   Link as LinkIcon,
@@ -18,8 +18,8 @@ import {
 
 const EARNING_ACTIVITIES = [
   {
-    id: 'daily-login',
-    title: 'Daily Log-In',
+    id: 'daily-claim',
+    title: 'Daily Check-in',
     description:
       'Earn 5 points every day you log in. Visit daily to stack up rewards and unlock perks!',
     points: 5,
@@ -55,23 +55,26 @@ const EARNING_ACTIVITIES = [
 ];
 
 const EarningActivityCard = ({ activity, user, onEarnPoints }) => {
-  const canCheckIn = useMemo(() => {
-    if (activity.id !== 'daily-login') return true;
-    if (!user.lastLogin) return true;
+  const canClaim = useMemo(() => {
+    if (activity.id !== 'daily-claim') return true;
+    if (!user.lastClaimTime) return true;
 
-    const lastLoginDate = new Date(user.lastLogin).toLocaleDateString();
+    const lastClaimDate = new Date(
+      new Date(user.lastClaimTime).getTime() + 8 * 60 * 60 * 1000
+    ).toLocaleDateString();
     const today = new Date().toLocaleDateString();
 
-    return lastLoginDate !== today;
-  }, [activity.id, user.lastLogin]);
+    return lastClaimDate !== today;
+  }, [activity.id, user.lastClaimTime]);
 
   const buttonText = useMemo(() => {
     if (activity.id === 'refer') return 'Refer';
-    if (activity.id === 'daily-login') {
-      return canCheckIn ? 'Check in' : 'Claimed';
+
+    if (activity.id === 'daily-claim') {
+      return canClaim ? 'Claim' : 'Claimed';
     }
     return 'Earn';
-  }, [activity.id, canCheckIn]);
+  }, [activity.id, canClaim]);
 
   return (
     <Card
@@ -123,20 +126,20 @@ const EarningActivityCard = ({ activity, user, onEarnPoints }) => {
           <Button
             variant="contained"
             size="small"
-            disabled={activity.id === 'daily-login' && !canCheckIn}
+            disabled={activity.id === 'daily-claim' && !canClaim}
             onClick={() => onEarnPoints(activity.id)}
             sx={{
               bgcolor:
-                activity.id === 'daily-login' && !canCheckIn
+                activity.id === 'daily-claim' && !canClaim
                   ? 'grey.300'
                   : '#1a237e',
               color:
-                activity.id === 'daily-login' && !canCheckIn
+                activity.id === 'daily-claim' && !canClaim
                   ? 'text.secondary'
                   : 'white',
               '&:hover': {
                 bgcolor:
-                  activity.id === 'daily-login' && !canCheckIn
+                  activity.id === 'daily-claim' && !canClaim
                     ? 'grey.300'
                     : '#000051',
               },

@@ -160,45 +160,58 @@ function Cart() {
     return today.toDateString();
   };
 
-  const handleCheckout = () => {
-    if (selectedIndexes.size === 0) {
-      toast.error('Please select at least one item to proceed to checkout.');
+const handleCheckout = async () => {
+  if (selectedIndexes.size === 0) {
+    toast.error('Please select at least one item to proceed to checkout.');
+    return;
+  }
+
+  const selectedCartItems = cart.filter((_, index) => selectedIndexes.has(index));
+
+  try {
+    for (const item of selectedCartItems) {
+      const productResponse = await http.get(`/product/${item.productId}`);
+      const product = productResponse.data;
+
+      if (!product) {
+        toast.error(`Product ${item.productTitle} not found.`);
+        continue;
+      }
+
+      // Reduce stock using PUT request
+      await http.put(`/product/reduce-stock/${item.productId}`, {
+        size: item.size,
+        color: item.color,
+        quantity: item.quantity,
+      });
+    }
+
+    // Proceed with order creation after stock update
+    const response = await http.post('/order', selectedCartItems);
+    const orderId = response.data.orderId;
+
+    if (!orderId) {
+      toast.error('Order ID is missing.');
       return;
     }
 
-    const selectedCartItems = cart.filter((_, index) =>
-      selectedIndexes.has(index)
-    );
+    await http.post('/user/spending', {
+      amount: `${calculateTotal().toFixed(2)}`,
+      points: calculatePoints(),
+      redemptionId: selectedRedemptionId,
+    });
 
-    http
-      .post('/order', selectedCartItems)
-      .then((response) => {
-        const orderId = response.data.orderId;
-        if (!orderId) {
-          toast.error('Order ID is missing.');
-          return;
-        }
-        http.post('/user/spending', {
-          amount: `${calculateTotal().toFixed(2)}`,
-          points: calculatePoints(),
-          redemptionId: selectedRedemptionId,
-        });
+    // Remove items from cart after checkout
+    await Promise.all(selectedCartItems.map((item) => http.delete(`/cart/${item.id}`)));
 
-        const deletePromises = selectedCartItems.map((item) =>
-          http.delete(`/cart/${item.id}`)
-        );
+    fetchCart();
+    navigate('/choice', { state: { orderId: orderId } });
 
-        Promise.all(deletePromises)
-          .then(() => {
-            fetchCart();
-            navigate('/choice', { state: { orderId: orderId } });
-          })
-          .catch(() =>
-            toast.error('Failed to remove selected items from the cart.')
-          );
-      })
-      .catch(() => toast.error('Failed to place order.'));
-  };
+  } catch (error) {
+    toast.error(error.response?.data?.message || 'Failed to place order.');
+  }
+};
+
 
   useEffect(() => {
     Promise.all([fetchCart(), fetchRewards()]);

@@ -46,6 +46,7 @@ function Navbar() {
     { text: 'Men', link: 'category/Men' },
     { text: 'Girls', link: 'category/Girls' },
     { text: 'Boys', link: 'category/Boys' },
+    //{ text: 'History', link: '/order-history' }
     // { text: "Addresses", link: "/addresses" },
     // { text: "Credit Cards", link: "/creditcards" },
     // { text: "Choice", link: "/choice" },
@@ -98,6 +99,29 @@ function Navbar() {
       console.error('Error fetching wishlist count:', error);
     }
   };
+
+  useEffect(() => {
+    if (user) {
+      // Fetch initial wishlist count
+      fetchWishlistCount();
+  
+      // Event listener to handle real-time wishlist updates
+      const handleWishlistUpdated = () => {
+        fetchWishlistCount(); // Re-fetch wishlist count when the event is triggered
+      };
+  
+      // Add the event listener
+      window.addEventListener('wishlistUpdated', handleWishlistUpdated);
+  
+      // Cleanup event listener on unmount
+      return () => {
+        window.removeEventListener('wishlistUpdated', handleWishlistUpdated);
+      };
+    } else {
+      setWishlistCount(0); // Reset wishlist count when user is not logged in
+    }
+  }, [user]);
+  
 
   useEffect(() => {
     if (user) {
@@ -336,6 +360,12 @@ function Navbar() {
                       }
                     >
                       Account
+                    </MenuItem>
+                    <MenuItem onClick={() => handleNavigate('/order-history')}>
+                     Order History
+                    </MenuItem>
+                    <MenuItem onClick={() => handleNavigate('/refund-requests')}>
+                     Refund Status
                     </MenuItem>
                     {adminRoles.includes(user?.role) && (
                       <MenuItem

@@ -8,7 +8,7 @@
         public string FullName { get; set; } = string.Empty; // Combines FirstName and LastName
         public string Email { get; set; } = string.Empty;
         public string MobileNo { get; set; } = string.Empty;
-        public DateTime? DateOfBirth { get; set; }
+        public DateTime? DateofBirth { get; set; }
         public string Role { get; set; } = string.Empty; // Maps to UserRole enum as a string
         public string? PfpURL { get; set; }
         public decimal TotalSpending { get; set; } = 0.00m;
@@ -22,6 +22,8 @@
         public bool IsPhoneVerified { get; set; } = false;
         public bool IsGoogleLogin { get; set; } = false;
         public DateTime LastLogin { get; set; }
+        public DateTime? LastClaimTime { get; set; }
+
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
     }

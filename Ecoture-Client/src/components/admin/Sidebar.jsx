@@ -89,7 +89,7 @@ function Sidebar() {
     }));
   };
 
-  const isActive = (path) => location.pathname == path;
+  const isActive = (path) => location.pathname.includes(path);
 
   const isParentActive = (subOptions) =>
     subOptions && subOptions.some((subOption) => isActive(subOption.path));

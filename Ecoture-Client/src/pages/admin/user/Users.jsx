@@ -463,7 +463,7 @@ const Users = () => {
                       <TableCell>{user.userId}</TableCell>
                       <TableCell>{user.fullName}</TableCell>
                       <TableCell>{user.email}</TableCell>
-                      <TableCell>{user.mobileNumber || 'N/A'}</TableCell>
+                      <TableCell>{user.mobileNo || 'N/A'}</TableCell>
                       <TableCell>
                         <Box
                           sx={{
@@ -514,8 +514,10 @@ const Users = () => {
                         {
                           // Render the edit button for all users except when the user is an admin and the logged-in user is staff
                           !(
-                            user.role === 'Admin' &&
-                            loggedInUser.role === 'Staff'
+                            (user.role === 'Admin' &&
+                              loggedInUser.role === 'Staff') ||
+                            (user.role === 'Staff' &&
+                              loggedInUser.role === 'Staff')
                           ) && (
                             <Link to={`/admin/users/${user.userId}/edit`}>
                               <Tooltip title="Edit User">
@@ -531,19 +533,24 @@ const Users = () => {
                             </Link>
                           )
                         }
-                        <Tooltip title="Delete User">
-                          <IconButton
-                            color="error"
-                            sx={{
-                              padding: '4px',
-                              visibility:
-                                user.role === 'Admin' ? 'hidden' : 'visible',
-                            }}
-                            onClick={() => handleDelete(user.userId)}
-                          >
-                            <Delete />
-                          </IconButton>
-                        </Tooltip>
+                        {!(
+                          (user.role === 'Admin' &&
+                            loggedInUser.role === 'Staff') ||
+                          (user.role === 'Staff' &&
+                            loggedInUser.role === 'Staff')
+                        ) && (
+                          <Tooltip title="Delete User">
+                            <IconButton
+                              color="error"
+                              sx={{
+                                padding: '4px',
+                              }}
+                              onClick={() => handleDelete(user.userId)}
+                            >
+                              <Delete />
+                            </IconButton>
+                          </Tooltip>
+                        )}
                       </TableCell>
                     </TableRow>
                   ))}

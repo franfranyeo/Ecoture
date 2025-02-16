@@ -42,7 +42,7 @@ const validationSchema = yup.object({
     ),
   lastName: yup
     .string()
-    .required('Last name is required')
+    .nullable()
     .min(2, 'Last name must be at least 2 characters')
     .max(100, 'Last name must be at most 100 characters')
     .matches(
@@ -549,6 +549,7 @@ const ProfileTab = ({ user }) => {
                   error={formik.touched.email && Boolean(formik.errors.email)}
                   helperText={formik.touched.email && formik.errors.email}
                   margin="normal"
+                  disabled={user.isGoogleLogin}
                 />
               ) : (
                 <Typography variant="body1">
@@ -615,7 +616,7 @@ const ProfileTab = ({ user }) => {
               )}
             </Grid>
             <Grid item xs={6}>
-              {!isEditing && (
+              {!isEditing && !user.isGoogleLogin && (
                 <Button
                   startIcon={<Lock />}
                   onClick={() => setShowPasswordDialog(true)}

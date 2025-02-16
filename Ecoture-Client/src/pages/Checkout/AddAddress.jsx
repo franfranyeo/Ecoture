@@ -17,11 +17,15 @@ import {
   Typography,
 } from '@mui/material';
 
-// formating help from ai for ui and clean up
+// Import flag images
+import SingaporeFlag from '../../assets/images/Singapore Flag.png'; // Replace with actual path
+import MalaysiaFlag from '../../assets/images/MalaysiaFlag.png'; // Replace with actual path
+
 function AddAddress() {
   const navigate = useNavigate();
   const [imageFile, setImageFile] = useState(null);
   const [uploadError, setUploadError] = useState(null);
+  const [flag, setFlag] = useState(null); // Holds the flag state
 
   const formik = useFormik({
     initialValues: {
@@ -34,6 +38,7 @@ function AddAddress() {
         .trim()
         .min(3, 'Street Address must be at least 3 characters')
         .max(100, 'Street Address must be at most 100 characters')
+        .matches(/^[SM]/, 'Street Address must start with S (Singapore) or M (Malaysia)')
         .required('Street Address is required'),
       description: yup
         .string()
@@ -51,7 +56,7 @@ function AddAddress() {
       http
         .post('/address', data)
         .then(() => {
-          navigate('/addresses');
+          navigate('/choice');
         })
         .catch((error) => {
           toast.error('An error occurred while adding the address.');
@@ -60,31 +65,17 @@ function AddAddress() {
     },
   });
 
-  const onFileChange = (e) => {
-    setUploadError(null);
-    let file = e.target.files[0];
-    if (file) {
-      if (file.size > 1024 * 1024) {
-        setUploadError('Maximum file size is 1MB');
-        return;
-      }
+  // Handle address input and update flag
+  const handleAddressChange = (event) => {
+    const { value } = event.target;
+    formik.setFieldValue('title', value);
 
-      let formData = new FormData();
-      formData.append('file', file);
-      http
-        .post('/file/upload', formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        })
-        .then((res) => {
-          setImageFile(res.data.filename);
-          toast.success('Image uploaded successfully.');
-        })
-        .catch((error) => {
-          setUploadError('Failed to upload image.');
-          console.error(error);
-        });
+    if (value.startsWith('S')) {
+      setFlag(SingaporeFlag);
+    } else if (value.startsWith('M')) {
+      setFlag(MalaysiaFlag);
+    } else {
+      setFlag(null);
     }
   };
 
@@ -103,17 +94,32 @@ function AddAddress() {
         </Typography>
 
         <Box component="form" onSubmit={formik.handleSubmit}>
-          <TextField
-            fullWidth
-            margin="normal"
-            label="Street Address"
-            name="title"
-            value={formik.values.title}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            error={formik.touched.title && Boolean(formik.errors.title)}
-            helperText={formik.touched.title && formik.errors.title}
-          />
+          <Box sx={{ position: 'relative' }}>
+            <TextField
+              fullWidth
+              margin="normal"
+              label="Street Address"
+              name="title"
+              value={formik.values.title}
+              onChange={handleAddressChange}
+              onBlur={formik.handleBlur}
+              error={formik.touched.title && Boolean(formik.errors.title)}
+              helperText={formik.touched.title && formik.errors.title}
+            />
+            {flag && (
+              <img
+                src={flag}
+                alt="Country Flag"
+                style={{
+                  position: 'absolute',
+                  right: '10px',
+                  top: '50%',
+                  transform: 'translateY(-50%)',
+                  height: '30px',
+                }}
+              />
+            )}
+          </Box>
 
           <TextField
             fullWidth
@@ -125,9 +131,7 @@ function AddAddress() {
             value={formik.values.description}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            error={
-              formik.touched.description && Boolean(formik.errors.description)
-            }
+            error={formik.touched.description && Boolean(formik.errors.description)}
             helperText={formik.touched.description && formik.errors.description}
           />
 
@@ -154,7 +158,31 @@ function AddAddress() {
                 hidden
                 accept="image/*"
                 type="file"
-                onChange={onFileChange}
+                onChange={(e) => {
+                  setUploadError(null);
+                  let file = e.target.files[0];
+                  if (file) {
+                    if (file.size > 1024 * 1024) {
+                      setUploadError('Maximum file size is 1MB');
+                      return;
+                    }
+
+                    let formData = new FormData();
+                    formData.append('file', file);
+                    http
+                      .post('/file/upload', formData, {
+                        headers: { 'Content-Type': 'multipart/form-data' },
+                      })
+                      .then((res) => {
+                        setImageFile(res.data.filename);
+                        toast.success('Image uploaded successfully.');
+                      })
+                      .catch((error) => {
+                        setUploadError('Failed to upload image.');
+                        console.error(error);
+                      });
+                  }
+                }}
               />
             </Button>
             {uploadError && <Alert severity="error">{uploadError}</Alert>}

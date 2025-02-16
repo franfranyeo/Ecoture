@@ -11,7 +11,6 @@ namespace Ecoture.Model.Request
         [RegularExpression(@"^[A-Za-z\s'\-.,]+$", ErrorMessage = "Only allow letters, spaces, and characters: ' - , .")]
         public string? FirstName { get; set; }
 
-        [MinLength(2), MaxLength(100)]
         [RegularExpression(@"^[A-Za-z\s'\-.,]+$", ErrorMessage = "Only allow letters, spaces, and characters: ' - , .")]
         public string? LastName { get; set; }
 

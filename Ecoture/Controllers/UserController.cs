@@ -229,7 +229,7 @@ namespace Ecoture.Controllers
                         FullName = user.FullName,
                         Email = user.Email,
                         MobileNo = user.MobileNo,
-                        DateOfBirth = user.DateofBirth,
+                        DateofBirth = user.DateofBirth,
                         Role = user.Role.ToString(),
                         PfpURL = user.PfpURL,
                         TotalSpending = user.TotalSpending,
@@ -243,6 +243,7 @@ namespace Ecoture.Controllers
                         IsPhoneVerified = user.IsPhoneVerified,
                         IsGoogleLogin = user.IsGoogleLogin,
                         LastLogin = user.LastLogin,
+                        LastClaimTime = user.LastClaimTime,
                         CreatedAt = user.CreatedAt,
                         UpdatedAt = user.UpdatedAt,
                     },
@@ -470,7 +471,7 @@ namespace Ecoture.Controllers
             var resetToken = await _userManager.GeneratePasswordResetTokenAsync(user.UserId);
 
             // Create password reset URL (you can add token expiration here)
-            var resetUrl = $"{_configuration["AppSettings:FrontendUrl"]}/reset-password?token={resetToken.Token}";
+            var resetUrl = $"http://localhost:3000/reset-password?token={resetToken.Token}";
 
             // Send the password reset email (e.g., using SendGrid)
             await _emailService.SendAsync(user.Email, "Password Reset Request", $"Click the link to reset your password: {resetUrl}");
@@ -498,6 +499,22 @@ namespace Ecoture.Controllers
             var result = await _userManager.ResetPasswordAsync(user.Email, request.Token, request.NewPassword);
             if (!result)
                 return BadRequest(new { message = "Invalid token or password reset failed" });
+
+            return Ok(new { message = "Password reset successful" });
+        }
+
+        // RESET PASSWORD
+        [HttpPost("reset-user-password")]
+        public async Task<IActionResult> ResetUserPassword([FromBody] ResetUserPasswordRequest request)
+        {
+            var user = await _context.Users.FindAsync(request.UserId);
+            if (user == null)
+                return BadRequest(new { message = "User not found" });
+
+            var generatedPassword = GenerateSecurePassword();
+            user.Password = BCrypt.Net.BCrypt.HashPassword(generatedPassword);
+
+            await _context.SaveChangesAsync();
 
             return Ok(new { message = "Password reset successful" });
         }
@@ -584,7 +601,7 @@ namespace Ecoture.Controllers
                     FullName = u.FullName,
                     Email = u.Email,
                     MobileNo = u.MobileNo,
-                    DateOfBirth = u.DateofBirth,
+                    DateofBirth = u.DateofBirth,
                     Role = u.Role.ToString(),
                     PfpURL = u.PfpURL,
                     TotalSpending = u.TotalSpending,
@@ -598,6 +615,7 @@ namespace Ecoture.Controllers
                     IsPhoneVerified = u.IsPhoneVerified,
                     IsGoogleLogin = u.IsGoogleLogin,
                     LastLogin = u.LastLogin,
+                    LastClaimTime = u.LastClaimTime,
                     CreatedAt = u.CreatedAt,
                     UpdatedAt = u.UpdatedAt
                 }).ToList();
@@ -637,7 +655,7 @@ namespace Ecoture.Controllers
                 FullName = user.FullName,
                 Email = user.Email,
                 MobileNo = user.MobileNo,
-                DateOfBirth = user.DateofBirth,
+                DateofBirth = user.DateofBirth,
                 Role = user.Role.ToString(),
                 PfpURL = user.PfpURL,
                 TotalSpending = user.TotalSpending,
@@ -651,6 +669,7 @@ namespace Ecoture.Controllers
                 IsPhoneVerified = user.IsPhoneVerified,
                 IsGoogleLogin = user.IsGoogleLogin,
                 LastLogin = user.LastLogin,
+                LastClaimTime = user.LastClaimTime,
                 CreatedAt = user.CreatedAt,
                 UpdatedAt = user.UpdatedAt
             };
@@ -684,7 +703,7 @@ namespace Ecoture.Controllers
                 FullName = rawUser.FullName,
                 Email = rawUser.Email,
                 MobileNo = rawUser.MobileNo,
-                DateOfBirth = rawUser.DateofBirth,
+                DateofBirth = rawUser.DateofBirth,
                 Role = rawUser.Role.ToString(),
                 PfpURL = rawUser.PfpURL,
                 TotalSpending = rawUser.TotalSpending,
@@ -813,6 +832,18 @@ namespace Ecoture.Controllers
             {
                 user.MembershipId = 3;
             }
+
+            var transaction = new PointsTransaction
+            {
+                UserId = user.UserId,
+                PointsEarned = request.Points,
+                PointsSpent = 0,
+                TransactionType = "Spending",
+                CreatedAt = DateTime.UtcNow,
+                ExpiryDate = DateTime.UtcNow.AddYears(1)
+            };
+
+            await _context.PointsTransactions.AddAsync(transaction);
 
             await _context.SaveChangesAsync();
 
