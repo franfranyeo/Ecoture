@@ -283,34 +283,34 @@ namespace Ecoture.Migrations
                         new
                         {
                             MembershipId = 1,
-                            CreatedAt = new DateTime(2025, 2, 15, 16, 41, 1, 619, DateTimeKind.Utc).AddTicks(9788),
+                            CreatedAt = new DateTime(2025, 2, 16, 14, 4, 17, 162, DateTimeKind.Utc).AddTicks(4091),
                             SpendingRequired = 0.00m,
                             Tier = 1,
-                            UpdatedAt = new DateTime(2025, 2, 15, 16, 41, 1, 619, DateTimeKind.Utc).AddTicks(9788)
+                            UpdatedAt = new DateTime(2025, 2, 16, 14, 4, 17, 162, DateTimeKind.Utc).AddTicks(4091)
                         },
                         new
                         {
                             MembershipId = 2,
-                            CreatedAt = new DateTime(2025, 2, 15, 16, 41, 1, 619, DateTimeKind.Utc).AddTicks(9791),
+                            CreatedAt = new DateTime(2025, 2, 16, 14, 4, 17, 162, DateTimeKind.Utc).AddTicks(4093),
                             SpendingRequired = 2000.00m,
                             Tier = 2,
-                            UpdatedAt = new DateTime(2025, 2, 15, 16, 41, 1, 619, DateTimeKind.Utc).AddTicks(9791)
+                            UpdatedAt = new DateTime(2025, 2, 16, 14, 4, 17, 162, DateTimeKind.Utc).AddTicks(4094)
                         },
                         new
                         {
                             MembershipId = 3,
-                            CreatedAt = new DateTime(2025, 2, 15, 16, 41, 1, 619, DateTimeKind.Utc).AddTicks(9793),
+                            CreatedAt = new DateTime(2025, 2, 16, 14, 4, 17, 162, DateTimeKind.Utc).AddTicks(4096),
                             SpendingRequired = 4000.00m,
                             Tier = 3,
-                            UpdatedAt = new DateTime(2025, 2, 15, 16, 41, 1, 619, DateTimeKind.Utc).AddTicks(9793)
+                            UpdatedAt = new DateTime(2025, 2, 16, 14, 4, 17, 162, DateTimeKind.Utc).AddTicks(4096)
                         },
                         new
                         {
                             MembershipId = 4,
-                            CreatedAt = new DateTime(2025, 2, 15, 16, 41, 1, 619, DateTimeKind.Utc).AddTicks(9795),
+                            CreatedAt = new DateTime(2025, 2, 16, 14, 4, 17, 162, DateTimeKind.Utc).AddTicks(4098),
                             SpendingRequired = 0.00m,
                             Tier = 0,
-                            UpdatedAt = new DateTime(2025, 2, 15, 16, 41, 1, 619, DateTimeKind.Utc).AddTicks(9795)
+                            UpdatedAt = new DateTime(2025, 2, 16, 14, 4, 17, 162, DateTimeKind.Utc).AddTicks(4098)
                         });
                 });
 
@@ -605,6 +605,36 @@ namespace Ecoture.Migrations
                     b.ToTable("Referrals");
                 });
 
+            modelBuilder.Entity("Ecoture.Model.Entity.RefundRequest", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<int>("OrderItemId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Reason")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrderItemId");
+
+                    b.ToTable("RefundRequests");
+                });
+
             modelBuilder.Entity("Ecoture.Model.Entity.Response", b =>
                 {
                     b.Property<int>("responseId")
@@ -890,31 +920,31 @@ namespace Ecoture.Migrations
 
             modelBuilder.Entity("Ecoture.Model.Entity.UserRedemptions", b =>
                 {
-                    b.Property<int>("redemptionId")
+                    b.Property<int>("RedemptionId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("pointsUsed")
+                    b.Property<int>("PointsUsed")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("redemptionDate")
+                    b.Property<DateTime>("RedemptionDate")
                         .HasColumnType("datetime");
 
-                    b.Property<int>("status")
+                    b.Property<int>("RewardId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Status")
                         .HasMaxLength(50)
                         .HasColumnType("int");
 
-                    b.Property<int>("userId")
+                    b.Property<int>("UserId")
                         .HasColumnType("int");
 
-                    b.Property<int>("voucherId")
-                        .HasColumnType("int");
+                    b.HasKey("RedemptionId");
 
-                    b.HasKey("redemptionId");
+                    b.HasIndex("RewardId");
 
-                    b.HasIndex("userId");
-
-                    b.HasIndex("voucherId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("UserRedemptions");
                 });
@@ -1147,6 +1177,17 @@ namespace Ecoture.Migrations
                     b.Navigation("referrerUser");
                 });
 
+            modelBuilder.Entity("Ecoture.Model.Entity.RefundRequest", b =>
+                {
+                    b.HasOne("Ecoture.Model.Entity.OrderItem", "OrderItem")
+                        .WithMany()
+                        .HasForeignKey("OrderItemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("OrderItem");
+                });
+
             modelBuilder.Entity("Ecoture.Model.Entity.Response", b =>
                 {
                     b.HasOne("Ecoture.Model.Entity.Enquiry", "Enquiry")
@@ -1201,15 +1242,15 @@ namespace Ecoture.Migrations
 
             modelBuilder.Entity("Ecoture.Model.Entity.UserRedemptions", b =>
                 {
-                    b.HasOne("Ecoture.Model.Entity.User", "User")
+                    b.HasOne("Ecoture.Model.Entity.Reward", "Reward")
                         .WithMany("UserRedemptions")
-                        .HasForeignKey("userId")
+                        .HasForeignKey("RewardId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Ecoture.Model.Entity.Reward", "Reward")
+                    b.HasOne("Ecoture.Model.Entity.User", "User")
                         .WithMany("UserRedemptions")
-                        .HasForeignKey("voucherId")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

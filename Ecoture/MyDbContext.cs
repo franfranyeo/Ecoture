@@ -48,7 +48,7 @@ namespace Ecoture
         public required DbSet<ProductCategory> ProductCategories { get; set; }
         public required DbSet<Category> Categories { get; set; }
 
-         // ✅ Additional DbSets (if needed)
+         // Ahmed Additional DbSets (if needed)
         public required DbSet<Address> Addresses { get; set; }
         public required DbSet<CreditCard> CreditCards { get; set; }
 
@@ -57,6 +57,8 @@ namespace Ecoture
 
         // Order Items Table
         public required DbSet<OrderItem> OrderItems { get; set; }
+        public required DbSet<RefundRequest> RefundRequests { get; set; }
+
 
         // FRAN DB CONTEXT
         public required DbSet<User> Users { get; set; }

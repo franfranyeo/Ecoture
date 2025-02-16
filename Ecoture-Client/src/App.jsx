@@ -23,9 +23,13 @@ import UserContext from './contexts/UserContext';
 import AddProduct from './pages/AddProduct';
 import AddAddress from './pages/Checkout/AddAddress';
 import AddCreditCard from './pages/Checkout/AddCreditCard';
+
 // AHMED IMPORTS
 import Addresses from './pages/Checkout/Addresses';
 import Cart from './pages/Checkout/Cart';
+import OrderHistory from "./pages/Checkout/OrderHistory";
+import RefundRequests from "./pages/Checkout/Refund";
+import RefundApproval from "./pages/admin/RefundApproval";
 import Choice from './pages/Checkout/Choice';
 import Confirmation from './pages/Checkout/Confirmation';
 import CreditCards from './pages/Checkout/CreditCards';
@@ -37,6 +41,7 @@ import EditProduct from './pages/EditProduct';
 import AddEnquiry from './pages/Enquiries/AddEnquiry';
 import AddResponse from './pages/Enquiries/AddResponse';
 import EnquiriesDashboard from './pages/Enquiries/Dashboard';
+
 // Amelia Imports
 import Enquiries from './pages/Enquiries/Enquiries';
 import UpdateEnquiry from './pages/Enquiries/UpdateEnquiry';
@@ -318,8 +323,11 @@ function App() {
                 <Route path="/form" element={<MyForm />} />
                 <Route path="/choice" element={<Choice />} />
                 <Route path="/confirmation" element={<Confirmation />} />
+                <Route path="/order-history" element={<OrderHistory />} />
+                <Route path="/refund-requests" element={<RefundRequests />} />
                 <Route path="/cart" element={<Cart />} />
-
+                <Route path="/admin/refund-approval" element={<ProtectedRoute element={RefundApproval} />} />
+                
                 {/* Enquiry Management */}
                 <Route path="/dashboard" element={<EnquiriesDashboard />} />
                 <Route path="/enquiries" element={<Enquiries />} />
