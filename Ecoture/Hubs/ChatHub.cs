@@ -20,6 +20,7 @@ namespace Ecoture.Hubs
 
             await Clients.Others.SendAsync("ReceiveMessage", "System", $"{userId} connected");
             await Clients.Others.SendAsync("Connections", userConnections.Keys);
+            await Clients.Client(Context.ConnectionId).SendAsync("ReceiveMessage", "Admin", "Hi, welcome to Ecoture live chat. How may I help you today?");
 
             await base.OnConnectedAsync();
         }
