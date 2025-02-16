@@ -1,16 +1,15 @@
-import React, { useContext, useEffect } from 'react';
+import React, { Suspense, useContext, useEffect } from 'react';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import http from 'utils/http';
 
-import { AccessTime, MonetizationOn } from '@mui/icons-material';
+import { ArrowBack } from '@mui/icons-material';
 import {
   Box,
   Button,
-  Card,
-  CardContent,
+  CircularProgress,
   Divider,
-  Grid,
   Paper,
   Tab,
   Tabs,
@@ -20,29 +19,23 @@ import {
 import UserContext from 'contexts/UserContext';
 
 import DataTable from '../../DataTable';
+import PointHistorySection from '../membership/PointHistorySection';
+import PointsEarningSection from '../membership/PointsEarningSection';
+import ReferralModal from '../rewards/ReferralModal';
 import EnhancedMembership from './EnhancedMembership';
 
 const MembershipTab = () => {
   const { user } = useContext(UserContext);
   const [rewards, setRewards] = useState([]);
+  const [currentView, setCurrentView] = useState('membership'); // 'membership' or 'earnPoints'
   const [userRedemptions, setUserRedemptions] = useState([]);
-
+  const navigate = useNavigate();
   const [tabIndex, setTabIndex] = useState(0);
+  const [showReferralModal, setShowReferralModal] = useState(false);
+  const [transactions, setTransactions] = useState([]);
 
   const handleTabChange = (event, newIndex) => {
     setTabIndex(newIndex);
-  };
-
-  const claimReward = async (rewardId) => {
-    // Add your API call or claim logic here
-    try {
-      await http.post(`rewards/claim/${rewardId}`);
-      toast.success('Reward claimed successfully!');
-      fetchRewards();
-    } catch (error) {
-      console.error('Failed to claim reward:', error);
-      toast.error('Failed to claim reward. Please try again.');
-    }
   };
 
   const fetchRewards = async () => {
@@ -53,6 +46,58 @@ const MembershipTab = () => {
     const finalUR = urdata.map((ur) => ({ ...ur, ...ur.reward }));
     setRewards(data);
     setUserRedemptions(finalUR);
+  };
+
+  const fetchPointHistory = async () => {
+    const response = await http.get('/points/history');
+    const { data } = response;
+    setTransactions(data);
+  };
+
+  const claimReward = async (rewardId) => {
+    try {
+      await http.post(`rewards/claim/${rewardId}`);
+      toast.success('Reward claimed successfully!');
+      fetchRewards();
+    } catch (error) {
+      console.error('Failed to claim reward:', error);
+      toast.error('Failed to claim reward. Please try again.');
+    }
+  };
+
+  const handleEarnPoints = async (activityId) => {
+    console.log('Earning points for activity:', activityId);
+    if (!activityId) {
+      toast.error('Invalid activity ID');
+      return;
+    }
+
+    switch (activityId) {
+      case 'shop-earn':
+        navigate('/');
+        break;
+      case 'review':
+        navigate('/order-history');
+        break;
+      case 'refer':
+        // show referral modal
+        setShowReferralModal(true);
+        break;
+      default:
+        break;
+    }
+  };
+
+  const handleNavigateToViewActivity = () => {
+    setCurrentView('viewActivity');
+  };
+
+  const handleNavigateToEarnPoints = () => {
+    setCurrentView('earnPoints');
+  };
+
+  const handleNavigateToMembership = () => {
+    setCurrentView('membership');
   };
 
   const generateColumns = (data, isUserRedemptions = false) => {
@@ -179,7 +224,7 @@ const MembershipTab = () => {
 
   useEffect(() => {
     try {
-      fetchRewards();
+      Promise.all([fetchRewards(), fetchPointHistory()]);
     } catch (error) {
       console.error(error);
     }
@@ -188,55 +233,114 @@ const MembershipTab = () => {
   return (
     <Box sx={{ flex: 1 }}>
       <Paper elevation={2} sx={{ padding: 4 }}>
-        <Box display="flex" justifyContent="space-between" alignItems="center">
-          <Typography variant="h5">Membership</Typography>
-        </Box>
-
-        <Box mt={4} mb={2}>
-          <EnhancedMembership
-            totalSpent={user.totalSpending}
-            totalPoints={user.totalPoints}
-          />
-        </Box>
-
-        <Divider sx={{ my: 2 }} />
-
-        <Tabs
-          value={tabIndex}
-          onChange={handleTabChange}
-          sx={{ mb: 2 }}
-          variant="fullWidth"
-        >
-          <Tab label="MY REWARDS" sx={{ flex: 1 }} />
-          <Tab label="CLAIM MORE REWARDS" sx={{ flex: 1 }} />
-        </Tabs>
-
-        {tabIndex === 0 && (
-          <DataTable
-            data={userRedemptions}
-            columns={generateColumns(userRedemptions, true)}
-            searchKeys={['rewardTitle', 'rewardDescription']}
-            filterOptions={{
-              key: 'rewardType',
-              values: ['All', 'Discount', 'Free Shipping', 'Cashback'],
+        {currentView === 'earnPoints' && (
+          <Box
+            onClick={handleNavigateToMembership}
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: 1,
+              mb: 2,
+              textDecoration: 'none',
+              color: 'text.primary',
+              '&:hover': {
+                color: 'primary.main',
+              },
+              cursor: 'pointer',
             }}
-            sortOptions={['Default', 'Newest', 'Oldest', 'Alphabetical']}
-          />
+          >
+            <ArrowBack sx={{ fontSize: 20 }} />
+            <Typography variant="body1">Back to Membership</Typography>
+          </Box>
         )}
-        {tabIndex === 1 && (
-          // Display the user's vouchers and rewards
-          <DataTable
-            data={rewards}
-            columns={columns}
-            searchKeys={['rewardTitle', 'rewardDescription']} // Specify searchable keys
-            filterOptions={{
-              key: 'rewardType',
-              values: ['All', 'Discount', 'Free Shipping', 'Cashback'],
-            }}
-            sortOptions={['Default', 'Newest', 'Oldest', 'Alphabetical']}
+        {currentView === 'membership' ? (
+          <>
+            <EnhancedMembership
+              totalSpent={user.totalSpending}
+              totalPoints={user.totalPoints}
+              onNavigateToEarnPoints={handleNavigateToEarnPoints}
+              onNavigateToViewActivity={handleNavigateToViewActivity}
+            />
+            <Divider sx={{ my: 2 }} />
+
+            <Tabs
+              value={tabIndex}
+              onChange={handleTabChange}
+              sx={{ mb: 2 }}
+              variant="fullWidth"
+            >
+              <Tab label="MY REWARDS" sx={{ flex: 1 }} />
+              <Tab label="CLAIM MORE REWARDS" sx={{ flex: 1 }} />
+            </Tabs>
+
+            {tabIndex === 0 && (
+              <DataTable
+                data={userRedemptions}
+                columns={generateColumns(userRedemptions, true)}
+                searchKeys={['rewardTitle', 'rewardDescription']}
+                filterOptions={{
+                  key: 'rewardType',
+                  values: ['All', 'Discount', 'Free Shipping', 'Cashback'],
+                }}
+                sortOptions={['Default', 'Newest', 'Oldest', 'Alphabetical']}
+              />
+            )}
+            {tabIndex === 1 && (
+              // Display the user's vouchers and rewards
+              <DataTable
+                data={rewards}
+                columns={columns}
+                searchKeys={['rewardTitle', 'rewardDescription']} // Specify searchable keys
+                filterOptions={{
+                  key: 'rewardType',
+                  values: ['All', 'Discount', 'Free Shipping', 'Cashback'],
+                }}
+                sortOptions={['Default', 'Newest', 'Oldest', 'Alphabetical']}
+              />
+            )}
+          </>
+        ) : currentView === 'earnPoints' ? (
+          <PointsEarningSection
+            totalPoints={user.totalPoints}
+            onNavigateBack={handleNavigateToMembership}
+            onEarnPoints={handleEarnPoints}
+            user={user}
           />
+        ) : (
+          <>
+            <Box
+              onClick={handleNavigateToMembership}
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: 1,
+                mb: 2,
+                textDecoration: 'none',
+                color: 'text.primary',
+                '&:hover': {
+                  color: 'primary.main',
+                },
+                cursor: 'pointer',
+              }}
+            >
+              <ArrowBack sx={{ fontSize: 20 }} />
+              <Typography variant="body1">Back to Membership</Typography>
+            </Box>
+            <PointHistorySection
+              transactions={transactions}
+              totalPoints={user.totalPoints}
+            />
+          </>
         )}
       </Paper>
+
+      <Suspense fallback={<CircularProgress />}>
+        <ReferralModal
+          open={showReferralModal}
+          onClose={() => setShowReferralModal(false)}
+          referralCode={user.referralCode}
+        />
+      </Suspense>
     </Box>
   );
 };
