@@ -99,7 +99,7 @@ function EditUser() {
   const [user, setUser] = useState({
     firstName: '',
     lastName: '',
-    dateOfBirth: '',
+    dateofBirth: '',
     email: '',
     mobileNumber: '',
   });
@@ -108,7 +108,7 @@ function EditUser() {
     http.get(`/user/${id}`).then((res) => {
       const cleanedUser = {
         ...res.data,
-        dateOfBirth: formatDateForInput(res.data.dateOfBirth),
+        dateofBirth: formatDateForInput(res.data.dateofBirth),
         mobileNumber: res.data.mobileNumber || 'Not set',
       };
 
@@ -121,7 +121,7 @@ function EditUser() {
   const formik = useFormik({
     initialValues: {
       ...user,
-      dateOfBirth: user.dateOfBirth || '',
+      dateofBirth: user.dateofBirth || '',
     },
     enableReinitialize: true,
     validationSchema:
@@ -138,7 +138,7 @@ function EditUser() {
           lastName: values.lastName.trim(),
           email: values.email.trim(),
           mobileNumber: values.mobileNumber ? values.mobileNumber : null,
-          dateOfBirth: formatDateForSubmission(values.dateOfBirth),
+          dateofBirth: formatDateForSubmission(values.dateofBirth),
           pfpURL: user.pfpURL || '',
         };
         const response = await http.put(`/user/${id}`, {
@@ -249,16 +249,16 @@ function EditUser() {
                     margin="dense"
                     type="date"
                     label="Date of Birth"
-                    name="dateOfBirth"
-                    value={formik.values.dateOfBirth}
+                    name="dateofBirth"
+                    value={formik.values.dateofBirth}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     error={
-                      formik.touched.dateOfBirth &&
-                      Boolean(formik.errors.dateOfBirth)
+                      formik.touched.dateofBirth &&
+                      Boolean(formik.errors.dateofBirth)
                     }
                     helperText={
-                      formik.touched.dateOfBirth && formik.errors.dateOfBirth
+                      formik.touched.dateofBirth && formik.errors.dateofBirth
                     }
                     InputLabelProps={{ shrink: true }}
                     variant="outlined"
@@ -277,6 +277,7 @@ function EditUser() {
                     error={formik.touched.email && Boolean(formik.errors.email)}
                     helperText={formik.touched.email && formik.errors.email}
                     variant="outlined"
+                    disabled={user.isGoogleLogin}
                   />
                 </Grid>
 
@@ -351,6 +352,7 @@ function EditUser() {
                   error={formik.touched.email && Boolean(formik.errors.email)}
                   helperText={formik.touched.email && formik.errors.email}
                   variant="outlined"
+                  disabled={user.isGoogleLogin}
                 />
               </Grid>
             </Grid>
@@ -402,16 +404,16 @@ function EditUser() {
                     margin="dense"
                     type="date"
                     label="Date of Birth"
-                    name="dateOfBirth"
-                    value={formik.values.dateOfBirth}
+                    name="dateofBirth"
+                    value={formik.values.dateofBirth}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     error={
-                      formik.touched.dateOfBirth &&
-                      Boolean(formik.errors.dateOfBirth)
+                      formik.touched.dateofBirth &&
+                      Boolean(formik.errors.dateofBirth)
                     }
                     helperText={
-                      formik.touched.dateOfBirth && formik.errors.dateOfBirth
+                      formik.touched.dateofBirth && formik.errors.dateofBirth
                     }
                     InputLabelProps={{ shrink: true }}
                     variant="outlined"
@@ -430,6 +432,7 @@ function EditUser() {
                     error={formik.touched.email && Boolean(formik.errors.email)}
                     helperText={formik.touched.email && formik.errors.email}
                     variant="outlined"
+                    disabled={user.isGoogleLogin}
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>

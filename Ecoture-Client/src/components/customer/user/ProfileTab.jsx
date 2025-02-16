@@ -549,6 +549,7 @@ const ProfileTab = ({ user }) => {
                   error={formik.touched.email && Boolean(formik.errors.email)}
                   helperText={formik.touched.email && formik.errors.email}
                   margin="normal"
+                  disabled={user.isGoogleLogin}
                 />
               ) : (
                 <Typography variant="body1">

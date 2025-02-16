@@ -21,6 +21,8 @@ import {
   Typography,
 } from '@mui/material';
 
+import GoogleLogo from 'assets/images/google-logo.svg';
+
 function ViewUser() {
   const navigate = useNavigate();
   const { id } = useParams();
@@ -244,6 +246,12 @@ function ViewUser() {
                   <Typography variant="body1">
                     <strong>Phone Verified:</strong>{' '}
                     {user.isPhoneVerified ? 'Yes' : 'No'}
+                  </Typography>
+                </Grid>
+                <Grid item xs={6}>
+                  <Typography variant="body1">
+                    <strong>Logged in with Google:</strong>{' '}
+                    {user.isGoogleLogin ? 'Yes' : 'No'}
                   </Typography>
                 </Grid>
                 <Grid item xs={6}>
