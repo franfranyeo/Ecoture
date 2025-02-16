@@ -5,7 +5,15 @@ import { toast } from 'react-toastify';
 import http from 'utils/http';
 
 import { ArrowBack } from '@mui/icons-material';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { Box, Button, Chip, Grid, Typography } from '@mui/material';
+import { useContext } from 'react';
+import UserContext from '../contexts/UserContext'; // Import UserContext
+
+
+
+
+// Wishlist icon
 
 function ProductDetail() {
   const { id } = useParams();
@@ -22,6 +30,56 @@ function ProductDetail() {
     3: '$30-$40',
     4: '$40-$50',
     5: '$50+',
+  };
+
+  const [wishlistStatus, setWishlistStatus] = useState(false); // Track if the product is in wishlist
+
+
+  // Wishlist icon
+function ProductDetail() {
+  const { user } = useContext(UserContext); // Access user context
+  const [wishlistStatus, setWishlistStatus] = useState(false); // Track if the product is in wishlist
+
+  useEffect(() => {
+    if (user) {
+      const fetchWishlistStatus = async () => {
+        try {
+          const response = await http.get(`/wishlist`);
+          const productInWishlist = response.data.some(
+            (item) => item.productId === product.id
+          );
+          setWishlistStatus(productInWishlist);
+        } catch (error) {
+          console.error('Error checking wishlist status:', error);
+        }
+      };
+      fetchWishlistStatus();
+    }
+  }, [user, product]);}
+
+  // Function to handle adding/removing product from the wishlist
+  const handleAddToWishlist = async () => {
+    if (!user) {
+      toast.error('You must be logged in to add items to your wishlist.');
+      return;
+    }
+
+    try {
+      if (wishlistStatus) {
+        // Remove from wishlist
+        await http.delete(`/wishlist/${product.id}`);
+        setWishlistStatus(false);
+        toast.success('Product removed from wishlist!');
+      } else {
+        // Add to wishlist
+        await http.post('/wishlist', { productId: product.id });
+        setWishlistStatus(true);
+        toast.success('Product added to wishlist!');
+      }
+    } catch (error) {
+      console.error('Error handling wishlist operation:', error);
+      toast.error('Failed to update wishlist.');
+    }
   };
 
   useEffect(() => {
@@ -166,6 +224,21 @@ function ProductDetail() {
           <Typography variant="body1" sx={{ marginBottom: 2 }}>
             {product.description}
           </Typography>
+
+          {/* Wishlist Button */}
+          <Button
+            variant="outlined"
+            color={wishlistStatus ? 'secondary' : 'primary'}
+            sx={{
+              marginTop: 2,
+              padding: '0.75rem 1.5rem',
+              fontWeight: 'bold',
+              borderRadius: '8px',
+            }}
+            onClick={handleAddToWishlist}
+          >
+            {wishlistStatus ? 'Remove from Wishlist' : 'Add to Wishlist'}
+          </Button>
 
           {/* Categories Section */}
           <Typography

@@ -1,6 +1,5 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
 import http from 'utils/http';
 
 import {
@@ -15,6 +14,8 @@ import {
   Typography,
 } from '@mui/material';
 
+import UserContext from 'contexts/UserContext';
+
 function Choice() {
   const [addresses, setAddresses] = useState([]);
   const [creditCards, setCreditCards] = useState([]);
@@ -22,6 +23,7 @@ function Choice() {
   const [selectedCard, setSelectedCard] = useState(null);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
+  const { user } = useContext(UserContext);
   const { state } = useLocation();
 
   useEffect(() => {
@@ -36,9 +38,21 @@ function Choice() {
 
   const handleNext = () => {
     if (selectedAddress && selectedCard) {
-      navigate('/confirmation', { state: state });
+      const orderConfirmationRequest = {
+        userId: user.userId, // ✅ Pass the logged-in user ID
+        orderId: state.orderId, // ✅ Pass the latest order ID
+      };
+      http
+        .post('/order/confirm', orderConfirmationRequest)
+        .then(() => {
+          navigate(`/confirmation`, { state: state });
+        })
+        .catch((error) => {
+          console.error('Error confirming order:', error);
+          alert('Failed to confirm order.');
+        });
     } else {
-      toast.error('Please select both an address and a credit card.');
+      alert('Please select both an address and a credit card.');
     }
   };
 

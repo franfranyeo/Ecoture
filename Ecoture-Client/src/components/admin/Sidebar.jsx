@@ -51,11 +51,10 @@ const sideMenuOptions = [
     icon: usersIcon,
     path: '/admin/enquiries',
   },
-  // Ahmed refund HERE IS WHERE I WANT TO ADD THE REFUND APPROVAL
   {
-    name: "Refund Approval",
+    name: 'Refund Approval',
     icon: usersIcon,
-    path: "/admin/refund-approval",
+    path: '/admin/refund-approval',
   },
   {
     name: 'Live Chat',

@@ -89,6 +89,13 @@ namespace Ecoture
                 .ForMember(dest => dest.ColorId, opt => opt.Ignore()) // Ensure color lookup is handled
                 .ReverseMap();
 
+            CreateMap<Wishlist, WishlistDTO>()
+    .ForMember(dest => dest.ProductTitle, opt => opt.MapFrom(src => src.Product.Title))
+    .ForMember(dest => dest.ProductImage, opt => opt.MapFrom(src => src.Product.ImageFile))
+    .ForMember(dest => dest.ProductPrice, opt => opt.MapFrom(src => src.Product.Price))
+    .ReverseMap();
+
+
             // ✅ Map Order to OrderDTO
             CreateMap<Order, OrderDTO>()
                 .ForMember(dest => dest.OrderItems, opt => opt.MapFrom(src => src.OrderItems)); // Map collection explicitly
