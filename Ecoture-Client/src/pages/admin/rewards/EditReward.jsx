@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { formatDateForInput, formatDateForSubmission } from 'utils/helper';
 import http from 'utils/http';
 import * as yup from 'yup';
 
@@ -30,7 +31,12 @@ function EditReward() {
 
   useEffect(() => {
     http.get(`/rewards/${id}`).then((res) => {
-      setReward(res.data);
+      const formattedReward = {
+        ...res.data,
+        expirationDate: formatDateForInput(res.data.expirationDate),
+        startDate: formatDateForInput(res.data.startDate),
+      };
+      setReward(formattedReward);
       setLoading(false);
     });
   }, [id]);
@@ -90,8 +96,8 @@ function EditReward() {
       rewardPercentage: reward?.rewardPercentage || 0,
       minimumPurchaseAmount: reward?.minimumPurchaseAmount || 0,
       maximumDiscountCap: reward?.maximumDiscountCap || 0,
-      expirationDate: reward?.expirationDate || null,
-      startDate: reward?.startDate || null,
+      expirationDate: reward?.expirationDate || '',
+      startDate: reward?.startDate || '',
       usageLimit: reward?.usageLimit || 1,
       status: reward?.status || 'Active',
       loyaltyPointsRequired: reward?.loyaltyPointsRequired || 0,
@@ -99,7 +105,13 @@ function EditReward() {
     validationSchema,
     onSubmit: async (values) => {
       try {
-        const response = await http.put(`/rewards/${id}`, values);
+        const submissionData = {
+          ...values,
+          expirationDate: formatDateForSubmission(values.expirationDate),
+          startDate: formatDateForSubmission(values.startDate),
+        };
+
+        const response = await http.put(`/rewards/${id}`, submissionData);
         console.log('Reward updated successfully:', response.data);
         toast.success('Reward updated successfully');
         navigate('/admin/rewards');

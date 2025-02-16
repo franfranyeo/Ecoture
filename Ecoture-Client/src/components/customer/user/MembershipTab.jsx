@@ -25,7 +25,7 @@ import ReferralModal from '../rewards/ReferralModal';
 import EnhancedMembership from './EnhancedMembership';
 
 const MembershipTab = () => {
-  const { user } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
   const [rewards, setRewards] = useState([]);
   const [currentView, setCurrentView] = useState('membership'); // 'membership' or 'earnPoints'
   const [userRedemptions, setUserRedemptions] = useState([]);
@@ -179,6 +179,11 @@ const MembershipTab = () => {
           const handleClaim = async () => {
             try {
               await claimReward(reward.rewardId);
+              setUser((prevUser) => ({
+                ...prevUser,
+                totalPoints:
+                  prevUser.totalPoints - reward.loyaltyPointsRequired,
+              }));
             } catch (error) {
               console.error('Failed to claim reward:', error);
             }
