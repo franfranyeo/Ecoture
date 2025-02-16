@@ -46,6 +46,7 @@ function Navbar() {
     { text: 'Men', link: 'category/Men' },
     { text: 'Girls', link: 'category/Girls' },
     { text: 'Boys', link: 'category/Boys' },
+    //{ text: 'History', link: '/order-history' }
     // { text: "Addresses", link: "/addresses" },
     // { text: "Credit Cards", link: "/creditcards" },
     // { text: "Choice", link: "/choice" },
@@ -336,6 +337,12 @@ function Navbar() {
                       }
                     >
                       Account
+                    </MenuItem>
+                    <MenuItem onClick={() => handleNavigate('/order-history')}>
+                     Order History
+                    </MenuItem>
+                    <MenuItem onClick={() => handleNavigate('/refund-requests')}>
+                     Refund Status
                     </MenuItem>
                     {adminRoles.includes(user?.role) && (
                       <MenuItem
