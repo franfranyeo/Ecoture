@@ -1,5 +1,5 @@
 import { useFormik } from 'formik';
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 // Ensure you have this package installed
@@ -10,6 +10,7 @@ import {
   Box,
   Button,
   Checkbox,
+  CircularProgress,
   FormControlLabel,
   Grid,
   IconButton,
@@ -23,10 +24,10 @@ import GoogleLoginButton from 'components/customer/user/GoogleLoginButton';
 import { authService } from '../../../services/auth.service';
 
 const Register = () => {
-  const [showPassword, setShowPassword] = React.useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const [searchParams] = useSearchParams();
-  const [showConfirmPassword, setShowConfirmPassword] = React.useState(false);
-
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
   };
@@ -88,6 +89,7 @@ const Register = () => {
         .oneOf([true], 'You must accept the terms and conditions'),
     }),
     onSubmit: async (data) => {
+      setIsLoading(true);
       try {
         const referralCode = searchParams.get('ref');
         const userData = {
@@ -100,7 +102,9 @@ const Register = () => {
           navigate('/login');
         }
       } catch (err) {
-        toast.error(err.response.data.message);
+        toast.error(err.response?.data?.message || 'Registration failed');
+      } finally {
+        setIsLoading(false);
       }
     },
   });
@@ -262,21 +266,27 @@ const Register = () => {
         </Grid>
 
         {/* Submit Button */}
-        <Button
-          type="submit"
-          fullWidth
-          variant="contained"
-          color="primary"
-          sx={{
-            mt: 3,
-            backgroundColor: 'primary.main',
-            '&:hover': {
-              backgroundColor: 'primary.light',
-            },
-          }}
-        >
-          Register
-        </Button>
+        <Box sx={{ position: 'relative' }}>
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            sx={{
+              mt: 3,
+              backgroundColor: 'primary.main',
+              '&:hover': {
+                backgroundColor: 'primary.light',
+              },
+            }}
+          >
+            {isLoading ? (
+              <CircularProgress size={24} sx={{ color: 'grey.300' }} />
+            ) : (
+              'Register'
+            )}
+          </Button>
+        </Box>
 
         {/* Divider with text */}
         <Box
