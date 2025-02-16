@@ -666,6 +666,15 @@ namespace Ecoture.Controllers
             user.TotalSpending += spending;
             user.TotalPoints += request.Points;
 
+            if (user.TotalSpending >= 2000)
+            {
+                user.MembershipId = 2;
+            }
+            else if (user.TotalPoints >= 4000)
+            {
+                user.MembershipId = 3;
+            }
+
             await _context.SaveChangesAsync();
 
             return Ok(new { message = "Spending updated successfully." });

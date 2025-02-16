@@ -4,7 +4,6 @@ import { toast } from 'react-toastify';
 import http from 'utils/http';
 
 import { AccessTime, MonetizationOn } from '@mui/icons-material';
-import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import {
   Box,
   Button,
@@ -21,7 +20,7 @@ import {
 import UserContext from 'contexts/UserContext';
 
 import DataTable from '../../DataTable';
-import ProgressBar from './ProgressBar';
+import EnhancedMembership from './EnhancedMembership';
 
 const MembershipTab = () => {
   const { user } = useContext(UserContext);
@@ -194,113 +193,11 @@ const MembershipTab = () => {
         </Box>
 
         <Box mt={4} mb={2}>
-          <Typography variant="h6">
-            You are a {user.membership ? user.membership.tier : 'Bronze'} Member
-          </Typography>
-          <ProgressBar
-            totalSpent={user.totalSpending.toFixed(2)}
-            target={1000}
+          <EnhancedMembership
+            totalSpent={user.totalSpending}
+            totalPoints={user.totalPoints}
           />
-          <Box display="flex" justifyContent="space-between" mt={2}>
-            <Typography variant="body1">
-              {user.membership ? user.membership.tier : 'Bronze'}
-            </Typography>
-            <Typography variant="body1">Silver</Typography>
-          </Box>
         </Box>
-        <Grid container spacing={2}>
-          {/* Points Card */}
-          <Grid item xs={12} sm={4}>
-            <Card
-              sx={{
-                height: '100%',
-                bgcolor: 'white',
-                border: '1px solid',
-                borderColor: 'grey.200',
-                borderRadius: 2,
-                boxShadow: 'none',
-              }}
-            >
-              <CardContent sx={{ p: 3 }}>
-                <Typography
-                  variant="subtitle1"
-                  sx={{
-                    color: 'text.secondary',
-                    fontWeight: 500,
-                    mb: 1,
-                  }}
-                >
-                  TOTAL POINTS:
-                </Typography>
-                <Typography
-                  variant="h3"
-                  sx={{
-                    color: '#1a237e',
-                    fontWeight: 'bold',
-                  }}
-                >
-                  {user.totalPoints}
-                </Typography>
-              </CardContent>
-            </Card>
-          </Grid>
-
-          {/* Activity Cards */}
-          <Grid item xs={12} sm={4}>
-            <Grid container direction="column" spacing={2}>
-              <Grid item>
-                <Card
-                  sx={{
-                    bgcolor: '#1a237e',
-                    color: 'white',
-                    borderRadius: 2,
-                    boxShadow: 'none',
-                  }}
-                >
-                  <CardContent
-                    sx={{
-                      p: 2,
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: 1,
-                      '&:last-child': { pb: 2 },
-                    }}
-                  >
-                    <AccessTime />
-                    <Typography variant="h6" sx={{ fontWeight: 500 }}>
-                      YOUR ACTIVITY
-                    </Typography>
-                  </CardContent>
-                </Card>
-              </Grid>
-              <Grid item>
-                <Card
-                  sx={{
-                    bgcolor: '#1a237e',
-                    color: 'white',
-                    borderRadius: 2,
-                    boxShadow: 'none',
-                  }}
-                >
-                  <CardContent
-                    sx={{
-                      p: 2,
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: 1,
-                      '&:last-child': { pb: 2 },
-                    }}
-                  >
-                    <MonetizationOn />
-                    <Typography variant="h6" sx={{ fontWeight: 500 }}>
-                      EARN MORE POINTS
-                    </Typography>
-                  </CardContent>
-                </Card>
-              </Grid>
-            </Grid>
-          </Grid>
-        </Grid>
 
         <Divider sx={{ my: 2 }} />
 

@@ -31,11 +31,7 @@ function Enquiries() {
   }, []);
 
   return (
-    <Box
-      sx={{
-        fontFamily: 'Outfit, system-ui, Avenir, Helvetica, Arial, sans-serif',
-      }}
-    >
+    <Box>
       <Box
         sx={{
           backgroundColor: '#f9f9f9',

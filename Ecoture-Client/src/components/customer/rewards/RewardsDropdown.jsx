@@ -16,6 +16,10 @@ const RewardsDropdown = ({
   subtotal = 0,
   disabled = false,
 }) => {
+  const availableRewards = userRedemptions.filter(
+    (redemption) => redemption.status != 'Used'
+  );
+
   const handleRewardSelect = (event) => {
     const redemptionId = event.target.value;
     const selectedRedemption = userRedemptions.find(
@@ -36,9 +40,10 @@ const RewardsDropdown = ({
     if (!reward) return 0;
 
     switch (reward.rewardType) {
-      case 'Discount':
+      case 'Discount': {
         const discountAmount = (subtotal * reward.rewardPercentage) / 100;
         return Math.min(discountAmount, reward.maximumDiscountCap || Infinity);
+      }
       case 'FreeShipping':
         return 5; // Assuming standard shipping is $5
       case 'Cashback':
@@ -80,8 +85,8 @@ const RewardsDropdown = ({
           defaultValue=""
           disabled={disabled}
         >
-          {userRedemptions.length > 0 ? (
-            userRedemptions.map((redemption) => (
+          {availableRewards.length > 0 ? (
+            availableRewards.map((redemption) => (
               <MenuItem
                 key={redemption.redemptionId}
                 value={redemption.redemptionId}

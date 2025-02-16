@@ -23,6 +23,7 @@ const ChatWidget = () => {
             fontSize: '16px',
             boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)',
             zIndex: 1000,
+            fontFamily: 'inherit',
           }}
         >
           💬 Chat with Us
