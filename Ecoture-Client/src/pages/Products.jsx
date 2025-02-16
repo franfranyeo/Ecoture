@@ -547,7 +547,7 @@ function Products({ onAddProductClick }) {
                     boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
                   },
                 }}
-                onClick={(e) => e.stopPropagation()} // <-- Prevent navigation when clicking on card
+                onClick={() => navigate(`/product/${product.id}`)} // <-- Allow navigation to product detail page
               >
                 {product.imageFile && (
                   <CardMedia
@@ -629,7 +629,10 @@ function Products({ onAddProductClick }) {
                       <FavoriteBorderIcon />
                     )
                   }
-                  onClick={(e) => handleAddToWishlist(product.id, e)} // <-- Pass the event to handleAddToWishlist
+                  onClick={(e) => {
+                    e.stopPropagation(); // Prevent the card's onClick from being triggered
+                    handleAddToWishlist(product.id, e);
+                  }}
                   sx={{ marginTop: 1 }}
                 >
                   {wishlistStatus[product.id]
@@ -652,10 +655,7 @@ function Products({ onAddProductClick }) {
                   )}
 
                   {reviewFormOpen === product.id && (
-                    <Box
-                      sx={{ marginTop: 2 }}
-                      onClick={(e) => e.stopPropagation()}
-                    >
+                    <Box sx={{ marginTop: 2 }}>
                       <InputBase
                         placeholder="Write your review..."
                         value={reviewText}
