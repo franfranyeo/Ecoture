@@ -62,84 +62,90 @@ namespace Ecoture.Services
                 return (false, "Email already exists.");
 
             using var transaction = await _context.Database.BeginTransactionAsync();
-
-            // Create user object and hash password
-            var now = DateTime.UtcNow;
-            var user = new User
+            try
             {
-                FirstName = request.FirstName,
-                LastName = request.LastName,
-                Email = request.Email,
-                Password = BCrypt.Net.BCrypt.HashPassword(request.Password),
-                CreatedAt = now,
-                UpdatedAt = now,
-            };
-
-            user.MembershipId = 1;
-
-            var mfaResponse = new MfaResponse
-            {
-                UserId = user.UserId
-            };
-
-            // Add user to the database
-            await _context.Users.AddAsync(user);
-            await _context.MfaResponses.AddAsync(mfaResponse);
-
-            // Add welcome points
-            var welcomePoints = new PointsTransaction
-            {
-                UserId = user.UserId,
-                PointsEarned = 500, // Welcome bonus points
-                PointsSpent = 0,
-                TransactionType = "Welcome",
-                CreatedAt = now,
-                ExpiryDate = now.AddYears(1)
-            };
-            await _context.PointsTransactions.AddAsync(welcomePoints);
-            user.TotalPoints += welcomePoints.PointsEarned;
-
-            await _context.SaveChangesAsync();
-
-            // Handle referral if provided
-            if (!string.IsNullOrEmpty(request.ReferralCode))
-            {
-                var referrer = await _context.Users
-                    .FirstOrDefaultAsync(u => u.ReferralCode == request.ReferralCode);
-
-                if (referrer != null)
+                // Create user object and hash password
+                var now = DateTime.UtcNow;
+                var user = new User
                 {
-                    // Create referral record
-                    var referral = new Referral
-                    {
-                        referrerUserId = referrer.UserId,
-                        refereeUserId = user.UserId,
-                        referralDate = now
-                    };
-                    await _context.Referrals.AddAsync(referral);
-                    await _context.SaveChangesAsync(); // Save to get the referralId
+                    FirstName = request.FirstName,
+                    LastName = request.LastName,
+                    Email = request.Email,
+                    Password = BCrypt.Net.BCrypt.HashPassword(request.Password),
+                    CreatedAt = now,
+                    UpdatedAt = now,
+                    MembershipId = 1
+                };
 
-                    // Add points transaction for referrer
-                    var referrerPoints = new PointsTransaction
-                    {
-                        UserId = referrer.UserId,
-                        PointsEarned = 100, // Adjust point value as needed
-                        PointsSpent = 0,
-                        TransactionType = "Referral",
-                        CreatedAt = now,
-                        ExpiryDate = now.AddYears(1), // Points expire in 1 year
-                        ReferralId = referral.referralId
-                    };
-                    await _context.PointsTransactions.AddAsync(referrerPoints);
+                // Add user to the database and save to get UserId
+                await _context.Users.AddAsync(user);
+                await _context.SaveChangesAsync(); // This generates the UserId
 
-                    // Update referrer's total points
-                    referrer.TotalPoints += referrerPoints.PointsEarned;
-                    _context.Users.Update(referrer);
+                // Now we can use user.UserId safely
+                var mfaResponse = new MfaResponse
+                {
+                    UserId = user.UserId
+                };
+                await _context.MfaResponses.AddAsync(mfaResponse);
+
+                // Add welcome points
+                var welcomePoints = new PointsTransaction
+                {
+                    UserId = user.UserId,
+                    PointsEarned = 500, // Welcome bonus points
+                    PointsSpent = 0,
+                    TransactionType = "Welcome",
+                    CreatedAt = now,
+                    ExpiryDate = now.AddYears(1)
+                };
+                await _context.PointsTransactions.AddAsync(welcomePoints);
+                user.TotalPoints += welcomePoints.PointsEarned;
+
+                // Handle referral if provided
+                if (!string.IsNullOrEmpty(request.ReferralCode))
+                {
+                    var referrer = await _context.Users
+                        .FirstOrDefaultAsync(u => u.ReferralCode == request.ReferralCode);
+                    if (referrer != null)
+                    {
+                        // Create referral record
+                        var referral = new Referral
+                        {
+                            referrerUserId = referrer.UserId,
+                            refereeUserId = user.UserId,
+                            referralDate = now
+                        };
+                        await _context.Referrals.AddAsync(referral);
+                        await _context.SaveChangesAsync(); // Save to get the referralId
+
+                        // Add points transaction for referrer
+                        var referrerPoints = new PointsTransaction
+                        {
+                            UserId = referrer.UserId,
+                            PointsEarned = 100,
+                            PointsSpent = 0,
+                            TransactionType = "Referral",
+                            CreatedAt = now,
+                            ExpiryDate = now.AddYears(1),
+                            ReferralId = referral.referralId
+                        };
+                        await _context.PointsTransactions.AddAsync(referrerPoints);
+
+                        // Update referrer's total points
+                        referrer.TotalPoints += referrerPoints.PointsEarned;
+                        _context.Users.Update(referrer);
+                    }
                 }
+
+                await _context.SaveChangesAsync();
+                await transaction.CommitAsync();
+                return (true, null);
             }
-            await transaction.CommitAsync();
-            await _context.SaveChangesAsync();
-            return (true, null);
+            catch (Exception ex)
+            {
+                await transaction.RollbackAsync();
+                return (false, $"Registration failed: {ex.Message}");
+            }
         }
 
         // LOGIN USER
