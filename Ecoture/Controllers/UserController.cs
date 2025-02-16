@@ -243,6 +243,7 @@ namespace Ecoture.Controllers
                         IsPhoneVerified = user.IsPhoneVerified,
                         IsGoogleLogin = user.IsGoogleLogin,
                         LastLogin = user.LastLogin,
+                        LastClaimTime = user.LastClaimTime,
                         CreatedAt = user.CreatedAt,
                         UpdatedAt = user.UpdatedAt,
                     },
@@ -598,6 +599,7 @@ namespace Ecoture.Controllers
                     IsPhoneVerified = u.IsPhoneVerified,
                     IsGoogleLogin = u.IsGoogleLogin,
                     LastLogin = u.LastLogin,
+                    LastClaimTime = u.LastClaimTime,
                     CreatedAt = u.CreatedAt,
                     UpdatedAt = u.UpdatedAt
                 }).ToList();
@@ -651,6 +653,7 @@ namespace Ecoture.Controllers
                 IsPhoneVerified = user.IsPhoneVerified,
                 IsGoogleLogin = user.IsGoogleLogin,
                 LastLogin = user.LastLogin,
+                LastClaimTime = user.LastClaimTime,
                 CreatedAt = user.CreatedAt,
                 UpdatedAt = user.UpdatedAt
             };

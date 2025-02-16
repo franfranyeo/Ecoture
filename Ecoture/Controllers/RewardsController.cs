@@ -200,8 +200,17 @@ namespace Ecoture.Controllers
 
             user.TotalPoints -= reward.LoyaltyPointsRequired ?? 0;
 
+            var transaction = new PointsTransaction
+            {
+                UserId = userId,
+                PointsSpent = reward.LoyaltyPointsRequired ?? 0,
+                TransactionType = "Reward Redemption",
+                CreatedAt = DateTime.UtcNow,
+                ExpiryDate = DateTime.UtcNow.AddYears(1)
+            };
 
             // Add the redemption to the database
+            _context.PointsTransactions.Add(transaction);
             _context.UserRedemptions.Add(userRedemption);
             await _context.SaveChangesAsync();
 

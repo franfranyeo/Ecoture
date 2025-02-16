@@ -36,6 +36,8 @@ const MembershipTab = () => {
 
   const handleTabChange = (event, newIndex) => {
     setTabIndex(newIndex);
+
+    fetchRewards();
   };
 
   const fetchRewards = async () => {
@@ -72,6 +74,19 @@ const MembershipTab = () => {
     }
 
     switch (activityId) {
+      case 'daily-claim':
+        try {
+          await http.post('/points/claim-points');
+          setUser((prevUser) => ({
+            ...prevUser,
+            totalPoints: prevUser.totalPoints + 5,
+            lastClaimTime: new Date().toISOString(),
+          }));
+        } catch (error) {
+          console.error('Failed to claim daily points:', error);
+          toast.error('Failed to claim daily points. Please try again.');
+        }
+        break;
       case 'shop-earn':
         navigate('/');
         break;
@@ -331,6 +346,7 @@ const MembershipTab = () => {
               <Typography variant="body1">Back to Membership</Typography>
             </Box>
             <PointHistorySection
+              fetchPointHistory={fetchPointHistory}
               transactions={transactions}
               totalPoints={user.totalPoints}
             />
