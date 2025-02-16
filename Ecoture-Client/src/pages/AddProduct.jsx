@@ -172,7 +172,6 @@ function AddProduct() {
       setColors([...colors, colorInput.trim()]);
       setColorInput('');
 
-
       // Update sizes with new color selection array
       setSizes((prevSizes) =>
         prevSizes.map((size) => ({ ...size, selectedColors: [] }))
@@ -185,12 +184,10 @@ function AddProduct() {
   };
 
   const addSizeField = () => {
-
     setSizes([
       ...sizes,
       { sizeName: '', stockQuantity: '', selectedColors: [] },
     ]);
-
   };
 
   const removeSizeField = (index) => {
@@ -480,26 +477,15 @@ function AddProduct() {
                     <Button
                       key={fit}
                       variant={
-                        formik.values.fits.includes(fit)
-                          ? 'contained'
-                          : 'outlined'
+                        formik.values.fits === fit ? 'contained' : 'outlined'
                       }
-                      onClick={() => {
-                        const selected = formik.values.fits.includes(fit)
-                          ? formik.values.fits.filter((f) => f !== fit)
-                          : [...formik.values.fits, fit];
-
-                        formik.setFieldValue('fits', selected);
-                      }}
+                      onClick={() => formik.setFieldValue('fits', fit)} // Allow only one selection
                       sx={{
                         borderRadius: '20px',
                         border: '1px solid #ccc',
-                        backgroundColor: formik.values.fits.includes(fit)
-                          ? '#555'
-                          : '#fff',
-                        color: formik.values.fits.includes(fit)
-                          ? '#fff'
-                          : '#000',
+                        backgroundColor:
+                          formik.values.fits === fit ? '#555' : '#fff',
+                        color: formik.values.fits === fit ? '#fff' : '#000',
                         '&:hover': {
                           backgroundColor: '#f0f0f0',
                           color: '#000',

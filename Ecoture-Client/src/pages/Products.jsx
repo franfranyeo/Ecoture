@@ -42,28 +42,56 @@ function Products({ onAddProductClick }) {
   const { categoryName } = useParams(); // Get category from URL
   const [selectedCategory, setSelectedCategory] = useState('');
 
+  const [selectedColor, setSelectedColor] = useState('');
+  const [selectedSize, setSelectedSize] = useState('');
+  const [selectedFit, setSelectedFit] = useState('');
+  const [selectedPriceRange, setSelectedPriceRange] = useState('');
+
   useEffect(() => {
     setSelectedCategory(categoryName || ''); // Sync category from URL
   }, [categoryName]);
 
   const getProducts = () => {
     http
-      .get('/product') // Fetch all products first
+      .get('/product')
       .then((res) => {
         let filteredProducts = res.data;
 
         if (selectedCategory) {
           filteredProducts = filteredProducts.filter((product) => {
             if (!product.categories || product.categories.length === 0)
-              return false; // Skip if no categories
+              return false;
 
-            // Ensure categories is treated as an array and check if it includes the selected category
             const categories = product.categories.map((c) =>
               c.categoryName.toLowerCase()
             );
 
             return categories.includes(selectedCategory.toLowerCase());
           });
+        }
+
+        if (selectedColor) {
+          filteredProducts = filteredProducts.filter((product) =>
+            product.sizeColors.some((sc) => sc.colorName === selectedColor)
+          );
+        }
+
+        if (selectedSize) {
+          filteredProducts = filteredProducts.filter((product) =>
+            product.sizeColors.some((sc) => sc.sizeName === selectedSize)
+          );
+        }
+
+        if (selectedFit) {
+          filteredProducts = filteredProducts.filter((product) =>
+            product.fits.some((fit) => fit.fitName === selectedFit)
+          );
+        }
+
+        if (selectedPriceRange) {
+          filteredProducts = filteredProducts.filter(
+            (product) => product.priceRange === parseInt(selectedPriceRange, 10)
+          );
         }
 
         setProductList(filteredProducts);
@@ -76,7 +104,13 @@ function Products({ onAddProductClick }) {
   // Fetch products when category changes
   useEffect(() => {
     getProducts();
-  }, [selectedCategory]); //  Now listens to dropdown changes
+  }, [
+    selectedCategory,
+    selectedColor,
+    selectedSize,
+    selectedFit,
+    selectedPriceRange,
+  ]);
 
   const handleCategoryChange = (event) => {
     const newCategory = event.target.value;
@@ -148,19 +182,20 @@ function Products({ onAddProductClick }) {
 
   const getSizeRange = (sizeColors) => {
     if (!sizeColors || sizeColors.length === 0) return 'No sizes available';
-  
+
     const sizeOrder = ['XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL'];
-  
+
     // Extract unique sizes, ignoring color variations
-    const uniqueSizes = [...new Set(sizeColors.map((item) => item.sizeName))]
-      .sort((a, b) => sizeOrder.indexOf(a) - sizeOrder.indexOf(b));
-  
+    const uniqueSizes = [
+      ...new Set(sizeColors.map((item) => item.sizeName)),
+    ].sort((a, b) => sizeOrder.indexOf(a) - sizeOrder.indexOf(b));
+
     if (uniqueSizes.length === 0) return 'Out of stock';
     if (uniqueSizes.length === 1) return `Size: ${uniqueSizes[0]}`;
-  
+
     return `Sizes: ${uniqueSizes[0]} - ${uniqueSizes[uniqueSizes.length - 1]}`;
   };
-  
+
   const toggleReviewForm = (productId, e) => {
     e.stopPropagation();
     setReviewFormOpen((prev) => (prev === productId ? null : productId));
@@ -210,60 +245,98 @@ function Products({ onAddProductClick }) {
       >
         Our Products
       </Typography>
-      <FormControl
+      <Box
         sx={{
-          minWidth: 180,
-          maxWidth: 220,
+          display: 'flex',
+          gap: 2,
+          flexWrap: 'wrap',
+          justifyContent: 'center',
           marginBottom: 2,
-          marginTop: 1,
-          backgroundColor: '#fff',
-          borderRadius: '8px',
-          boxShadow: '0px 2px 4px rgba(0,0,0,0.1)',
-          '& .MuiInputLabel-root': {
-            fontSize: '14px',
-            color: '#555',
-            transform: 'translate(14px, -9px) scale(0.75)', // Adjusted label position
-            backgroundColor: '#fff',
-            padding: '0 4px',
-          },
         }}
       >
-        {/* Only render the dropdown if the user is logged in */}
-        {user && user.role && user.role == 'Admin' && (
-          <>
-            <InputLabel shrink>Category</InputLabel>
-            <Select
-              value={selectedCategory} // Controlled by state
-              onChange={handleCategoryChange} // Updates the URL dynamically
-              displayEmpty
-              sx={{
-                textAlign: 'left',
-                padding: '12px',
-                fontSize: '14px',
-                '& .MuiSelect-select': {
-                  padding: '10px',
-                  display: 'flex',
-                  alignItems: 'center',
-                },
-                '& .MuiOutlinedInput-notchedOutline': {
-                  borderColor: '#ddd',
-                },
-                '&:hover .MuiOutlinedInput-notchedOutline': {
-                  borderColor: '#888',
-                },
-              }}
-            >
-              <MenuItem value="">All Categories</MenuItem>
-              <MenuItem value="Men">Men</MenuItem>
-              <MenuItem value="Women">Women</MenuItem>
-              <MenuItem value="Trending">Trending</MenuItem>
-              <MenuItem value="New arrivals">New Arrivals</MenuItem>
-              <MenuItem value="Girls">Girls</MenuItem>
-              <MenuItem value="Boys">Boys</MenuItem>
-            </Select>
-          </>
-        )}
-      </FormControl>
+        {/* Category Filter */}
+        <FormControl sx={{ minWidth: 180 }}>
+          <InputLabel shrink>Category</InputLabel>
+          <Select
+            value={selectedCategory}
+            onChange={handleCategoryChange}
+            displayEmpty
+          >
+            <MenuItem value="">All Categories</MenuItem>
+            <MenuItem value="Men">Men</MenuItem>
+            <MenuItem value="Women">Women</MenuItem>
+            <MenuItem value="Trending">Trending</MenuItem>
+            <MenuItem value="New arrivals">New Arrivals</MenuItem>
+            <MenuItem value="Girls">Girls</MenuItem>
+            <MenuItem value="Boys">Boys</MenuItem>
+          </Select>
+        </FormControl>
+
+        {/* ✅ Fix: Color Filter (Overlapping Text Fixed) */}
+        <FormControl sx={{ minWidth: 180 }}>
+          <InputLabel shrink>Color</InputLabel>
+          <Select
+            value={selectedColor}
+            onChange={(e) => setSelectedColor(e.target.value)}
+            displayEmpty
+          >
+            <MenuItem value="">All Colors</MenuItem>
+            <MenuItem value="Blue">Blue</MenuItem>
+            <MenuItem value="Black">Black</MenuItem>
+            <MenuItem value="Red">Red</MenuItem>
+            <MenuItem value="White">White</MenuItem>
+          </Select>
+        </FormControl>
+
+        {/* Size Filter */}
+        <FormControl sx={{ minWidth: 150 }}>
+          <InputLabel shrink>Size</InputLabel>
+          <Select
+            value={selectedSize}
+            onChange={(e) => setSelectedSize(e.target.value)}
+            displayEmpty
+          >
+            <MenuItem value="">All Sizes</MenuItem>
+            <MenuItem value="S">S</MenuItem>
+            <MenuItem value="M">M</MenuItem>
+            <MenuItem value="L">L</MenuItem>
+            <MenuItem value="XL">XL</MenuItem>
+            <MenuItem value="XXL">XXL</MenuItem>
+          </Select>
+        </FormControl>
+
+        {/* Fit Filter */}
+        <FormControl sx={{ minWidth: 180 }}>
+          <InputLabel shrink>Fit</InputLabel>
+          <Select
+            value={selectedFit}
+            onChange={(e) => setSelectedFit(e.target.value)}
+            displayEmpty
+          >
+            <MenuItem value="">All Fits</MenuItem>
+            <MenuItem value="Regular Tapered">Regular Tapered</MenuItem>
+            <MenuItem value="Skinny Tapered">Skinny Tapered</MenuItem>
+            <MenuItem value="Seasonal Fit">Seasonal Fit</MenuItem>
+          </Select>
+        </FormControl>
+
+     
+        <FormControl sx={{ minWidth: 180 }}>
+          <InputLabel shrink>Price Range</InputLabel>
+          <Select
+            value={selectedPriceRange}
+            onChange={(e) => setSelectedPriceRange(e.target.value)}
+            displayEmpty
+          >
+            <MenuItem value="">All Prices</MenuItem>
+            <MenuItem value="1">$10 - $20</MenuItem>
+            <MenuItem value="2">$20 - $30</MenuItem>
+            <MenuItem value="3">$30 - $40</MenuItem>
+            <MenuItem value="4">$40 - $50</MenuItem>
+            <MenuItem value="5">$50+</MenuItem>
+          </Select>
+        </FormControl>
+      </Box>
 
       <Box
         sx={{
