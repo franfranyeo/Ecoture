@@ -21,6 +21,8 @@ import {
   Typography,
 } from '@mui/material';
 
+import GoogleLogo from 'assets/images/google-logo.svg';
+
 function ViewUser() {
   const navigate = useNavigate();
   const { id } = useParams();
@@ -46,7 +48,7 @@ function ViewUser() {
         dateofBirth: res.data.dateofBirth
           ? res.data.dateofBirth.split('T')[0]
           : 'Not set',
-        mobileNumber: res.data.mobileNumber || 'Not set',
+        mobileNo: res.data.mobileNo || 'Not set',
         createdAt: new Date(res.data.createdAt).toLocaleDateString(
           'en-US',
           options
@@ -209,7 +211,7 @@ function ViewUser() {
                 {user.role !== 'Admin' && (
                   <Grid item xs={12} sm={6}>
                     <Typography variant="body1">
-                      <strong>Mobile Number:</strong> {user.mobileNumber}
+                      <strong>Mobile Number:</strong> {user.mobileNo}
                     </Typography>
                   </Grid>
                 )}
@@ -244,6 +246,12 @@ function ViewUser() {
                   <Typography variant="body1">
                     <strong>Phone Verified:</strong>{' '}
                     {user.isPhoneVerified ? 'Yes' : 'No'}
+                  </Typography>
+                </Grid>
+                <Grid item xs={6}>
+                  <Typography variant="body1">
+                    <strong>Logged in with Google:</strong>{' '}
+                    {user.isGoogleLogin ? 'Yes' : 'No'}
                   </Typography>
                 </Grid>
                 <Grid item xs={6}>

@@ -229,7 +229,7 @@ namespace Ecoture.Controllers
                         FullName = user.FullName,
                         Email = user.Email,
                         MobileNo = user.MobileNo,
-                        DateOfBirth = user.DateofBirth,
+                        DateofBirth = user.DateofBirth,
                         Role = user.Role.ToString(),
                         PfpURL = user.PfpURL,
                         TotalSpending = user.TotalSpending,
@@ -470,7 +470,7 @@ namespace Ecoture.Controllers
             var resetToken = await _userManager.GeneratePasswordResetTokenAsync(user.UserId);
 
             // Create password reset URL (you can add token expiration here)
-            var resetUrl = $"{_configuration["AppSettings:FrontendUrl"]}/reset-password?token={resetToken.Token}";
+            var resetUrl = $"http://localhost:3000/reset-password?token={resetToken.Token}";
 
             // Send the password reset email (e.g., using SendGrid)
             await _emailService.SendAsync(user.Email, "Password Reset Request", $"Click the link to reset your password: {resetUrl}");
@@ -584,7 +584,7 @@ namespace Ecoture.Controllers
                     FullName = u.FullName,
                     Email = u.Email,
                     MobileNo = u.MobileNo,
-                    DateOfBirth = u.DateofBirth,
+                    DateofBirth = u.DateofBirth,
                     Role = u.Role.ToString(),
                     PfpURL = u.PfpURL,
                     TotalSpending = u.TotalSpending,
@@ -637,7 +637,7 @@ namespace Ecoture.Controllers
                 FullName = user.FullName,
                 Email = user.Email,
                 MobileNo = user.MobileNo,
-                DateOfBirth = user.DateofBirth,
+                DateofBirth = user.DateofBirth,
                 Role = user.Role.ToString(),
                 PfpURL = user.PfpURL,
                 TotalSpending = user.TotalSpending,
@@ -684,7 +684,7 @@ namespace Ecoture.Controllers
                 FullName = rawUser.FullName,
                 Email = rawUser.Email,
                 MobileNo = rawUser.MobileNo,
-                DateOfBirth = rawUser.DateofBirth,
+                DateofBirth = rawUser.DateofBirth,
                 Role = rawUser.Role.ToString(),
                 PfpURL = rawUser.PfpURL,
                 TotalSpending = rawUser.TotalSpending,

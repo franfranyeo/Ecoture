@@ -376,6 +376,7 @@ const Rewards = () => {
                     <TableCell>Description</TableCell>
                     <TableCell>Type</TableCell>
                     <TableCell>Expiration Date</TableCell>
+                    <TableCell>Status</TableCell>
                     <TableCell>Actions</TableCell>
                   </TableRow>
                 </TableHead>
@@ -388,6 +389,12 @@ const Rewards = () => {
                       <TableCell>{reward.rewardType}</TableCell>
                       <TableCell>
                         {reward.expirationDate.split('T')[0]}
+                      </TableCell>
+                      <TableCell>
+                        <Chip
+                          label={reward.status}
+                          color={reward.status == 'Active' ? 'success' : 'info'}
+                        />
                       </TableCell>
                       <TableCell>
                         <Tooltip title="View">
