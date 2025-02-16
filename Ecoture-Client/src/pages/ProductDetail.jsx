@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useContext } from 'react';
 import ReactImageMagnify from 'react-image-magnify';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -7,11 +8,10 @@ import http from 'utils/http';
 import { ArrowBack } from '@mui/icons-material';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { Box, Button, Chip, Grid, Typography } from '@mui/material';
-import { useContext } from 'react';
-import UserContext from '../contexts/UserContext'; // Import UserContext
 
+import UserContext from '../contexts/UserContext';
 
-
+// Import UserContext
 
 // Wishlist icon
 
@@ -32,19 +32,15 @@ function ProductDetail() {
     5: '$50+',
   };
 
-  const [wishlistStatus, setWishlistStatus] = useState(false); // Track if the product is in wishlist
-
-
-  // Wishlist icon
-function ProductDetail() {
-  const { user } = useContext(UserContext); // Access user context
-  const [wishlistStatus, setWishlistStatus] = useState(false); // Track if the product is in wishlist
+  // Use this hook at the top of your component
+  const { user } = useContext(UserContext);
+  const [wishlistStatus, setWishlistStatus] = useState(false);
 
   useEffect(() => {
-    if (user) {
+    if (user && product) {
       const fetchWishlistStatus = async () => {
         try {
-          const response = await http.get(`/wishlist`);
+          const response = await http.get('/wishlist');
           const productInWishlist = response.data.some(
             (item) => item.productId === product.id
           );
@@ -55,9 +51,8 @@ function ProductDetail() {
       };
       fetchWishlistStatus();
     }
-  }, [user, product]);}
+  }, [user, product]);
 
-  // Function to handle adding/removing product from the wishlist
   const handleAddToWishlist = async () => {
     if (!user) {
       toast.error('You must be logged in to add items to your wishlist.');
@@ -76,6 +71,9 @@ function ProductDetail() {
         setWishlistStatus(true);
         toast.success('Product added to wishlist!');
       }
+
+      // Dispatch a custom event to notify the Navbar
+      window.dispatchEvent(new Event('wishlistUpdated'));
     } catch (error) {
       console.error('Error handling wishlist operation:', error);
       toast.error('Failed to update wishlist.');
@@ -136,23 +134,37 @@ function ProductDetail() {
 
   return (
     <Box sx={{ padding: '80px 16px 16px' }}>
-      <Button
-        variant="outlined"
-        startIcon={<ArrowBack />}
-        onClick={() => navigate('/')}
-        sx={{
-          marginBottom: 2,
-          backgroundColor: '#fff',
-          color: 'black',
-          borderColor: '#ccc',
-          '&:hover': {
-            backgroundColor: '#f9f9f9',
-            borderColor: '#aaa',
-          },
-        }}
-      >
-        Back to Products
-      </Button>
+      <Box sx={{ display: 'flex', gap: 2, marginBottom: 2 }}>
+        <Button
+          variant="outlined"
+          startIcon={<ArrowBack />}
+          onClick={() => navigate('/')}
+          sx={{
+            backgroundColor: '#fff',
+            color: 'black',
+            borderColor: '#ccc',
+            '&:hover': {
+              backgroundColor: '#f9f9f9',
+              borderColor: '#aaa',
+            },
+          }}
+        >
+          Back to Products
+        </Button>
+
+        <Button
+          variant="outlined"
+          color={wishlistStatus ? 'secondary' : 'primary'}
+          sx={{
+            padding: '0.75rem 1.5rem',
+            fontWeight: 'bold',
+            borderRadius: '8px',
+          }}
+          onClick={handleAddToWishlist}
+        >
+          {wishlistStatus ? 'Remove from Wishlist' : 'Add to Wishlist'}
+        </Button>
+      </Box>
 
       <Grid container spacing={4}>
         <Grid item xs={12} md={6}>
@@ -224,21 +236,6 @@ function ProductDetail() {
           <Typography variant="body1" sx={{ marginBottom: 2 }}>
             {product.description}
           </Typography>
-
-          {/* Wishlist Button */}
-          <Button
-            variant="outlined"
-            color={wishlistStatus ? 'secondary' : 'primary'}
-            sx={{
-              marginTop: 2,
-              padding: '0.75rem 1.5rem',
-              fontWeight: 'bold',
-              borderRadius: '8px',
-            }}
-            onClick={handleAddToWishlist}
-          >
-            {wishlistStatus ? 'Remove from Wishlist' : 'Add to Wishlist'}
-          </Button>
 
           {/* Categories Section */}
           <Typography
