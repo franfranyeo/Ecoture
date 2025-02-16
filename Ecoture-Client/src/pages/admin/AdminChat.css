@@ -6,32 +6,61 @@
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
   background: #ffffff;
-  border: 1px solid #ddd; /* Slight border for contrast */
+  border: 1px solid #ddd; 
 }
 
-/* Sidebar Styling */
 .sidebar {
-  width: 250px;
+  width: 280px;
   min-width: 200px;
-  background-color: #f1f3f5; /* Lighter contrast */
+  background-color: #f1f3f5; 
   padding: 15px;
   border-right: 2px solid #dcdcdc;
   border-radius: 10px 0 0 10px;
   display: flex;
   flex-direction: column;
+  overflow-y: scroll;
 }
 
-/* User List Items */
+.sidebar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+  background: #e1e1e1;
+  border-radius: 10px;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+  background: #007bff;
+  border-radius: 10px;
+}
+
 .user-item {
+  display: flex;              
+  align-items: center;         
+  justify-content: space-between;  
   padding: 12px;
-  cursor: pointer;
-  border-radius: 5px;
+  border-radius: 15px;
   margin-bottom: 8px;
   background: white;
   transition: all 0.3s ease;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
   border: 1px solid #ddd;
+  cursor: pointer;            
 }
+
+.user-label {
+  flex: 1;                     
+  /* cursor: pointer; */      
+}
+
+.delete-icon {
+  margin-left: 8px;
+  color: red;
+  font-size: 18px;
+  cursor: pointer;
+}
+
 
 .user-item:hover {
   background: #007bff;
@@ -84,7 +113,6 @@
   border-radius: 10px;
 }
 
-/* Chat Bubbles */
 .chat-bubble {
   padding: 10px 15px;
   margin: 6px 0;
@@ -93,20 +121,45 @@
   word-wrap: break-word;
   transition: all 0.2s ease-in-out;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: relative;
+  padding-bottom: 24px; 
 }
 
-/* Chat Bubble Hover Effect */
-.chat-bubble:hover {
-  opacity: 0.85;
-  box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.15);
-}
-
-/* Admin Messages */
 .chat-bubble.admin {
-  background-color: #007bff;
+  background-color: #0056b3;
   color: white;
   align-self: flex-end;
   border-top-right-radius: 2px;
+  text-align: left;
+}
+
+/* User Messages */
+.chat-bubble.user {
+  background-color: #e9ecef;
+  color: black;
+  align-self: flex-start;
+  border-top-left-radius: 2px;
+}
+
+.timestamp {
+  position: absolute;
+  bottom: 4px;
+  right: 8px;
+  font-size: 0.75rem;
+  opacity: 0.8;
+}
+
+.chat-bubble.admin .timestamp {
+  color: #fff;
+}
+
+.chat-bubble.user .timestamp {
+  color: #333;
+}
+
+.chat-bubble:hover {
+  opacity: 0.85;
+  box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.15);
 }
 
 /* User Messages */
@@ -148,7 +201,6 @@
   background: #0056b3;
 }
 
-/* Placeholder Message */
 .chat-placeholder {
   flex: 1;
   display: flex;
@@ -177,4 +229,12 @@
   border-radius: 10px;
   margin-left: 8px;
   font-weight: bold;
+}
+
+.offline-note {
+  color: #525151;
+  font-style: italic;
+  padding: 12px;
+  background: #f9f9f9;
+  border-radius: 5px;
 }

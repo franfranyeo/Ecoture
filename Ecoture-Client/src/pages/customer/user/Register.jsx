@@ -1,6 +1,6 @@
 import { useFormik } from 'formik';
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 // Ensure you have this package installed
 import * as yup from 'yup';
@@ -24,7 +24,7 @@ import { authService } from '../../../services/auth.service';
 
 const Register = () => {
   const [showPassword, setShowPassword] = React.useState(false);
-
+  const [searchParams] = useSearchParams();
   const [showConfirmPassword, setShowConfirmPassword] = React.useState(false);
 
   const handleClickShowPassword = () => {
@@ -89,7 +89,12 @@ const Register = () => {
     }),
     onSubmit: async (data) => {
       try {
-        const response = await authService.register(data);
+        const referralCode = searchParams.get('ref');
+        const userData = {
+          ...data,
+          ...(referralCode && { referralCode }),
+        };
+        const response = await authService.register(userData);
         if (response) {
           toast.success('Account created successfully');
           navigate('/login');

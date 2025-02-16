@@ -91,30 +91,96 @@ namespace Ecoture.Controllers
 
                 if (user == null)
                 {
-                    // Create a new user
-                    user = new User
+                    using var transaction = await _context.Database.BeginTransactionAsync();
+                    try
                     {
-                        Email = userInfo.Email,
-                        FirstName = userInfo.GivenName ?? string.Empty,
-                        LastName = userInfo.FamilyName ?? string.Empty,
-                        Password = string.Empty, // No password for Google login
-                        PfpURL = userInfo.Picture,
-                        CreatedAt = DateTime.UtcNow,
-                        UpdatedAt = DateTime.UtcNow,
-                        IsGoogleLogin = true,
-                        ReferralCode = RandomReferralCode.Generate(),
-                    };
+                        var now = DateTime.UtcNow;
+                        // Create a new user
+                        user = new User
+                        {
+                            Email = userInfo.Email,
+                            FirstName = userInfo.GivenName ?? string.Empty,
+                            LastName = userInfo.FamilyName ?? string.Empty,
+                            Password = string.Empty, // No password for Google login
+                            PfpURL = userInfo.Picture,
+                            CreatedAt = now,
+                            UpdatedAt = now,
+                            IsGoogleLogin = true,
+                            ReferralCode = RandomReferralCode.Generate(),
+                            MembershipId = 1, // Set default membership
+                        };
 
-                    mfaMethods = await _context.MfaResponses.FirstOrDefaultAsync(m => m.UserId == user.UserId);
-                    mfaMethods ??= new MfaResponse
+                        // Add user first to get UserId
+                        await _context.Users.AddAsync(user);
+                        await _context.SaveChangesAsync();
+
+                        // Handle referral if provided
+                        if (!string.IsNullOrEmpty(request.ReferralCode))
+                        {
+                            var referrer = await _context.Users
+                                .FirstOrDefaultAsync(u => u.ReferralCode == request.ReferralCode);
+
+                            if (referrer != null)
+                            {
+                                // Create referral record
+                                var referral = new Referral
+                                {
+                                    referrerUserId = referrer.UserId,
+                                    refereeUserId = user.UserId,
+                                    referralDate = now
+                                };
+                                await _context.Referrals.AddAsync(referral);
+                                await _context.SaveChangesAsync();
+
+                                // Add points transaction for referrer
+                                var referrerPoints = new PointsTransaction
+                                {
+                                    UserId = referrer.UserId,
+                                    PointsEarned = 100, // Referral bonus points
+                                    PointsSpent = 0,
+                                    TransactionType = "Referral",
+                                    CreatedAt = now,
+                                    ExpiryDate = now.AddYears(1),
+                                    ReferralId = referral.referralId
+                                };
+                                await _context.PointsTransactions.AddAsync(referrerPoints);
+
+                                // Update referrer's total points
+                                referrer.TotalPoints += referrerPoints.PointsEarned;
+                                _context.Users.Update(referrer);
+                            }
+                        }
+
+                        // Create MFA response
+                        mfaMethods = new MfaResponse
+                        {
+                            UserId = user.UserId,
+                        };
+                        await _context.MfaResponses.AddAsync(mfaMethods);
+
+                        // Add welcome points
+                        var welcomePoints = new PointsTransaction
+                        {
+                            UserId = user.UserId,
+                            PointsEarned = 500, // Welcome bonus points
+                            PointsSpent = 0,
+                            TransactionType = "Welcome",
+                            CreatedAt = now,
+                            ExpiryDate = now.AddYears(1)
+                        };
+                        await _context.PointsTransactions.AddAsync(welcomePoints);
+                        user.TotalPoints += welcomePoints.PointsEarned;
+
+                        await _context.SaveChangesAsync();
+                        await transaction.CommitAsync();
+                    }
+                    catch (Exception)
                     {
-                        UserId = user.UserId,
-                    };
-                    // Add user and membership to the database
-                    _context.Users.Add(user);
-                    await _context.MfaResponses.AddAsync(mfaMethods);
-                    await _context.SaveChangesAsync();
+                        await transaction.RollbackAsync();
+                        throw;
+                    }
                 }
+
                 // Fetch existing membership and MFA methods
                 membership = await _context.Memberships.FirstOrDefaultAsync(m => m.MembershipId == user.MembershipId);
                 mfaMethods = await _context.MfaResponses.FirstOrDefaultAsync(m => m.UserId == user.UserId);
@@ -122,6 +188,7 @@ namespace Ecoture.Controllers
                 {
                     UserId = user.UserId,
                 };
+
                 // Step 3: Generate JWT token
                 string? secret = _configuration.GetValue<string>("Authentication:Secret");
                 if (string.IsNullOrEmpty(secret))
@@ -147,10 +214,14 @@ namespace Ecoture.Controllers
                 var securityToken = tokenHandler.CreateToken(tokenDescriptor);
                 string token = tokenHandler.WriteToken(securityToken);
 
+                user.LastLogin = DateTime.UtcNow;
+
+                await _context.SaveChangesAsync();
+
                 // Step 4: Prepare the response
                 var res = new LoginResponse
                 {
-                    User = new UserLoginDTO
+                    User = new UserDTO
                     {
                         UserId = user.UserId,
                         FirstName = user.FirstName,
@@ -187,7 +258,6 @@ namespace Ecoture.Controllers
             }
             catch (Exception ex)
             {
-                // Log the exception (optional)
                 Console.Error.WriteLine($"Error during Google login: {ex.Message}");
                 return StatusCode(500, new { message = "An unexpected error occurred" });
             }
@@ -482,6 +552,7 @@ namespace Ecoture.Controllers
                     IsEmailVerified = u.IsEmailVerified,
                     IsPhoneVerified = u.IsPhoneVerified,
                     IsGoogleLogin = u.IsGoogleLogin,
+                    LastLogin = u.LastLogin,
                     CreatedAt = u.CreatedAt,
                     UpdatedAt = u.UpdatedAt
                 }).ToList();
@@ -505,7 +576,7 @@ namespace Ecoture.Controllers
                     UserId = user.UserId,
                 };
 
-                var userInfo = new UserLoginDTO
+                var userInfo = new UserDTO
                 {
                     UserId = user.UserId,
                     FirstName = user.FirstName,
@@ -526,6 +597,7 @@ namespace Ecoture.Controllers
                     IsEmailVerified = user.IsEmailVerified,
                     IsPhoneVerified = user.IsPhoneVerified,
                     IsGoogleLogin = user.IsGoogleLogin,
+                    LastLogin = user.LastLogin,
                     CreatedAt = user.CreatedAt,
                     UpdatedAt = user.UpdatedAt
                 };
@@ -573,6 +645,7 @@ namespace Ecoture.Controllers
                 IsEmailVerified = rawUser.IsEmailVerified,
                 IsPhoneVerified = rawUser.IsPhoneVerified,
                 IsGoogleLogin = rawUser.IsGoogleLogin,
+                LastLogin = rawUser.LastLogin,
                 CreatedAt = rawUser.CreatedAt,
                 UpdatedAt = rawUser.UpdatedAt
             };

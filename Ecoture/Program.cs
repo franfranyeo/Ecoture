@@ -12,7 +12,11 @@ var builder = WebApplication.CreateBuilder(args);
 
 //  Add Services to the Container
 builder.Services.AddControllers();
-builder.Services.AddSignalR();
+builder.Services.AddSignalR(options =>
+{
+    options.KeepAliveInterval = TimeSpan.FromSeconds(10); 
+});
+
 //  Configure Database Context with MySQL
 builder.Services.AddDbContext<MyDbContext>(options =>
     options.UseMySQL(builder.Configuration.GetConnectionString("MyConnection"))
