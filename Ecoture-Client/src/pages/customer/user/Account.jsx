@@ -24,9 +24,8 @@ const Account = () => {
 
   useEffect(() => {
     http
-      .get('/user')
+      .get('/user/profile')
       .then((res) => {
-        console.log(res.data);
         const { mfaMethods, user } = res.data;
         const fetchUser = { ...user, mfaMethods };
         localStorage.setItem('user', JSON.stringify(fetchUser));

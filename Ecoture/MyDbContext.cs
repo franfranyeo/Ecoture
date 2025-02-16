@@ -60,6 +60,8 @@ namespace Ecoture
 
         // Order Items Table
         public required DbSet<OrderItem> OrderItems { get; set; }
+        public required DbSet<RefundRequest> RefundRequests { get; set; }
+
 
         // FRAN DB CONTEXT
         public required DbSet<User> Users { get; set; }
@@ -371,6 +373,7 @@ namespace Ecoture
                         Email = adminEmail,
                         Password = hashedPassword,
                         Role = UserRole.Admin,
+                        MembershipId = 4,
                         CreatedAt = DateTime.UtcNow,
                         UpdatedAt = DateTime.UtcNow
                     };

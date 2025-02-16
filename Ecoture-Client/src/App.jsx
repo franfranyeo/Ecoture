@@ -27,6 +27,9 @@ import AddCreditCard from './pages/Checkout/AddCreditCard';
 // AHMED IMPORTS
 import Addresses from './pages/Checkout/Addresses';
 import Cart from './pages/Checkout/Cart';
+import OrderHistory from "./pages/Checkout/OrderHistory";
+import RefundRequests from "./pages/Checkout/Refund";
+import RefundApproval from "./pages/admin/RefundApproval";
 import Choice from './pages/Checkout/Choice';
 import Confirmation from './pages/Checkout/Confirmation';
 import CreditCards from './pages/Checkout/CreditCards';
@@ -38,6 +41,7 @@ import EditProduct from './pages/EditProduct';
 import AddEnquiry from './pages/Enquiries/AddEnquiry';
 import AddResponse from './pages/Enquiries/AddResponse';
 import EnquiriesDashboard from './pages/Enquiries/Dashboard';
+
 // Amelia Imports
 import Enquiries from './pages/Enquiries/Enquiries';
 import UpdateEnquiry from './pages/Enquiries/UpdateEnquiry';
@@ -55,6 +59,7 @@ import AddReward from './pages/admin/rewards/AddReward';
 import EditReward from './pages/admin/rewards/EditReward';
 import Rewards from './pages/admin/rewards/Rewards';
 import ViewReward from './pages/admin/rewards/ViewReward';
+import AddUser from './pages/admin/user/AddUser';
 import EditUser from './pages/admin/user/EditUser';
 import Users from './pages/admin/user/Users';
 import ViewUser from './pages/admin/user/ViewUser';
@@ -163,7 +168,15 @@ function App() {
     },
     {
       url: '/account',
-      component: <Navigate to="/account/profile" />,
+      component: (
+        <Navigate
+          to={
+            user && user.role == 'Customer'
+              ? '/account/profile'
+              : '/account/security'
+          }
+        />
+      ),
     },
     {
       url: '/account/:tab',
@@ -191,6 +204,10 @@ function App() {
     {
       url: '/admin/users/:id/view',
       component: ViewUser,
+    },
+    {
+      url: '/admin/users/add',
+      component: AddUser,
     },
     {
       url: '/admin/users/:id/edit',
@@ -309,8 +326,11 @@ function App() {
                 <Route path="/form" element={<MyForm />} />
                 <Route path="/choice" element={<Choice />} />
                 <Route path="/confirmation" element={<Confirmation />} />
+                <Route path="/order-history" element={<OrderHistory />} />
+                <Route path="/refund-requests" element={<RefundRequests />} />
                 <Route path="/cart" element={<Cart />} />
-
+                <Route path="/admin/refund-approval" element={<ProtectedRoute element={RefundApproval} />} />
+                
                 {/* Enquiry Management */}
                 <Route path="/dashboard" element={<EnquiriesDashboard />} />
                 <Route path="/enquiries" element={<Enquiries />} />
