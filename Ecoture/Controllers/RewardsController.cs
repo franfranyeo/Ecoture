@@ -3,6 +3,8 @@ using Ecoture.Model.Entity;
 using Ecoture.Model.DTO;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
+using Ecoture.Model.Enum;
 
 namespace Ecoture.Controllers
 {
@@ -16,8 +18,19 @@ namespace Ecoture.Controllers
         [HttpGet, Authorize]
         public async Task<IActionResult> GetRewards()
         {
-            var rewards = await _context.Rewards.ToListAsync();
-            return Ok(rewards);
+            if (User.IsInRole("Admin"))
+            {
+                var rewards = await _context.Rewards.ToListAsync();
+                return Ok(rewards);
+            }
+            else
+            {
+                var currentDate = DateTime.UtcNow;
+                var availableRewards = await _context.Rewards
+                    .Where(r => r.StartDate <= currentDate && r.ExpirationDate >= currentDate && r.Status == "Active")
+                    .ToListAsync();
+                return Ok(availableRewards);
+            }
         }
 
         // GET: /Reward/{id}
@@ -139,5 +152,181 @@ namespace Ecoture.Controllers
                 return StatusCode(500, new { message = "An error occurred while deleting reward", error = ex.Message });
             }
         }
+
+        [HttpPost("Claim/{rewardId}")]
+        [Authorize]
+        public async Task<IActionResult> ClaimReward(int rewardId)
+        {
+            // Get the current user's ID from the claims
+            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+
+            // Find the user and reward in the database
+            var user = await _context.Users
+                .Include(u => u.UserRedemptions)
+                .FirstOrDefaultAsync(u => u.UserId == userId);
+
+            var reward = await _context.Rewards
+                .Include(r => r.UserRedemptions)
+                .FirstOrDefaultAsync(r => r.RewardId == rewardId);
+
+            if (user == null)
+                return NotFound(new { message = "User not found" });
+
+            if (reward == null)
+                return NotFound(new { message = "Reward not found" });
+
+            // Check if the reward is still available
+            if (reward.UsageLimit <= 0)
+                return BadRequest(new { message = "This reward has reached its usage limit" });
+
+            // Check if the user has already claimed this reward
+            if (user.UserRedemptions.Any(ur => ur.RewardId == rewardId))
+                return BadRequest(new { message = "You have already claimed this reward" });
+
+            // Check if the user is eligible for the reward (e.g., loyalty points, purchase history, etc.)
+            if (!IsUserEligibleForReward(user, reward))
+                return BadRequest(new { message = "You are not eligible for this reward" });
+
+            // Claim the reward
+            var userRedemption = new UserRedemptions
+            {
+                UserId = user.UserId,
+                RewardId = reward.RewardId,
+                RedemptionDate = DateTime.UtcNow
+            };
+
+            // Update the reward's usage limit
+            reward.UsageLimit -= 1;
+
+            user.TotalPoints -= reward.LoyaltyPointsRequired ?? 0;
+
+
+            // Add the redemption to the database
+            _context.UserRedemptions.Add(userRedemption);
+            await _context.SaveChangesAsync();
+
+            return Ok(new { message = "Reward claimed successfully" });
+        }
+
+        [HttpGet("UserRedemptions")]
+        [Authorize]
+        public async Task<IActionResult> GetUserRedemptions()
+        {
+            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+
+            if (User.IsInRole("Admin"))
+            {
+                var allRedemptions = await _context.UserRedemptions
+                    .Include(ur => ur.User)
+                    .Include(ur => ur.Reward)
+                    .Select(ur => new UserRedemptionWithDetailsDto
+                    {
+                        RedemptionId = ur.RedemptionId,
+                        UserId = ur.UserId,
+                        FullName = ur.User.FullName,
+                        Email = ur.User.Email,
+                        PointsUsed = ur.PointsUsed,
+                        RedemptionDate = ur.RedemptionDate,
+                        Status = ur.Status.ToString(),
+                        Reward = new RewardDto
+                        {
+                            RewardId = ur.Reward.RewardId,
+                            RewardType = ur.Reward.RewardType,
+                            RewardTitle = ur.Reward.RewardTitle,
+                            RewardDescription = ur.Reward.RewardDescription,
+                            RewardCode = ur.Reward.RewardCode,
+                            RewardPercentage = ur.Reward.RewardPercentage,
+                            MinimumPurchaseAmount = ur.Reward.MinimumPurchaseAmount,
+                            MaximumDiscountCap = ur.Reward.MaximumDiscountCap,
+                            ExpirationDate = ur.Reward.ExpirationDate,
+                            StartDate = ur.Reward.StartDate,
+                            UsageLimit = ur.Reward.UsageLimit,
+                            RewardStatus = ur.Reward.Status,
+                            LoyaltyPointsRequired = ur.Reward.LoyaltyPointsRequired
+                        }
+                    })
+                    .ToListAsync();
+
+                return Ok(allRedemptions);
+            }
+            else
+            {
+                var userRedemptions = await _context.UserRedemptions
+                    .Where(ur => ur.UserId == userId)
+                    .Include(ur => ur.Reward)
+                    .Select(ur => new UserRedemptionDto
+                    {
+                        RedemptionId = ur.RedemptionId,
+                        UserId = ur.UserId,
+                        PointsUsed = ur.PointsUsed,
+                        RedemptionDate = ur.RedemptionDate,
+                        Status = ur.Status.ToString(),
+                        Reward = new RewardDto
+                        {
+                            RewardId = ur.Reward.RewardId,
+                            RewardType = ur.Reward.RewardType,
+                            RewardTitle = ur.Reward.RewardTitle,
+                            RewardDescription = ur.Reward.RewardDescription,
+                            RewardCode = ur.Reward.RewardCode,
+                            RewardPercentage = ur.Reward.RewardPercentage,
+                            MinimumPurchaseAmount = ur.Reward.MinimumPurchaseAmount,
+                            MaximumDiscountCap = ur.Reward.MaximumDiscountCap,
+                            ExpirationDate = ur.Reward.ExpirationDate,
+                            StartDate = ur.Reward.StartDate,
+                            UsageLimit = ur.Reward.UsageLimit,
+                            RewardStatus = ur.Reward.Status,
+                            LoyaltyPointsRequired = ur.Reward.LoyaltyPointsRequired
+                        }
+                    })
+                    .ToListAsync();
+
+                return Ok(userRedemptions);
+            }
+        }
+
+        public class UserRedemptionDto
+        {
+            public int RedemptionId { get; set; }
+            public int UserId { get; set; }
+            public int PointsUsed { get; set; }
+            public DateTime RedemptionDate { get; set; }
+            public string Status { get; set; }
+            public RewardDto Reward { get; set; }
+        }
+
+        public class UserRedemptionWithDetailsDto : UserRedemptionDto
+        {
+            public string FullName { get; set; }
+            public string Email { get; set; }
+        }
+
+        public class RewardDto
+        {
+            public int RewardId { get; set; }
+            public string RewardType { get; set; }
+            public string RewardTitle { get; set; }
+            public string RewardDescription { get; set; }
+            public string RewardCode { get; set; }
+            public decimal RewardPercentage { get; set; }
+            public decimal MinimumPurchaseAmount { get; set; }
+            public decimal MaximumDiscountCap { get; set; }
+            public DateTime ExpirationDate { get; set; }
+            public DateTime StartDate { get; set; }
+            public int UsageLimit { get; set; }
+            public string RewardStatus { get; set; }
+            public int? LoyaltyPointsRequired { get; set; }
+        }
+        // Helper method to check user eligibility
+        private static bool IsUserEligibleForReward(User user, Reward reward)
+        {
+            // Implement logic to check if the user is eligible for the reward
+            // For example, check if the user has enough loyalty points
+            if (reward.LoyaltyPointsRequired != null && user.TotalPoints < reward.LoyaltyPointsRequired)
+                return false;
+
+            // Add other eligibility checks as needed
+            return true;
+        }
     }
+
 }

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import http from 'utils/http';
 
 import {
@@ -46,7 +47,7 @@ function UpdateEnquiry() {
     http
       .put(`/Enquiry/${id}`, updatedEnquiry)
       .then(() => {
-        alert('Status updated successfully!');
+        toast.success('Status updated successfully!');
         navigate('/enquiries');
       })
       .catch((err) => console.error('Error updating enquiry:', err));

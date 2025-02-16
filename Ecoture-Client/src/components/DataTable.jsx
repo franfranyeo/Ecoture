@@ -1,10 +1,16 @@
-import { useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 
+import { Clear, FilterList, Search, Sort } from '@mui/icons-material';
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import {
   Box,
+  Chip,
   IconButton,
+  Input,
+  InputAdornment,
+  Menu,
+  MenuItem,
   Paper,
   Table,
   TableBody,
@@ -13,7 +19,6 @@ import {
   TableHead,
   TableRow,
   TableSortLabel,
-  TextField,
   Typography,
 } from '@mui/material';
 import {
@@ -24,18 +29,57 @@ import {
   useReactTable,
 } from '@tanstack/react-table';
 
-const DataTable = ({ data, columns }) => {
+const DataTable = ({
+  data,
+  columns,
+  searchKeys,
+  filterOptions,
+  sortOptions,
+}) => {
   const [filter, setFilter] = useState('');
   const [sorting, setSorting] = useState([]);
+  const [anchorElSort, setAnchorElSort] = useState(null);
+  const [anchorElFilter, setAnchorElFilter] = useState(null);
+  const [filterType, setFilterType] = useState('');
+  const [sortOrder, setSortOrder] = useState('default');
 
-  // Filtered data based on global search input
+  // Filtered data based on search and filter input
   const filteredData = useMemo(() => {
-    return data.filter((row) =>
-      Object.values(row).some((value) =>
-        value?.toString().toLowerCase().includes(filter.toLowerCase())
-      )
-    );
-  }, [data, filter]);
+    let filtered = data;
+
+    if (filter) {
+      filtered = filtered.filter((row) =>
+        searchKeys.some((key) =>
+          row[key]?.toString().toLowerCase().includes(filter.toLowerCase())
+        )
+      );
+    }
+
+    if (filterType) {
+      filtered = filtered.filter(
+        (row) => row[filterOptions.key] === filterType
+      );
+    }
+
+    // Sort logic
+    switch (sortOrder) {
+      case 'newest':
+        filtered.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+        break;
+      case 'oldest':
+        filtered.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
+        break;
+      case 'alphabetical':
+        filtered.sort((a, b) =>
+          a[searchKeys[0]].localeCompare(b[searchKeys[0]])
+        );
+        break;
+      default:
+        break;
+    }
+
+    return filtered;
+  }, [data, filter, searchKeys, filterType, filterOptions, sortOrder]);
 
   const table = useReactTable({
     data: filteredData,
@@ -47,18 +91,103 @@ const DataTable = ({ data, columns }) => {
     getSortedRowModel: getSortedRowModel(),
   });
 
-  return (
-    <Paper style={{ padding: '20px', margin: '20px 0' }}>
-      <TextField
-        label="Search"
-        variant="outlined"
-        fullWidth
-        margin="normal"
-        value={filter}
-        onChange={(e) => setFilter(e.target.value)}
-      />
+  const handleFilterChange = (value) => {
+    setFilterType(value === 'All' ? '' : value);
+    setAnchorElFilter(null);
+  };
 
-      <TableContainer>
+  const handleSortChange = (value) => {
+    setSortOrder(value);
+    setAnchorElSort(null);
+  };
+
+  return (
+    <>
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          mb: 2,
+        }}
+      >
+        <Input
+          value={filter}
+          onChange={(e) => setFilter(e.target.value)}
+          placeholder="Search..."
+          startAdornment={
+            <InputAdornment position="start">
+              <Search />
+            </InputAdornment>
+          }
+          endAdornment={
+            filter && (
+              <InputAdornment position="end">
+                <IconButton onClick={() => setFilter('')}>
+                  <Clear />
+                </IconButton>
+              </InputAdornment>
+            )
+          }
+          sx={{ mr: 2, width: '300px' }}
+        />
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+          <Typography variant="body1">Reward Type:</Typography>
+          <IconButton onClick={(e) => setAnchorElFilter(e.currentTarget)}>
+            <FilterList />
+          </IconButton>
+          <Menu
+            anchorEl={anchorElFilter}
+            open={Boolean(anchorElFilter)}
+            onClose={() => setAnchorElFilter(null)}
+          >
+            {filterOptions.values.map((option) => (
+              <MenuItem key={option} onClick={() => handleFilterChange(option)}>
+                {option}
+              </MenuItem>
+            ))}
+          </Menu>
+          <Typography variant="body1">Sort:</Typography>
+          <IconButton onClick={(e) => setAnchorElSort(e.currentTarget)}>
+            <Sort />
+          </IconButton>
+          <Menu
+            anchorEl={anchorElSort}
+            open={Boolean(anchorElSort)}
+            onClose={() => setAnchorElSort(null)}
+          >
+            {sortOptions.map((option) => (
+              <MenuItem
+                key={option}
+                onClick={() => handleSortChange(option.toLowerCase())}
+              >
+                {option}
+              </MenuItem>
+            ))}
+          </Menu>
+        </Box>
+      </Box>
+
+      <Box sx={{ mb: 2 }}>
+        {filterType && (
+          <Chip
+            label={`Filter: ${filterType}`}
+            onDelete={() => setFilterType('')}
+            sx={{ ml: 1 }}
+          />
+        )}
+        {sortOrder !== 'default' && (
+          <Chip
+            label={`Sort: ${
+              sortOrder.charAt(0).toUpperCase() + sortOrder.slice(1)
+            }`}
+            onDelete={() => setSortOrder('default')}
+            sx={{ ml: 1 }}
+          />
+        )}
+      </Box>
+
+      <TableContainer component={Paper}>
         <Table>
           <TableHead>
             {table.getHeaderGroups().map((headerGroup) => (
@@ -122,7 +251,6 @@ const DataTable = ({ data, columns }) => {
         }}
       >
         <IconButton
-          variant="contained"
           onClick={() => table.previousPage()}
           disabled={!table.getCanPreviousPage()}
         >
@@ -133,14 +261,13 @@ const DataTable = ({ data, columns }) => {
           {table.getPageCount()}
         </Typography>
         <IconButton
-          variant="contained"
           onClick={() => table.nextPage()}
           disabled={!table.getCanNextPage()}
         >
           <KeyboardArrowRightIcon />
         </IconButton>
       </Box>
-    </Paper>
+    </>
   );
 };
 

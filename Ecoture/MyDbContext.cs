@@ -150,17 +150,17 @@ namespace Ecoture
 
             // UserRedemption relationships
             modelBuilder.Entity<UserRedemptions>()
-                .HasKey(pt => pt.redemptionId);
+                .HasKey(pt => pt.RedemptionId);
 
             modelBuilder.Entity<UserRedemptions>()
                 .HasOne(ur => ur.User)
                 .WithMany(u => u.UserRedemptions)
-                .HasForeignKey(ur => ur.userId);
+                .HasForeignKey(ur => ur.UserId);
 
             modelBuilder.Entity<UserRedemptions>()
                 .HasOne(ur => ur.Reward)
                 .WithMany(v => v.UserRedemptions)
-                .HasForeignKey(ur => ur.voucherId);
+                .HasForeignKey(ur => ur.RewardId);
 
             modelBuilder.Entity<Response>()
 				.HasOne(r => r.Enquiry)
@@ -376,6 +376,7 @@ namespace Ecoture
                             Email = adminEmail,
                             Password = hashedPassword,
                             Role = UserRole.Admin,
+                            MembershipId = 4,
                             CreatedAt = DateTime.UtcNow,
                             UpdatedAt = DateTime.UtcNow
                         };

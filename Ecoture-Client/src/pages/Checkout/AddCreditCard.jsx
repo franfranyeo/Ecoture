@@ -1,6 +1,7 @@
 import { useFormik } from 'formik';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import http from 'utils/http';
 import * as yup from 'yup';
 
@@ -58,7 +59,7 @@ function AddCreditCard() {
           navigate('/creditcards');
         })
         .catch(() => {
-          alert(
+          toast.error(
             'An error occurred while adding the credit card. Please try again.'
           );
         });

@@ -6,5 +6,6 @@ namespace Ecoture.Model.Request
     {
         [Required]
         public string Token { get; set; } = string.Empty;
+        public string? ReferralCode { get; set; }
     }
 }
