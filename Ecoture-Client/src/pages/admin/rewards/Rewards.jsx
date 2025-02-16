@@ -392,6 +392,7 @@ const Rewards = () => {
                       <TableCell>
                         <Tooltip title="View">
                           <IconButton
+                            color="secondary"
                             component={Link}
                             to={`/admin/rewards/${reward.rewardId}/view`}
                           >
@@ -400,6 +401,7 @@ const Rewards = () => {
                         </Tooltip>
                         <Tooltip title="Edit">
                           <IconButton
+                            color="secondary"
                             component={Link}
                             to={`/admin/rewards/${reward.rewardId}/edit`}
                           >
@@ -408,6 +410,7 @@ const Rewards = () => {
                         </Tooltip>
                         <Tooltip title="Delete">
                           <IconButton
+                            color="error"
                             onClick={() => handleDelete(reward.rewardId)}
                           >
                             <Delete />

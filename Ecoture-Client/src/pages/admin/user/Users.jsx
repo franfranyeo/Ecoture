@@ -229,7 +229,21 @@ const Users = () => {
 
   return (
     <>
-      <Typography variant="h4">Users</Typography>
+      <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+        <Typography variant="h4">Users</Typography>
+
+        {loggedInUser.role === 'Admin' && (
+          <Button
+            variant="contained"
+            color="primary"
+            component={Link}
+            to="/admin/users/add"
+            sx={{ mb: 2 }}
+          >
+            Add User
+          </Button>
+        )}
+      </Box>
       <Box
         sx={{
           minHeight: '100vh',
@@ -473,7 +487,9 @@ const Users = () => {
                             textAlign: 'center',
                           }}
                         >
-                          {user.membershipTier ? user.membershipTier : 'N/A'}
+                          {user.membershipTier && user.membershipTier != 'None'
+                            ? user.membershipTier
+                            : 'N/A'}
                         </Box>
                       </TableCell>
                       <TableCell

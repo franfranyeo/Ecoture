@@ -9,6 +9,7 @@ import {
 } from '@mui/icons-material';
 import {
   Box,
+  Button,
   Collapse,
   Divider,
   List,
@@ -19,6 +20,7 @@ import {
 
 // Icons for the sidebar options
 import dashboardIcon from 'assets/icons/dashboard.svg';
+import rewardsIcon from 'assets/icons/rewards.svg';
 import usersIcon from 'assets/icons/users.svg';
 import UserContext from 'contexts/UserContext';
 
@@ -36,7 +38,7 @@ const sideMenuOptions = [
   },
   {
     name: 'Rewards',
-    icon: usersIcon,
+    icon: rewardsIcon,
     path: '/admin/rewards',
   },
   {
@@ -126,12 +128,8 @@ function Sidebar() {
         </ListItem>
         <Divider />
         {sideMenuOptions.map((option) => (
-          <React.Fragment
-            key={option.name}
-            onClick={() => handleClick(option.name)}
-          >
+          <React.Fragment key={option.name}>
             <ListItem
-              button
               onClick={() => option.subOptions && handleClick(option.name)}
               sx={{
                 my: 1,

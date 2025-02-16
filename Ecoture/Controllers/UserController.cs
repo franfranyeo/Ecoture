@@ -287,51 +287,96 @@ namespace Ecoture.Controllers
             }
         }
 
-        // CREATE STAFF WITH ADMIN ROLE
-        [HttpPost("create-staff"), Authorize]
-        public async Task<IActionResult> CreateStaff(CreateStaffRequest request)
+        [Authorize(Roles = "Admin")]
+        [HttpPost("staff")]
+        public async Task<IActionResult> CreateStaffAsync(CreateStaffRequest request)
         {
-            // Check if user is an admin
-            var id = Convert.ToInt32(User.Claims.Where(c => c.Type == ClaimTypes.NameIdentifier).Select(c => c.Value).SingleOrDefault());
-            var user = _context.Users.Find(id);
-
-            if (user.Role != UserRole.Admin)
-            {
-                return Unauthorized();
-            }
-
-            // trim string values
+            // Trim input values
             request.FirstName = request.FirstName.Trim();
             request.LastName = request.LastName.Trim();
-            request.Email = request.Email.Trim();
-            request.Password = request.Password.Trim();
-            
+            request.Email = request.Email.Trim().ToLower();
+
             // Check if user already exists
-            var userExists = _context.Users.Any(u => u.Email == request.Email);
-            if (userExists)
+            if (await _context.Users.AnyAsync(u => u.Email == request.Email))
+                return BadRequest(new { IsSuccess = false, ErrorMessage = "Email already exists." });
+
+            using var transaction = await _context.Database.BeginTransactionAsync();
+            try
             {
-                string message = "Email already exists.";
-                return BadRequest(new { message });
+                // Generate a secure random password
+                var generatedPassword = GenerateSecurePassword(); // You'll need to implement this
+                var now = DateTime.UtcNow;
+
+                // Create user object with staff role
+                var user = new User
+                {
+                    FirstName = request.FirstName,
+                    LastName = request.LastName,
+                    Email = request.Email,
+                    Password = BCrypt.Net.BCrypt.HashPassword(generatedPassword),
+                    Role = UserRole.Staff,
+                    CreatedAt = now,
+                    UpdatedAt = now,
+                    MembershipId = 4 // Default membership
+                };
+
+                // Create MFA response record
+                var mfaResponse = new MfaResponse
+                {
+                    UserId = user.UserId
+                };
+
+                // Add records to database
+                await _context.Users.AddAsync(user);
+                await _context.MfaResponses.AddAsync(mfaResponse);
+                await _context.SaveChangesAsync();
+
+                // Send password via email
+                await _emailService.SendAsync(
+                    request.Email,
+                    "Ecoture: Staff Account Created",
+                    $"Your temporary password is {generatedPassword}. Please change it upon your first login."
+                );
+
+                await transaction.CommitAsync();
+
+                return Ok(new { IsSuccess = true });
             }
-            // Create user object 
-            var now = DateTime.Now;
-            string passwordHash = BCrypt.Net.BCrypt.HashPassword(request.Password);
-            var staff = new User()
+            catch (Exception ex)
             {
-                FirstName = request.FirstName,
-                LastName = request.LastName,
-                Email = request.Email,
-                Password = passwordHash,
-                Role = UserRole.Staff,
-                CreatedAt = now,
-                UpdatedAt = now
-            };
-            // Add user 
-            _context.Users.Add(staff);
-            await _context.SaveChangesAsync();
-            return Ok();
+                await transaction.RollbackAsync();
+                return StatusCode(500, new { IsSuccess = false, ErrorMessage = "Failed to create staff account." });
+            }
         }
-        
+
+        private string GenerateSecurePassword()
+        {
+            const string uppercase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            const string lowercase = "abcdefghijklmnopqrstuvwxyz";
+            const string numbers = "0123456789";
+            const string symbols = "#?!@$%^&*-";
+            const int length = 12;
+
+            var random = new Random();
+            var password = new StringBuilder();
+
+            // Ensure at least one of each required character type
+            password.Append(uppercase[random.Next(uppercase.Length)]);
+            password.Append(lowercase[random.Next(lowercase.Length)]);
+            password.Append(numbers[random.Next(numbers.Length)]);
+            password.Append(symbols[random.Next(symbols.Length)]);
+
+            // Fill the rest with random characters
+            var allChars = uppercase + lowercase + numbers + symbols;
+            for (int i = password.Length; i < length; i++)
+            {
+                password.Append(allChars[random.Next(allChars.Length)]);
+            }
+
+            // Shuffle the password
+            return new string(password.ToString().ToCharArray().OrderBy(x => random.Next()).ToArray());
+        }
+
         // UPDATE MFA
         [HttpPost("update-mfa"), Authorize]
         public async Task<ActionResult> UpdateMfa([FromBody] UpdateMfaRequest request)
@@ -524,7 +569,7 @@ namespace Ecoture.Controllers
 
             var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
 
-            if (User.IsInRole("Admin"))
+            if (User.IsInRole("Admin") || User.IsInRole("Staff"))
             {
                 var rawUsers = await _context.Users
                 .Include(u => u.Membership)
@@ -561,54 +606,61 @@ namespace Ecoture.Controllers
             }
             else
             {
-                var user = await _context.Users
+                return Unauthorized(new { message = "You are not authorized to view this data." });
+            }
+        }
+
+        [HttpGet("profile"), Authorize]
+        public async Task<IActionResult> GetProfile()
+        {
+            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+            var user = await _context.Users
                         .Include(u => u.Membership) // Include Membership to avoid null reference
                         .FirstOrDefaultAsync(u => u.UserId == userId);
-                if (user == null)
-                {
-                    return NotFound(new { message = "User not found" });
-                }
-                var mfaDetails = await _context.MfaResponses
-                .FirstOrDefaultAsync(m => m.UserId == user.UserId);
-                // If no MFA record exists, create a new one with default values
-                mfaDetails ??= new MfaResponse
-                {
-                    UserId = user.UserId,
-                };
-
-                var userInfo = new UserDTO
-                {
-                    UserId = user.UserId,
-                    FirstName = user.FirstName,
-                    LastName = user.LastName,
-                    FullName = user.FullName,
-                    Email = user.Email,
-                    MobileNo = user.MobileNo,
-                    DateOfBirth = user.DateofBirth,
-                    Role = user.Role.ToString(),
-                    PfpURL = user.PfpURL,
-                    TotalSpending = user.TotalSpending,
-                    TotalPoints = user.TotalPoints,
-                    MembershipTier = user.Membership.Tier.ToString(),
-                    MembershipStartDate = user.MembershipStartDate,
-                    MembershipEndDate = user.MembershipEndDate,
-                    ReferralCode = user.ReferralCode,
-                    Is2FAEnabled = user.Is2FAEnabled,
-                    IsEmailVerified = user.IsEmailVerified,
-                    IsPhoneVerified = user.IsPhoneVerified,
-                    IsGoogleLogin = user.IsGoogleLogin,
-                    LastLogin = user.LastLogin,
-                    CreatedAt = user.CreatedAt,
-                    UpdatedAt = user.UpdatedAt
-                };
-
-                var userResponse = new
-                {
-                    User = userInfo,
-                    MfaMethods = mfaDetails
-                };
-                return Ok(userResponse);
+            if (user == null)
+            {
+                return NotFound(new { message = "User not found" });
             }
+            var mfaDetails = await _context.MfaResponses
+            .FirstOrDefaultAsync(m => m.UserId == user.UserId);
+            // If no MFA record exists, create a new one with default values
+            mfaDetails ??= new MfaResponse
+            {
+                UserId = user.UserId,
+            };
+
+            var userInfo = new UserDTO
+            {
+                UserId = user.UserId,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                FullName = user.FullName,
+                Email = user.Email,
+                MobileNo = user.MobileNo,
+                DateOfBirth = user.DateofBirth,
+                Role = user.Role.ToString(),
+                PfpURL = user.PfpURL,
+                TotalSpending = user.TotalSpending,
+                TotalPoints = user.TotalPoints,
+                MembershipTier = user.Membership.Tier.ToString(),
+                MembershipStartDate = user.MembershipStartDate,
+                MembershipEndDate = user.MembershipEndDate,
+                ReferralCode = user.ReferralCode,
+                Is2FAEnabled = user.Is2FAEnabled,
+                IsEmailVerified = user.IsEmailVerified,
+                IsPhoneVerified = user.IsPhoneVerified,
+                IsGoogleLogin = user.IsGoogleLogin,
+                LastLogin = user.LastLogin,
+                CreatedAt = user.CreatedAt,
+                UpdatedAt = user.UpdatedAt
+            };
+
+            var userResponse = new
+            {
+                User = userInfo,
+                MfaMethods = mfaDetails
+            };
+            return Ok(userResponse);
         }
         // GET: api/Users/5 (Get user by ID)
         [HttpGet("{userId}"), Authorize]
@@ -696,6 +748,20 @@ namespace Ecoture.Controllers
             await _context.SaveChangesAsync();
 
             return NoContent();
+        }
+
+        [HttpPost("sendemail")]
+        public async Task<IActionResult> SendEmail([FromBody] SendEmailRequest request)
+        {
+            try
+            {
+                await _emailService.SendAsync(request.To, request.Subject, request.Body);
+                return Ok(new { message = "Email sent successfully." });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
         }
 
         [HttpPost("spending")]

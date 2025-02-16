@@ -15,7 +15,10 @@ import {
 const AccountSidePanel = ({ user, selected, setSelected }) => {
   const navigate = useNavigate();
 
-  const menuItems = ['Profile', 'Membership', 'Security', 'Notifications'];
+  const menuItems =
+    user.role == 'Customer'
+      ? ['Profile', 'Membership', 'Security']
+      : ['Security'];
   const handleNavigation = (text) => {
     navigate(`/account/${text.toLowerCase()}`);
   };
@@ -47,6 +50,7 @@ const AccountSidePanel = ({ user, selected, setSelected }) => {
               width: 100,
               height: 100,
               borderRadius: '50%',
+              objectFit: 'cover',
             }}
           />
         ) : (
