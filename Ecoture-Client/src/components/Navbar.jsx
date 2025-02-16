@@ -184,6 +184,7 @@ function Navbar() {
                         width: '40px',
                         height: '40px',
                         borderRadius: '50%',
+                        objectFit: 'cover',
                         cursor: 'pointer',
                       }}
                       onClick={handleMenuOpen}
@@ -256,6 +257,7 @@ function Navbar() {
                             width: '40px',
                             height: '40px',
                             borderRadius: '50%',
+                            objectFit: 'cover',
                           }}
                         />
                       ) : (
@@ -272,7 +274,15 @@ function Navbar() {
                         <Box>{user.email}</Box>
                       </Box>
                     </Box>
-                    <MenuItem onClick={() => handleNavigate('/account')}>
+                    <MenuItem
+                      onClick={() =>
+                        handleNavigate(
+                          user.role == 'Customer'
+                            ? '/account/profile'
+                            : '/account/security'
+                        )
+                      }
+                    >
                       Account
                     </MenuItem>
                     <MenuItem onClick={() => handleNavigate('/order-history')}>

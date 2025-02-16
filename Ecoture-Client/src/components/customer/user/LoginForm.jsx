@@ -5,7 +5,14 @@ import { Link } from 'react-router-dom';
 import * as yup from 'yup';
 
 import { Visibility, VisibilityOff } from '@mui/icons-material';
-import { Box, Button, IconButton, TextField, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  CircularProgress,
+  IconButton,
+  TextField,
+  Typography,
+} from '@mui/material';
 
 import GoogleLoginButton from './GoogleLoginButton';
 
@@ -28,6 +35,18 @@ const validationSchema = yup.object({
 
 function LoginForm({ onSubmit }) {
   const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleClick = async () => {
+    setIsLoading(true);
+    try {
+      await onSubmit();
+    } catch (error) {
+      console.error('Login error:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const formik = useFormik({
     initialValues: {
@@ -35,11 +54,18 @@ function LoginForm({ onSubmit }) {
       password: '',
     },
     validationSchema,
-    onSubmit: (values) => {
-      onSubmit({
-        email: values.email.trim().toLowerCase(),
-        password: values.password.trim(),
-      });
+    onSubmit: async (values) => {
+      setIsLoading(true);
+      try {
+        await onSubmit({
+          email: values.email.trim().toLowerCase(),
+          password: values.password.trim(),
+        });
+      } catch (error) {
+        console.error('Login error:', error);
+      } finally {
+        setIsLoading(false);
+      }
     },
   });
 
@@ -95,23 +121,33 @@ function LoginForm({ onSubmit }) {
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
+          position: 'relative',
         }}
       >
         <Button
           type="submit"
           variant="contained"
+          fullWidth
           sx={{
             mt: 5,
             paddingX: 12,
             fontSize: 16,
-            width: '100%',
             backgroundColor: 'primary.main',
             '&:hover': {
               backgroundColor: 'primary.light',
             },
           }}
         >
-          Login
+          {isLoading ? (
+            <CircularProgress
+              size={24}
+              sx={{
+                color: 'grey.300',
+              }}
+            />
+          ) : (
+            'Login'
+          )}
         </Button>
       </Box>
       <Box

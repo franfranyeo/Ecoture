@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 import { useFormik } from 'formik';
 import { useContext, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
@@ -369,8 +370,8 @@ const ProfileTab = ({ user }) => {
         return;
       }
 
-      if (file.size > 5000000) {
-        toast.error('File size should be less than 5MB');
+      if (file.size > 1024 * 1024) {
+        toast.error('File size should be less than 1MB');
         return;
       }
 
@@ -382,20 +383,19 @@ const ProfileTab = ({ user }) => {
 
       try {
         const formData = new FormData();
-        formData.append('image', file);
+        formData.append('file', file);
 
-        const response = await http.post(
-          '/user/upload-profile-image',
-          formData,
-          {
-            headers: {
-              'Content-Type': 'multipart/form-data',
-            },
-          }
-        );
+        const response = await http.post('/file/upload', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        });
 
-        if (response.data.imageUrl) {
-          formik.setFieldValue('pfpURL', response.data.imageUrl);
+        if (response.data.filename) {
+          formik.setFieldValue(
+            'pfpURL',
+            `${import.meta.env.VITE_FILE_BASE_URL}${response.data.filename}`
+          );
           toast.success('Profile image uploaded successfully');
         }
       } catch (error) {
