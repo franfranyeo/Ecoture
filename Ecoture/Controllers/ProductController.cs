@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
+using Ecoture.Model.Response;
 
 namespace Ecoture.Controllers
 {
@@ -559,5 +560,46 @@ namespace Ecoture.Controllers
 
             return Convert.ToInt32(userIdClaim);
         }
+
+        [HttpPut("reduce-stock/{id}"), Authorize]
+        public async Task<IActionResult> ReduceStock(int id, [FromBody] ReduceStockRequest request)
+        {
+            if (request.Quantity <= 0)
+            {
+                return BadRequest(new { Message = "Quantity must be greater than zero." });
+            }
+
+            var product = await _context.Products
+                .Include(p => p.ProductSizeColors)
+                .ThenInclude(psc => psc.Size)
+                .Include(p => p.ProductSizeColors)
+                .ThenInclude(psc => psc.Color)
+                .FirstOrDefaultAsync(p => p.Id == id);
+
+            if (product == null)
+            {
+                return NotFound(new { Message = "Product not found." });
+            }
+
+            var productSizeColor = product.ProductSizeColors
+                .FirstOrDefault(psc => psc.Size.Name == request.Size && psc.Color.Name == request.Color);
+
+            if (productSizeColor == null)
+            {
+                return BadRequest(new { Message = "Invalid size or color selection." });
+            }
+
+            if (productSizeColor.StockQuantity < request.Quantity)
+            {
+                return BadRequest(new { Message = "Not enough stock available." });
+            }
+
+            // Deduct stock
+            productSizeColor.StockQuantity -= request.Quantity;
+
+            await _context.SaveChangesAsync();
+            return Ok(new { Message = "Stock updated successfully." });
+        }
+
     }
 }
