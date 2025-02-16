@@ -23,10 +23,6 @@ import UserContext from './contexts/UserContext';
 import AddProduct from './pages/AddProduct';
 import AddAddress from './pages/Checkout/AddAddress';
 import AddCreditCard from './pages/Checkout/AddCreditCard';
-
-import Wishlist from './pages/Wishlist';
-
-
 // AHMED IMPORTS
 import Addresses from './pages/Checkout/Addresses';
 import Cart from './pages/Checkout/Cart';
@@ -49,7 +45,6 @@ import UpdateEnquiry from './pages/Enquiries/UpdateEnquiry';
 import AddNewsletter from './pages/Newsletter/AddNewsletter';
 import CreateNewsletter from './pages/Newsletter/CreateNewsletter';
 import SelectContent from './pages/Newsletter/SelectContent';
-import AddNewsletter from './pages/Newsletter/AddNewsletter';
 import ProductDetail from './pages/ProductDetail';
 import Products from './pages/Products';
 import Reviews from './pages/Reviews';
@@ -316,8 +311,6 @@ function App() {
                 <Route path="/reviews/:productId" element={<Reviews />} />
                 <Route path="/wishlist" element={<Wishlist />} />
 
-               
-
                 {/* AHMED CODES */}
                 <Route path="/addresses" element={<Addresses />} />
                 <Route path="/addaddress" element={<AddAddress />} />
@@ -347,8 +340,11 @@ function App() {
                 <Route path="/updateenquiry/:id" element={<UpdateEnquiry />} />
 
                 {/* Newsletter Management */}
-                <Route path="/createnewsletter" element={<CreateNewsletter />}/>
-                <Route path="/addnewsletter" element={<AddNewsletter />}/>
+                <Route
+                  path="/createnewsletter"
+                  element={<CreateNewsletter />}
+                />
+                <Route path="/addnewsletter" element={<AddNewsletter />} />
                 <Route path="/selectcontent" element={<SelectContent />} />
 
                 <Route
