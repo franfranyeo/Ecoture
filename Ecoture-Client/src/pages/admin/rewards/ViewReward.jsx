@@ -135,11 +135,6 @@ function ViewReward() {
 
         {/* Reward Image and Title */}
         <Box sx={{ display: 'flex', alignItems: 'center', mb: 4 }}>
-          <Avatar
-            sx={{ width: 120, height: 120 }}
-            src={reward.rewardImage || ''}
-            alt={reward.rewardTitle}
-          />
           <Box sx={{ ml: 3 }}>
             <Typography variant="h4" sx={{ fontWeight: '500' }}>
               {reward.rewardTitle}

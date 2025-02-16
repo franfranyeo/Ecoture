@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 import { useFormik } from 'formik';
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -93,6 +94,7 @@ function EditReward() {
       startDate: reward?.startDate || null,
       usageLimit: reward?.usageLimit || 1,
       status: reward?.status || 'Active',
+      loyaltyPointsRequired: reward?.loyaltyPointsRequired || 0,
     },
     validationSchema,
     onSubmit: async (values) => {
@@ -253,6 +255,25 @@ function EditReward() {
             helperText={
               formik.touched.maximumDiscountCap &&
               formik.errors.maximumDiscountCap
+            }
+            margin="dense"
+          />
+
+          <TextField
+            fullWidth
+            label="Points Required"
+            name="loyaltyPointsRequired"
+            type="number"
+            value={formik.values.loyaltyPointsRequired}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            error={
+              formik.touched.loyaltyPointsRequired &&
+              Boolean(formik.errors.loyaltyPointsRequired)
+            }
+            helperText={
+              formik.touched.loyaltyPointsRequired &&
+              formik.errors.loyaltyPointsRequired
             }
             margin="dense"
           />

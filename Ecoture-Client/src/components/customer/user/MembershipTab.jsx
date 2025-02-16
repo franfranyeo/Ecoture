@@ -42,6 +42,7 @@ const MembershipTab = () => {
       fetchRewards();
     } catch (error) {
       console.error('Failed to claim reward:', error);
+      toast.error('Failed to claim reward. Please try again.');
     }
   };
 
@@ -52,7 +53,6 @@ const MembershipTab = () => {
     const { data: urdata } = urresponse;
     const finalUR = urdata.map((ur) => ({ ...ur, ...ur.reward }));
     setRewards(data);
-    console.log(finalUR);
     setUserRedemptions(finalUR);
   };
 
@@ -65,8 +65,6 @@ const MembershipTab = () => {
       'rewardDescription',
       'rewardType', // Added for filtering
       'loyaltyPointsRequired',
-      'expirationDate',
-      'status',
     ];
 
     const userRedemptionKeys = [
@@ -130,6 +128,11 @@ const MembershipTab = () => {
             user.totalPoints >= reward.loyaltyPointsRequired;
           const isActive = reward.status === 'Active';
 
+          // Check if reward is already claimed by looking in userRedemptions
+          const isClaimed = userRedemptions.some(
+            (ur) => ur.rewardId === reward.rewardId
+          );
+
           const handleClaim = async () => {
             try {
               await claimReward(reward.rewardId);
@@ -141,10 +144,10 @@ const MembershipTab = () => {
           return (
             <Button
               onClick={handleClaim}
-              disabled={isExpired || !hasEnoughPoints || !isActive}
+              disabled={isExpired || !hasEnoughPoints || !isActive || isClaimed}
               variant="contained"
               color={
-                isExpired || !hasEnoughPoints || !isActive
+                isExpired || !hasEnoughPoints || !isActive || isClaimed
                   ? 'inherit'
                   : 'primary'
               }
@@ -156,7 +159,9 @@ const MembershipTab = () => {
                   ? 'Insufficient Points'
                   : !isActive
                     ? 'Inactive'
-                    : 'Claim'}
+                    : isClaimed
+                      ? 'Claimed'
+                      : 'Claim'}
             </Button>
           );
         },

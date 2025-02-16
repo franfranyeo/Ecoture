@@ -5,6 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import http from 'utils/http';
 
 import {
+  Alert,
   Box,
   Button,
   Card,
@@ -17,23 +18,30 @@ import {
   Typography,
 } from '@mui/material';
 
+import RewardsDropdown from 'components/customer/rewards/RewardsDropdown';
+
 function Cart() {
   const navigate = useNavigate();
   const [cart, setCart] = useState([]); // Store cart items from API
   const [selectedIndexes, setSelectedIndexes] = useState(new Set()); // Track selected items
   const [selectAll, setSelectAll] = useState(false);
   const [discount, setDiscount] = useState(0);
-  const [coupon, setCoupon] = useState('');
-
-  useEffect(() => {
-    fetchCart();
-  }, []);
+  const [userRedemptions, setUserRedemptions] = useState([]);
+  const [selectedReward, setSelectedReward] = useState(null);
+  const [selectedRedemptionId, setSelectedRedemptionId] = useState(null);
+  const [shippingCost, setShippingCost] = useState(5);
 
   const fetchCart = () => {
     http
       .get('/cart')
       .then((response) => setCart(response.data))
       .catch(() => toast.error('Failed to fetch cart items.'));
+  };
+
+  const fetchRewards = () => {
+    http.get('/rewards/userredemptions').then((response) => {
+      setUserRedemptions(response.data);
+    });
   };
 
   const toggleSelectItem = (index) => {
@@ -46,6 +54,80 @@ function Cart() {
       }
       return updatedSelection;
     });
+  };
+
+  const calculateFinalTotal = () => {
+    const subtotal = calculateTotal();
+    let finalTotal = subtotal;
+    let discountAmount = 0;
+
+    if (selectedReward) {
+      switch (selectedReward.rewardType) {
+        case 'Discount':
+          discountAmount = Math.min(
+            (subtotal * selectedReward.rewardPercentage) / 100,
+            selectedReward.maximumDiscountCap || Infinity
+          );
+          finalTotal -= discountAmount;
+          break;
+        case 'FreeShipping':
+          setShippingCost(0);
+          break;
+        // For Cashback and Charity, we don't modify the final total
+        default:
+          break;
+      }
+    }
+
+    return finalTotal + shippingCost;
+  };
+
+  // Add this function to calculate points
+  const calculatePoints = () => {
+    const finalTotal = calculateFinalTotal();
+    return Math.floor(finalTotal); // 1 point per $1, rounded down
+  };
+
+  const handleRewardSelect = (reward, redemptionId) => {
+    setSelectedReward(reward);
+    setSelectedRedemptionId(redemptionId);
+    if (reward) {
+      switch (reward.rewardType) {
+        case 'Discount': {
+          const discountAmount = Math.min(
+            (total * reward.rewardPercentage) / 100,
+            reward.maximumDiscountCap || Infinity
+          );
+          setDiscount(discountAmount);
+          toast.success(`Discount Applied: $${discountAmount.toFixed(2)} off!`);
+          break;
+        }
+        case 'FreeShipping':
+          setShippingCost(0);
+          toast.success('Free Shipping Applied!');
+          break;
+        case 'Cashback': {
+          const cashbackAmount = (total * reward.rewardPercentage) / 100;
+          toast.success(
+            `Cashback of $${cashbackAmount.toFixed(2)} will be credited to your account after purchase`
+          );
+          break;
+        }
+        case 'Charity':
+          {
+            const donationAmount = (total * reward.rewardPercentage) / 100;
+            toast.success(
+              `$${donationAmount.toFixed(2)} will be donated to ${reward.rewardTitle}`
+            );
+          }
+          break;
+        default:
+          break;
+      }
+    } else {
+      setDiscount(0);
+      setShippingCost(5);
+    }
   };
 
   const toggleSelectAll = () => {
@@ -72,16 +154,6 @@ function Cart() {
 
   const total = calculateTotal();
 
-  const applyDiscount = () => {
-    if (coupon === 'SAVE10' && total >= 100) {
-      setDiscount(10);
-      toast.success('Discount Applied: $10 Off!');
-    } else {
-      setDiscount(0);
-      toast.error('Invalid Coupon Code or Minimum Spend $100 Required');
-    }
-  };
-
   const getEstimatedDelivery = () => {
     const today = new Date();
     today.setDate(today.getDate() + 5);
@@ -106,6 +178,11 @@ function Cart() {
           toast.error('Order ID is missing.');
           return;
         }
+        http.post('/user/spending', {
+          amount: `${calculateTotal().toFixed(2)}`,
+          points: calculatePoints(),
+          redemptionId: selectedRedemptionId,
+        });
 
         const deletePromises = selectedCartItems.map((item) =>
           http.delete(`/cart/${item.id}`)
@@ -122,6 +199,18 @@ function Cart() {
       })
       .catch(() => toast.error('Failed to place order.'));
   };
+
+  useEffect(() => {
+    Promise.all([fetchCart(), fetchRewards()]);
+  }, []);
+
+  useEffect(() => {
+    if (selectedIndexes.size === 0 || total === 0) {
+      setSelectedReward(null);
+      setDiscount(0);
+      setShippingCost(5); // Reset shipping cost if it was changed by a free shipping reward
+    }
+  }, [selectedIndexes.size, total]);
 
   return (
     <Box
@@ -201,25 +290,49 @@ function Cart() {
         }}
       >
         <Typography variant="h5" sx={{ marginBottom: 2 }}>
-          Total
+          Order Summary
         </Typography>
-        <Typography variant="h6">${(total - discount).toFixed(2)}</Typography>
-        <Typography sx={{ marginTop: 1 }}>Shipping: Free</Typography>
+        <Typography>Subtotal: ${total.toFixed(2)}</Typography>
+        <Typography>Shipping: ${shippingCost.toFixed(2)}</Typography>
+        {discount > 0 && (
+          <Typography color="success.main">
+            Discount: -${discount.toFixed(2)}
+          </Typography>
+        )}
+        <Typography>Estimated Delivery: {getEstimatedDelivery()}</Typography>
+
         <Divider sx={{ marginY: 1 }} />
-        <Typography sx={{ marginBottom: 1 }}>
-          Estimated Delivery: {getEstimatedDelivery()}
+        <Typography variant="h6">
+          Total: ${calculateFinalTotal().toFixed(2)}
         </Typography>
-        <TextField
-          fullWidth
-          variant="outlined"
-          label="Enter Coupon Code"
-          value={coupon}
-          onChange={(e) => setCoupon(e.target.value)}
-          sx={{ mt: 2 }}
+
+        <RewardsDropdown
+          userRedemptions={userRedemptions}
+          onRewardSelect={(reward, redemptionId) =>
+            handleRewardSelect(reward, redemptionId)
+          }
+          subtotal={total}
+          disabled={selectedIndexes.size === 0 || total === 0}
         />
-        <Button variant="contained" sx={{ mt: 1 }} onClick={applyDiscount}>
-          Apply Discount
-        </Button>
+        {selectedReward?.rewardType === 'Cashback' && (
+          <Alert severity="info" sx={{ mt: 1 }}>
+            You will receive $
+            {((total * selectedReward.rewardPercentage) / 100).toFixed(2)}{' '}
+            cashback
+          </Alert>
+        )}
+
+        {selectedReward?.rewardType === 'Charity' && (
+          <Alert severity="info" sx={{ mt: 1 }}>
+            ${((total * selectedReward.rewardPercentage) / 100).toFixed(2)} will
+            be donated to {selectedReward.rewardTitle}
+          </Alert>
+        )}
+
+        <Alert severity="info" sx={{ mt: 1 }}>
+          You will earn {calculatePoints()} points from this purchase
+        </Alert>
+
         <Button
           variant="contained"
           color="primary"
@@ -230,8 +343,6 @@ function Cart() {
           Checkout
         </Button>
       </Box>
-
-      <ToastContainer />
     </Box>
   );
 }

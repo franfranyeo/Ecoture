@@ -451,80 +451,134 @@ namespace Ecoture.Controllers
         [HttpGet, Authorize]
         public async Task<IActionResult> GetUsers()
         {
-            var rawUsers = await _context.Users
+
+            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+
+            if (User.IsInRole("Admin"))
+            {
+                var rawUsers = await _context.Users
                 .Include(u => u.Membership)
                 .ToListAsync();
 
-            // Proceed with the mapping logic
-            var users = rawUsers.Select(u => new UserDTO
+                // Proceed with the mapping logic
+                var users = rawUsers.Select(u => new UserDTO
+                {
+                    UserId = u.UserId,
+                    FirstName = u.FirstName,
+                    LastName = u.LastName,
+                    FullName = u.FullName,
+                    Email = u.Email,
+                    MobileNo = u.MobileNo,
+                    DateOfBirth = u.DateofBirth,
+                    Role = u.Role.ToString(),
+                    PfpURL = u.PfpURL,
+                    TotalSpending = u.TotalSpending,
+                    TotalPoints = u.TotalPoints,
+                    MembershipTier = u.Membership.Tier.ToString(),
+                    MembershipStartDate = u.MembershipStartDate,
+                    MembershipEndDate = u.MembershipEndDate,
+                    ReferralCode = u.ReferralCode,
+                    Is2FAEnabled = u.Is2FAEnabled,
+                    IsEmailVerified = u.IsEmailVerified,
+                    IsPhoneVerified = u.IsPhoneVerified,
+                    IsGoogleLogin = u.IsGoogleLogin,
+                    CreatedAt = u.CreatedAt,
+                    UpdatedAt = u.UpdatedAt
+                }).ToList();
+
+                return Ok(users);
+            }
+            else
             {
-                UserId = u.UserId,
-                FirstName = u.FirstName,
-                LastName = u.LastName,
-                FullName = u.FullName,
-                Email = u.Email,
-                MobileNo = u.MobileNo,
-                DateOfBirth = u.DateofBirth,
-                Role = u.Role.ToString(),
-                PfpURL = u.PfpURL,
-                TotalSpending = u.TotalSpending,
-                TotalPoints = u.TotalPoints,
-                MembershipTier = u.Membership.Tier.ToString(),
-                MembershipStartDate = u.MembershipStartDate,
-                MembershipEndDate = u.MembershipEndDate,
-                ReferralCode = u.ReferralCode,
-                Is2FAEnabled = u.Is2FAEnabled,
-                IsEmailVerified = u.IsEmailVerified,
-                IsPhoneVerified = u.IsPhoneVerified,
-                IsGoogleLogin = u.IsGoogleLogin,
-                CreatedAt = u.CreatedAt,
-                UpdatedAt = u.UpdatedAt
-            }).ToList();
+                var user = await _context.Users
+                        .Include(u => u.Membership) // Include Membership to avoid null reference
+                        .FirstOrDefaultAsync(u => u.UserId == userId);
+                if (user == null)
+                {
+                    return NotFound(new { message = "User not found" });
+                }
+                var mfaDetails = await _context.MfaResponses
+                .FirstOrDefaultAsync(m => m.UserId == user.UserId);
+                // If no MFA record exists, create a new one with default values
+                mfaDetails ??= new MfaResponse
+                {
+                    UserId = user.UserId,
+                };
 
-            return Ok(users);
+                var userInfo = new UserLoginDTO
+                {
+                    UserId = user.UserId,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    FullName = user.FullName,
+                    Email = user.Email,
+                    MobileNo = user.MobileNo,
+                    DateOfBirth = user.DateofBirth,
+                    Role = user.Role.ToString(),
+                    PfpURL = user.PfpURL,
+                    TotalSpending = user.TotalSpending,
+                    TotalPoints = user.TotalPoints,
+                    MembershipTier = user.Membership.Tier.ToString(),
+                    MembershipStartDate = user.MembershipStartDate,
+                    MembershipEndDate = user.MembershipEndDate,
+                    ReferralCode = user.ReferralCode,
+                    Is2FAEnabled = user.Is2FAEnabled,
+                    IsEmailVerified = user.IsEmailVerified,
+                    IsPhoneVerified = user.IsPhoneVerified,
+                    IsGoogleLogin = user.IsGoogleLogin,
+                    CreatedAt = user.CreatedAt,
+                    UpdatedAt = user.UpdatedAt
+                };
+
+                var userResponse = new
+                {
+                    User = userInfo,
+                    MfaMethods = mfaDetails
+                };
+                return Ok(userResponse);
+            }
         }
-
         // GET: api/Users/5 (Get user by ID)
         [HttpGet("{userId}"), Authorize]
-public async Task<IActionResult> GetUser(int userId)
-{
-    var rawUser = await _context.Users
-        .Include(u => u.Membership)
-        .FirstOrDefaultAsync(u => u.UserId == userId);
+        public async Task<IActionResult> GetUser(int userId)
+        {
+            var rawUser = await _context.Users
+                .Include(u => u.Membership)
+                .FirstOrDefaultAsync(u => u.UserId == userId);
 
-    if (rawUser == null)
-    {
-        return NotFound(new { message = "User not found" });
-    }
+            if (rawUser == null)
+            {
+                return NotFound(new { message = "User not found" });
+            }
 
-    // Proceed with the mapping logic
-    var user = new UserDTO
-    {
-        UserId = rawUser.UserId,
-        FirstName = rawUser.FirstName,
-        LastName = rawUser.LastName,
-        FullName = rawUser.FullName,
-        Email = rawUser.Email,
-        MobileNo = rawUser.MobileNo,
-        DateOfBirth = rawUser.DateofBirth,
-        Role = rawUser.Role.ToString(),
-        PfpURL = rawUser.PfpURL,
-        TotalSpending = rawUser.TotalSpending,
-        TotalPoints = rawUser.TotalPoints,
-        MembershipTier = rawUser.Membership.Tier.ToString(),
-        MembershipStartDate = rawUser.MembershipStartDate,
-        MembershipEndDate = rawUser.MembershipEndDate,
-        ReferralCode = rawUser.ReferralCode,
-        Is2FAEnabled = rawUser.Is2FAEnabled,
-        IsEmailVerified = rawUser.IsEmailVerified,
-        IsPhoneVerified = rawUser.IsPhoneVerified,
-        IsGoogleLogin = rawUser.IsGoogleLogin,
-        CreatedAt = rawUser.CreatedAt,
-        UpdatedAt = rawUser.UpdatedAt
-    };
+            // Proceed with the mapping logic
+            var user = new UserDTO
+            {
+                UserId = rawUser.UserId,
+                FirstName = rawUser.FirstName,
+                LastName = rawUser.LastName,
+                FullName = rawUser.FullName,
+                Email = rawUser.Email,
+                MobileNo = rawUser.MobileNo,
+                DateOfBirth = rawUser.DateofBirth,
+                Role = rawUser.Role.ToString(),
+                PfpURL = rawUser.PfpURL,
+                TotalSpending = rawUser.TotalSpending,
+                TotalPoints = rawUser.TotalPoints,
+                MembershipTier = rawUser.Membership.Tier.ToString(),
+                MembershipStartDate = rawUser.MembershipStartDate,
+                MembershipEndDate = rawUser.MembershipEndDate,
+                ReferralCode = rawUser.ReferralCode,
+                Is2FAEnabled = rawUser.Is2FAEnabled,
+                IsEmailVerified = rawUser.IsEmailVerified,
+                IsPhoneVerified = rawUser.IsPhoneVerified,
+                IsGoogleLogin = rawUser.IsGoogleLogin,
+                CreatedAt = rawUser.CreatedAt,
+                UpdatedAt = rawUser.UpdatedAt
+            };
 
-    return Ok(user);
-}
+            return Ok(user);
+        }
 
         // POST: api/Users (Create a new user)
         [HttpPost]
@@ -571,5 +625,58 @@ public async Task<IActionResult> GetUser(int userId)
             return NoContent();
         }
 
+        [HttpPost("spending")]
+        public async Task<IActionResult> UpdateSpending([FromBody] SpendingRequest request)
+        {
+            // Validate the request
+            if (request == null || string.IsNullOrEmpty(request.Amount))
+            {
+                return BadRequest("Amount is required.");
+            }
+
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            if (string.IsNullOrEmpty(userId))
+            {
+                return Unauthorized("User ID not found in claims.");
+            }
+
+            var user = await _context.Users.FindAsync(int.Parse(userId));
+            if (user == null)
+            {
+                return NotFound("User not found.");
+            }
+
+            if (!decimal.TryParse(request.Amount, out decimal spending))
+            {
+                return BadRequest("Invalid amount format.");
+            }
+
+            if (request.RedemptionId.HasValue)
+            {
+                var redemption = await _context.UserRedemptions.FindAsync(request.RedemptionId.Value);
+                if (redemption == null)
+                {
+                    return NotFound("Redemption not found.");
+                }
+
+                redemption.Status = RedemptionStatus.Used;
+            }
+
+            user.TotalSpending += spending;
+            user.TotalPoints += request.Points;
+
+            await _context.SaveChangesAsync();
+
+            return Ok(new { message = "Spending updated successfully." });
+        }
+
+        public class SpendingRequest
+        {
+            public string Amount { get; set; }
+            public int Points { get; set; }
+
+            public int? RedemptionId { get; set; }
+        }
     }
 }
