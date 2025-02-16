@@ -157,55 +157,80 @@ namespace Ecoture.Controllers
         [Authorize]
         public async Task<IActionResult> ClaimReward(int rewardId)
         {
-            // Get the current user's ID from the claims
             var userId = Convert.ToInt32(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
 
-            // Find the user and reward in the database
-            var user = await _context.Users
-                .Include(u => u.UserRedemptions)
-                .FirstOrDefaultAsync(u => u.UserId == userId);
-
-            var reward = await _context.Rewards
-                .Include(r => r.UserRedemptions)
-                .FirstOrDefaultAsync(r => r.RewardId == rewardId);
-
-            if (user == null)
-                return NotFound(new { message = "User not found" });
-
-            if (reward == null)
-                return NotFound(new { message = "Reward not found" });
-
-            // Check if the reward is still available
-            if (reward.UsageLimit <= 0)
-                return BadRequest(new { message = "This reward has reached its usage limit" });
-
-            // Check if the user has already claimed this reward
-            if (user.UserRedemptions.Any(ur => ur.RewardId == rewardId))
-                return BadRequest(new { message = "You have already claimed this reward" });
-
-            // Check if the user is eligible for the reward (e.g., loyalty points, purchase history, etc.)
-            if (!IsUserEligibleForReward(user, reward))
-                return BadRequest(new { message = "You are not eligible for this reward" });
-
-            // Claim the reward
-            var userRedemption = new UserRedemptions
+            using var transaction = await _context.Database.BeginTransactionAsync();
+            try
             {
-                UserId = user.UserId,
-                RewardId = reward.RewardId,
-                RedemptionDate = DateTime.UtcNow
-            };
+                // Lock the reward record for update
+                var reward = await _context.Rewards
+                    .Include(r => r.UserRedemptions)
+                    .FirstOrDefaultAsync(r => r.RewardId == rewardId);
 
-            // Update the reward's usage limit
-            reward.UsageLimit -= 1;
+                var user = await _context.Users
+                    .Include(u => u.UserRedemptions)
+                    .FirstOrDefaultAsync(u => u.UserId == userId);
 
-            user.TotalPoints -= reward.LoyaltyPointsRequired ?? 0;
+                if (user == null)
+                    return NotFound(new { message = "User not found" });
+                if (reward == null)
+                    return NotFound(new { message = "Reward not found" });
 
+                // Validation checks
+                if (reward.UsageLimit <= 0)
+                    return BadRequest(new { message = "This reward has reached its usage limit" });
+                if (user.UserRedemptions.Any(ur => ur.RewardId == rewardId))
+                    return BadRequest(new { message = "You have already claimed this reward" });
+                if (!IsUserEligibleForReward(user, reward))
+                    return BadRequest(new { message = "You are not eligible for this reward" });
 
-            // Add the redemption to the database
-            _context.UserRedemptions.Add(userRedemption);
-            await _context.SaveChangesAsync();
+                // Check if user has enough points
+                int pointsRequired = reward.LoyaltyPointsRequired ?? 0;
+                if (user.TotalPoints < pointsRequired)
+                    return BadRequest(new { message = "Insufficient points" });
 
-            return Ok(new { message = "Reward claimed successfully" });
+                // Create redemption record
+                var userRedemption = new UserRedemptions
+                {
+                    UserId = user.UserId,
+                    RewardId = reward.RewardId,
+                    RedemptionDate = DateTime.UtcNow
+                };
+
+                // Update reward status
+                if (reward.UsageLimit == 1) 
+                {
+                    reward.Status = "Inactive";
+                }
+                reward.UsageLimit -= 1;
+
+                // Update user points
+                user.TotalPoints -= pointsRequired;
+
+                // Record transaction
+                var pointsTransaction = new PointsTransaction
+                {
+                    UserId = userId,
+                    PointsSpent = pointsRequired,
+                    TransactionType = "Reward Redemption",
+                    CreatedAt = DateTime.UtcNow,
+                    ExpiryDate = DateTime.UtcNow.AddYears(1)
+                };
+
+                _context.PointsTransactions.Add(pointsTransaction);
+                _context.UserRedemptions.Add(userRedemption);
+
+                await _context.SaveChangesAsync();
+                await transaction.CommitAsync();
+
+                return Ok(new { message = "Reward claimed successfully" });
+            }
+            catch (Exception ex)
+            {
+                await transaction.RollbackAsync();
+                // Log the exception
+                return StatusCode(500, new { message = "An error occurred while processing your request" });
+            }
         }
 
         [HttpGet("UserRedemptions")]

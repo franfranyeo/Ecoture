@@ -22,6 +22,8 @@
         public bool IsPhoneVerified { get; set; } = false;
         public bool IsGoogleLogin { get; set; } = false;
         public DateTime LastLogin { get; set; }
+        public DateTime? LastClaimTime { get; set; }
+
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
     }

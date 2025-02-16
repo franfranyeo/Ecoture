@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -21,9 +21,10 @@ import {
   Typography,
 } from '@mui/material';
 
-import GoogleLogo from 'assets/images/google-logo.svg';
+import UserContext from 'contexts/UserContext';
 
 function ViewUser() {
+  const { user: currentUser } = useContext(UserContext);
   const navigate = useNavigate();
   const { id } = useParams();
   const [user, setUser] = useState(null);
@@ -59,6 +60,7 @@ function ViewUser() {
         ),
       };
 
+      console.log('cleanedUser:', cleanedUser);
       setUser(cleanedUser);
       setLoading(false);
     });
@@ -97,7 +99,7 @@ function ViewUser() {
   const handleResetPassword = async () => {
     setLoading(true);
     try {
-      const response = await http.post('/user/reset-password', {
+      const response = await http.post('/user/reset-user-password', {
         userId: id,
       });
       toast.success(response.data.message);
@@ -127,20 +129,24 @@ function ViewUser() {
           position: 'relative',
         }}
       >
-        {/* Edit Icon in Top Right Corner */}
-        <IconButton
-          onClick={handleEdit}
-          sx={{
-            position: 'absolute',
-            top: 16,
-            right: 16,
-          }}
-        >
-          <Edit />
-        </IconButton>
-
         {!loading && user && (
           <>
+            {!(
+              (user.role === 'Admin' && currentUser.role === 'Staff') ||
+              (user.role === 'Staff' && currentUser.role === 'Staff')
+            ) && (
+              <IconButton
+                onClick={handleEdit}
+                sx={{
+                  position: 'absolute',
+                  top: 16,
+                  right: 16,
+                }}
+              >
+                <Edit />
+              </IconButton>
+            )}
+
             <Box
               sx={{
                 display: 'flex',
@@ -254,11 +260,16 @@ function ViewUser() {
                     {user.isGoogleLogin ? 'Yes' : 'No'}
                   </Typography>
                 </Grid>
-                <Grid item xs={6}>
-                  <Button startIcon={<Lock />} onClick={handleResetPassword}>
-                    Reset Password
-                  </Button>
-                </Grid>
+                {!(
+                  (user.role === 'Admin' && currentUser.role === 'Staff') ||
+                  (user.role === 'Staff' && currentUser.role === 'Staff')
+                ) && (
+                  <Grid item xs={6}>
+                    <Button startIcon={<Lock />} onClick={handleResetPassword}>
+                      Reset Password
+                    </Button>
+                  </Grid>
+                )}
               </Grid>
 
               <Divider sx={{ my: 3 }} />
@@ -280,23 +291,31 @@ function ViewUser() {
                 </Grid>
               </Grid>
 
-              <Divider sx={{ my: 3 }} />
-              <Box marginTop={3}>
-                <Typography variant="h6" color="error">
-                  Delete Account
-                </Typography>
-                <Typography variant="body2" color="textSecondary" mt={1}>
-                  Deleting this account will not delete any of the user data.
-                </Typography>
-                <Button
-                  variant="contained"
-                  color="error"
-                  sx={{ mt: 2 }}
-                  onClick={() => handleDelete(user._id)}
-                >
-                  Delete Account
-                </Button>
-              </Box>
+              {!(
+                (user.role === 'Admin' && currentUser.role === 'Staff') ||
+                (user.role === 'Staff' && currentUser.role === 'Staff')
+              ) && (
+                <>
+                  <Divider sx={{ my: 3 }} />
+                  <Box marginTop={3}>
+                    <Typography variant="h6" color="error">
+                      Delete Account
+                    </Typography>
+                    <Typography variant="body2" color="textSecondary" mt={1}>
+                      Deleting this account will not delete any of the user
+                      data.
+                    </Typography>
+                    <Button
+                      variant="contained"
+                      color="error"
+                      sx={{ mt: 2 }}
+                      onClick={() => handleDelete(user._id)}
+                    >
+                      Delete Account
+                    </Button>
+                  </Box>
+                </>
+              )}
             </Box>
           </>
         )}

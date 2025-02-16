@@ -243,6 +243,7 @@ namespace Ecoture.Controllers
                         IsPhoneVerified = user.IsPhoneVerified,
                         IsGoogleLogin = user.IsGoogleLogin,
                         LastLogin = user.LastLogin,
+                        LastClaimTime = user.LastClaimTime,
                         CreatedAt = user.CreatedAt,
                         UpdatedAt = user.UpdatedAt,
                     },
@@ -502,6 +503,22 @@ namespace Ecoture.Controllers
             return Ok(new { message = "Password reset successful" });
         }
 
+        // RESET PASSWORD
+        [HttpPost("reset-user-password")]
+        public async Task<IActionResult> ResetUserPassword([FromBody] ResetUserPasswordRequest request)
+        {
+            var user = await _context.Users.FindAsync(request.UserId);
+            if (user == null)
+                return BadRequest(new { message = "User not found" });
+
+            var generatedPassword = GenerateSecurePassword();
+            user.Password = BCrypt.Net.BCrypt.HashPassword(generatedPassword);
+
+            await _context.SaveChangesAsync();
+
+            return Ok(new { message = "Password reset successful" });
+        }
+
 
 
         // CUSTOMER DELETE ACCOUNT (2 STEPS)
@@ -598,6 +615,7 @@ namespace Ecoture.Controllers
                     IsPhoneVerified = u.IsPhoneVerified,
                     IsGoogleLogin = u.IsGoogleLogin,
                     LastLogin = u.LastLogin,
+                    LastClaimTime = u.LastClaimTime,
                     CreatedAt = u.CreatedAt,
                     UpdatedAt = u.UpdatedAt
                 }).ToList();
@@ -651,6 +669,7 @@ namespace Ecoture.Controllers
                 IsPhoneVerified = user.IsPhoneVerified,
                 IsGoogleLogin = user.IsGoogleLogin,
                 LastLogin = user.LastLogin,
+                LastClaimTime = user.LastClaimTime,
                 CreatedAt = user.CreatedAt,
                 UpdatedAt = user.UpdatedAt
             };
@@ -813,6 +832,18 @@ namespace Ecoture.Controllers
             {
                 user.MembershipId = 3;
             }
+
+            var transaction = new PointsTransaction
+            {
+                UserId = user.UserId,
+                PointsEarned = request.Points,
+                PointsSpent = 0,
+                TransactionType = "Spending",
+                CreatedAt = DateTime.UtcNow,
+                ExpiryDate = DateTime.UtcNow.AddYears(1)
+            };
+
+            await _context.PointsTransactions.AddAsync(transaction);
 
             await _context.SaveChangesAsync();
 
