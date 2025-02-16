@@ -288,6 +288,9 @@ function Products({ onAddProductClick }) {
               <MenuItem value="Men">Men</MenuItem>
               <MenuItem value="Women">Women</MenuItem>
               <MenuItem value="Trending">Trending</MenuItem>
+              <MenuItem value="New Arrivals">New Arrivals</MenuItem>
+              <MenuItem value="Boys">Boys</MenuItem>
+              <MenuItem value="Girls">Girls</MenuItem>
             </Select>
           </FormControl>
         </Box>
@@ -361,6 +364,8 @@ function Products({ onAddProductClick }) {
               <MenuItem value="S">S</MenuItem>
               <MenuItem value="M">M</MenuItem>
               <MenuItem value="L">L</MenuItem>
+              <MenuItem value="XL">XL</MenuItem>
+              <MenuItem value="XXL">XXL</MenuItem>
             </Select>
           </FormControl>
         </Box>
@@ -392,6 +397,7 @@ function Products({ onAddProductClick }) {
               <MenuItem value="">All Fits</MenuItem>
               <MenuItem value="Regular Tapered">Regular Tapered</MenuItem>
               <MenuItem value="Skinny Tapered">Skinny Tapered</MenuItem>
+              <MenuItem value="Seasonal Fit">Seasonal Fit</MenuItem>
             </Select>
           </FormControl>
         </Box>
