@@ -1,111 +1,65 @@
-import { useEffect, useRef, useState } from 'react';
+import { useRef } from 'react';
 import EmailEditor from 'react-email-editor';
-import http from 'utils/http';
-
-import { Box, Button, Typography } from '@mui/material';
-
-// Axios instance for API requests
+import sampleDesign from './sampleDesign.json';
+import { useNavigate } from 'react-router-dom';
+import { Button } from '@mui/material';
 
 function CreateNewsletter() {
+  const navigate = useNavigate();
   const emailEditorRef = useRef(null);
-  const [isEditorReady, setIsEditorReady] = useState(false);
-  const [contents, setContents] = useState([]);
-
-  useEffect(() => {
-    http
-      .get('/Content')
-      .then((res) => {
-        setContents(res.data);
-      })
-      .catch((err) => {
-        console.error('Error fetching contents:', err);
-      });
-  }, []);
 
   const handleEditorReady = () => {
-    if (!emailEditorRef.current || !emailEditorRef.current.editor) {
-      console.error('🚨 Editor is not initialized yet.');
-      return;
-    }
-
-    console.log('✅ Editor is Ready');
-
-    // Your Custom HTML Email Template
-    const customHTML = `
-          <!DOCTYPE html>
-          <html>
-          <head>
-            <style>
-              body { font-family: Arial, sans-serif; padding: 20px; }
-              h1 { color: #2E86C1; text-align: center; }
-              .content { padding: 20px; background: #f4f4f4; }
-            </style>
-          </head>
-          <body>
-            <h1>Welcome to Our Newsletter</h1>
-            <div class="content">
-              <p>This is a fully preloaded custom HTML email template.</p>
-              <img src="https://via.placeholder.com/600x200" width="100%" />
-            </div>
-          </body>
-          </html>
-        `;
+    console.log('Email editor ready. Loaded design JSON:', sampleDesign);
 
     setTimeout(() => {
-      try {
-        emailEditorRef.current.editor.setContent(customHTML);
-        console.log('🎉 Custom HTML Loaded Successfully!');
-      } catch (error) {
-        console.error('🚨 Error Injecting HTML:', error);
+      if (emailEditorRef.current?.editor) {
+        emailEditorRef.current.editor.loadDesign(sampleDesign, () => {
+          console.log('Design loaded successfully!');
+        });
+      } else {
+        console.error('Editor instance is not available.');
       }
     }, 1000);
   };
 
-  // ✅ Save Newsletter Content
-  const handleSaveNewsletter = () => {
-    if (!isEditorReady || !emailEditorRef.current) {
-      console.error('🚨 Editor is not ready, cannot save.');
-      return;
-    }
-
-    emailEditorRef.current.editor.exportHtml((data) => {
-      const { design, html } = data;
-
-      // Send to backend API
-      http
-        .post('/Newsletter', {
-          Title: 'My Newsletter',
-          EmailBody: html,
-          DesignJson: design, // Save design JSON for future edits
-        })
-        .then((res) => {
-          console.log('✅ Newsletter saved successfully:', res.data);
-        })
-        .catch((err) => {
-          console.error('🚨 Error saving newsletter:', err);
-        });
-    });
-  };
-
   return (
-    <Box sx={{ padding: '20px', minHeight: '100vh' }}>
-      <Typography variant="h4" sx={{ marginBottom: '20px' }}>
-        Create Newsletter
-      </Typography>
-
-      {/* ✅ Ensure onReady callback is used */}
-      <EmailEditor ref={emailEditorRef} onLoad={handleEditorReady} />
-
-      {/* ✅ Save Button */}
+    <div>
+      {/* <Button onClick={() => {
+        emailEditorRef.current.editor?.saveDesign((design) => {
+          console.log('saveDesign', design);
+          alert('Design JSON has been logged in your developer console.');
+        });
+      }}>
+        Print JSON
+      </Button> */}
+      <EmailEditor
+        ref={emailEditorRef}
+        onReady={handleEditorReady}
+        minHeight={700}
+        options={{
+          customFonts: [
+            {
+              name: 'Open Sans',
+              url: 'https://fonts.googleapis.com/css?family=Open+Sans',
+              family: 'Open Sans, sans-serif'
+            },
+            {
+              name: 'Lobster',
+              url: 'https://fonts.googleapis.com/css?family=Lobster',
+              family: 'Lobster, cursive'
+            }
+          ]
+        }}
+      />
       <Button
         variant="contained"
         color="primary"
-        sx={{ marginTop: '20px' }}
-        onClick={handleSaveNewsletter}
+        onClick={() => navigate('/addnewsletter')}
+        style={{ marginTop: '16px' }}
       >
-        Save Newsletter
+        Add Newsletter
       </Button>
-    </Box>
+    </div>
   );
 }
 

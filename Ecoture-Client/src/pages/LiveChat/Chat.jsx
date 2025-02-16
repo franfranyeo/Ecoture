@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import UserContext from "contexts/UserContext";
 import * as signalR from "@microsoft/signalr";
 import "./Chat.css";
@@ -12,7 +12,6 @@ const Chat = () => {
 
     const getUserId = () => {
         if (user) {
-            localStorage.setItem("user", JSON.stringify(user));
             return `${user.firstName} ${user.lastName}`.trim();
         }
         let storedGuestId = localStorage.getItem("chatUserId");
@@ -25,54 +24,38 @@ const Chat = () => {
     const [currentUserId, setCurrentUserId] = useState(getUserId());
 
     useEffect(() => {
-        if (user) {
-            localStorage.removeItem("chatUserId");
-            const realName = `${user.firstName} ${user.lastName}`.trim();
-            if (currentUserId.startsWith("Guest") || currentUserId !== realName) {
-                console.log(`Replacing guest ID (“${currentUserId}”) with real user ID (“${realName}”).`);
-                setCurrentUserId(realName);
-            }
-        }
-    }, [user, currentUserId]);
-
-    useEffect(() => {
         const newUserId = getUserId();
         if (currentUserId !== newUserId) {
             console.log(`🔄 User switched: ${currentUserId} → ${newUserId}`);
-            disconnectCurrentUser().then(() => {
-                cleanupAndReconnect(newUserId);
-            });
-        }
-    }, [user, currentUserId]);
-
-    const disconnectCurrentUser = async () => {
-        if (connection && connection.state === signalR.HubConnectionState.Connected) {
-            try {
-                console.log("🛑 Stopping connection...");
-                setConnection(null);
-                await connection.send("DisconnectUser", currentUserId); // Notify server
-                await connection.stop();
-                console.log("🔴 Connection stopped successfully");
-                setConnectedUsers((prev) => prev.filter((u) => u !== currentUserId));
-            } catch (err) {
-                console.error("⚠️ Error stopping connection:", err);
+            if (connection) {
+                connection.send("DisconnectUser", currentUserId)
+                    .then(() => console.log(`📢 Disconnected from server as ${currentUserId}`))
+                    .catch(err => console.error("⚠️ Error notifying server about disconnection:", err));
+                connection.stop().then(() => {
+                    console.log("🔴 Previous connection stopped");
+                    setConnection(null);
+                    setMessages([]);
+                    localStorage.removeItem(`chatMessages_${currentUserId}`);
+                    setCurrentUserId(newUserId);
+                    setupConnection(newUserId);
+                });
+            } else {
+                setMessages([]);
+                localStorage.removeItem(`chatMessages_${currentUserId}`);
+                setCurrentUserId(newUserId);
+                setupConnection(newUserId);
             }
         }
-    };
-
-    const cleanupAndReconnect = async (newUserId) => {
-        setMessages([]);
-        localStorage.removeItem(`chatMessages_${currentUserId}`);
-        setCurrentUserId(newUserId);
-        await setupConnection(newUserId);
-    };
+    }, [user]);
 
     const setupConnection = async (userId) => {
-        await disconnectCurrentUser();
-
+        if (connection) {
+            await connection.stop();
+            console.log("🔴 Stopped previous connection before new setup");
+        }
         const newConnection = new signalR.HubConnectionBuilder()
             .withUrl(`${import.meta.env.VITE_API_BASE_URL}/chatHub?username=${userId}`, {
-                withCredentials: true,
+                withCredentials: true
             })
             .withAutomaticReconnect()
             .build();
@@ -80,21 +63,20 @@ const Chat = () => {
         try {
             await newConnection.start();
             console.log(`🟢 Connected as ${userId}`);
-
             const savedMessages = JSON.parse(localStorage.getItem(`chatMessages_${userId}`)) || [];
             setMessages(Array.isArray(savedMessages) ? savedMessages : []);
 
+            newConnection.off("ReceiveMessage");
+            newConnection.off("Connections");
+
             newConnection.on("ReceiveMessage", (senderId, receivedMessage) => {
                 if (senderId !== "System") {
-                    setMessages((prevMessages) => {
+                    setMessages(prevMessages => {
                         const isDuplicate = prevMessages.some(
-                            (msg) => msg.userId === senderId && msg.message === receivedMessage
+                            msg => msg.userId === senderId && msg.message === receivedMessage
                         );
                         if (!isDuplicate) {
-                            const updatedMessages = [
-                                ...prevMessages,
-                                { userId: senderId, message: receivedMessage, timestamp: new Date() },
-                            ];
+                            const updatedMessages = [...prevMessages, { userId: senderId, message: receivedMessage }];
                             localStorage.setItem(`chatMessages_${userId}`, JSON.stringify(updatedMessages));
                             return updatedMessages;
                         }
@@ -105,7 +87,7 @@ const Chat = () => {
 
             newConnection.on("Connections", (connections) => {
                 console.log("Updated connected users:", connections);
-                setConnectedUsers(connections.filter((u) => u !== null));
+                setConnectedUsers(connections);
             });
 
             setConnection(newConnection);
@@ -114,19 +96,30 @@ const Chat = () => {
         }
     };
 
+    const chatBoxRef = useRef(null);
+    useEffect(() => {
+        if (chatBoxRef.current) {
+            chatBoxRef.current.scrollTop = chatBoxRef.current.scrollHeight;
+        }
+    }, [messages]);
+
     useEffect(() => {
         setupConnection(currentUserId);
         return () => {
-            disconnectCurrentUser();
+            if (connection) {
+                console.log("🔴 Cleaning up connection");
+                connection.off("ReceiveMessage");
+                connection.off("Connections");
+                connection.stop().catch(err => console.error("⚠️ Error stopping connection:", err));
+            }
         };
     }, []);
 
     const sendMessage = async () => {
         if (connection && message.trim() !== "") {
-            const timestamp = new Date();
             await connection.send("SendMessage", currentUserId, message);
-            setMessages((prevMessages) => {
-                const updatedMessages = [...prevMessages, { userId: currentUserId, message, timestamp }];
+            setMessages(prevMessages => {
+                const updatedMessages = [...prevMessages, { userId: currentUserId, message }];
                 localStorage.setItem(`chatMessages_${currentUserId}`, JSON.stringify(updatedMessages));
                 return updatedMessages;
             });
@@ -136,9 +129,13 @@ const Chat = () => {
 
     return (
         <div className="chat-container">
-            <div className="chat-box">
+            <div className="chat-box" ref={chatBoxRef}>
                 {messages
-                    .filter((msg) => msg.userId === currentUserId || msg.userId === "Admin")
+                    .filter(
+                        msg =>
+                            msg.userId === currentUserId ||
+                            msg.userId === "Admin"
+                    )
                     .map((msg, index) => (
                         <div
                             key={index}
@@ -146,27 +143,19 @@ const Chat = () => {
                         >
                             <strong>
                                 {msg.userId && msg.userId.startsWith("Guest") ? "Guest" : msg.userId}:
-                            </strong>
-                            <br />
-                            <span className="message-text">{msg.message}</span>
-
-                            {/* Timestamp in bottom-right corner */}
-                            {msg.timestamp && (
-                                <div className="timestamp">
-                                    {new Date(msg.timestamp).toLocaleTimeString([], {
-                                        hour: "2-digit",
-                                        minute: "2-digit",
-                                    })}
-                                </div>
-                            )}
+                            </strong>{" "}
+                            {msg.message}
                         </div>
                     ))}
-
             </div>
-
             <div className="chat-input">
-                <input type="text" value={message} onChange={(e) => setMessage(e.target.value)} placeholder="Type a message..." />
-                <button onClick={sendMessage} id="send-btn">Send</button>
+                <input
+                    type="text"
+                    value={message}
+                    onChange={(e) => setMessage(e.target.value)}
+                    placeholder="Type a message..."
+                />
+                <button onClick={sendMessage} className="send-btn">Send</button>
             </div>
         </div>
     );

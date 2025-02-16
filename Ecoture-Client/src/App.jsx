@@ -51,6 +51,7 @@ import UpdateEnquiry from './pages/Enquiries/UpdateEnquiry';
 import AdminChat from './pages/admin/AdminChat';
 import CreateNewsletter from './pages/Newsletter/CreateNewsletter';
 import SelectContent from './pages/Newsletter/SelectContent';
+import AddNewsletter from './pages/Newsletter/AddNewsletter';
 import ProductDetail from './pages/ProductDetail';
 import Products from './pages/Products';
 
@@ -345,10 +346,8 @@ function App() {
                 <Route path="/updateenquiry/:id" element={<UpdateEnquiry />} />
 
                 {/* Newsletter Management */}
-                <Route
-                  path="/createnewsletter"
-                  element={<CreateNewsletter />}
-                />
+                <Route path="/createnewsletter" element={<CreateNewsletter />}/>
+                <Route path="/addnewsletter" element={<AddNewsletter />}/>
                 <Route path="/selectcontent" element={<SelectContent />} />
 
                 <Route path="/admin/livechat" element={<ProtectedRoute element={AdminChat} />} />

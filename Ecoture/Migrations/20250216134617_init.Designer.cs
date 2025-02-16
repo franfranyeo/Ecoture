@@ -3,6 +3,7 @@ using System;
 using Ecoture;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Ecoture.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    partial class MyDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250216134617_init")]
+    partial class init
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -296,12 +299,13 @@ namespace Ecoture.Migrations
                             Tier = 2,
                             UpdatedAt = new DateTime(2025, 2, 16, 13, 46, 15, 63, DateTimeKind.Utc).AddTicks(3240)
                         },
-                            Tier = 3,
-                            UpdatedAt = new DateTime(2025, 2, 16, 13, 46, 15, 63, DateTimeKind.Utc).AddTicks(3242)
-                            CreatedAt = new DateTime(2025, 2, 16, 17, 27, 51, 476, DateTimeKind.Utc).AddTicks(1976),
+                        new
+                        {
+                            MembershipId = 3,
+                            CreatedAt = new DateTime(2025, 2, 16, 13, 46, 15, 63, DateTimeKind.Utc).AddTicks(3242),
                             SpendingRequired = 4000.00m,
                             Tier = 3,
-                            UpdatedAt = new DateTime(2025, 2, 16, 17, 27, 51, 476, DateTimeKind.Utc).AddTicks(1976)
+                            UpdatedAt = new DateTime(2025, 2, 16, 13, 46, 15, 63, DateTimeKind.Utc).AddTicks(3242)
                         },
                         new
                         {
@@ -602,36 +606,6 @@ namespace Ecoture.Migrations
                     b.HasIndex("referrerUserId");
 
                     b.ToTable("Referrals");
-                });
-
-            modelBuilder.Entity("Ecoture.Model.Entity.RefundRequest", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<int>("OrderItemId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Reason")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("OrderItemId");
-
-                    b.ToTable("RefundRequests");
                 });
 
             modelBuilder.Entity("Ecoture.Model.Entity.Response", b =>
@@ -982,30 +956,6 @@ namespace Ecoture.Migrations
                     b.ToTable("UserTokens");
                 });
 
-            modelBuilder.Entity("Ecoture.Model.Entity.Wishlist", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProductId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Wishlists");
-                });
-
             modelBuilder.Entity("Ecoture.Model.Response.MfaResponse", b =>
                 {
                     b.Property<int>("UserId")
@@ -1200,17 +1150,6 @@ namespace Ecoture.Migrations
                     b.Navigation("referrerUser");
                 });
 
-            modelBuilder.Entity("Ecoture.Model.Entity.RefundRequest", b =>
-                {
-                    b.HasOne("Ecoture.Model.Entity.OrderItem", "OrderItem")
-                        .WithMany()
-                        .HasForeignKey("OrderItemId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("OrderItem");
-                });
-
             modelBuilder.Entity("Ecoture.Model.Entity.Response", b =>
                 {
                     b.HasOne("Ecoture.Model.Entity.Enquiry", "Enquiry")
@@ -1293,25 +1232,6 @@ namespace Ecoture.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Ecoture.Model.Entity.Wishlist", b =>
-                {
-                    b.HasOne("Ecoture.Model.Entity.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Ecoture.Model.Entity.User", "User")
-                        .WithMany("Wishlists")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Product");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("Ecoture.Model.Entity.Category", b =>
                 {
                     b.Navigation("ProductCategories");
@@ -1376,8 +1296,6 @@ namespace Ecoture.Migrations
                     b.Navigation("ReferralsSent");
 
                     b.Navigation("UserRedemptions");
-
-                    b.Navigation("Wishlists");
                 });
 #pragma warning restore 612, 618
         }
