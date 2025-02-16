@@ -1,26 +1,28 @@
-import React, { useContext, useState } from "react";
+import { useContext, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+// Update with the actual image path
+import { toast } from 'react-toastify';
+
+import MenuIcon from '@mui/icons-material/Menu';
+import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import {
   AppBar,
-  Toolbar,
+  Avatar,
   Box,
+  Button,
   Container,
-  Menu,
-  MenuItem,
-  IconButton,
   Drawer,
-  List,
+  IconButton,
   ListItem,
   ListItemText,
-  Button,
-  Avatar,
+  Menu,
+  MenuItem,
+  Toolbar,
   Typography,
-} from "@mui/material";
-import { Link, useNavigate } from "react-router-dom";
-import UserContext from "../contexts/UserContext";
-import EcoTureLogo from "../assets/images/ecoture-logo.png"; // Update with the actual image path
-import { toast } from "react-toastify";
-import MenuIcon from "@mui/icons-material/Menu";
-import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
+} from '@mui/material';
+
+import EcoTureLogo from '../assets/images/ecoture-logo.png';
+import UserContext from '../contexts/UserContext';
 
 function Navbar() {
   const { user, setUser } = useContext(UserContext);
@@ -30,13 +32,13 @@ function Navbar() {
   const adminRoles = [0, 1];
 
   const customerNavItems = [
-    { text: "New Arrivals", link: "category/New%20Arrivals" },
-    { text: "Trending", link: "category/Trending" },
+    { text: 'New Arrivals', link: 'category/New%20Arrivals' },
+    { text: 'Trending', link: 'category/Trending' },
     // temp removed
-    { text: "Women", link: "category/Women" },
-    { text: "Men", link: "category/Men" },
-    { text: "Girls", link: "category/Girls" },
-    { text: "Boys", link: "category/Boys" },
+    { text: 'Women', link: 'category/Women' },
+    { text: 'Men', link: 'category/Men' },
+    { text: 'Girls', link: 'category/Girls' },
+    { text: 'Boys', link: 'category/Boys' },
     // { text: "Addresses", link: "/addresses" },
     // { text: "Credit Cards", link: "/creditcards" },
     // { text: "Choice", link: "/choice" },
@@ -44,18 +46,18 @@ function Navbar() {
 
   const handleLogout = () => {
     setUser(null);
-    localStorage.removeItem("user");
-    localStorage.removeItem("accessToken");
-    toast.success("Logged out successfully!");
+    localStorage.removeItem('user');
+    localStorage.removeItem('accessToken');
+    toast.success('Logged out successfully!');
     handleMenuClose();
-    navigate("/login");
+    navigate('/login');
   };
 
   const handleMenuOpen = (event) => {
     if (user) {
       setAnchorEl(event.currentTarget);
     } else {
-      navigate("/login");
+      navigate('/login');
     }
   };
 
@@ -75,63 +77,63 @@ function Navbar() {
   const navItems = adminRoles.includes(user?.role) ? [] : customerNavItems;
 
   return (
-    <AppBar position="relative" sx={{ bgcolor: "white", boxShadow: 2 }}>
+    <AppBar position="relative" sx={{ bgcolor: 'white', boxShadow: 2 }}>
       <Container>
         <Toolbar
           sx={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
           }}
         >
           {/* EcoTure Logo */}
           <Box
             onClick={() => {
-              if (["Admin", "Staff"].includes(user?.role)) {
+              if (['Admin', 'Staff'].includes(user?.role)) {
                 // Staff or Admin
-                navigate("/admin/dashboard");
+                navigate('/admin/dashboard');
               } else {
                 // Customer
-                navigate("/");
+                navigate('/');
               }
             }}
             style={{
-              display: "flex",
-              alignItems: "center",
-              cursor: "pointer",
+              display: 'flex',
+              alignItems: 'center',
+              cursor: 'pointer',
             }}
           >
             <img
               src={EcoTureLogo}
               alt="EcoTure Logo"
-              style={{ width: "90px" }}
+              style={{ width: '90px' }}
             />
           </Box>
 
           {/* Navigation Links for Desktop */}
           <Box
             sx={{
-              display: { xs: "none", md: "flex" },
-              gap: "20px",
+              display: { xs: 'none', md: 'flex' },
+              gap: '20px',
             }}
           >
             {navItems.map((item, index) => (
               <Link
                 className="nav-link"
                 sx={{
-                  mx: "10px",
-                  fontSize: "14px",
-                  fontWeight: "bold",
-                  transition: "all 0.3s",
-                  color: "#000",
-                  "&:hover": { color: "red" },
+                  mx: '10px',
+                  fontSize: '14px',
+                  fontWeight: 'bold',
+                  transition: 'all 0.3s',
+                  color: '#000',
+                  '&:hover': { color: 'red' },
                 }}
                 to={item.link}
                 key={index}
               >
                 <Typography
                   sx={{
-                    textDecoration: "none",
+                    textDecoration: 'none',
                   }}
                 >
                   {item.text}
@@ -142,7 +144,7 @@ function Navbar() {
 
           {/* Mobile Menu Icon */}
           <IconButton
-            sx={{ display: { xs: "block", md: "none" } }}
+            sx={{ display: { xs: 'block', md: 'none' } }}
             onClick={toggleDrawer}
           >
             <MenuIcon />
@@ -151,9 +153,9 @@ function Navbar() {
           {/* Profile and Cart Section */}
           <Box
             sx={{
-              display: "flex",
-              alignItems: "center",
-              gap: "16px",
+              display: 'flex',
+              alignItems: 'center',
+              gap: '16px',
             }}
           >
             {user && !adminRoles.includes(user?.role) && (
@@ -165,9 +167,9 @@ function Navbar() {
             {/* Profile Section */}
             <div
               style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "8px",
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px',
               }}
             >
               {user && (
@@ -178,10 +180,10 @@ function Navbar() {
                       alt="User Avatar"
                       className="nav-icon avatar-icon"
                       style={{
-                        width: "40px",
-                        height: "40px",
-                        borderRadius: "50%",
-                        cursor: "pointer",
+                        width: '40px',
+                        height: '40px',
+                        borderRadius: '50%',
+                        cursor: 'pointer',
                       }}
                       onClick={handleMenuOpen}
                     />
@@ -189,7 +191,7 @@ function Navbar() {
                     <Avatar
                       width="40px"
                       height="40px"
-                      sx={{ cursor: "pointer" }}
+                      sx={{ cursor: 'pointer' }}
                       onClick={handleMenuOpen}
                     />
                   )}
@@ -212,25 +214,25 @@ function Navbar() {
                     open={Boolean(anchorEl)}
                     onClose={handleMenuClose}
                     MenuListProps={{
-                      "aria-labelledby": "basic-button",
+                      'aria-labelledby': 'basic-button',
                     }}
                     PaperProps={{
                       elevation: 3,
                       sx: {
                         borderRadius: 2,
                         minWidth: 200,
-                        padding: "8px",
-                        bgcolor: "background.paper",
-                        boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
+                        padding: '8px',
+                        bgcolor: 'background.paper',
+                        boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
                       },
                     }}
                   >
                     <Box
                       style={{
-                        display: "flex",
-                        alignItems: "center",
-                        padding: "0px 16px 16px 14px",
-                        borderBottom: "1px solid rgba(0, 0, 0, 0.1)",
+                        display: 'flex',
+                        alignItems: 'center',
+                        padding: '0px 16px 16px 14px',
+                        borderBottom: '1px solid rgba(0, 0, 0, 0.1)',
                       }}
                     >
                       {/* <img
@@ -250,18 +252,18 @@ function Navbar() {
                           alt="User Avatar"
                           className="nav-icon avatar-icon"
                           style={{
-                            width: "40px",
-                            height: "40px",
-                            borderRadius: "50%",
+                            width: '40px',
+                            height: '40px',
+                            borderRadius: '50%',
                           }}
                         />
                       ) : (
                         <Avatar width="40px" height="40px" />
                       )}
-                      <Box style={{ marginLeft: "8px" }}>
+                      <Box style={{ marginLeft: '8px' }}>
                         <Box
                           style={{
-                            fontWeight: "500",
+                            fontWeight: '500',
                           }}
                         >
                           {user.fullName}
@@ -269,12 +271,12 @@ function Navbar() {
                         <Box>{user.email}</Box>
                       </Box>
                     </Box>
-                    <MenuItem onClick={() => handleNavigate("/account")}>
+                    <MenuItem onClick={() => handleNavigate('/account')}>
                       Account
                     </MenuItem>
                     {adminRoles.includes(user?.role) && (
                       <MenuItem
-                        onClick={() => handleNavigate("/admin/settings")}
+                        onClick={() => handleNavigate('/admin/settings')}
                       >
                         Admin Settings
                       </MenuItem>
@@ -284,7 +286,7 @@ function Navbar() {
                 </>
               )}
               {!user && (
-                <Box sx={{ display: "flex" }}>
+                <Box sx={{ display: 'flex' }}>
                   <Link to="/login" className="nav-link">
                     <Button variant="outlined">Login</Button>
                   </Link>
@@ -293,11 +295,11 @@ function Navbar() {
                     <Button
                       variant="contained"
                       sx={{
-                        backgroundColor: "primary.main",
-                        "&:hover": {
-                          backgroundColor: "primary.light",
+                        backgroundColor: 'primary.main',
+                        '&:hover': {
+                          backgroundColor: 'primary.light',
                         },
-                        textTransform: "none",
+                        textTransform: 'none',
                       }}
                     >
                       REGISTER

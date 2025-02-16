@@ -1,5 +1,6 @@
 using AutoMapper;
 using Ecoture;
+using Ecoture.Hubs;
 using Ecoture.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +12,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 //  Add Services to the Container
 builder.Services.AddControllers();
+builder.Services.AddSignalR(options =>
+{
+    options.KeepAliveInterval = TimeSpan.FromSeconds(10); 
+});
 
 //  Configure Database Context with MySQL
 builder.Services.AddDbContext<MyDbContext>(options =>
@@ -71,7 +76,8 @@ builder.Services.AddCors(options =>
         {
             policy.WithOrigins(allowedOrigins)
                 .AllowAnyMethod()
-                .AllowAnyHeader();
+                .AllowAnyHeader()
+                .AllowCredentials();
         });
 });
 
@@ -138,7 +144,14 @@ app.UseHttpsRedirection();
 app.UseCors();
 app.UseStaticFiles();
 app.UseAuthentication();
-app.UseAuthorization(); 
-
+app.UseRouting();
+app.UseAuthorization();
 app.MapControllers();
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllers();
+    endpoints.MapHub<ChatHub>("/chatHub"); // Map the hub
+});
+
+
 app.Run();

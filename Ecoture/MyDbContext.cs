@@ -35,10 +35,14 @@ namespace Ecoture
         public DbSet<Newsletter> Newsletters { get; set; }
         public required DbSet<Product> Products { get; set; }
         public required DbSet<Size> Sizes { get; set; }
-        public required DbSet<ProductSize> ProductSizes { get; set; }
+       
         public required DbSet<Review> Reviews { get; set; }
         public required DbSet<Color> Colors { get; set; }
-        public required DbSet<ProductColor> ProductColors { get; set; }
+        
+        //  Define DbSets for Entities
+       
+        public required DbSet<ProductSizeColor> ProductSizeColors { get; set; } //  New Table
+
         public required DbSet<ProductFit> ProductFits { get; set; }
         public required DbSet<Fit> Fits { get; set; }
         public required DbSet<ProductCategory> ProductCategories { get; set; }
@@ -113,18 +117,19 @@ namespace Ecoture
 
             modelBuilder.Entity<MfaResponse>().HasKey(m => m.UserId);
 
-            // Referral relationships
             modelBuilder.Entity<Referral>()
-                .HasOne(r => r.referrerUser)
-                .WithMany()
-                .HasForeignKey(r => r.referrerUserId)
-                .OnDelete(DeleteBehavior.Restrict);
+            .HasOne(r => r.referrerUser)
+            .WithMany(u => u.ReferralsSent) 
+            .HasForeignKey(r => r.referrerUserId)
+            .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Referral>()
                 .HasOne(r => r.refereeUser)
-                .WithMany()
+                .WithMany(u => u.ReferralsReceived) 
                 .HasForeignKey(r => r.refereeUserId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+
 
             // PointsTransaction relationships
             modelBuilder.Entity<PointsTransaction>()
@@ -147,17 +152,17 @@ namespace Ecoture
 
             // UserRedemption relationships
             modelBuilder.Entity<UserRedemptions>()
-                .HasKey(pt => pt.redemptionId);
+                .HasKey(pt => pt.RedemptionId);
 
             modelBuilder.Entity<UserRedemptions>()
                 .HasOne(ur => ur.User)
                 .WithMany(u => u.UserRedemptions)
-                .HasForeignKey(ur => ur.userId);
+                .HasForeignKey(ur => ur.UserId);
 
             modelBuilder.Entity<UserRedemptions>()
                 .HasOne(ur => ur.Reward)
                 .WithMany(v => v.UserRedemptions)
-                .HasForeignKey(ur => ur.voucherId);
+                .HasForeignKey(ur => ur.RewardId);
 
             modelBuilder.Entity<Response>()
 				.HasOne(r => r.Enquiry)
@@ -172,13 +177,16 @@ namespace Ecoture
                 .WithMany()
                 .HasForeignKey(c => c.ProductId)
                 .OnDelete(DeleteBehavior.Cascade);
-            // ✅ Configure many-to-many relationships
-            ConfigureProductSizeRelationship(modelBuilder);
-            ConfigureProductColorRelationship(modelBuilder);
+
+
+
+            //  Configure many-to-many relationships
+            ConfigureProductSizeColorRelationship(modelBuilder); //  New Configuration
             ConfigureProductFitRelationship(modelBuilder);
             ConfigureProductCategoryRelationship(modelBuilder);
 
-            // ✅ Configure one-to-many relationships
+
+            //  Configure one-to-many relationships
             ConfigureReviewRelationship(modelBuilder);
             ConfigureResponseRelationship(modelBuilder);
 
@@ -211,46 +219,39 @@ namespace Ecoture
                 .HasIndex(p => p.Description)
                 .HasDatabaseName("IX_Product_Description");
 
-			base.OnModelCreating(modelBuilder);
+
+            base.OnModelCreating(modelBuilder);
 		}
 
-        // ✅ Many-to-Many: Products ↔ Sizes
-        private void ConfigureProductSizeRelationship(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<ProductSize>()
-                .HasKey(ps => ps.Id);
 
-            modelBuilder.Entity<ProductSize>()
-                .HasOne(ps => ps.Product)
-                .WithMany(p => p.ProductSizes)
-                .HasForeignKey(ps => ps.ProductId)
+
+        private void ConfigureProductSizeColorRelationship(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<ProductSizeColor>()
+                .HasKey(psc => psc.Id);
+
+            modelBuilder.Entity<ProductSizeColor>()
+                .HasOne(psc => psc.Product)
+                .WithMany(p => p.ProductSizeColors)
+                .HasForeignKey(psc => psc.ProductId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            modelBuilder.Entity<ProductSize>()
-                .HasOne(ps => ps.Size)
-                .WithMany(s => s.ProductSizes)
-                .HasForeignKey(ps => ps.SizeId)
+            modelBuilder.Entity<ProductSizeColor>()
+                .HasOne(psc => psc.Size)
+                .WithMany(s => s.ProductSizeColors) // ✅ Define explicit navigation property in Size
+                .HasForeignKey(psc => psc.SizeId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<ProductSizeColor>()
+                .HasOne(psc => psc.Color)
+                .WithMany(c => c.ProductSizeColors) // ✅ Define explicit navigation property in Color
+                .HasForeignKey(psc => psc.ColorId)
                 .OnDelete(DeleteBehavior.Restrict);
         }
 
-        // ✅ Many-to-Many: Products ↔ Colors
-        private void ConfigureProductColorRelationship(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<ProductColor>()
-                .HasKey(pc => pc.Id);
 
-            modelBuilder.Entity<ProductColor>()
-                .HasOne(pc => pc.Product)
-                .WithMany(p => p.ProductColors)
-                .HasForeignKey(pc => pc.ProductId)
-                .OnDelete(DeleteBehavior.Cascade);
 
-            modelBuilder.Entity<ProductColor>()
-                .HasOne(pc => pc.Color)
-                .WithMany(c => c.ProductColors)
-                .HasForeignKey(pc => pc.ColorId)
-                .OnDelete(DeleteBehavior.Restrict);
-        }
+
 
         // ✅ Many-to-Many: Products ↔ Fits
         private void ConfigureProductFitRelationship(ModelBuilder modelBuilder)
@@ -377,6 +378,7 @@ namespace Ecoture
                             Email = adminEmail,
                             Password = hashedPassword,
                             Role = UserRole.Admin,
+                            MembershipId = 4,
                             CreatedAt = DateTime.UtcNow,
                             UpdatedAt = DateTime.UtcNow
                         };

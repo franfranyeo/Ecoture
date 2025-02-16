@@ -1,24 +1,25 @@
-import React, { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useFormik } from 'formik';
+import { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import http from 'utils/http';
+import * as yup from 'yup';
+
+import { ArrowBack } from '@mui/icons-material';
 import {
+  Alert,
   Box,
-  Typography,
-  TextField,
   Button,
+  Card,
+  CircularProgress,
   Dialog,
-  DialogTitle,
+  DialogActions,
   DialogContent,
   DialogContentText,
-  DialogActions,
-  CircularProgress,
-  Alert,
+  DialogTitle,
   IconButton,
-  Card,
-} from "@mui/material";
-import { ArrowBack } from "@mui/icons-material";
-import { useFormik } from "formik";
-import * as yup from "yup";
-import http from "utils/http";
+  TextField,
+  Typography,
+} from '@mui/material';
 
 // formating help from ai
 function EditCreditCard() {
@@ -31,34 +32,34 @@ function EditCreditCard() {
 
   const formik = useFormik({
     initialValues: {
-      cardHolderName: "",
-      cardNumber: "",
-      expiryMonth: "",
-      expiryYear: "",
-      cvv: "",
+      cardHolderName: '',
+      cardNumber: '',
+      expiryMonth: '',
+      expiryYear: '',
+      cvv: '',
     },
     validationSchema: yup.object({
-      cardHolderName: yup.string().required("Card Holder Name is required"),
+      cardHolderName: yup.string().required('Card Holder Name is required'),
       cardNumber: yup
         .string()
-        .matches(/^\d{16}$/, "Card Number must be 16 digits")
-        .required("Card Number is required"),
+        .matches(/^\d{16}$/, 'Card Number must be 16 digits')
+        .required('Card Number is required'),
       expiryMonth: yup
         .number()
-        .min(1, "Must be between 1 and 12")
-        .max(12, "Must be between 1 and 12")
-        .required("Expiry Month is required"),
+        .min(1, 'Must be between 1 and 12')
+        .max(12, 'Must be between 1 and 12')
+        .required('Expiry Month is required'),
       expiryYear: yup
         .number()
         .min(
           new Date().getFullYear(),
           `Must be ${new Date().getFullYear()} or later`
         )
-        .required("Expiry Year is required"),
+        .required('Expiry Year is required'),
       cvv: yup
         .string()
-        .matches(/^\d{3}$/, "CVV must be 3 digits")
-        .required("CVV is required"),
+        .matches(/^\d{3}$/, 'CVV must be 3 digits')
+        .required('CVV is required'),
     }),
     onSubmit: (data) => {
       http
@@ -68,7 +69,7 @@ function EditCreditCard() {
           navigate('/choice');
         })
         .catch(() => {
-          setError("Failed to update the credit card. Please try again.");
+          setError('Failed to update the credit card. Please try again.');
         });
     },
   });
@@ -81,7 +82,7 @@ function EditCreditCard() {
         setLoading(false);
       })
       .catch(() => {
-        setError("Failed to load credit card details.");
+        setError('Failed to load credit card details.');
         setLoading(false);
       });
   }, [id]);
@@ -94,24 +95,24 @@ function EditCreditCard() {
         navigate('/choice');
       })
       .catch(() => {
-        setError("Failed to delete the credit card. Please try again.");
+        setError('Failed to delete the credit card. Please try again.');
       });
   };
 
   return (
-    <Box sx={{ maxWidth: 600, mx: "auto", mt: 4 }}>
+    <Box sx={{ maxWidth: 600, mx: 'auto', mt: 4 }}>
       <Card elevation={3} sx={{ p: 3 }}>
-        <Box sx={{ display: "flex", alignItems: "center", mb: 3 }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
           <IconButton onClick={() => navigate(-1)} sx={{ mr: 1 }}>
             <ArrowBack />
           </IconButton>
-          <Typography variant="h5" sx={{ fontWeight: "bold" }}>
+          <Typography variant="h5" sx={{ fontWeight: 'bold' }}>
             Edit Credit Card
           </Typography>
         </Box>
 
         {loading ? (
-          <Box sx={{ textAlign: "center" }}>
+          <Box sx={{ textAlign: 'center' }}>
             <CircularProgress />
           </Box>
         ) : (
@@ -200,7 +201,7 @@ function EditCreditCard() {
               />
 
               <Box
-                sx={{ mt: 4, display: "flex", justifyContent: "space-between" }}
+                sx={{ mt: 4, display: 'flex', justifyContent: 'space-between' }}
               >
                 <Button
                   variant="contained"

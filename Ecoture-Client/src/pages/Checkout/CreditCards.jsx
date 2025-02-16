@@ -1,18 +1,19 @@
-import React, { useEffect, useState, useContext } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useContext, useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import http from 'utils/http';
+
+import { Edit } from '@mui/icons-material';
 import {
+  Alert,
   Box,
-  Typography,
-  Grid,
+  Button,
   Card,
   CardContent,
-  Button,
-  Alert,
-  Tooltip,
-} from "@mui/material";
-import { Edit } from "@mui/icons-material";
-import http from "utils/http";
-import UserContext from "../../contexts/UserContext";
+  Grid,
+  Typography,
+} from '@mui/material';
+
+import UserContext from '../../contexts/UserContext';
 
 function CreditCards() {
   const [creditCardList, setCreditCardList] = useState([]);
@@ -22,13 +23,13 @@ function CreditCards() {
 
   const getCreditCards = () => {
     http
-      .get("/creditcard")
+      .get('/creditcard')
       .then((res) => {
         setCreditCardList(res.data);
         setError(null);
       })
       .catch(() => {
-        setError("Failed to fetch credit cards. Please try again later.");
+        setError('Failed to fetch credit cards. Please try again later.');
       });
   };
 
@@ -41,16 +42,20 @@ function CreditCards() {
   };
 
   return (
-    <Box sx={{ maxWidth: 800, mx: "auto", mt: 4 }}>
+    <Box sx={{ maxWidth: 800, mx: 'auto', mt: 4 }}>
       <Typography
         variant="h4"
-        sx={{ mb: 3, fontWeight: "bold", textAlign: "center" }}
+        sx={{ mb: 3, fontWeight: 'bold', textAlign: 'center' }}
       >
         My Credit Cards
       </Typography>
 
       {/* error alert */}
-      {error && <Alert severity="error" sx={{ mb: 3 }}>{error}</Alert>}
+      {error && (
+        <Alert severity="error" sx={{ mb: 3 }}>
+          {error}
+        </Alert>
+      )}
 
       <Grid container spacing={3} justifyContent="center">
         {creditCardList.length > 0 ? (
@@ -59,16 +64,16 @@ function CreditCards() {
               <Card
                 onClick={() => handleCardClick(card.id)}
                 sx={{
-                  cursor: "pointer",
+                  cursor: 'pointer',
                   borderRadius: 2,
-                  overflow: "hidden",
-                  backgroundColor: "#f9f9f9",
-                  border: "1px solid #ddd",
-                  transition: "transform 0.2s, box-shadow 0.2s",
-                  "&:hover": {
-                    transform: "scale(1.02)",
-                    boxShadow: "0 6px 15px rgba(0, 0, 0, 0.1)",
-                    backgroundColor: "#f5f5f5",
+                  overflow: 'hidden',
+                  backgroundColor: '#f9f9f9',
+                  border: '1px solid #ddd',
+                  transition: 'transform 0.2s, box-shadow 0.2s',
+                  '&:hover': {
+                    transform: 'scale(1.02)',
+                    boxShadow: '0 6px 15px rgba(0, 0, 0, 0.1)',
+                    backgroundColor: '#f5f5f5',
                   },
                 }}
               >
@@ -77,28 +82,36 @@ function CreditCards() {
                     {card.cardHolderName}
                   </Typography>
 
-                  <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
+                  <Typography
+                    variant="body2"
+                    color="text.secondary"
+                    sx={{ mb: 1 }}
+                  >
                     Card Number: **** **** **** {card.lastFourDigits}
                   </Typography>
 
-                  <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+                  <Typography
+                    variant="body2"
+                    color="text.secondary"
+                    sx={{ mb: 2 }}
+                  >
                     Expiry: {card.expiryMonth}/{card.expiryYear}
                   </Typography>
 
                   <Box
                     sx={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
                       gap: 1,
-                      color: "#007bff",
-                      fontSize: "0.9rem",
-                      fontWeight: "bold",
-                      transition: "color 0.2s",
-                      "&:hover": { color: "#0056b3" },
+                      color: '#007bff',
+                      fontSize: '0.9rem',
+                      fontWeight: 'bold',
+                      transition: 'color 0.2s',
+                      '&:hover': { color: '#0056b3' },
                     }}
                   >
-                    <Edit sx={{ fontSize: "1.2rem" }} />
+                    <Edit sx={{ fontSize: '1.2rem' }} />
                     <Typography variant="body2">Click to Edit</Typography>
                   </Box>
                 </CardContent>
@@ -109,7 +122,7 @@ function CreditCards() {
           <Typography
             variant="body1"
             color="text.secondary"
-            sx={{ textAlign: "center", mt: 4 }}
+            sx={{ textAlign: 'center', mt: 4 }}
           >
             No credit cards found. Add a new card to get started.
           </Typography>
@@ -118,11 +131,29 @@ function CreditCards() {
 
       {/* Buttons - Add Credit Card and Choose Information */}
       {user && (
-        <Box sx={{ textAlign: 'center', mt: 4, display: 'flex', justifyContent: 'center', gap: '20px' }}>
-          <Button variant="contained" component={Link} to="/addcreditcard" size="large">
+        <Box
+          sx={{
+            textAlign: 'center',
+            mt: 4,
+            display: 'flex',
+            justifyContent: 'center',
+            gap: '20px',
+          }}
+        >
+          <Button
+            variant="contained"
+            component={Link}
+            to="/addcreditcard"
+            size="large"
+          >
             Add Credit Card
           </Button>
-          <Button variant="contained" component={Link} to="/choice" size="large">
+          <Button
+            variant="contained"
+            component={Link}
+            to="/choice"
+            size="large"
+          >
             Choose Information
           </Button>
         </Box>

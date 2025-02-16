@@ -36,7 +36,8 @@ namespace Ecoture.Services
                 [
                     new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()),
                     new Claim(ClaimTypes.Name, $"{user.FirstName} {user.LastName}".Trim()),
-                    new Claim(ClaimTypes.Email, user.Email)
+                    new Claim(ClaimTypes.Email, user.Email),
+                    new Claim(ClaimTypes.Role, user.Role.ToString())
                 ]),
                 Expires = DateTime.UtcNow.AddDays(tokenExpiresDays),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
@@ -60,6 +61,8 @@ namespace Ecoture.Services
             if (await _context.Users.AnyAsync(u => u.Email == request.Email))
                 return (false, "Email already exists.");
 
+            using var transaction = await _context.Database.BeginTransactionAsync();
+
             // Create user object and hash password
             var now = DateTime.UtcNow;
             var user = new User
@@ -82,6 +85,46 @@ namespace Ecoture.Services
             // Add user to the database
             await _context.Users.AddAsync(user);
             await _context.MfaResponses.AddAsync(mfaResponse);
+            await _context.SaveChangesAsync();
+
+
+            // Handle referral if provided
+            if (!string.IsNullOrEmpty(request.ReferralCode))
+            {
+                var referrer = await _context.Users
+                    .FirstOrDefaultAsync(u => u.ReferralCode == request.ReferralCode);
+
+                if (referrer != null)
+                {
+                    // Create referral record
+                    var referral = new Referral
+                    {
+                        referrerUserId = referrer.UserId,
+                        refereeUserId = user.UserId,
+                        referralDate = now
+                    };
+                    await _context.Referrals.AddAsync(referral);
+                    await _context.SaveChangesAsync(); // Save to get the referralId
+
+                    // Add points transaction for referrer
+                    var referrerPoints = new PointsTransaction
+                    {
+                        UserId = referrer.UserId,
+                        PointsEarned = 100, // Adjust point value as needed
+                        PointsSpent = 0,
+                        TransactionType = "Referral",
+                        CreatedAt = now,
+                        ExpiryDate = now.AddYears(1), // Points expire in 1 year
+                        ReferralId = referral.referralId
+                    };
+                    await _context.PointsTransactions.AddAsync(referrerPoints);
+
+                    // Update referrer's total points
+                    referrer.TotalPoints += referrerPoints.PointsEarned;
+                    _context.Users.Update(referrer);
+                }
+            }
+            await transaction.CommitAsync();
             await _context.SaveChangesAsync();
             return (true, null);
         }
@@ -146,7 +189,7 @@ namespace Ecoture.Services
             // Return user info and access token
             var response = new LoginResponse
             {
-                User = new UserLoginDTO
+                User = new UserDTO
                 {
                     UserId = user.UserId,
                     FirstName = user.FirstName,

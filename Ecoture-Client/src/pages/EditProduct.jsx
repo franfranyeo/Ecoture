@@ -1,49 +1,53 @@
-import React, { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useFormik } from 'formik';
+import { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import http from 'utils/http';
+import * as yup from 'yup';
+
+import { ArrowBack } from '@mui/icons-material';
+import { AddCircleOutline, RemoveCircleOutline } from '@mui/icons-material';
 import {
   Box,
-  Typography,
-  TextField,
   Button,
-  Grid,
   Card,
   CardActions,
-  ToggleButtonGroup,
-  ToggleButton,
-  IconButton,
   Dialog,
-  DialogTitle,
+  DialogActions,
   DialogContent,
   DialogContentText,
-  DialogActions,
-} from "@mui/material";
-import { ArrowBack } from "@mui/icons-material";
-import { AddCircleOutline, RemoveCircleOutline } from "@mui/icons-material";
-import { Chip } from "@mui/material";
+  DialogTitle,
 
-import { useFormik } from "formik";
-import * as yup from "yup";
-import http from "utils/http";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+  FormControl,
+  Grid,
+  IconButton,
+  InputLabel,
+  MenuItem,
+  Select,
+
+  TextField,
+  Typography,
+} from '@mui/material';
+import { Chip } from '@mui/material';
 
 function EditProduct() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [product, setProduct] = useState({});
   const [imageFile, setImageFile] = useState(null);
-  const [imageError, setImageError] = useState("");
+  const [imageError, setImageError] = useState('');
   const [isUploading, setIsUploading] = useState(false);
   const [loading, setLoading] = useState(true);
   const [open, setOpen] = useState(false);
   const [colors, setColors] = useState([]); // State for colors
-  const [colorInput, setColorInput] = useState(""); // State for input color
+  const [colorInput, setColorInput] = useState(''); // State for input color
 
   // Function to add a color to the list
   const addColor = () => {
     if (colorInput.trim() && !colors.includes(colorInput.trim())) {
       setColors([...colors, colorInput.trim()]); // Ensure colors is an array of strings
-      setColorInput("");
+      setColorInput('');
     }
   };
 
@@ -52,20 +56,21 @@ function EditProduct() {
     setColors(colors.filter((color) => color !== colorToRemove));
   };
 
-  const [sizes, setSizes] = useState([{ sizeName: "", stockQuantity: "" }]);
+  const [sizes, setSizes] = useState([{ sizeName: '', stockQuantity: '' }]);
 
   const priceRangeMap = {
-    1: "$10-$20",
-    2: "$20-$30",
-    3: "$30-$40",
-    4: "$40-$50",
-    5: "$50+",
+    1: '$10-$20',
+    2: '$20-$30',
+    3: '$30-$40',
+    4: '$40-$50',
+    5: '$50+',
   };
 
-  const reversePriceRangeMap = Object.fromEntries(
-    Object.entries(priceRangeMap).map(([k, v]) => [v, parseInt(k)])
-  );
+  // const reversePriceRangeMap = Object.fromEntries(
+  //   Object.entries(priceRangeMap).map(([k, v]) => [v, parseInt(k)])
+  // );
 
+  // CHANGE FROM (around line 83 in EditProduct.jsx):
   useEffect(() => {
     http
       .get(`/product/${id}`)
@@ -74,11 +79,11 @@ function EditProduct() {
 
         // Function to determine price range based on price
         const determinePriceRange = (price) => {
-          if (price <= 20) return 1; // "$10-$20"
-          if (price <= 30) return 2; // "$20-$30"
-          if (price <= 40) return 3; // "$30-$40"
-          if (price <= 50) return 4; // "$40-$50"
-          return 5; // "$50+"
+          if (price <= 20) return 1;
+          if (price <= 30) return 2;
+          if (price <= 40) return 3;
+          if (price <= 50) return 4;
+          return 5;
         };
 
         // Assign calculated priceRange
@@ -86,30 +91,109 @@ function EditProduct() {
 
         setProduct({
           ...data,
-          priceRange: computedPriceRange, // Store calculated price range
+          priceRange: computedPriceRange,
           fits: data.fits ? data.fits.map((f) => f.fitName) : [],
           categories: data.categories
             ? data.categories.map((c) => c.categoryName)
             : [],
         });
 
+        // Set image and sizes
         setImageFile(data.imageFile);
-        setSizes(data.sizes || [{ sizeName: "", stockQuantity: "" }]);
-        setColors(data.colors ? data.colors.map((c) => c.colorName) : []);
+
+
+        setSizes(
+          (data.SizeColors || []).map((size) => ({
+            sizeName: size.sizeName || '',
+            stockQuantity: size.stockQuantity || 0,
+            selectedColor: size.colorName || '',
+          }))
+        );
+
+        setColors(
+          data.SizeColors
+            ? [...new Set(data.SizeColors.map((size) => size.colorName))]
+            : []
+        );
+
+
         setLoading(false);
       })
       .catch(() => {
-        toast.error("Failed to load product data.");
+        toast.error('Failed to load product data.');
+
+        setLoading(false);
+      });
+  }, [id]);
+
+  // TO:
+  useEffect(() => {
+    http
+      .get(`/product/${id}`)
+      .then((res) => {
+        const data = res.data;
+        console.log('API Response:', data); // Add this for debugging
+
+        // Function to determine price range based on price
+        const determinePriceRange = (price) => {
+          if (price <= 20) return 1;
+          if (price <= 30) return 2;
+          if (price <= 40) return 3;
+          if (price <= 50) return 4;
+          return 5;
+        };
+
+        // Assign calculated priceRange
+        const computedPriceRange = determinePriceRange(data.price);
+
+        setProduct({
+          ...data,
+          priceRange: computedPriceRange,
+          fits: data.fits ? data.fits.map((f) => f.fitName) : [],
+          categories: data.categories
+            ? data.categories.map((c) => c.categoryName)
+            : [],
+        });
+
+        // Set image
+        setImageFile(data.imageFile);
+
+        // Set sizes with their colors and quantities
+        if (data.sizeColors && data.sizeColors.length > 0) {
+          setSizes(
+            data.sizeColors.map((item) => ({
+              sizeName: item.sizeName,
+              stockQuantity: item.stockQuantity,
+              selectedColor: item.colorName,
+            }))
+          );
+
+          // Extract unique colors from sizeColors
+          const uniqueColors = [
+            ...new Set(data.sizeColors.map((item) => item.colorName)),
+          ];
+          setColors(uniqueColors);
+        } else {
+          // If no existing data, set default empty state
+          setSizes([{ sizeName: '', stockQuantity: '', selectedColor: '' }]);
+          setColors([]);
+        }
+
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error('Error loading product:', error);
+        toast.error('Failed to load product data.');
         setLoading(false);
       });
   }, [id]);
 
   const formik = useFormik({
     initialValues: {
-      title: product.title || "",
-      description: product.description || "",
-      longDescription: product.longDescription || "",
-      price: product.price || "",
+      title: product.title || '',
+      description: product.description || '',
+      longDescription: product.longDescription || '',
+      price: product.price || '',
       categories: product.categories || [],
       fits: product.fits || [],
     },
@@ -119,78 +203,77 @@ function EditProduct() {
       title: yup
         .string()
         .trim()
-        .min(3, "Title must be at least 3 characters")
-        .max(100, "Title must be at most 100 characters")
-        .required("Title is required"),
+        .min(3, 'Title must be at least 3 characters')
+        .max(100, 'Title must be at most 100 characters')
+        .required('Title is required'),
       description: yup
         .string()
         .trim()
-        .min(3, "Description must be at least 3 characters")
-        .max(500, "Description must be at most 500 characters")
-        .required("Description is required"),
+        .min(3, 'Description must be at least 3 characters')
+        .max(500, 'Description must be at most 500 characters')
+        .required('Description is required'),
       longDescription: yup
         .string()
         .trim()
-        .min(3, "Long description must be at least 3 characters")
-        .max(1000, "Long description must be at most 1000 characters")
-        .required("Long description is required"),
+        .min(3, 'Long description must be at least 3 characters')
+        .max(1000, 'Long description must be at most 1000 characters')
+        .required('Long description is required'),
       price: yup
         .number()
-        .min(0.01, "Price must be greater than zero")
-        .required("Price is required"),
-      categories: yup.array().min(1, "At least one category is required"),
-      fits: yup.array().min(1, "At least one fit is required"),
+        .min(0.01, 'Price must be greater than zero')
+        .required('Price is required'),
+      categories: yup.array().min(1, 'At least one category is required'),
+      fits: yup.array().min(1, 'At least one fit is required'),
     }),
 
     onSubmit: (values) => {
-      // Create the request body
       const requestBody = {
         title: values.title,
         description: values.description,
         longDescription: values.longDescription,
         price: parseFloat(values.price),
-        categories: values.categories, // Support multiple categories
-        fits: values.fits, // Support multiple fits
+        categories: values.categories,
+        fits: values.fits,
         imageFile: imageFile,
-        sizes: sizes.map((s) => ({
+        SizeColors: sizes.map((s) => ({
           sizeName: s.sizeName.trim(),
           stockQuantity: parseInt(s.stockQuantity, 10),
+          colorName: s.selectedColor,
         })),
         colors: colors,
       };
 
-      // Make the API call
+      // Make the API call to update the product
       http
         .put(`/product/${id}`, requestBody)
         .then((response) => {
-          toast.success("Product updated successfully!");
-          navigate("/");
+          toast.success('Product updated successfully!');
+          navigate('/'); // Redirect after success
         })
         .catch((error) => {
-          console.error("Update failed:", error);
           toast.error(
-            error.response?.data?.message || "Failed to update product"
+            error.response?.data?.message || 'Failed to update product'
           );
         });
     },
   });
 
   const onFileChange = (e) => {
-    setImageError("");
+    setImageError('');
     const file = e.target.files[0];
     if (file) {
       if (file.size > 1024 * 1024) {
-        setImageError("Maximum file size is 1MB");
+        setImageError('Maximum file size is 1MB');
         return;
       }
 
       const formData = new FormData();
-      formData.append("file", file);
+      formData.append('file', file);
       setIsUploading(true);
       http
-        .post("/file/upload", formData, {
+        .post('/file/upload', formData, {
           headers: {
-            "Content-Type": "multipart/form-data",
+            'Content-Type': 'multipart/form-data',
           },
         })
         .then((res) => {
@@ -198,14 +281,14 @@ function EditProduct() {
           setIsUploading(false);
         })
         .catch(() => {
-          setImageError("Failed to upload image. Please try again.");
+          setImageError('Failed to upload image. Please try again.');
           setIsUploading(false);
         });
     }
   };
 
   const addSizeField = () => {
-    setSizes([...sizes, { sizeName: "", stockQuantity: "" }]);
+    setSizes([...sizes, { sizeName: '', stockQuantity: '' }]);
   };
 
   const removeSizeField = (index) => {
@@ -214,9 +297,15 @@ function EditProduct() {
   };
 
   const handleSizeChange = (index, field, value) => {
-    const updatedSizes = sizes.map((size, i) =>
-      i === index ? { ...size, [field]: value } : size
-    );
+    const updatedSizes = sizes.map((size, i) => {
+      if (i === index) {
+        return {
+          ...size,
+          [field]: field === 'stockQuantity' ? parseInt(value) || 0 : value,
+        };
+      }
+      return size;
+    });
     setSizes(updatedSizes);
   };
 
@@ -232,57 +321,67 @@ function EditProduct() {
     setOpen(false);
   };
 
+  const handleColorSelection = (sizeIndex, color) => {
+    const updatedSizes = sizes.map((size, i) => {
+      if (i === sizeIndex) {
+        return { ...size, selectedColor: color }; // Update selected color for this size
+      }
+      return size;
+    });
+    setSizes(updatedSizes);
+  };
+
   const deleteProduct = () => {
     http
       .delete(`/product/${id}`)
       .then(() => {
-        toast.success("Product deleted successfully!");
-        navigate("/");
+        toast.success('Product deleted successfully!');
+        navigate('/');
       })
       .catch(() => {
-        toast.error("Failed to delete product. Please try again.");
+        toast.error('Failed to delete product. Please try again.');
       });
   };
 
   if (loading) {
-    return <Typography>Loading...</Typography>;
+    return <Typography>Loading...</Typography>; // This ensures the form doesn't load prematurely.
   }
 
   return (
     <Box
       sx={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "flex-start",
-        minHeight: "100vh",
-        backgroundColor: "#f4f4f4",
-        padding: "40px 20px",
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'flex-start',
+        minHeight: '100vh',
+        backgroundColor: '#f4f4f4',
+        padding: '40px 20px',
       }}
     >
       <Card
         sx={{
-          width: "100%",
-          maxWidth: "1000px",
-          padding: "30px",
-          borderRadius: "12px",
-          boxShadow: "0 4px 12px rgba(0, 0, 0, 0.15)",
-          backgroundColor: "#ffffff",
+          width: '100%',
+          maxWidth: '1000px',
+          padding: '30px',
+          borderRadius: '12px',
+          boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
+          backgroundColor: '#ffffff',
         }}
       >
         {/*  Back Button */}
         <Button
           variant="outlined"
           startIcon={<ArrowBack />}
-          onClick={() => navigate("/")}
+          onClick={() => navigate('/')}
           sx={{
             marginBottom: 2,
             marginTop: 4, //  ADD MORE SPACING AT THE TOP
-            backgroundColor: "#fff",
-            color: "black",
-            borderColor: "#ccc",
-            "&:hover": {
-              backgroundColor: "#f9f9f9",
-              borderColor: "#aaa",
+            backgroundColor: '#fff',
+            color: 'black',
+            borderColor: '#ccc',
+            '&:hover': {
+              backgroundColor: '#f9f9f9',
+              borderColor: '#aaa',
             },
           }}
         >
@@ -294,9 +393,9 @@ function EditProduct() {
           variant="h4"
           sx={{
             mb: 4,
-            color: "#2c3e50",
-            fontWeight: "bold",
-            textAlign: "center",
+            color: '#2c3e50',
+            fontWeight: 'bold',
+            textAlign: 'center',
           }}
         >
           Edit Product
@@ -366,8 +465,8 @@ function EditProduct() {
                 sx={{ mb: 2 }}
               />
               <Typography variant="subtitle1" sx={{ mt: 2 }}>
-                Price Range:{" "}
-                <strong>{priceRangeMap[product.priceRange] || "N/A"}</strong>
+                Price Range:{' '}
+                <strong>{priceRangeMap[product.priceRange] || 'N/A'}</strong>
               </Typography>
 
               <Typography variant="subtitle1" sx={{ mt: 2 }}>
@@ -388,7 +487,7 @@ function EditProduct() {
                       label="Size"
                       value={size.sizeName}
                       onChange={(e) =>
-                        handleSizeChange(index, "sizeName", e.target.value)
+                        handleSizeChange(index, 'sizeName', e.target.value)
                       }
                     />
                   </Grid>
@@ -400,11 +499,31 @@ function EditProduct() {
                       type="number"
                       value={size.stockQuantity}
                       onChange={(e) =>
-                        handleSizeChange(index, "stockQuantity", e.target.value)
+                        handleSizeChange(index, 'stockQuantity', e.target.value)
                       }
                     />
                   </Grid>
-                  <Grid item xs={2} sx={{ textAlign: "center" }}>
+                  <Grid item xs={12}>
+                    <Typography variant="subtitle2">
+                      Select Color for this Size:
+                    </Typography>
+                    <FormControl fullWidth>
+                      <InputLabel>Select Color</InputLabel>
+                      <Select
+                        value={size.selectedColor || ''}
+                        onChange={(e) =>
+                          handleColorSelection(index, e.target.value)
+                        }
+                      >
+                        {colors.map((color, colorIndex) => (
+                          <MenuItem key={colorIndex} value={color}>
+                            {color}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={2} sx={{ textAlign: 'center' }}>
                     {sizes.length > 1 && (
                       <IconButton
                         color="error"
@@ -423,59 +542,9 @@ function EditProduct() {
               ))}
 
               <Typography variant="subtitle1" sx={{ mt: 2, mb: 1 }}>
-                Categories:
-              </Typography>
-              <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1 }}>
-                {[
-                  "Landing",
-                  "New arrivals",
-                  "Trending",
-                  "Women",
-                  "Men",
-                  "Girls",
-                  "Boys",
-                ].map((category) => (
-                  <Button
-                    key={category}
-                    variant={
-                      formik.values.categories.includes(category)
-                        ? "contained"
-                        : "outlined"
-                    }
-                    onClick={() => {
-                      const selected = formik.values.categories.includes(
-                        category
-                      )
-                        ? formik.values.categories.filter((c) => c !== category)
-                        : [...formik.values.categories, category];
-
-                      formik.setFieldValue("categories", selected);
-                    }}
-                    sx={{
-                      borderRadius: "20px",
-                      border: "1px solid #ccc",
-                      backgroundColor: formik.values.categories.includes(
-                        category
-                      )
-                        ? "#555"
-                        : "#fff",
-                      color: formik.values.categories.includes(category)
-                        ? "#fff"
-                        : "#000",
-                      "&:hover": { backgroundColor: "#f0f0f0", color: "#000" },
-                      padding: "8px 16px",
-                      textTransform: "none",
-                    }}
-                  >
-                    {category}
-                  </Button>
-                ))}
-              </Box>
-
-              <Typography variant="subtitle1" sx={{ mt: 2, mb: 1 }}>
                 Colors:
               </Typography>
-              <Box sx={{ display: "flex", gap: 1, mb: 2 }}>
+              <Box sx={{ display: 'flex', gap: 1, mb: 2 }}>
                 <TextField
                   fullWidth
                   placeholder="Enter color"
@@ -486,52 +555,102 @@ function EditProduct() {
                   Add
                 </Button>
               </Box>
-              <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1 }}>
+              <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
                 {colors.map((color, index) => (
                   <Chip
                     key={index}
-                    label={color} // Ensure this is a string
-                    onDelete={() => removeColor(color)}
+                    label={color} // This label will now only show the color name
+                    onDelete={() => removeColor(color)} // Removes the color when clicked
                     color="primary"
                   />
                 ))}
               </Box>
 
               <Typography variant="subtitle1" sx={{ mt: 2, mb: 1 }}>
+                Categories:
+              </Typography>
+              <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
+                {[
+                  'Landing',
+                  'New arrivals',
+                  'Trending',
+                  'Women',
+                  'Men',
+                  'Girls',
+                  'Boys',
+                ].map((category) => (
+                  <Button
+                    key={category}
+                    variant={
+                      formik.values.categories.includes(category)
+                        ? 'contained'
+                        : 'outlined'
+                    }
+                    onClick={() => {
+                      const selected = formik.values.categories.includes(
+                        category
+                      )
+                        ? formik.values.categories.filter((c) => c !== category)
+                        : [...formik.values.categories, category];
+
+                      formik.setFieldValue('categories', selected);
+                    }}
+                    sx={{
+                      borderRadius: '20px',
+                      border: '1px solid #ccc',
+                      backgroundColor: formik.values.categories.includes(
+                        category
+                      )
+                        ? '#555'
+                        : '#fff',
+                      color: formik.values.categories.includes(category)
+                        ? '#fff'
+                        : '#000',
+                      '&:hover': { backgroundColor: '#f0f0f0', color: '#000' },
+                      padding: '8px 16px',
+                      textTransform: 'none',
+                    }}
+                  >
+                    {category}
+                  </Button>
+                ))}
+              </Box>
+
+              <Typography variant="subtitle1" sx={{ mt: 2, mb: 1 }}>
                 Fits:
               </Typography>
-              <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1 }}>
-                {["Regular Tapered", "Skinny Tapered", "Seasonal Fit"].map(
+              <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
+                {['Regular Tapered', 'Skinny Tapered', 'Seasonal Fit'].map(
                   (fit) => (
                     <Button
                       key={fit}
                       variant={
                         formik.values.fits.includes(fit)
-                          ? "contained"
-                          : "outlined"
+                          ? 'contained'
+                          : 'outlined'
                       }
                       onClick={() => {
                         const selected = formik.values.fits.includes(fit)
                           ? formik.values.fits.filter((f) => f !== fit)
                           : [...formik.values.fits, fit];
 
-                        formik.setFieldValue("fits", selected);
+                        formik.setFieldValue('fits', selected);
                       }}
                       sx={{
-                        borderRadius: "20px",
-                        border: "1px solid #ccc",
+                        borderRadius: '20px',
+                        border: '1px solid #ccc',
                         backgroundColor: formik.values.fits.includes(fit)
-                          ? "#555"
-                          : "#fff",
+                          ? '#555'
+                          : '#fff',
                         color: formik.values.fits.includes(fit)
-                          ? "#fff"
-                          : "#000",
-                        "&:hover": {
-                          backgroundColor: "#f0f0f0",
-                          color: "#000",
+                          ? '#fff'
+                          : '#000',
+                        '&:hover': {
+                          backgroundColor: '#f0f0f0',
+                          color: '#000',
                         },
-                        padding: "8px 16px",
-                        textTransform: "none",
+                        padding: '8px 16px',
+                        textTransform: 'none',
                       }}
                     >
                       {fit}
@@ -544,12 +663,12 @@ function EditProduct() {
             <Grid item xs={12} md={4}>
               <Box
                 sx={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  textAlign: "center",
-                  height: "100%",
-                  justifyContent: "center",
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  textAlign: 'center',
+                  height: '100%',
+                  justifyContent: 'center',
                   gap: 2,
                 }}
               >
@@ -557,8 +676,8 @@ function EditProduct() {
                   variant="contained"
                   component="label"
                   sx={{
-                    backgroundColor: "#4caf50",
-                    "&:hover": { backgroundColor: "#45a049" },
+                    backgroundColor: '#4caf50',
+                    '&:hover': { backgroundColor: '#45a049' },
                   }}
                 >
                   Upload Image
@@ -582,20 +701,20 @@ function EditProduct() {
                   imageFile && (
                     <Box
                       sx={{
-                        width: "200px",
-                        height: "200px",
-                        border: "1px solid #ddd",
-                        borderRadius: "4px",
-                        overflow: "hidden",
+                        width: '200px',
+                        height: '200px',
+                        border: '1px solid #ddd',
+                        borderRadius: '4px',
+                        overflow: 'hidden',
                       }}
                     >
                       <img
                         alt="Product Preview"
                         src={getImageUrl(imageFile)}
                         style={{
-                          width: "100%",
-                          height: "100%",
-                          objectFit: "cover",
+                          width: '100%',
+                          height: '100%',
+                          objectFit: 'cover',
                         }}
                       />
                     </Box>
@@ -605,14 +724,14 @@ function EditProduct() {
             </Grid>
           </Grid>
           <CardActions
-            sx={{ display: "flex", justifyContent: "space-between", mt: 4 }}
+            sx={{ display: 'flex', justifyContent: 'space-between', mt: 4 }}
           >
             <Button
               type="submit" // Make sure it submits the form
               variant="contained"
               sx={{
-                backgroundColor: "#4caf50",
-                "&:hover": { backgroundColor: "#45a049" },
+                backgroundColor: '#4caf50',
+                '&:hover': { backgroundColor: '#45a049' },
               }}
             >
               Update

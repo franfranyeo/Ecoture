@@ -1,62 +1,69 @@
-import React, { useEffect, useState, useContext } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useContext, useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import http from 'utils/http';
+
+import { Clear, Search } from '@mui/icons-material';
 import {
   Box,
-  Typography,
-  Grid,
+  Button,
   Card,
   CardContent,
   CardMedia,
-  Button,
-  InputBase,
-  IconButton,
+  Chip,
   Dialog,
-  DialogTitle,
+  DialogActions,
   DialogContent,
   DialogContentText,
-  DialogActions,
+  DialogTitle,
+  FormControl,
+  Grid,
+  IconButton,
+  InputBase,
+  InputLabel,
   MenuItem,
   Select,
-  FormControl,
-  InputLabel,
-  Chip,
-} from "@mui/material";
-import { Search, Clear } from "@mui/icons-material";
-import http from "utils/http";
-import UserContext from "../contexts/UserContext";
+  Typography,
+} from '@mui/material';
+
+import UserContext from '../contexts/UserContext';
 
 function Products({ onAddProductClick }) {
   const [productList, setProductList] = useState([]);
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState('');
   const { user } = useContext(UserContext);
   const navigate = useNavigate();
 
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [productToDelete, setProductToDelete] = useState(null);
 
-  const [reviewText, setReviewText] = useState("");
-  const [reviewRating, setReviewRating] = useState("");
+  const [reviewText, setReviewText] = useState('');
+  const [reviewRating, setReviewRating] = useState('');
   const [reviewFormOpen, setReviewFormOpen] = useState(null);
 
   const { categoryName } = useParams(); // Get category from URL
-  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState('');
+
+  const [selectedColor, setSelectedColor] = useState('');
+  const [selectedSize, setSelectedSize] = useState('');
+  const [selectedFit, setSelectedFit] = useState('');
+  const [selectedPriceRange, setSelectedPriceRange] = useState('');
 
   useEffect(() => {
-    setSelectedCategory(categoryName || ""); // Sync category from URL
+    setSelectedCategory(categoryName || ''); // Sync category from URL
   }, [categoryName]);
 
   const getProducts = () => {
     http
-      .get("/product") // Fetch all products first
+      .get('/product')
       .then((res) => {
         let filteredProducts = res.data;
 
         if (selectedCategory) {
           filteredProducts = filteredProducts.filter((product) => {
             if (!product.categories || product.categories.length === 0)
-              return false; // Skip if no categories
+              return false;
 
-            // Ensure categories is treated as an array and check if it includes the selected category
             const categories = product.categories.map((c) =>
               c.categoryName.toLowerCase()
             );
@@ -65,17 +72,47 @@ function Products({ onAddProductClick }) {
           });
         }
 
+        if (selectedColor) {
+          filteredProducts = filteredProducts.filter((product) =>
+            product.sizeColors.some((sc) => sc.colorName === selectedColor)
+          );
+        }
+
+        if (selectedSize) {
+          filteredProducts = filteredProducts.filter((product) =>
+            product.sizeColors.some((sc) => sc.sizeName === selectedSize)
+          );
+        }
+
+        if (selectedFit) {
+          filteredProducts = filteredProducts.filter((product) =>
+            product.fits.some((fit) => fit.fitName === selectedFit)
+          );
+        }
+
+        if (selectedPriceRange) {
+          filteredProducts = filteredProducts.filter(
+            (product) => product.priceRange === parseInt(selectedPriceRange, 10)
+          );
+        }
+
         setProductList(filteredProducts);
       })
       .catch((err) => {
-        console.error("Error fetching products:", err);
+        console.error('Error fetching products:', err);
       });
   };
 
   // Fetch products when category changes
   useEffect(() => {
     getProducts();
-  }, [selectedCategory]); //  Now listens to dropdown changes
+  }, [
+    selectedCategory,
+    selectedColor,
+    selectedSize,
+    selectedFit,
+    selectedPriceRange,
+  ]);
 
   const handleCategoryChange = (event) => {
     const newCategory = event.target.value;
@@ -84,18 +121,19 @@ function Products({ onAddProductClick }) {
     if (newCategory) {
       navigate(`/category/${newCategory}`);
     } else {
-      navigate("/");
+      navigate('/');
     }
   };
 
   const searchProducts = () => {
+    const query = encodeURIComponent(search); // Safeguard against special characters
     http
-      .get(`/product?search=${search}`)
+      .get(`/product?search=${query}`)
       .then((res) => {
         setProductList(res.data);
       })
       .catch((err) => {
-        console.error("Error searching products:", err);
+        console.error('Error searching products:', err);
       });
   };
 
@@ -104,7 +142,7 @@ function Products({ onAddProductClick }) {
   };
 
   const onSearchKeyDown = (e) => {
-    if (e.key === "Enter") {
+    if (e.key === 'Enter') {
       searchProducts();
     }
   };
@@ -114,7 +152,7 @@ function Products({ onAddProductClick }) {
   };
 
   const onClickClear = () => {
-    setSearch("");
+    setSearch('');
     getProducts();
   };
 
@@ -139,22 +177,25 @@ function Products({ onAddProductClick }) {
           closeDeleteDialog();
         })
         .catch(() => {
-          alert("Failed to delete product. Please try again.");
+          toast.error('Failed to delete product. Please try again.');
         });
     }
   };
 
-  const getSizeRange = (sizes) => {
-    if (!sizes || sizes.length === 0) return "";
-    const sizeOrder = ["XS", "S", "M", "L", "XL", "XXL", "XXXL"];
-    const sortedSizes = sizes
-      .map((size) => size.sizeName)
-      .filter((name) => sizeOrder.includes(name))
-      .sort((a, b) => sizeOrder.indexOf(a) - sizeOrder.indexOf(b));
+  const getSizeRange = (sizeColors) => {
+    if (!sizeColors || sizeColors.length === 0) return 'No sizes available';
 
-    return sortedSizes.length === 1
-      ? sortedSizes[0]
-      : `${sortedSizes[0]}-${sortedSizes[sortedSizes.length - 1]}`;
+    const sizeOrder = ['XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL'];
+
+    // Extract unique sizes, ignoring color variations
+    const uniqueSizes = [
+      ...new Set(sizeColors.map((item) => item.sizeName)),
+    ].sort((a, b) => sizeOrder.indexOf(a) - sizeOrder.indexOf(b));
+
+    if (uniqueSizes.length === 0) return 'Out of stock';
+    if (uniqueSizes.length === 1) return `Size: ${uniqueSizes[0]}`;
+
+    return `Sizes: ${uniqueSizes[0]} - ${uniqueSizes[uniqueSizes.length - 1]}`;
   };
 
   const toggleReviewForm = (productId, e) => {
@@ -165,7 +206,7 @@ function Products({ onAddProductClick }) {
   const submitReview = (productId, e) => {
     e.stopPropagation();
     if (!reviewText || !reviewRating) {
-      alert("Please provide valid review text and a rating.");
+      toast.error('Please provide valid review text and a rating.');
       return;
     }
 
@@ -173,19 +214,19 @@ function Products({ onAddProductClick }) {
       productId,
       comment: reviewText,
       rating: reviewRating,
-      username: user?.name || "Anonymous",
+      username: user?.name || 'Anonymous',
     };
 
     http
-      .post("/reviews", reviewData)
+      .post('/reviews', reviewData)
       .then(() => {
-        setReviewText("");
-        setReviewRating("");
+        setReviewText('');
+        setReviewRating('');
         setReviewFormOpen(null);
       })
       .catch((err) => {
-        console.error("Error adding review:", err);
-        alert("Failed to add review. Please try again.");
+        console.error('Error adding review:', err);
+        toast.error('Failed to add review. Please try again.');
       });
   };
 
@@ -200,72 +241,110 @@ function Products({ onAddProductClick }) {
         variant="h4"
         sx={{
           marginBottom: 3,
-          textAlign: "center",
-          fontWeight: "bold",
+          textAlign: 'center',
+          fontWeight: 'bold',
         }}
       >
         Our Products
       </Typography>
-      <FormControl
+      <Box
         sx={{
-          minWidth: 180,
-          maxWidth: 220,
+          display: 'flex',
+          gap: 2,
+          flexWrap: 'wrap',
+          justifyContent: 'center',
           marginBottom: 2,
-          marginTop: 1,
-          backgroundColor: "#fff",
-          borderRadius: "8px",
-          boxShadow: "0px 2px 4px rgba(0,0,0,0.1)",
-          "& .MuiInputLabel-root": {
-            fontSize: "14px",
-            color: "#555",
-            transform: "translate(14px, -9px) scale(0.75)", // Adjusted label position
-            backgroundColor: "#fff",
-            padding: "0 4px",
-          },
         }}
       >
-        {/* Only render the dropdown if the user is logged in */}
-        {user && user.role && user.role == "Admin" && (
-          <>
-            <InputLabel shrink>Category</InputLabel>
-            <Select
-              value={selectedCategory} // Controlled by state
-              onChange={handleCategoryChange} // Updates the URL dynamically
-              displayEmpty
-              sx={{
-                textAlign: "left",
-                padding: "12px",
-                fontSize: "14px",
-                "& .MuiSelect-select": {
-                  padding: "10px",
-                  display: "flex",
-                  alignItems: "center",
-                },
-                "& .MuiOutlinedInput-notchedOutline": {
-                  borderColor: "#ddd",
-                },
-                "&:hover .MuiOutlinedInput-notchedOutline": {
-                  borderColor: "#888",
-                },
-              }}
-            >
-              <MenuItem value="">All Categories</MenuItem>
-              <MenuItem value="Men">Men</MenuItem>
-              <MenuItem value="Women">Women</MenuItem>
-              <MenuItem value="Trending">Trending</MenuItem>
-              <MenuItem value="New arrivals">New Arrivals</MenuItem>
-              <MenuItem value="Girls">Girls</MenuItem>
-              <MenuItem value="Boys">Boys</MenuItem>
-            </Select>
-          </>
-        )}
-      </FormControl>
+        {/* Category Filter */}
+        <FormControl sx={{ minWidth: 180 }}>
+          <InputLabel shrink>Category</InputLabel>
+          <Select
+            value={selectedCategory}
+            onChange={handleCategoryChange}
+            displayEmpty
+          >
+            <MenuItem value="">All Categories</MenuItem>
+            <MenuItem value="Men">Men</MenuItem>
+            <MenuItem value="Women">Women</MenuItem>
+            <MenuItem value="Trending">Trending</MenuItem>
+            <MenuItem value="New arrivals">New Arrivals</MenuItem>
+            <MenuItem value="Girls">Girls</MenuItem>
+            <MenuItem value="Boys">Boys</MenuItem>
+          </Select>
+        </FormControl>
+
+        {/* ✅ Fix: Color Filter (Overlapping Text Fixed) */}
+        <FormControl sx={{ minWidth: 180 }}>
+          <InputLabel shrink>Color</InputLabel>
+          <Select
+            value={selectedColor}
+            onChange={(e) => setSelectedColor(e.target.value)}
+            displayEmpty
+          >
+            <MenuItem value="">All Colors</MenuItem>
+            <MenuItem value="Blue">Blue</MenuItem>
+            <MenuItem value="Black">Black</MenuItem>
+            <MenuItem value="Red">Red</MenuItem>
+            <MenuItem value="White">White</MenuItem>
+          </Select>
+        </FormControl>
+
+        {/* Size Filter */}
+        <FormControl sx={{ minWidth: 150 }}>
+          <InputLabel shrink>Size</InputLabel>
+          <Select
+            value={selectedSize}
+            onChange={(e) => setSelectedSize(e.target.value)}
+            displayEmpty
+          >
+            <MenuItem value="">All Sizes</MenuItem>
+            <MenuItem value="S">S</MenuItem>
+            <MenuItem value="M">M</MenuItem>
+            <MenuItem value="L">L</MenuItem>
+            <MenuItem value="XL">XL</MenuItem>
+            <MenuItem value="XXL">XXL</MenuItem>
+          </Select>
+        </FormControl>
+
+        {/* Fit Filter */}
+        <FormControl sx={{ minWidth: 180 }}>
+          <InputLabel shrink>Fit</InputLabel>
+          <Select
+            value={selectedFit}
+            onChange={(e) => setSelectedFit(e.target.value)}
+            displayEmpty
+          >
+            <MenuItem value="">All Fits</MenuItem>
+            <MenuItem value="Regular Tapered">Regular Tapered</MenuItem>
+            <MenuItem value="Skinny Tapered">Skinny Tapered</MenuItem>
+            <MenuItem value="Seasonal Fit">Seasonal Fit</MenuItem>
+          </Select>
+        </FormControl>
+
+     
+        <FormControl sx={{ minWidth: 180 }}>
+          <InputLabel shrink>Price Range</InputLabel>
+          <Select
+            value={selectedPriceRange}
+            onChange={(e) => setSelectedPriceRange(e.target.value)}
+            displayEmpty
+          >
+            <MenuItem value="">All Prices</MenuItem>
+            <MenuItem value="1">$10 - $20</MenuItem>
+            <MenuItem value="2">$20 - $30</MenuItem>
+            <MenuItem value="3">$30 - $40</MenuItem>
+            <MenuItem value="4">$40 - $50</MenuItem>
+            <MenuItem value="5">$50+</MenuItem>
+          </Select>
+        </FormControl>
+      </Box>
 
       <Box
         sx={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
           marginBottom: 4,
           gap: 1,
         }}
@@ -276,9 +355,9 @@ function Products({ onAddProductClick }) {
           onChange={onSearchChange}
           onKeyDown={onSearchKeyDown}
           sx={{
-            border: "1px solid #ccc",
-            borderRadius: "50px",
-            padding: "0.5rem 1rem",
+            border: '1px solid #ccc',
+            borderRadius: '50px',
+            padding: '0.5rem 1rem',
             flex: 1,
             maxWidth: 400,
           }}
@@ -289,12 +368,12 @@ function Products({ onAddProductClick }) {
         <IconButton color="secondary" onClick={onClickClear}>
           <Clear />
         </IconButton>
-        {user && user.role && user.role == "Admin" && (
+        {user && user.role && user.role == 'Admin' && (
           <Button
             variant="contained"
             color="primary"
             onClick={onAddProductClick}
-            sx={{ borderRadius: "50px" }}
+            sx={{ borderRadius: '50px' }}
           >
             Add Product
           </Button>
@@ -307,17 +386,17 @@ function Products({ onAddProductClick }) {
             <Grid item xs={12} sm={6} md={4} lg={3} key={product.id}>
               <Card
                 sx={{
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "space-between",
-                  height: "100%",
-                  borderRadius: "12px",
-                  boxShadow: "none",
-                  border: "1px solid #e0e0e0",
-                  transition: "transform 0.2s",
-                  "&:hover": {
-                    transform: "scale(1.03)",
-                    boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'space-between',
+                  height: '100%',
+                  borderRadius: '12px',
+                  boxShadow: 'none',
+                  border: '1px solid #e0e0e0',
+                  transition: 'transform 0.2s',
+                  '&:hover': {
+                    transform: 'scale(1.03)',
+                    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
                   },
                 }}
                 onClick={() => navigate(`/product/${product.id}`)}
@@ -329,75 +408,67 @@ function Products({ onAddProductClick }) {
                     image={`${import.meta.env.VITE_FILE_BASE_URL}${
                       product.imageFile
                     }`}
-                    sx={{ height: 250, objectFit: "cover" }}
+                    sx={{ height: 250, objectFit: 'cover' }}
                   />
                 )}
                 <CardContent>
                   <Box
-                    sx={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                    }}
+                    sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}
                   >
-                    {product.sizes?.length > 0 && (
-                      <Typography
-                        variant="body2"
-                        color="text.secondary"
-                        sx={{ fontWeight: "bold" }}
-                      >
-                        {getSizeRange(product.sizes)}
-                      </Typography>
+                    {product.sizeColors?.length > 0 && (
+                      <Box>
+                        <Typography
+                          variant="body2"
+                          color="text.secondary"
+                          sx={{ fontWeight: 'bold', marginBottom: 0.5 }}
+                        >
+                          Available Sizes:
+                        </Typography>
+                        <Typography variant="body2" color="text.primary">
+                          {getSizeRange(product.sizeColors)}
+                        </Typography>
+                      </Box>
                     )}
-                  </Box>
-                  <Typography
-                    variant="h6"
-                    sx={{ fontWeight: "bold", marginBottom: 1 }}
-                  >
-                    {product.title}
-                  </Typography>
-                  {product.sizes?.length > 0 && (
+
+                    {/* Display price */}
                     <Typography
-                      variant="body2"
-                      color="text.secondary"
-                      sx={{ fontWeight: "bold", marginBottom: 1 }}
+                      variant="h6"
+                      sx={{ fontWeight: 'bold', marginBottom: 1 }}
                     >
-                      Total Quantity Available:{" "}
-                      {product.sizes.reduce(
-                        (total, size) => total + size.stockQuantity,
-                        0
-                      )}
+                      {product.title}
                     </Typography>
-                  )}
-                  {product.discountedPrice ? (
-                    <Box>
-                      <Typography
-                        variant="body2"
-                        color="text.secondary"
-                        sx={{
-                          textDecoration: "line-through",
-                          fontSize: "0.9rem",
-                        }}
-                      >
-                        ${product.originalPrice?.toFixed(2)}
-                      </Typography>
+
+                    {/* Discounted price */}
+                    {product.discountedPrice ? (
+                      <Box>
+                        <Typography
+                          variant="body2"
+                          color="text.secondary"
+                          sx={{
+                            textDecoration: 'line-through',
+                            fontSize: '0.9rem',
+                          }}
+                        >
+                          ${product.originalPrice?.toFixed(2)}
+                        </Typography>
+                        <Typography
+                          variant="h6"
+                          color="primary"
+                          sx={{ fontWeight: 'bold' }}
+                        >
+                          ${product.discountedPrice.toFixed(2)}
+                        </Typography>
+                      </Box>
+                    ) : (
                       <Typography
                         variant="h6"
                         color="primary"
-                        sx={{ fontWeight: "bold" }}
+                        sx={{ fontWeight: 'bold' }}
                       >
-                        ${product.discountedPrice.toFixed(2)}
+                        ${product.price?.toFixed(2)}
                       </Typography>
-                    </Box>
-                  ) : (
-                    <Typography
-                      variant="h6"
-                      color="primary"
-                      sx={{ fontWeight: "bold" }}
-                    >
-                      ${product.price?.toFixed(2)}
-                    </Typography>
-                  )}
+                    )}
+                  </Box>
                 </CardContent>
 
                 <Box sx={{ padding: 2 }}>
@@ -409,8 +480,8 @@ function Products({ onAddProductClick }) {
                       sx={{ marginTop: 1 }}
                     >
                       {reviewFormOpen === product.id
-                        ? "Cancel"
-                        : "Write a Review"}
+                        ? 'Cancel'
+                        : 'Write a Review'}
                     </Button>
                   )}
 
@@ -424,11 +495,11 @@ function Products({ onAddProductClick }) {
                         value={reviewText}
                         onChange={(e) => setReviewText(e.target.value)}
                         sx={{
-                          border: "1px solid #ccc",
-                          borderRadius: "8px",
-                          padding: "0.5rem",
+                          border: '1px solid #ccc',
+                          borderRadius: '8px',
+                          padding: '0.5rem',
                           marginBottom: 1,
-                          width: "100%",
+                          width: '100%',
                         }}
                       />
                       <FormControl
@@ -469,11 +540,11 @@ function Products({ onAddProductClick }) {
                   </Button>
                 </Box>
 
-                {user && user.role && user.role == "Admin" && (
+                {user && user.role && user.role == 'Admin' && (
                   <Box
                     sx={{
-                      display: "flex",
-                      justifyContent: "space-between",
+                      display: 'flex',
+                      justifyContent: 'space-between',
                       padding: 1,
                     }}
                   >
@@ -484,7 +555,7 @@ function Products({ onAddProductClick }) {
                         e.stopPropagation();
                         navigate(`/editproduct/${product.id}`);
                       }}
-                      sx={{ fontSize: "0.8rem" }}
+                      sx={{ fontSize: '0.8rem' }}
                     >
                       Edit
                     </Button>
@@ -495,7 +566,7 @@ function Products({ onAddProductClick }) {
                         e.stopPropagation();
                         openDeleteDialog(product);
                       }}
-                      sx={{ fontSize: "0.8rem" }}
+                      sx={{ fontSize: '0.8rem' }}
                     >
                       Delete
                     </Button>
@@ -509,7 +580,7 @@ function Products({ onAddProductClick }) {
         <Typography
           variant="h6"
           color="text.secondary"
-          sx={{ textAlign: "center", marginTop: 4 }}
+          sx={{ textAlign: 'center', marginTop: 4 }}
         >
           No products found in this category.
         </Typography>

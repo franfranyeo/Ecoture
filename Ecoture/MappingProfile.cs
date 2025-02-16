@@ -1,11 +1,9 @@
 ﻿using AutoMapper;
 using Ecoture.Model.Entity;
-using Ecoture.Model;
 using Ecoture.Model.Enum;
 using Ecoture.Model.DTO;
 using Ecoture.Model.Request;
 using System.Linq;
-using Ecoture.Model.DTO;
 
 namespace Ecoture
 {
@@ -13,61 +11,52 @@ namespace Ecoture
     {
         public MappingProfile()
         {
+            // ✅ Map Enquiry & Response
             CreateMap<Enquiry, EnquiryDTO>();
-            CreateMap<Response, ResponseDTO>();
             CreateMap<Response, ResponseDTO>()
                 .ForMember(dest => dest.Subject, opt => opt.MapFrom(src => src.Enquiry.subject));
 
+            // ✅ Map Cart & Orders
             CreateMap<Cart, CartDTO>().ReverseMap();
             CreateMap<AddToCartRequest, Cart>().ReverseMap();
-
             CreateMap<Order, OrderDTO>()
-            .ForMember(dest => dest.OrderItems, opt => opt.MapFrom(src => src.OrderItems));
-
-            // Map OrderItem to OrderItemDTO
+                .ForMember(dest => dest.OrderItems, opt => opt.MapFrom(src => src.OrderItems));
             CreateMap<OrderItem, OrderItemDTO>();
 
             // ✅ Map Product to ProductDTO
             CreateMap<Product, ProductDTO>()
-                .ForMember(dest => dest.Sizes, opt => opt.MapFrom(src => src.ProductSizes.Select(ps => new ProductSizeDTO
-                {
-                    SizeName = ps.Size.Name,
-                    StockQuantity = ps.StockQuantity
-                })))
-                .ForMember(dest => dest.Colors, opt => opt.MapFrom(src => src.ProductColors.Select(pc => new ProductColorDTO
-                {
-                    ColorName = pc.Color.Name
-                })))
-                .ForMember(dest => dest.Fits, opt => opt.MapFrom(src => src.ProductFits.Select(pf => new FitDTO
-                {
-                    FitName = pf.Fit.Name
-                })))
-                .ForMember(dest => dest.Categories, opt => opt.MapFrom(src => src.ProductCategories.Select(pc => new CategoryDTO
-                {
-                    
-                    CategoryName = pc.Category.Name
-                })))
+                .ForMember(dest => dest.SizeColors, opt => opt.MapFrom(src => src.ProductSizeColors
+                    .Select(psc => new ProductSizeColorDTO
+                    {
+                        SizeName = psc.Size.Name,
+                        ColorName = psc.Color.Name,
+                        StockQuantity = psc.StockQuantity
+                    })))
+                .ForMember(dest => dest.Fits, opt => opt.MapFrom(src => src.ProductFits
+                    .Select(pf => new FitDTO
+                    {
+                        FitName = pf.Fit.Name
+                    })))
+                .ForMember(dest => dest.Categories, opt => opt.MapFrom(src => src.ProductCategories
+                    .Select(pc => new CategoryDTO
+                    {
+                        CategoryName = pc.Category.Name
+                    })))
                 .ReverseMap();
 
-            // ✅ Map ProductSize to ProductSizeDTO
-            CreateMap<ProductSize, ProductSizeDTO>()
+            // ✅ Map ProductSizeColor to ProductSizeColorDTO
+            CreateMap<ProductSizeColor, ProductSizeColorDTO>()
                 .ForMember(dest => dest.SizeName, opt => opt.MapFrom(src => src.Size.Name))
-                .ReverseMap();
-
-            // ✅ Map ProductColor to ProductColorDTO
-            CreateMap<ProductColor, ProductColorDTO>()
                 .ForMember(dest => dest.ColorName, opt => opt.MapFrom(src => src.Color.Name))
                 .ReverseMap();
 
             // ✅ Map ProductFit to FitDTO
             CreateMap<ProductFit, FitDTO>()
-                
                 .ForMember(dest => dest.FitName, opt => opt.MapFrom(src => src.Fit.Name))
                 .ReverseMap();
 
             // ✅ Map ProductCategory to CategoryDTO
             CreateMap<ProductCategory, CategoryDTO>()
-                
                 .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.Category.Name))
                 .ReverseMap();
 
@@ -82,18 +71,22 @@ namespace Ecoture
 
             // ✅ Map AddProductRequest to Product (For Creating Products)
             CreateMap<AddProductRequest, Product>()
-                .ForMember(dest => dest.ProductSizes, opt => opt.Ignore()) // Sizes are handled separately
-                .ForMember(dest => dest.ProductColors, opt => opt.Ignore()) // Colors are handled separately
+                .ForMember(dest => dest.ProductSizeColors, opt => opt.Ignore()) // ✅ Sizes & Colors handled separately
                 .ForMember(dest => dest.ProductFits, opt => opt.Ignore()) // ✅ Ignore fits (handled in ProductController)
                 .ForMember(dest => dest.ProductCategories, opt => opt.Ignore()) // ✅ Ignore categories (handled in ProductController)
                 .ReverseMap();
 
             // ✅ Map UpdateProductRequest to Product (For Updating Products)
             CreateMap<UpdateProductRequest, Product>()
-                .ForMember(dest => dest.ProductSizes, opt => opt.Ignore()) // Sizes are handled separately
-                .ForMember(dest => dest.ProductColors, opt => opt.Ignore()) // Colors are handled separately
+                .ForMember(dest => dest.ProductSizeColors, opt => opt.Ignore()) // ✅ Sizes & Colors handled separately
                 .ForMember(dest => dest.ProductFits, opt => opt.Ignore()) // ✅ Ignore fits (handled in ProductController)
                 .ForMember(dest => dest.ProductCategories, opt => opt.Ignore()) // ✅ Ignore categories (handled in ProductController)
+                .ReverseMap();
+
+            // ✅ Map SizeColorRequest to ProductSizeColor (For handling size and color mapping)
+            CreateMap<SizeColorRequest, ProductSizeColor>()
+                .ForMember(dest => dest.SizeId, opt => opt.Ignore()) // Ensure size lookup is handled
+                .ForMember(dest => dest.ColorId, opt => opt.Ignore()) // Ensure color lookup is handled
                 .ReverseMap();
 
             // ✅ Map Order to OrderDTO

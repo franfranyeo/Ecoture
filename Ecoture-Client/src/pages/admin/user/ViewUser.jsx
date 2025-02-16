@@ -1,24 +1,25 @@
-import React, { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
-import http from "utils/http";
+import { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import http from 'utils/http';
+
+import { ArrowBack, Edit, Lock } from '@mui/icons-material';
 import {
-  Box,
-  Typography,
-  Paper,
-  IconButton,
-  Grid,
   Avatar,
-  Divider,
+  Box,
   Button,
   Dialog,
-  DialogTitle,
+  DialogActions,
   DialogContent,
   DialogContentText,
-  DialogActions,
-} from "@mui/material";
-import { ArrowBack, Edit, Lock } from "@mui/icons-material";
-import "react-toastify/dist/ReactToastify.css";
-import { toast } from "react-toastify";
+  DialogTitle,
+  Divider,
+  Grid,
+  IconButton,
+  Paper,
+  Typography,
+} from '@mui/material';
 
 function ViewUser() {
   const navigate = useNavigate();
@@ -29,13 +30,13 @@ function ViewUser() {
   const [userId, setUserId] = useState(null);
 
   const options = {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-    hour: "numeric",
-    minute: "numeric",
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
     hour12: true,
-    timeZone: "GMT",
+    timeZone: 'GMT',
   };
 
   useEffect(() => {
@@ -43,15 +44,15 @@ function ViewUser() {
       const cleanedUser = {
         ...res.data,
         dateofBirth: res.data.dateofBirth
-          ? res.data.dateofBirth.split("T")[0]
-          : "Not set",
-        mobileNumber: res.data.mobileNumber || "Not set",
+          ? res.data.dateofBirth.split('T')[0]
+          : 'Not set',
+        mobileNumber: res.data.mobileNumber || 'Not set',
         createdAt: new Date(res.data.createdAt).toLocaleDateString(
-          "en-US",
+          'en-US',
           options
         ),
         updatedAt: new Date(res.data.updatedAt).toLocaleDateString(
-          "en-US",
+          'en-US',
           options
         ),
       };
@@ -79,11 +80,11 @@ function ViewUser() {
     if (userId) {
       try {
         await http.delete(`/user/${userId}`);
-        toast.success("User deleted successfully");
-        navigate("/admin/users");
+        toast.success('User deleted successfully');
+        navigate('/admin/users');
       } catch (error) {
-        console.error("Error deleting user:", error);
-        toast.error("Failed to delete user");
+        console.error('Error deleting user:', error);
+        toast.error('Failed to delete user');
       } finally {
         setOpen(false);
         setUserId(null);
@@ -94,7 +95,7 @@ function ViewUser() {
   const handleResetPassword = async () => {
     setLoading(true);
     try {
-      const response = await http.post("/user/reset-password", {
+      const response = await http.post('/user/reset-password', {
         userId: id,
       });
       toast.success(response.data.message);
@@ -107,10 +108,10 @@ function ViewUser() {
 
   return (
     <>
-      <Box sx={{ display: "flex", alignItems: "center", mb: 3 }}>
+      <Box sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
         <IconButton
-          sx={{ cursor: "pointer" }}
-          onClick={() => navigate("/admin/users")}
+          sx={{ cursor: 'pointer' }}
+          onClick={() => navigate('/admin/users')}
         >
           <ArrowBack fontSize="large" />
         </IconButton>
@@ -121,14 +122,14 @@ function ViewUser() {
         sx={{
           p: 4,
           borderRadius: 3,
-          position: "relative",
+          position: 'relative',
         }}
       >
         {/* Edit Icon in Top Right Corner */}
         <IconButton
           onClick={handleEdit}
           sx={{
-            position: "absolute",
+            position: 'absolute',
             top: 16,
             right: 16,
           }}
@@ -140,8 +141,8 @@ function ViewUser() {
           <>
             <Box
               sx={{
-                display: "flex",
-                alignItems: "center",
+                display: 'flex',
+                alignItems: 'center',
                 mb: 4,
               }}
             >
@@ -150,7 +151,7 @@ function ViewUser() {
                   width: 120,
                   height: 120,
                 }}
-                src={user.pfpURL || ""}
+                src={user.pfpURL || ''}
                 alt={`${user.firstName} ${user.lastName}`}
               />
               <Box>
@@ -158,8 +159,8 @@ function ViewUser() {
                   variant="h4"
                   sx={{
                     ml: 3,
-                    color: "#333",
-                    fontWeight: "500",
+                    color: '#333',
+                    fontWeight: '500',
                   }}
                 >
                   {user.fullName}
@@ -191,7 +192,7 @@ function ViewUser() {
                     <strong>Last Name:</strong> {user.lastName}
                   </Typography>
                 </Grid>
-                {user.role !== "Admin" && (
+                {user.role !== 'Admin' && (
                   <>
                     <Grid item xs={12} sm={6}>
                       <Typography variant="body1">
@@ -205,7 +206,7 @@ function ViewUser() {
                     <strong>Email:</strong> {user.email}
                   </Typography>
                 </Grid>
-                {user.role !== "Admin" && (
+                {user.role !== 'Admin' && (
                   <Grid item xs={12} sm={6}>
                     <Typography variant="body1">
                       <strong>Mobile Number:</strong> {user.mobileNumber}
@@ -214,8 +215,8 @@ function ViewUser() {
                 )}
                 <Grid item xs={12} sm={6}>
                   <Typography variant="body1">
-                    <strong>Referral Code:</strong>{" "}
-                    {user.referralCode ? user.referralCode : "N/A"}
+                    <strong>Referral Code:</strong>{' '}
+                    {user.referralCode ? user.referralCode : 'N/A'}
                   </Typography>
                 </Grid>
               </Grid>
@@ -229,20 +230,20 @@ function ViewUser() {
               <Grid container spacing={2}>
                 <Grid item xs={12} sm={6}>
                   <Typography variant="body1">
-                    <strong>2FA Enabled:</strong>{" "}
-                    {user.is2FAEnabled ? "Yes" : "No"}
+                    <strong>2FA Enabled:</strong>{' '}
+                    {user.is2FAEnabled ? 'Yes' : 'No'}
                   </Typography>
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <Typography variant="body1">
-                    <strong>Email Verified:</strong>{" "}
-                    {user.isEmailVerified ? "Yes" : "No"}
+                    <strong>Email Verified:</strong>{' '}
+                    {user.isEmailVerified ? 'Yes' : 'No'}
                   </Typography>
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <Typography variant="body1">
-                    <strong>Phone Verified:</strong>{" "}
-                    {user.isPhoneVerified ? "Yes" : "No"}
+                    <strong>Phone Verified:</strong>{' '}
+                    {user.isPhoneVerified ? 'Yes' : 'No'}
                   </Typography>
                 </Grid>
                 <Grid item xs={6}>
@@ -300,9 +301,9 @@ function ViewUser() {
       >
         <DialogTitle
           id="alert-dialog-title"
-          sx={{ color: "#e2160f", fontWeight: "bold" }}
+          sx={{ color: '#e2160f', fontWeight: 'bold' }}
         >
-          {"Delete Account?"}
+          {'Delete Account?'}
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description" sx={{ mb: 2 }}>

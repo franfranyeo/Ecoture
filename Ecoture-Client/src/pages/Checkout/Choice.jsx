@@ -1,18 +1,19 @@
-import React, { useState, useEffect, useContext} from "react";
+import { useEffect, useState } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import http from 'utils/http';
+
 import {
+  Alert,
   Box,
-  Typography,
-  Grid,
+  Button,
   Card,
   CardContent,
   CardMedia,
-  Button,
-  Alert,
+  Grid,
   IconButton,
-} from "@mui/material";
-import { useLocation, useNavigate, Link } from "react-router-dom";
-import http from "utils/http";
-import UserContext from "contexts/UserContext";
+  Typography,
+} from '@mui/material';
 
 function Choice() {
   const [addresses, setAddresses] = useState([]);
@@ -27,44 +28,31 @@ function Choice() {
 
   useEffect(() => {
     // Fetching addresses and credit cards
-    Promise.all([http.get("/address"), http.get("/creditcard")])
+    Promise.all([http.get('/address'), http.get('/creditcard')])
       .then(([addressRes, cardRes]) => {
         setAddresses(addressRes.data);
         setCreditCards(cardRes.data);
       })
-      .catch(() => setError("Failed to load data. Please try again later."));
+      .catch(() => setError('Failed to load data. Please try again later.'));
   }, []);
 
-const handleNext = () => {
-  if (selectedAddress && selectedCard) {
-    const orderConfirmationRequest = {
-      userId: user.userId,  // ✅ Pass the logged-in user ID
-      orderId: state.orderId,  // ✅ Pass the latest order ID
-    };
-
-    http.post("/order/confirm", orderConfirmationRequest)
-      .then(() => {
-        navigate(`/confirmation`, { state: state });
-      })
-      .catch((error) => {
-        console.error("Error confirming order:", error);
-        alert("Failed to confirm order.");
-      });
-  } else {
-    alert("Please select both an address and a credit card.");
-  }
-};
-
+  const handleNext = () => {
+    if (selectedAddress && selectedCard) {
+      navigate('/confirmation', { state: state });
+    } else {
+      toast.error('Please select both an address and a credit card.');
+    }
+  };
 
   if (error) {
     return <Alert severity="error">{error}</Alert>;
   }
 
   return (
-    <Box sx={{ mt: 4, mx: "auto", maxWidth: 900 }}>
+    <Box sx={{ mt: 4, mx: 'auto', maxWidth: 900 }}>
       <Typography
         variant="h4"
-        sx={{ mb: 4, textAlign: "center", fontWeight: "bold" }}
+        sx={{ mb: 4, textAlign: 'center', fontWeight: 'bold' }}
       >
         Choose Address and Credit Card
       </Typography>
@@ -72,8 +60,8 @@ const handleNext = () => {
       <Grid container spacing={3}>
         {/* Addresses Section */}
         <Grid item xs={12} md={6}>
-          <Box sx={{ display: "flex", justifyContent: "space-between", mb: 2 }}>
-            <Typography variant="h5" sx={{ fontWeight: "bold" }}>
+          <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 2 }}>
+            <Typography variant="h5" sx={{ fontWeight: 'bold' }}>
               Addresses
             </Typography>
             <Button
@@ -92,16 +80,16 @@ const handleNext = () => {
                 key={address.id}
                 sx={{
                   mb: 2,
-                  position: "relative",
-                  cursor: "pointer",
+                  position: 'relative',
+                  cursor: 'pointer',
                   border:
                     selectedAddress?.id === address.id
-                      ? "2px solid blue"
-                      : "1px solid gray",
-                  transition: "transform 0.2s",
-                  "&:hover": {
-                    transform: "scale(1.02)",
-                    border: "2px solid lightblue",
+                      ? '2px solid blue'
+                      : '1px solid gray',
+                  transition: 'transform 0.2s',
+                  '&:hover': {
+                    transform: 'scale(1.02)',
+                    border: '2px solid lightblue',
                   },
                 }}
                 onClick={() => setSelectedAddress(address)}
@@ -117,7 +105,7 @@ const handleNext = () => {
                   />
                 )}
                 <CardContent>
-                  <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+                  <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
                     {address.title}
                   </Typography>
                   <Typography variant="body2" color="textSecondary">
@@ -130,11 +118,11 @@ const handleNext = () => {
                   component={Link}
                   to={`/editaddress/${address.id}`}
                   sx={{
-                    position: "absolute",
+                    position: 'absolute',
                     top: 8,
                     right: 8,
-                    backgroundColor: "white",
-                    "&:hover": { backgroundColor: "lightgray" },
+                    backgroundColor: 'white',
+                    '&:hover': { backgroundColor: 'lightgray' },
                   }}
                 >
                   <Typography>Edit</Typography>
@@ -150,8 +138,8 @@ const handleNext = () => {
 
         {/* Credit Cards Section */}
         <Grid item xs={12} md={6}>
-          <Box sx={{ display: "flex", justifyContent: "space-between", mb: 2 }}>
-            <Typography variant="h5" sx={{ fontWeight: "bold" }}>
+          <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 2 }}>
+            <Typography variant="h5" sx={{ fontWeight: 'bold' }}>
               Credit Cards
             </Typography>
             <Button
@@ -170,22 +158,22 @@ const handleNext = () => {
                 key={card.id}
                 sx={{
                   mb: 2,
-                  position: "relative",
-                  cursor: "pointer",
+                  position: 'relative',
+                  cursor: 'pointer',
                   border:
                     selectedCard?.id === card.id
-                      ? "2px solid blue"
-                      : "1px solid gray",
-                  transition: "transform 0.2s",
-                  "&:hover": {
-                    transform: "scale(1.02)",
-                    border: "2px solid lightblue",
+                      ? '2px solid blue'
+                      : '1px solid gray',
+                  transition: 'transform 0.2s',
+                  '&:hover': {
+                    transform: 'scale(1.02)',
+                    border: '2px solid lightblue',
                   },
                 }}
                 onClick={() => setSelectedCard(card)}
               >
                 <CardContent>
-                  <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+                  <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
                     {card.cardHolderName}
                   </Typography>
                   <Typography variant="body2" color="textSecondary">
@@ -201,11 +189,11 @@ const handleNext = () => {
                   component={Link}
                   to={`/editcreditcard/${card.id}`}
                   sx={{
-                    position: "absolute",
+                    position: 'absolute',
                     top: 8,
                     right: 8,
-                    backgroundColor: "white",
-                    "&:hover": { backgroundColor: "lightgray" },
+                    backgroundColor: 'white',
+                    '&:hover': { backgroundColor: 'lightgray' },
                   }}
                 >
                   <Typography>Edit</Typography>
@@ -221,7 +209,7 @@ const handleNext = () => {
       </Grid>
 
       {/* Confirm Button */}
-      <Box sx={{ textAlign: "center", mt: 4 }}>
+      <Box sx={{ textAlign: 'center', mt: 4 }}>
         <Button
           variant="contained"
           size="large"

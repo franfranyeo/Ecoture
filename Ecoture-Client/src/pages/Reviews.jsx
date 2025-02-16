@@ -1,24 +1,27 @@
-import React, { useEffect, useState, useContext } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useContext, useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import http from 'utils/http';
+
+import { Cancel, Delete, Edit, Save } from '@mui/icons-material';
 import {
   Box,
-  Typography,
-  Grid,
-  IconButton,
   Button,
-  InputBase,
-  Select,
-  MenuItem,
-  FormControl,
-  InputLabel,
   Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
-} from "@mui/material";
-import { Edit, Delete, Save, Cancel } from "@mui/icons-material";
-import http from "utils/http";
-import UserContext from "../contexts/UserContext";
+  FormControl,
+  Grid,
+  IconButton,
+  InputBase,
+  InputLabel,
+  MenuItem,
+  Select,
+  Typography,
+} from '@mui/material';
+
+import UserContext from '../contexts/UserContext';
 
 const Reviews = () => {
   const { productId } = useParams();
@@ -26,7 +29,7 @@ const Reviews = () => {
   const { user } = useContext(UserContext); // Access the signed-in user's context
   const [fetchedReviews, setFetchedReviews] = useState([]);
   const [editMode, setEditMode] = useState(null); // Track the review being edited
-  const [editText, setEditText] = useState(""); // Track edited text
+  const [editText, setEditText] = useState(''); // Track edited text
   const [editRating, setEditRating] = useState(1); // Track edited rating (default to 1)
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false); // State to control delete confirmation dialog
   const [reviewToDelete, setReviewToDelete] = useState(null); // Store the review being deleted
@@ -40,7 +43,7 @@ const Reviews = () => {
           setFetchedReviews(res.data);
         })
         .catch((err) => {
-          console.error("Error fetching reviews:", err);
+          console.error('Error fetching reviews:', err);
         });
     }
   }, [productId]);
@@ -56,8 +59,8 @@ const Reviews = () => {
           setDeleteDialogOpen(false); // Close the dialog after deletion
         })
         .catch((err) => {
-          console.error("Error deleting review:", err);
-          alert("Failed to delete review. Please try again.");
+          console.error('Error deleting review:', err);
+          toast.error('Failed to delete review. Please try again.');
         });
     }
   };
@@ -87,19 +90,19 @@ const Reviews = () => {
         setEditMode(null);
       })
       .catch((err) => {
-        console.error("Error updating review:", err);
-        alert("Failed to update review. Please try again.");
+        console.error('Error updating review:', err);
+        toast.error('Failed to update review. Please try again.');
       });
   };
 
   const handleCancelEdit = () => {
     setEditMode(null);
-    setEditText("");
+    setEditText('');
     setEditRating(1); // Reset rating to default value
   };
 
   const handleBackClick = () => {
-    navigate("/");
+    navigate('/');
   };
 
   // Open the delete confirmation dialog
@@ -138,28 +141,28 @@ const Reviews = () => {
               <Box
                 sx={{
                   padding: 2,
-                  border: "1px solid #e0e0e0",
-                  borderRadius: "8px",
-                  position: "relative",
-                  display: "flex",
-                  flexDirection: "column",
+                  border: '1px solid #e0e0e0',
+                  borderRadius: '8px',
+                  position: 'relative',
+                  display: 'flex',
+                  flexDirection: 'column',
                   gap: 2,
                 }}
               >
                 {editMode === review.id ? (
                   // Edit mode UI
                   <Box
-                    sx={{ display: "flex", flexDirection: "column", gap: 2 }}
+                    sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}
                   >
                     <InputBase
                       value={editText}
                       onChange={(e) => setEditText(e.target.value)}
                       placeholder="Edit your review..."
                       sx={{
-                        width: "100%",
-                        border: "1px solid #ccc",
-                        borderRadius: "8px",
-                        padding: "8px",
+                        width: '100%',
+                        border: '1px solid #ccc',
+                        borderRadius: '8px',
+                        padding: '8px',
                       }}
                     />
 
@@ -171,9 +174,9 @@ const Reviews = () => {
                         onChange={(e) => setEditRating(e.target.value)}
                         label="Rating"
                         sx={{
-                          width: "100%",
-                          padding: "8px",
-                          borderRadius: "8px",
+                          width: '100%',
+                          padding: '8px',
+                          borderRadius: '8px',
                         }}
                       >
                         <MenuItem value={1}>1</MenuItem>
@@ -187,9 +190,9 @@ const Reviews = () => {
                     {/* Action Buttons */}
                     <Box
                       sx={{
-                        display: "flex",
+                        display: 'flex',
                         gap: 2,
-                        justifyContent: "space-between",
+                        justifyContent: 'space-between',
                       }}
                     >
                       <Button
@@ -226,10 +229,10 @@ const Reviews = () => {
                 {user && (
                   <Box
                     sx={{
-                      position: "absolute",
-                      top: "8px",
-                      right: "8px",
-                      display: "flex",
+                      position: 'absolute',
+                      top: '8px',
+                      right: '8px',
+                      display: 'flex',
                       gap: 1,
                     }}
                   >

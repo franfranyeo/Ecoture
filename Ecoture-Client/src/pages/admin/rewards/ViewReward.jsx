@@ -1,24 +1,25 @@
-import React, { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
-import http from "utils/http";
+import { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import http from 'utils/http';
+
+import { ArrowBack, Edit } from '@mui/icons-material';
 import {
-  Box,
-  Typography,
-  Paper,
-  IconButton,
-  Grid,
   Avatar,
-  Divider,
+  Box,
   Button,
   Dialog,
-  DialogTitle,
+  DialogActions,
   DialogContent,
   DialogContentText,
-  DialogActions,
-} from "@mui/material";
-import { ArrowBack, Edit, Delete } from "@mui/icons-material";
-import "react-toastify/dist/ReactToastify.css";
-import { toast } from "react-toastify";
+  DialogTitle,
+  Divider,
+  Grid,
+  IconButton,
+  Paper,
+  Typography,
+} from '@mui/material';
 
 function ViewReward() {
   const navigate = useNavigate();
@@ -28,13 +29,13 @@ function ViewReward() {
   const [open, setOpen] = useState(false);
 
   const options = {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-    hour: "numeric",
-    minute: "numeric",
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
     hour12: true,
-    timeZone: "GMT",
+    timeZone: 'GMT',
   };
 
   useEffect(() => {
@@ -45,29 +46,29 @@ function ViewReward() {
           ...response.data,
           expirationDate: response.data.expirationDate
             ? new Date(response.data.expirationDate).toLocaleDateString(
-                "en-US",
+                'en-US',
                 options
               )
-            : "Not set",
+            : 'Not set',
           startDate: response.data.startDate
             ? new Date(response.data.startDate).toLocaleDateString(
-                "en-US",
+                'en-US',
                 options
               )
-            : "Not set",
+            : 'Not set',
           createdAt: new Date(response.data.createdAt).toLocaleDateString(
-            "en-US",
+            'en-US',
             options
           ),
           updatedAt: new Date(response.data.updatedAt).toLocaleDateString(
-            "en-US",
+            'en-US',
             options
           ),
         };
         setReward(cleanedReward);
       } catch (error) {
-        console.error("Error fetching reward:", error);
-        toast.error("Failed to fetch reward");
+        console.error('Error fetching reward:', error);
+        toast.error('Failed to fetch reward');
       } finally {
         setLoading(false);
       }
@@ -90,11 +91,11 @@ function ViewReward() {
   const deleteReward = async () => {
     try {
       await http.delete(`/rewards/${id}`);
-      toast.success("Reward deleted successfully");
-      navigate("/admin/rewards");
+      toast.success('Reward deleted successfully');
+      navigate('/admin/rewards');
     } catch (error) {
-      console.error("Error deleting reward:", error);
-      toast.error("Failed to delete reward");
+      console.error('Error deleting reward:', error);
+      toast.error('Failed to delete reward');
     } finally {
       setOpen(false);
     }
@@ -111,20 +112,20 @@ function ViewReward() {
   return (
     <>
       {/* Header */}
-      <Box sx={{ display: "flex", alignItems: "center", mb: 3 }}>
-        <IconButton onClick={() => navigate("/admin/rewards")}>
+      <Box sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
+        <IconButton onClick={() => navigate('/admin/rewards')}>
           <ArrowBack fontSize="large" />
         </IconButton>
         <Typography variant="h4">View Reward</Typography>
       </Box>
 
       {/* Main Content */}
-      <Paper elevation={3} sx={{ p: 4, borderRadius: 3, position: "relative" }}>
+      <Paper elevation={3} sx={{ p: 4, borderRadius: 3, position: 'relative' }}>
         {/* Edit Icon in Top Right Corner */}
         <IconButton
           onClick={handleEdit}
           sx={{
-            position: "absolute",
+            position: 'absolute',
             top: 16,
             right: 16,
           }}
@@ -133,14 +134,9 @@ function ViewReward() {
         </IconButton>
 
         {/* Reward Image and Title */}
-        <Box sx={{ display: "flex", alignItems: "center", mb: 4 }}>
-          <Avatar
-            sx={{ width: 120, height: 120 }}
-            src={reward.rewardImage || ""}
-            alt={reward.rewardTitle}
-          />
+        <Box sx={{ display: 'flex', alignItems: 'center', mb: 4 }}>
           <Box sx={{ ml: 3 }}>
-            <Typography variant="h4" sx={{ fontWeight: "500" }}>
+            <Typography variant="h4" sx={{ fontWeight: '500' }}>
               {reward.rewardTitle}
             </Typography>
             <Typography variant="body2" color="textSecondary">
@@ -209,29 +205,29 @@ function ViewReward() {
         <Grid container spacing={2}>
           <Grid item xs={12} sm={6}>
             <Typography variant="body1">
-              <strong>Applicable Products:</strong>{" "}
-              {reward.applicableProducts || "All Products"}
+              <strong>Applicable Products:</strong>{' '}
+              {reward.applicableProducts || 'All Products'}
             </Typography>
           </Grid>
           <Grid item xs={12} sm={6}>
             <Typography variant="body1">
-              <strong>Exclusions:</strong> {reward.exclusions || "None"}
+              <strong>Exclusions:</strong> {reward.exclusions || 'None'}
             </Typography>
           </Grid>
           <Grid item xs={12} sm={6}>
             <Typography variant="body1">
-              <strong>User Eligibility:</strong>{" "}
-              {reward.userEligibility || "All Users"}
+              <strong>User Eligibility:</strong>{' '}
+              {reward.userEligibility || 'All Users'}
             </Typography>
           </Grid>
           <Grid item xs={12} sm={6}>
             <Typography variant="body1">
-              <strong>Stackable:</strong> {reward.isStackable ? "Yes" : "No"}
+              <strong>Stackable:</strong> {reward.isStackable ? 'Yes' : 'No'}
             </Typography>
           </Grid>
           <Grid item xs={12} sm={6}>
             <Typography variant="body1">
-              <strong>Auto Apply:</strong> {reward.autoApply ? "Yes" : "No"}
+              <strong>Auto Apply:</strong> {reward.autoApply ? 'Yes' : 'No'}
             </Typography>
           </Grid>
         </Grid>
@@ -278,8 +274,8 @@ function ViewReward() {
 
       {/* Delete Confirmation Dialog */}
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle sx={{ color: "#e2160f", fontWeight: "bold" }}>
-          {"Delete Reward?"}
+        <DialogTitle sx={{ color: '#e2160f', fontWeight: 'bold' }}>
+          {'Delete Reward?'}
         </DialogTitle>
         <DialogContent>
           <DialogContentText sx={{ mb: 2 }}>

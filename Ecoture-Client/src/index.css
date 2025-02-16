@@ -62,12 +62,12 @@ body {
 }
 
 .nav-link:hover {
-    color: #ff4500 !important; /* Orange hover effect */
+  color: #ff4500 !important; /* Orange hover effect */
 }
 
 .nav-icon {
-    width: 24px; /* Reduced width for icons */
-    height: 24px; /* Reduced height for icons */
-    transition: transform 0.2s ease; /* Smooth scaling effect */
-    vertical-align: middle; /* Align icons to the middle */
+  width: 24px; /* Reduced width for icons */
+  height: 24px; /* Reduced height for icons */
+  transition: transform 0.2s ease; /* Smooth scaling effect */
+  vertical-align: middle; /* Align icons to the middle */
 }

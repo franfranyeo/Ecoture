@@ -283,34 +283,34 @@ namespace Ecoture.Migrations
                         new
                         {
                             MembershipId = 1,
-                            CreatedAt = new DateTime(2025, 2, 15, 13, 44, 55, 172, DateTimeKind.Utc).AddTicks(9993),
+                            CreatedAt = new DateTime(2025, 2, 15, 16, 41, 1, 619, DateTimeKind.Utc).AddTicks(9788),
                             SpendingRequired = 0.00m,
                             Tier = 1,
-                            UpdatedAt = new DateTime(2025, 2, 15, 13, 44, 55, 172, DateTimeKind.Utc).AddTicks(9993)
+                            UpdatedAt = new DateTime(2025, 2, 15, 16, 41, 1, 619, DateTimeKind.Utc).AddTicks(9788)
                         },
                         new
                         {
                             MembershipId = 2,
-                            CreatedAt = new DateTime(2025, 2, 15, 13, 44, 55, 172, DateTimeKind.Utc).AddTicks(9996),
+                            CreatedAt = new DateTime(2025, 2, 15, 16, 41, 1, 619, DateTimeKind.Utc).AddTicks(9791),
                             SpendingRequired = 2000.00m,
                             Tier = 2,
-                            UpdatedAt = new DateTime(2025, 2, 15, 13, 44, 55, 172, DateTimeKind.Utc).AddTicks(9996)
+                            UpdatedAt = new DateTime(2025, 2, 15, 16, 41, 1, 619, DateTimeKind.Utc).AddTicks(9791)
                         },
                         new
                         {
                             MembershipId = 3,
-                            CreatedAt = new DateTime(2025, 2, 15, 13, 44, 55, 172, DateTimeKind.Utc).AddTicks(9998),
+                            CreatedAt = new DateTime(2025, 2, 15, 16, 41, 1, 619, DateTimeKind.Utc).AddTicks(9793),
                             SpendingRequired = 4000.00m,
                             Tier = 3,
-                            UpdatedAt = new DateTime(2025, 2, 15, 13, 44, 55, 172, DateTimeKind.Utc).AddTicks(9999)
+                            UpdatedAt = new DateTime(2025, 2, 15, 16, 41, 1, 619, DateTimeKind.Utc).AddTicks(9793)
                         },
                         new
                         {
                             MembershipId = 4,
-                            CreatedAt = new DateTime(2025, 2, 15, 13, 44, 55, 173, DateTimeKind.Utc),
+                            CreatedAt = new DateTime(2025, 2, 15, 16, 41, 1, 619, DateTimeKind.Utc).AddTicks(9795),
                             SpendingRequired = 0.00m,
                             Tier = 0,
-                            UpdatedAt = new DateTime(2025, 2, 15, 13, 44, 55, 173, DateTimeKind.Utc).AddTicks(1)
+                            UpdatedAt = new DateTime(2025, 2, 15, 16, 41, 1, 619, DateTimeKind.Utc).AddTicks(9795)
                         });
                 });
 
@@ -531,27 +531,6 @@ namespace Ecoture.Migrations
                     b.ToTable("ProductCategories");
                 });
 
-            modelBuilder.Entity("Ecoture.Model.Entity.ProductColor", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<int>("ColorId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ColorId");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("ProductColors");
-                });
-
             modelBuilder.Entity("Ecoture.Model.Entity.ProductFit", b =>
                 {
                     b.Property<int>("Id")
@@ -573,10 +552,13 @@ namespace Ecoture.Migrations
                     b.ToTable("ProductFits");
                 });
 
-            modelBuilder.Entity("Ecoture.Model.Entity.ProductSize", b =>
+            modelBuilder.Entity("Ecoture.Model.Entity.ProductSizeColor", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int>("ColorId")
                         .HasColumnType("int");
 
                     b.Property<int>("ProductId")
@@ -590,23 +572,19 @@ namespace Ecoture.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ColorId");
+
                     b.HasIndex("ProductId");
 
                     b.HasIndex("SizeId");
 
-                    b.ToTable("ProductSizes");
+                    b.ToTable("ProductSizeColors");
                 });
 
             modelBuilder.Entity("Ecoture.Model.Entity.Referral", b =>
                 {
                     b.Property<int>("referralId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<int?>("UserId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("UserId1")
                         .HasColumnType("int");
 
                     b.Property<int>("refereeUserId")
@@ -619,10 +597,6 @@ namespace Ecoture.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("referralId");
-
-                    b.HasIndex("UserId");
-
-                    b.HasIndex("UserId1");
 
                     b.HasIndex("refereeUserId");
 
@@ -806,7 +780,8 @@ namespace Ecoture.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
 
                     b.HasKey("Id");
 
@@ -1137,25 +1112,6 @@ namespace Ecoture.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("Ecoture.Model.Entity.ProductColor", b =>
-                {
-                    b.HasOne("Ecoture.Model.Entity.Color", "Color")
-                        .WithMany("ProductColors")
-                        .HasForeignKey("ColorId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Ecoture.Model.Entity.Product", "Product")
-                        .WithMany("ProductColors")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Color");
-
-                    b.Navigation("Product");
-                });
-
             modelBuilder.Entity("Ecoture.Model.Entity.ProductFit", b =>
                 {
                     b.HasOne("Ecoture.Model.Entity.Fit", "Fit")
@@ -1175,19 +1131,27 @@ namespace Ecoture.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("Ecoture.Model.Entity.ProductSize", b =>
+            modelBuilder.Entity("Ecoture.Model.Entity.ProductSizeColor", b =>
                 {
+                    b.HasOne("Ecoture.Model.Entity.Color", "Color")
+                        .WithMany("ProductSizeColors")
+                        .HasForeignKey("ColorId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("Ecoture.Model.Entity.Product", "Product")
-                        .WithMany("ProductSizes")
+                        .WithMany("ProductSizeColors")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Ecoture.Model.Entity.Size", "Size")
-                        .WithMany("ProductSizes")
+                        .WithMany("ProductSizeColors")
                         .HasForeignKey("SizeId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.Navigation("Color");
 
                     b.Navigation("Product");
 
@@ -1196,22 +1160,14 @@ namespace Ecoture.Migrations
 
             modelBuilder.Entity("Ecoture.Model.Entity.Referral", b =>
                 {
-                    b.HasOne("Ecoture.Model.Entity.User", null)
-                        .WithMany("ReferralsReceived")
-                        .HasForeignKey("UserId");
-
-                    b.HasOne("Ecoture.Model.Entity.User", null)
-                        .WithMany("ReferralsSent")
-                        .HasForeignKey("UserId1");
-
                     b.HasOne("Ecoture.Model.Entity.User", "refereeUser")
-                        .WithMany()
+                        .WithMany("ReferralsReceived")
                         .HasForeignKey("refereeUserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Ecoture.Model.Entity.User", "referrerUser")
-                        .WithMany()
+                        .WithMany("ReferralsSent")
                         .HasForeignKey("referrerUserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -1321,7 +1277,7 @@ namespace Ecoture.Migrations
 
             modelBuilder.Entity("Ecoture.Model.Entity.Color", b =>
                 {
-                    b.Navigation("ProductColors");
+                    b.Navigation("ProductSizeColors");
                 });
 
             modelBuilder.Entity("Ecoture.Model.Entity.Enquiry", b =>
@@ -1348,11 +1304,9 @@ namespace Ecoture.Migrations
                 {
                     b.Navigation("ProductCategories");
 
-                    b.Navigation("ProductColors");
-
                     b.Navigation("ProductFits");
 
-                    b.Navigation("ProductSizes");
+                    b.Navigation("ProductSizeColors");
 
                     b.Navigation("Reviews");
                 });
@@ -1366,7 +1320,7 @@ namespace Ecoture.Migrations
 
             modelBuilder.Entity("Ecoture.Model.Entity.Size", b =>
                 {
-                    b.Navigation("ProductSizes");
+                    b.Navigation("ProductSizeColors");
                 });
 
             modelBuilder.Entity("Ecoture.Model.Entity.User", b =>

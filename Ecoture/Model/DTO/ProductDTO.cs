@@ -19,7 +19,7 @@ namespace Ecoture.Model.DTO
 
         public decimal Price { get; set; } // Product Price
 
-        public int StockQuantity { get; set; } // Total stock count (across all sizes)
+        public int StockQuantity { get; set; } // Total stock count (calculated dynamically)
 
         public PriceRange PriceRange { get; set; } // Enum for price range
 
@@ -34,36 +34,28 @@ namespace Ecoture.Model.DTO
         public UserBasicDTO? User { get; set; } // Basic user details as a nested DTO
 
         /// <summary>
-        /// List of sizes and their stock quantities for this product.
+        /// List of size and color combinations with stock quantities.
         /// </summary>
-        public List<ProductSizeDTO> Sizes { get; set; } = new(); // List of sizes associated with the product
-
-        public List<ProductColorDTO> Colors { get; set; } = new(); // List of product colors
+        public List<ProductSizeColorDTO> SizeColors { get; set; } = new(); // List of product size-color stock mappings
 
         public List<FitDTO> Fits { get; set; } = new(); // List of product fits
 
         public List<CategoryDTO> Categories { get; set; } = new(); // List of product categories
     }
 
+    
+
     /// <summary>
-    /// Data Transfer Object for Product-Size relationship.
+    /// Data Transfer Object for Fit details.
     /// </summary>
-    public class ProductSizeDTO
-    {
-        public string SizeName { get; set; } = string.Empty; // Name of the size (e.g., S, M, L)
-        public int StockQuantity { get; set; } // Stock quantity for this size
-    }
-
-    public class ProductColorDTO
-    {
-        public string ColorName { get; set; } = string.Empty;
-    }
-
     public class FitDTO
     {
         public string FitName { get; set; } = string.Empty;
     }
 
+    /// <summary>
+    /// Data Transfer Object for Category details.
+    /// </summary>
     public class CategoryDTO
     {
         public string CategoryName { get; set; } = string.Empty;
