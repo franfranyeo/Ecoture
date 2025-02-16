@@ -23,8 +23,6 @@ function Choice() {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
   const { state } = useLocation();
-  const { user } = useContext(UserContext);
-  
 
   useEffect(() => {
     // Fetching addresses and credit cards
@@ -224,4 +222,3 @@ function Choice() {
 }
 
 export default Choice;
-
