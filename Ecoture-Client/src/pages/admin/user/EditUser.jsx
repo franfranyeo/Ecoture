@@ -100,7 +100,6 @@ function EditUser() {
   const [loading, setLoading] = useState(true);
 
   const [user, setUser] = useState({
-    salutations: '',
     firstName: '',
     lastName: '',
     dateofBirth: '',
@@ -167,10 +166,7 @@ function EditUser() {
   return (
     <>
       <Box sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
-        <IconButton
-          sx={{ cursor: 'pointer' }}
-          onClick={() => navigate(`/admin/users/${id}/view`)}
-        >
+        <IconButton sx={{ cursor: 'pointer' }} onClick={() => navigate(-1)}>
           <ArrowBack fontSize="large" />
         </IconButton>
         <Typography variant="h4">Edit User</Typography>
@@ -368,42 +364,6 @@ function EditUser() {
             <>
               <Grid container spacing={2}>
                 <Grid item xs={12} sm={6}>
-                  <FormControl
-                    fullWidth
-                    margin="dense"
-                    variant="outlined"
-                    error={
-                      formik.touched.salutations &&
-                      Boolean(formik.errors.salutations)
-                    }
-                  >
-                    <InputLabel id="salutations-label">Salutations</InputLabel>
-                    <Select
-                      labelId="salutations-label"
-                      id="salutations"
-                      name="salutations"
-                      value={formik.values.salutations}
-                      onChange={formik.handleChange}
-                      onBlur={formik.handleBlur}
-                      label="Salutations"
-                    >
-                      <MenuItem value="">
-                        <em>---</em>
-                      </MenuItem>
-                      <MenuItem value="Mr">Mr</MenuItem>
-                      <MenuItem value="Mrs">Mrs</MenuItem>
-                      <MenuItem value="Ms">Ms</MenuItem>
-                      <MenuItem value="Mdm">Mdm</MenuItem>
-                    </Select>
-                    {formik.touched.salutations &&
-                      formik.errors.salutations && (
-                        <FormHelperText>
-                          {formik.errors.salutations}
-                        </FormHelperText>
-                      )}
-                  </FormControl>
-                </Grid>
-                <Grid item xs={12} sm={6}>
                   <TextField
                     fullWidth
                     margin="dense"
@@ -461,37 +421,7 @@ function EditUser() {
                     variant="outlined"
                   />
                 </Grid>
-                <Grid item xs={12} sm={6}>
-                  <FormControl
-                    fullWidth
-                    margin="dense"
-                    variant="outlined"
-                    error={
-                      formik.touched.gender && Boolean(formik.errors.gender)
-                    }
-                  >
-                    <InputLabel id="gender-label">Gender</InputLabel>
-                    <Select
-                      labelId="gender-label"
-                      id="gender"
-                      name="gender"
-                      value={formik.values.gender}
-                      onChange={formik.handleChange}
-                      onBlur={formik.handleBlur}
-                      label="Gender"
-                    >
-                      <MenuItem value="">
-                        <em>---</em>
-                      </MenuItem>
-                      <MenuItem value="Male">Male</MenuItem>
-                      <MenuItem value="Female">Female</MenuItem>
-                      <MenuItem value="Other">Other</MenuItem>
-                    </Select>
-                    {formik.touched.gender && formik.errors.gender && (
-                      <FormHelperText>{formik.errors.gender}</FormHelperText>
-                    )}
-                  </FormControl>
-                </Grid>
+
                 <Grid item xs={12} sm={6}>
                   <TextField
                     fullWidth

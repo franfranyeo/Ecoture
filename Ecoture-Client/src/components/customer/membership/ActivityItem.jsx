@@ -7,7 +7,6 @@ import {
 import { Box, Typography } from '@mui/material';
 
 const ActivityItem = ({ transaction }) => {
-  console.log(transaction);
   const isPositive = transaction.pointsEarned > 0;
   const isGift = transaction.transactionType.toLowerCase() === 'welcome gift';
 

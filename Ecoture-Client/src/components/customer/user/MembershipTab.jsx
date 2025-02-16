@@ -66,7 +66,6 @@ const MembershipTab = () => {
   };
 
   const handleEarnPoints = async (activityId) => {
-    console.log('Earning points for activity:', activityId);
     if (!activityId) {
       toast.error('Invalid activity ID');
       return;
