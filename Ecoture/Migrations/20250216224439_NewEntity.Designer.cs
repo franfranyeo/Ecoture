@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Ecoture.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20250216134617_init")]
-    partial class init
+    [Migration("20250216224439_NewEntity")]
+    partial class NewEntity
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -152,9 +152,6 @@ namespace Ecoture.Migrations
                     b.Property<bool>("Membership")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<int?>("NewsletterIssueId")
-                        .HasColumnType("int");
-
                     b.Property<int>("PreferencesId")
                         .HasColumnType("int");
 
@@ -163,8 +160,6 @@ namespace Ecoture.Migrations
                         .HasColumnType("longtext");
 
                     b.HasKey("ContentId");
-
-                    b.HasIndex("NewsletterIssueId");
 
                     b.ToTable("Contents");
                 });
@@ -204,6 +199,24 @@ namespace Ecoture.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("CreditCards");
+                });
+
+            modelBuilder.Entity("Ecoture.Model.Entity.EmailList", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<DateTime>("SubscribedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("EmailLists");
                 });
 
             modelBuilder.Entity("Ecoture.Model.Entity.Enquiry", b =>
@@ -286,34 +299,34 @@ namespace Ecoture.Migrations
                         new
                         {
                             MembershipId = 1,
-                            CreatedAt = new DateTime(2025, 2, 16, 13, 46, 15, 63, DateTimeKind.Utc).AddTicks(3238),
+                            CreatedAt = new DateTime(2025, 2, 16, 22, 44, 39, 409, DateTimeKind.Utc).AddTicks(9598),
                             SpendingRequired = 0.00m,
                             Tier = 1,
-                            UpdatedAt = new DateTime(2025, 2, 16, 13, 46, 15, 63, DateTimeKind.Utc).AddTicks(3238)
+                            UpdatedAt = new DateTime(2025, 2, 16, 22, 44, 39, 409, DateTimeKind.Utc).AddTicks(9599)
                         },
                         new
                         {
                             MembershipId = 2,
-                            CreatedAt = new DateTime(2025, 2, 16, 13, 46, 15, 63, DateTimeKind.Utc).AddTicks(3240),
+                            CreatedAt = new DateTime(2025, 2, 16, 22, 44, 39, 409, DateTimeKind.Utc).AddTicks(9601),
                             SpendingRequired = 2000.00m,
                             Tier = 2,
-                            UpdatedAt = new DateTime(2025, 2, 16, 13, 46, 15, 63, DateTimeKind.Utc).AddTicks(3240)
+                            UpdatedAt = new DateTime(2025, 2, 16, 22, 44, 39, 409, DateTimeKind.Utc).AddTicks(9601)
                         },
                         new
                         {
                             MembershipId = 3,
-                            CreatedAt = new DateTime(2025, 2, 16, 13, 46, 15, 63, DateTimeKind.Utc).AddTicks(3242),
+                            CreatedAt = new DateTime(2025, 2, 16, 22, 44, 39, 409, DateTimeKind.Utc).AddTicks(9603),
                             SpendingRequired = 4000.00m,
                             Tier = 3,
-                            UpdatedAt = new DateTime(2025, 2, 16, 13, 46, 15, 63, DateTimeKind.Utc).AddTicks(3242)
+                            UpdatedAt = new DateTime(2025, 2, 16, 22, 44, 39, 409, DateTimeKind.Utc).AddTicks(9604)
                         },
                         new
                         {
                             MembershipId = 4,
-                            CreatedAt = new DateTime(2025, 2, 16, 13, 46, 15, 63, DateTimeKind.Utc).AddTicks(3243),
+                            CreatedAt = new DateTime(2025, 2, 16, 22, 44, 39, 409, DateTimeKind.Utc).AddTicks(9606),
                             SpendingRequired = 0.00m,
                             Tier = 0,
-                            UpdatedAt = new DateTime(2025, 2, 16, 13, 46, 15, 63, DateTimeKind.Utc).AddTicks(3244)
+                            UpdatedAt = new DateTime(2025, 2, 16, 22, 44, 39, 409, DateTimeKind.Utc).AddTicks(9606)
                         });
                 });
 
@@ -326,7 +339,7 @@ namespace Ecoture.Migrations
                     b.Property<int>("ContentId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("DateSent")
+                    b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("IssueTitle")
@@ -338,6 +351,10 @@ namespace Ecoture.Migrations
                         .IsRequired()
                         .HasMaxLength(40)
                         .HasColumnType("varchar(40)");
+
+                    b.Property<string>("Template")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
                     b.HasKey("IssueId");
 
@@ -1003,13 +1020,6 @@ namespace Ecoture.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Ecoture.Model.Entity.Content", b =>
-                {
-                    b.HasOne("Ecoture.Model.Entity.Newsletter", null)
-                        .WithMany("Contents")
-                        .HasForeignKey("NewsletterIssueId");
-                });
-
             modelBuilder.Entity("Ecoture.Model.Entity.CreditCard", b =>
                 {
                     b.HasOne("Ecoture.Model.Entity.User", "User")
@@ -1250,11 +1260,6 @@ namespace Ecoture.Migrations
             modelBuilder.Entity("Ecoture.Model.Entity.Fit", b =>
                 {
                     b.Navigation("ProductFits");
-                });
-
-            modelBuilder.Entity("Ecoture.Model.Entity.Newsletter", b =>
-                {
-                    b.Navigation("Contents");
                 });
 
             modelBuilder.Entity("Ecoture.Model.Entity.Order", b =>

@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import http from 'utils/http';
 import * as Yup from 'yup';
 
-import { Box, Button, TextField, Typography } from '@mui/material';
+import { Box, Button, Container, Paper, TextField, Typography } from '@mui/material';
 
 const validationSchema = Yup.object({
   email: Yup.string()
@@ -40,104 +40,103 @@ function AddEnquiry() {
   };
 
   return (
-    <Box sx={{ maxWidth: '600px', margin: 'auto', padding: '20px' }}>
-      <Typography variant="h4" gutterBottom>
-        Add Enquiry
-      </Typography>
-      <Formik
-        initialValues={initialValues}
-        validationSchema={validationSchema}
-        onSubmit={handleSubmit}
+    <Container maxWidth="md">
+      <Paper
+        elevation={3}
+        sx={{
+          padding: '30px',
+          marginTop: '40px',
+          marginBottom: '40px',
+          borderRadius: '10px',
+          backgroundColor: '#ffffff',
+        }}
       >
-        {({ errors, touched, isSubmitting }) => (
-          <Form>
-            <Box sx={{ marginBottom: '20px' }}>
-              <Field
-                as={TextField}
-                name="email"
-                label="Email"
-                fullWidth
-                margin="normal"
-                variant="outlined"
-                error={touched.email && Boolean(errors.email)}
-                helperText={touched.email && errors.email}
-              />
-            </Box>
-            <Box sx={{ marginBottom: '20px' }}>
-              <Field
-                as={TextField}
-                name="subject"
-                label="Subject"
-                fullWidth
-                margin="normal"
-                variant="outlined"
-                error={touched.subject && Boolean(errors.subject)}
-                helperText={touched.subject && errors.subject}
-              />
-            </Box>
-            <Box sx={{ marginBottom: '20px' }}>
-              <Field
-                as={TextField}
-                name="message"
-                label="Message"
-                fullWidth
-                multiline
-                rows={4}
-                margin="normal"
-                variant="outlined"
-                error={touched.message && Boolean(errors.message)}
-                helperText={touched.message && errors.message}
-              />
-            </Box>
+        <Typography variant="h4" align="center" fontWeight="bold" gutterBottom>
+          Submit An Enquiry!
+        </Typography>
+        <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
+          {({ errors, touched, isSubmitting }) => (
+            <Form>
+              <Box sx={{ marginBottom: '20px' }}>
+                <Field
+                  as={TextField}
+                  name="email"
+                  label="Email"
+                  fullWidth
+                  margin="normal"
+                  variant="outlined"
+                  error={touched.email && Boolean(errors.email)}
+                  helperText={touched.email && errors.email}
+                />
+              </Box>
+              <Box sx={{ marginBottom: '20px' }}>
+                <Field
+                  as={TextField}
+                  name="subject"
+                  label="Subject"
+                  fullWidth
+                  margin="normal"
+                  variant="outlined"
+                  error={touched.subject && Boolean(errors.subject)}
+                  helperText={touched.subject && errors.subject}
+                />
+              </Box>
+              <Box sx={{ marginBottom: '20px' }}>
+                <Field
+                  as={TextField}
+                  name="message"
+                  label="Message"
+                  fullWidth
+                  multiline
+                  rows={4}
+                  margin="normal"
+                  variant="outlined"
+                  error={touched.message && Boolean(errors.message)}
+                  helperText={touched.message && errors.message}
+                />
+              </Box>
 
-            <Box
-              sx={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                gap: '10px',
-              }}
-            >
-              <Button
-                type="submit"
-                variant="outlined"
-                color="primary"
-                sx={{
-                  textTransform: 'none',
-                  fontSize: '1rem',
-                  borderColor: 'green',
-                  color: 'black',
-                  ':hover': {
-                    backgroundColor: 'rgba(0, 0, 0, 0.04)',
-                    borderColor: 'black',
-                  },
-                }}
-                disabled={isSubmitting}
-              >
-                Submit
-              </Button>
-              <Button
-                type="button"
-                variant="outlined"
-                color="primary"
-                sx={{
-                  textTransform: 'none',
-                  fontSize: '1rem',
-                  borderColor: 'black',
-                  color: 'red',
-                  ':hover': {
-                    backgroundColor: 'rgba(0, 0, 0, 0.04)',
-                    borderColor: 'black',
-                  },
-                }}
-                onClick={() => navigate('/')}
-              >
-                Cancel
-              </Button>
-            </Box>
-          </Form>
-        )}
-      </Formik>
-    </Box>
+              {/* Buttons Section */}
+              <Box sx={{ display: 'flex', justifyContent: 'center', gap: '15px', marginTop: '20px' }}>
+                <Button
+                  type="submit"
+                  variant="contained"
+                  color="primary"
+                  sx={{
+                    textTransform: 'none',
+                    fontSize: '1rem',
+                    padding: '10px 20px',
+                    fontWeight: 'bold',
+                    backgroundColor: '#0A74DA',
+                    ':hover': { backgroundColor: '#0858A3' },
+                  }}
+                  disabled={isSubmitting}
+                >
+                  Submit
+                </Button>
+                <Button
+                  type="button"
+                  variant="outlined"
+                  color="error"
+                  sx={{
+                    textTransform: 'none',
+                    fontSize: '1rem',
+                    padding: '10px 20px',
+                    fontWeight: 'bold',
+                    borderColor: '#FF3B30',
+                    color: '#FF3B30',
+                    ':hover': { backgroundColor: '#FFF0F0', borderColor: '#FF3B30' },
+                  }}
+                  onClick={() => navigate('/')}
+                >
+                  Cancel
+                </Button>
+              </Box>
+            </Form>
+          )}
+        </Formik>
+      </Paper>
+    </Container>
   );
 }
 

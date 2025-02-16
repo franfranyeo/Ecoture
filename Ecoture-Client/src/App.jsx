@@ -35,7 +35,7 @@ import MyForm from './pages/Checkout/MyForm';
 import CustomerLanding from './pages/CustomerLanding';
 import EditProduct from './pages/EditProduct';
 import AddEnquiry from './pages/Enquiries/AddEnquiry';
-import AddResponse from './pages/Enquiries/AddResponse';
+import ManageEnquiry from './pages/Enquiries/AddResponse';
 import EnquiriesDashboard from './pages/Enquiries/Dashboard';
 // Amelia Imports
 import Enquiries from './pages/Enquiries/Enquiries';
@@ -43,7 +43,7 @@ import UpdateEnquiry from './pages/Enquiries/UpdateEnquiry';
 import AdminChat from './pages/admin/AdminChat';
 import CreateNewsletter from './pages/Newsletter/CreateNewsletter';
 import SelectContent from './pages/Newsletter/SelectContent';
-import AddNewsletter from './pages/Newsletter/AddNewsletter';
+import Newsletter from './pages/Newsletter/Newsletter';
 import ProductDetail from './pages/ProductDetail';
 import Products from './pages/Products';
 import Reviews from './pages/Reviews';
@@ -58,6 +58,7 @@ import AddUser from './pages/admin/user/AddUser';
 import EditUser from './pages/admin/user/EditUser';
 import Users from './pages/admin/user/Users';
 import ViewUser from './pages/admin/user/ViewUser';
+import Footer from './components/Footer';
 // Fran Imports
 import Account from './pages/customer/user/Account';
 import ForgotPassword from './pages/customer/user/ForgotPassword';
@@ -255,7 +256,13 @@ function App() {
             >
               {/* Navbar is always rendered */}
               <Navbar onLogout={logout} />
-
+              <Box
+    sx={{
+      flexGrow: 1, // Expands to push footer down
+      display: "flex",
+      flexDirection: "column",
+    }}
+  >
               <Routes>
                 <Route
                   path="/"
@@ -325,19 +332,20 @@ function App() {
                 <Route path="/dashboard" element={<EnquiriesDashboard />} />
                 <Route path="/enquiries" element={<Enquiries />} />
                 <Route path="/addenquiry" element={<AddEnquiry />} />
-                <Route path="/addresponse/:id" element={<AddResponse />} />
+                <Route path="/manageenquiry/:id" element={<ManageEnquiry />} />
                 <Route path="/updateenquiry/:id" element={<UpdateEnquiry />} />
 
                 {/* Newsletter Management */}
                 <Route path="/createnewsletter" element={<CreateNewsletter />}/>
-                <Route path="/addnewsletter" element={<AddNewsletter />}/>
+                <Route path="/newsletter" element={<Newsletter />}/>
                 <Route path="/selectcontent" element={<SelectContent />} />
 
                 <Route path="/admin/livechat" element={<ProtectedRoute element={AdminChat} />} />
 
               </Routes>
-
+              </Box>
               {!isAdmin && !isAdminRoute && <ChatWidget />}
+              {!isAdmin && !isAdminRoute && <Footer />}
             </Box>
           </ThemeProvider>
         </Router>

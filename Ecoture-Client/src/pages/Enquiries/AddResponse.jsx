@@ -1,66 +1,91 @@
-import { ErrorMessage, Field, Form, Formik } from 'formik';
+import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import http from 'utils/http';
 import * as Yup from 'yup';
+import { Formik, Field, Form, ErrorMessage } from 'formik';
+import {
+  Box,
+  Button,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  Paper,
+  Typography,
+} from '@mui/material';
 
-import { Box, Button, Paper, Typography } from '@mui/material';
+// Status mapping
+const statusEnum = {
+  0: 'Open',
+  1: 'Closed',
+  2: 'In Progress',
+};
 
-// Validation schema using Yup
+const reverseStatusEnum = {
+  Open: 0,
+  Closed: 1,
+  'In Progress': 2,
+};
+
+// Validation schema
 const validationSchema = Yup.object({
   message: Yup.string().required('Response message is required'),
+  status: Yup.string().required('Status is required'),
 });
 
-function AddResponse() {
+function ManageEnquiry() {
   const navigate = useNavigate();
   const { id } = useParams();
+  const [status, setStatus] = useState('');
+  const [loading, setLoading] = useState(true);
 
-  const handleSubmit = (values, { resetForm }) => {
-    const newResponse = { message: values.message, enquiryId: id };
+  useEffect(() => {
     http
-      .post('/Response', newResponse)
-      .then(() => {
-        toast.success('Response added successfully!');
-        resetForm();
-        navigate('/enquiries');
+      .get(`/Enquiry/${id}`)
+      .then((res) => {
+        setStatus(statusEnum[res.data.status]); // Convert numeric status to string
+        setLoading(false);
       })
-      .catch((error) => {
-        console.error('Error adding response:', error);
-        toast.error('Failed to add response. Please try again.');
-      });
+      .catch((err) => console.error('Error fetching enquiry:', err));
+  }, [id]);
+
+  const handleSubmit = async (values, { setSubmitting }) => {
+    try {
+      // Send response message
+      await http.post('/Response', { message: values.message, enquiryId: id });
+
+      // Update enquiry status
+      await http.put(`/Enquiry/${id}`, { status: reverseStatusEnum[values.status] });
+
+      toast.success('Response added & status updated successfully!');
+      navigate('/enquiries');
+    } catch (error) {
+      console.error('Error updating enquiry:', error);
+      toast.error('Failed to update enquiry. Please try again.');
+    } finally {
+      setSubmitting(false);
+    }
   };
 
+  if (loading) {
+    return <Typography>Loading...</Typography>;
+  }
+
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        justifyContent: 'center',
-        backgroundColor: '#f9f9f9',
-        padding: '50px',
-      }}
-    >
-      <Paper
-        elevation={3}
-        sx={{
-          maxWidth: '500px',
-          width: '100%',
-          padding: '30px',
-          borderRadius: '10px',
-        }}
-      >
-        <Typography
-          variant="h5"
-          sx={{ marginBottom: '20px', textAlign: 'center' }}
-        >
-          Add Response
+    <Box sx={{ display: 'flex', justifyContent: 'center', backgroundColor: '#f9f9f9', padding: '50px' }}>
+      <Paper elevation={3} sx={{ maxWidth: '500px', width: '100%', padding: '30px', borderRadius: '10px' }}>
+        <Typography variant="h5" sx={{ marginBottom: '20px', textAlign: 'center' }}>
+          Manage Enquiry
         </Typography>
         <Formik
-          initialValues={{ message: '' }}
+          initialValues={{ message: '', status }}
           validationSchema={validationSchema}
           onSubmit={handleSubmit}
         >
           {({ isSubmitting }) => (
             <Form>
+              {/* Response Message */}
               <Box sx={{ marginBottom: '20px' }}>
                 <Typography variant="body1" sx={{ marginBottom: '8px' }}>
                   Response Message
@@ -77,20 +102,24 @@ function AddResponse() {
                     resize: 'none',
                   }}
                 />
-                <ErrorMessage
-                  name="message"
-                  component="div"
-                  style={{ color: 'red', marginTop: '5px' }}
-                />
+                <ErrorMessage name="message" component="div" style={{ color: 'red', marginTop: '5px' }} />
               </Box>
 
-              <Box
-                sx={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  gap: '10px',
-                }}
-              >
+              {/* Enquiry Status */}
+              <FormControl fullWidth sx={{ marginBottom: '20px' }}>
+                <InputLabel id="status-label">Enquiry Status</InputLabel>
+                <Field as={Select} name="status" labelId="status-label">
+                  {Object.values(statusEnum).map((value) => (
+                    <MenuItem key={value} value={value}>
+                      {value}
+                    </MenuItem>
+                  ))}
+                </Field>
+                <ErrorMessage name="status" component="div" style={{ color: 'red', marginTop: '5px' }} />
+              </FormControl>
+
+              {/* Buttons */}
+              <Box sx={{ display: 'flex', justifyContent: 'space-between', gap: '10px' }}>
                 <Button
                   type="submit"
                   variant="outlined"
@@ -107,7 +136,7 @@ function AddResponse() {
                   }}
                   disabled={isSubmitting}
                 >
-                  Add Response
+                  Submit
                 </Button>
                 <Button
                   type="button"
@@ -136,4 +165,4 @@ function AddResponse() {
   );
 }
 
-export default AddResponse;
+export default ManageEnquiry;

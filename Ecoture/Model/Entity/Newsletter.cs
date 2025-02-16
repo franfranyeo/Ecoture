@@ -12,11 +12,11 @@ namespace Ecoture.Model.Entity
 		public string IssueTitle { get; set; } = string.Empty;
 
 		public int ContentId { get; set; }
-		public DateTime DateSent { get; set; }
+		public DateTime DateCreated { get; set; }
 
 		[MaxLength(40)]
 		public string NewsletterCategory { get; set; } = string.Empty;
+        public string Template { get; set; } = string.Empty;
 
-		public ICollection<Content> Contents { get; set; }
-	}
+    }
 }
