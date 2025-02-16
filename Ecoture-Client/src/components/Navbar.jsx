@@ -102,6 +102,29 @@ function Navbar() {
 
   useEffect(() => {
     if (user) {
+      // Fetch initial wishlist count
+      fetchWishlistCount();
+  
+      // Event listener to handle real-time wishlist updates
+      const handleWishlistUpdated = () => {
+        fetchWishlistCount(); // Re-fetch wishlist count when the event is triggered
+      };
+  
+      // Add the event listener
+      window.addEventListener('wishlistUpdated', handleWishlistUpdated);
+  
+      // Cleanup event listener on unmount
+      return () => {
+        window.removeEventListener('wishlistUpdated', handleWishlistUpdated);
+      };
+    } else {
+      setWishlistCount(0); // Reset wishlist count when user is not logged in
+    }
+  }, [user]);
+  
+
+  useEffect(() => {
+    if (user) {
       fetchWishlistCount(); // Initial fetch
   
       // Set up event listener

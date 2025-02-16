@@ -482,11 +482,8 @@ function AddProduct() {
                           : 'outlined'
                       }
                       onClick={() => {
-                        const selected = formik.values.fits.includes(fit)
-                          ? formik.values.fits.filter((f) => f !== fit)
-                          : [...formik.values.fits, fit];
-
-                        formik.setFieldValue('fits', selected);
+                        // Ensure only one fit can be selected at a time
+                        formik.setFieldValue('fits', [fit]); // Force to set an array with the selected fit
                       }}
                       sx={{
                         borderRadius: '20px',
