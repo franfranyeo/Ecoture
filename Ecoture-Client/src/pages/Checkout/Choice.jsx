@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import http from 'utils/http';
 
 import {
@@ -37,7 +38,7 @@ function Choice() {
     if (selectedAddress && selectedCard) {
       navigate('/confirmation', { state: state });
     } else {
-      alert('Please select both an address and a credit card.');
+      toast.error('Please select both an address and a credit card.');
     }
   };
 

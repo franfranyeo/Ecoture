@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 
 import * as signalR from '@microsoft/signalr';
 
@@ -113,7 +114,7 @@ const AdminChat = () => {
       });
       setMessage('');
     } else {
-      alert('Please select a user to reply to.');
+      toast.error('Please select a user to reply to.');
     }
   };
 

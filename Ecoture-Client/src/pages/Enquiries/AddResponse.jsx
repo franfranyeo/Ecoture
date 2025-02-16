@@ -1,5 +1,6 @@
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import { useNavigate, useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import http from 'utils/http';
 import * as Yup from 'yup';
 
@@ -19,13 +20,13 @@ function AddResponse() {
     http
       .post('/Response', newResponse)
       .then(() => {
-        alert('Response added successfully!');
+        toast.success('Response added successfully!');
         resetForm();
         navigate('/enquiries');
       })
       .catch((error) => {
         console.error('Error adding response:', error);
-        alert('Failed to add response. Please try again.');
+        toast.error('Failed to add response. Please try again.');
       });
   };
 

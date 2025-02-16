@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import ReactImageMagnify from 'react-image-magnify';
 import { useNavigate, useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import http from 'utils/http';
 
 import { ArrowBack } from '@mui/icons-material';
@@ -40,7 +41,7 @@ function ProductDetail() {
 
   const handleAddToCart = async () => {
     if (!selectedColor || !selectedSize) {
-      alert('Please select a color and size before adding to cart.');
+      toast.error('Please select a color and size before adding to cart.');
       return;
     }
 
@@ -62,13 +63,13 @@ function ProductDetail() {
       });
 
       if (response.status === 200) {
-        alert('Item added to cart successfully!');
+        toast.success('Item added to cart successfully!');
       } else {
-        alert('Failed to add item to cart.');
+        toast.error('Failed to add item to cart.');
       }
     } catch (error) {
       console.error('Error adding to cart:', error);
-      alert('Failed to add item to cart.');
+      toast.error('Failed to add item to cart.');
     }
   };
 

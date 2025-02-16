@@ -74,8 +74,7 @@ function AddReward() {
       .required('Status is required'),
     loyaltyPointsRequired: yup
       .number()
-      .min(0, 'Loyalty points required must be at least 0')
-      .nullable(),
+      .min(0, 'Loyalty points required must be at least 0'),
   });
 
   // Formik setup
@@ -139,7 +138,7 @@ function AddReward() {
               }
             >
               <MenuItem value="Discount">Discount</MenuItem>
-              <MenuItem value="FreeShipping">Free Shipping</MenuItem>
+              <MenuItem value="Free Shipping">Free Shipping</MenuItem>
               <MenuItem value="Cashback">Cashback</MenuItem>
               <MenuItem value="Cashback">Charity</MenuItem>
             </Select>
@@ -254,6 +253,24 @@ function AddReward() {
             helperText={
               formik.touched.maximumDiscountCap &&
               formik.errors.maximumDiscountCap
+            }
+            margin="dense"
+          />
+          <TextField
+            fullWidth
+            label="Points Required"
+            name="loyaltyPointsRequired"
+            type="number"
+            value={formik.values.loyaltyPointsRequired}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            error={
+              formik.touched.loyaltyPointsRequired &&
+              Boolean(formik.errors.loyaltyPointsRequired)
+            }
+            helperText={
+              formik.touched.loyaltyPointsRequired &&
+              formik.errors.loyaltyPointsRequired
             }
             margin="dense"
           />

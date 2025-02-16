@@ -1,5 +1,6 @@
 import { Field, Form, Formik } from 'formik';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import http from 'utils/http';
 import * as Yup from 'yup';
 
@@ -32,7 +33,7 @@ function AddEnquiry() {
       message: values.message,
     };
     http.post('/Enquiry', newEnquiry).then(() => {
-      alert('Enquiry added successfully!');
+      toast.success('Enquiry added successfully!');
       navigate('/enquiries');
     });
     resetForm();
