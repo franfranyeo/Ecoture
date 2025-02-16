@@ -198,6 +198,9 @@ namespace Ecoture.Controllers
             // Update the reward's usage limit
             reward.UsageLimit -= 1;
 
+            user.TotalPoints -= reward.LoyaltyPointsRequired ?? 0;
+
+
             // Add the redemption to the database
             _context.UserRedemptions.Add(userRedemption);
             await _context.SaveChangesAsync();

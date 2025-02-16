@@ -1,10 +1,11 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 
 import { AccessTime, MonetizationOn } from '@mui/icons-material';
 import {
   Box,
   Card,
   CardContent,
+  Dialog,
   Grid,
   LinearProgress,
   Typography,
@@ -17,7 +18,12 @@ const MEMBERSHIP_TIERS = [
   { id: 3, name: 'Gold', spendingRequired: 4000 },
 ];
 
-const EnhancedMembership = ({ totalSpent = 0, totalPoints = 0 }) => {
+const EnhancedMembership = ({
+  totalSpent = 0,
+  totalPoints = 0,
+  onNavigateToEarnPoints,
+  onNavigateToViewActivity,
+}) => {
   const theme = useTheme();
 
   const { currentTier, nextTier, progress } = useMemo(() => {
@@ -126,59 +132,70 @@ const EnhancedMembership = ({ totalSpent = 0, totalPoints = 0 }) => {
 
         {/* Activity Cards */}
         <Grid item xs={12} md={4}>
-          <Card
-            sx={{
-              height: '45%',
-              bgcolor: '#1a237e',
-              color: 'white',
-              borderRadius: 2,
-              boxShadow: 'none',
-            }}
-          >
-            <CardContent
-              sx={{
-                p: 2,
-                display: 'flex',
-                flexDirection: 'column',
-                gap: 2,
-                height: '100%',
-              }}
-            >
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                <AccessTime />
-                <Typography variant="h6" sx={{ fontWeight: 500 }}>
-                  YOUR ACTIVITY
-                </Typography>
-              </Box>
-            </CardContent>
-          </Card>
-          <Box sx={{ height: '10%' }} />
-          <Card
-            sx={{
-              height: '45%',
-              bgcolor: '#1a237e',
-              color: 'white',
-              borderRadius: 2,
-              boxShadow: 'none',
-            }}
-          >
-            <CardContent
-              sx={{
-                p: 2,
-                display: 'flex',
-                flexDirection: 'column',
-                gap: 2,
-                height: '100%',
-              }}
-            >
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                <MonetizationOn />
-                <Typography variant="h6" sx={{ fontWeight: 500 }}>
-                  EARN MORE POINTS
-                </Typography>
-              </Box>
-            </CardContent>
-          </Card>
+          <Grid container direction="column" spacing={2}>
+            <Grid item>
+              <Card
+                sx={{
+                  bgcolor: '#1a237e',
+                  color: 'white',
+                  borderRadius: 2,
+                  boxShadow: 'none',
+                  cursor: 'pointer',
+                  transition: 'transform 0.2s',
+                  '&:hover': {
+                    transform: 'translateY(-2px)',
+                  },
+                }}
+                onClick={onNavigateToViewActivity}
+              >
+                <CardContent
+                  sx={{
+                    p: 2,
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 1,
+                    '&:last-child': { pb: 2 },
+                  }}
+                >
+                  <AccessTime />
+                  <Typography variant="h6" sx={{ fontWeight: 500 }}>
+                    YOUR ACTIVITY
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Grid>
+            <Grid item>
+              <Card
+                sx={{
+                  bgcolor: '#1a237e',
+                  color: 'white',
+                  borderRadius: 2,
+                  boxShadow: 'none',
+                  cursor: 'pointer',
+                  transition: 'transform 0.2s',
+                  '&:hover': {
+                    transform: 'translateY(-2px)',
+                  },
+                }}
+                onClick={onNavigateToEarnPoints}
+              >
+                <CardContent
+                  sx={{
+                    p: 2,
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 1,
+                    '&:last-child': { pb: 2 },
+                  }}
+                >
+                  <MonetizationOn />
+                  <Typography variant="h6" sx={{ fontWeight: 500 }}>
+                    EARN MORE POINTS
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Grid>
+          </Grid>
         </Grid>
 
         {/* Benefits Card */}

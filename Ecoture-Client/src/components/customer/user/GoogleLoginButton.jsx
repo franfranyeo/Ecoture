@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import http from 'utils/http';
@@ -13,13 +13,16 @@ import UserContext from 'contexts/UserContext';
 function GoogleLoginButton() {
   const navigate = useNavigate();
   const { setUser } = React.useContext(UserContext);
+  const [searchParams] = useSearchParams();
   const currentUrl = window.location.pathname;
+  const referralCode = searchParams.get('ref');
   const handleGoogleLogin = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
       try {
         // Send the access token to the backend
         const res = await http.post('user/google', {
           token: tokenResponse.access_token,
+          referralCode: referralCode,
         });
         const { user, accessToken, mfaMethods } = res.data;
         if (user) {
