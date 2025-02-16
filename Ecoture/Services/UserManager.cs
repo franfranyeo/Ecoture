@@ -143,6 +143,11 @@ namespace Ecoture.Services
                 throw new ArgumentException("Invalid email or password.");
             }
 
+            if (user.Password == null || user.Password == "")
+            {
+                throw new ArgumentException("Invalid email or password.");
+            }
+
             // Check if password is correct
             bool isPasswordCorrect = BCrypt.Net.BCrypt.Verify(request.Password, user.Password);
             if (!isPasswordCorrect)

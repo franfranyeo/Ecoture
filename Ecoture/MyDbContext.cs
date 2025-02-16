@@ -350,6 +350,7 @@ namespace Ecoture
                         Email = adminEmail,
                         Password = hashedPassword,
                         Role = UserRole.Admin,
+                        MembershipId = 4,
                         CreatedAt = DateTime.UtcNow,
                         UpdatedAt = DateTime.UtcNow
                     };
