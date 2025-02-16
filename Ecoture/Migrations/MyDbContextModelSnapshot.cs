@@ -283,34 +283,34 @@ namespace Ecoture.Migrations
                         new
                         {
                             MembershipId = 1,
-                            CreatedAt = new DateTime(2025, 2, 16, 14, 4, 17, 162, DateTimeKind.Utc).AddTicks(4091),
+                            CreatedAt = new DateTime(2025, 2, 16, 17, 27, 51, 476, DateTimeKind.Utc).AddTicks(1970),
                             SpendingRequired = 0.00m,
                             Tier = 1,
-                            UpdatedAt = new DateTime(2025, 2, 16, 14, 4, 17, 162, DateTimeKind.Utc).AddTicks(4091)
+                            UpdatedAt = new DateTime(2025, 2, 16, 17, 27, 51, 476, DateTimeKind.Utc).AddTicks(1971)
                         },
                         new
                         {
                             MembershipId = 2,
-                            CreatedAt = new DateTime(2025, 2, 16, 14, 4, 17, 162, DateTimeKind.Utc).AddTicks(4093),
+                            CreatedAt = new DateTime(2025, 2, 16, 17, 27, 51, 476, DateTimeKind.Utc).AddTicks(1973),
                             SpendingRequired = 2000.00m,
                             Tier = 2,
-                            UpdatedAt = new DateTime(2025, 2, 16, 14, 4, 17, 162, DateTimeKind.Utc).AddTicks(4094)
+                            UpdatedAt = new DateTime(2025, 2, 16, 17, 27, 51, 476, DateTimeKind.Utc).AddTicks(1974)
                         },
                         new
                         {
                             MembershipId = 3,
-                            CreatedAt = new DateTime(2025, 2, 16, 14, 4, 17, 162, DateTimeKind.Utc).AddTicks(4096),
+                            CreatedAt = new DateTime(2025, 2, 16, 17, 27, 51, 476, DateTimeKind.Utc).AddTicks(1976),
                             SpendingRequired = 4000.00m,
                             Tier = 3,
-                            UpdatedAt = new DateTime(2025, 2, 16, 14, 4, 17, 162, DateTimeKind.Utc).AddTicks(4096)
+                            UpdatedAt = new DateTime(2025, 2, 16, 17, 27, 51, 476, DateTimeKind.Utc).AddTicks(1976)
                         },
                         new
                         {
                             MembershipId = 4,
-                            CreatedAt = new DateTime(2025, 2, 16, 14, 4, 17, 162, DateTimeKind.Utc).AddTicks(4098),
+                            CreatedAt = new DateTime(2025, 2, 16, 17, 27, 51, 476, DateTimeKind.Utc).AddTicks(1978),
                             SpendingRequired = 0.00m,
                             Tier = 0,
-                            UpdatedAt = new DateTime(2025, 2, 16, 14, 4, 17, 162, DateTimeKind.Utc).AddTicks(4098)
+                            UpdatedAt = new DateTime(2025, 2, 16, 17, 27, 51, 476, DateTimeKind.Utc).AddTicks(1978)
                         });
                 });
 
@@ -983,6 +983,30 @@ namespace Ecoture.Migrations
                     b.ToTable("UserTokens");
                 });
 
+            modelBuilder.Entity("Ecoture.Model.Entity.Wishlist", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Wishlists");
+                });
+
             modelBuilder.Entity("Ecoture.Model.Response.MfaResponse", b =>
                 {
                     b.Property<int>("UserId")
@@ -1270,6 +1294,25 @@ namespace Ecoture.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Ecoture.Model.Entity.Wishlist", b =>
+                {
+                    b.HasOne("Ecoture.Model.Entity.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Ecoture.Model.Entity.User", "User")
+                        .WithMany("Wishlists")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Ecoture.Model.Entity.Category", b =>
                 {
                     b.Navigation("ProductCategories");
@@ -1334,6 +1377,8 @@ namespace Ecoture.Migrations
                     b.Navigation("ReferralsSent");
 
                     b.Navigation("UserRedemptions");
+
+                    b.Navigation("Wishlists");
                 });
 #pragma warning restore 612, 618
         }

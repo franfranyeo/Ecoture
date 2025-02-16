@@ -24,6 +24,9 @@ import AddProduct from './pages/AddProduct';
 import AddAddress from './pages/Checkout/AddAddress';
 import AddCreditCard from './pages/Checkout/AddCreditCard';
 
+import Wishlist from './pages/Wishlist';
+
+
 // AHMED IMPORTS
 import Addresses from './pages/Checkout/Addresses';
 import Cart from './pages/Checkout/Cart';
@@ -259,7 +262,8 @@ function App() {
               }}
             >
               {/* Navbar is always rendered */}
-              <Navbar onLogout={logout} user={user} />  
+              <Navbar onLogout={logout} />
+
 
 
               <Routes>
@@ -311,6 +315,8 @@ function App() {
                 <Route path="/editproduct/:id" element={<EditProduct />} />
                 <Route path="/product/:id" element={<ProductDetail />} />
                 <Route path="/reviews/:productId" element={<Reviews />} />
+                <Route path="/wishlist" element={<Wishlist />} />
+
                
 
                 {/* AHMED CODES */}
