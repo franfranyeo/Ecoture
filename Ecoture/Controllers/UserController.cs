@@ -503,6 +503,22 @@ namespace Ecoture.Controllers
             return Ok(new { message = "Password reset successful" });
         }
 
+        // RESET PASSWORD
+        [HttpPost("reset-user-password")]
+        public async Task<IActionResult> ResetUserPassword([FromBody] ResetUserPasswordRequest request)
+        {
+            var user = await _context.Users.FindAsync(request.UserId);
+            if (user == null)
+                return BadRequest(new { message = "User not found" });
+
+            var generatedPassword = GenerateSecurePassword();
+            user.Password = BCrypt.Net.BCrypt.HashPassword(generatedPassword);
+
+            await _context.SaveChangesAsync();
+
+            return Ok(new { message = "Password reset successful" });
+        }
+
 
 
         // CUSTOMER DELETE ACCOUNT (2 STEPS)
