@@ -1,8 +1,10 @@
+/* eslint-disable complexity */
 import { useFormik } from 'formik';
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { formatDateForInput, formatDateForSubmission } from 'utils/helper';
 import http from 'utils/http';
 import * as yup from 'yup';
 
@@ -12,14 +14,9 @@ import {
   Box,
   Button,
   Divider,
-  FormControl,
-  FormHelperText,
   Grid,
   IconButton,
-  InputLabel,
-  MenuItem,
   Paper,
-  Select,
   TextField,
   Typography,
 } from '@mui/material';
@@ -45,7 +42,7 @@ const custValidationSchema = yup.object().shape({
     .max(50, "Email can't be longer than 50 characters")
     .required('Email is required'),
 
-  mobileNumber: yup.string().trim(),
+  mobileNo: yup.string().trim(),
 });
 
 const staffValidationSchema = yup.object().shape({
@@ -69,7 +66,7 @@ const staffValidationSchema = yup.object().shape({
     .email('Enter a valid email')
     .max(50, "Email can't be longer than 50 characters")
     .required('Email is required'),
-  mobileNumber: yup.string().nullable(),
+  mobileNo: yup.string().nullable(),
 });
 
 const adminValidationSchema = yup.object().shape({
@@ -104,18 +101,18 @@ function EditUser() {
     lastName: '',
     dateofBirth: '',
     email: '',
-    mobileNumber: '',
+    mobileNo: '',
   });
 
   useEffect(() => {
     http.get(`/user/${id}`).then((res) => {
       const cleanedUser = {
         ...res.data,
-        dateofBirth: res.data.dateofBirth
-          ? res.data.dateofBirth.split('T')[0]
-          : 'Not set',
-        mobileNumber: res.data.mobileNumber || 'Not set',
+        dateofBirth: formatDateForInput(res.data.dateofBirth),
+        mobileNo: res.data.mobileNo || 'Not set',
       };
+
+      console.log('User fetched:', cleanedUser); // Added logging
       setUser(cleanedUser);
       setLoading(false);
     });
@@ -124,7 +121,7 @@ function EditUser() {
   const formik = useFormik({
     initialValues: {
       ...user,
-      dateofBirth: user.dateofBirth ? user.dateofBirth.split('T')[0] : null,
+      dateofBirth: user.dateofBirth || '',
     },
     enableReinitialize: true,
     validationSchema:
@@ -140,9 +137,8 @@ function EditUser() {
           firstName: values.firstName.trim(),
           lastName: values.lastName.trim(),
           email: values.email.trim(),
-          mobileNumber: values.mobileNumber ? values.mobileNumber : null,
-          dateofBirth:
-            values.dateofBirth != 'Not set' ? values.dateofBirth : null,
+          mobileNo: values.mobileNo ? values.mobileNo : null,
+          dateofBirth: formatDateForSubmission(values.dateofBirth),
           pfpURL: user.pfpURL || '',
         };
         const response = await http.put(`/user/${id}`, {
@@ -160,13 +156,13 @@ function EditUser() {
   });
 
   const handleCancel = () => {
-    navigate(`/admin/users/${id}/view`);
+    navigate(-1);
   };
 
   return (
     <>
       <Box sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
-        <IconButton sx={{ cursor: 'pointer' }} onClick={() => navigate(-1)}>
+        <IconButton sx={{ cursor: 'pointer' }} onClick={handleCancel}>
           <ArrowBack fontSize="large" />
         </IconButton>
         <Typography variant="h4">Edit User</Typography>
@@ -281,6 +277,7 @@ function EditUser() {
                     error={formik.touched.email && Boolean(formik.errors.email)}
                     helperText={formik.touched.email && formik.errors.email}
                     variant="outlined"
+                    disabled={user.isGoogleLogin}
                   />
                 </Grid>
 
@@ -289,16 +286,15 @@ function EditUser() {
                     fullWidth
                     margin="dense"
                     label="Mobile Number"
-                    name="mobileNumber"
-                    value={formik.values.mobileNumber}
+                    name="mobileNo"
+                    value={formik.values.mobileNo}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     error={
-                      formik.touched.mobileNumber &&
-                      Boolean(formik.errors.mobileNumber)
+                      formik.touched.mobileNo && Boolean(formik.errors.mobileNo)
                     }
                     helperText={
-                      formik.touched.mobileNumber && formik.errors.mobileNumber
+                      formik.touched.mobileNo && formik.errors.mobileNo
                     }
                     variant="outlined"
                   />
@@ -355,6 +351,7 @@ function EditUser() {
                   error={formik.touched.email && Boolean(formik.errors.email)}
                   helperText={formik.touched.email && formik.errors.email}
                   variant="outlined"
+                  disabled={user.isGoogleLogin}
                 />
               </Grid>
             </Grid>
@@ -434,6 +431,7 @@ function EditUser() {
                     error={formik.touched.email && Boolean(formik.errors.email)}
                     helperText={formik.touched.email && formik.errors.email}
                     variant="outlined"
+                    disabled={user.isGoogleLogin}
                   />
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -461,16 +459,15 @@ function EditUser() {
                     fullWidth
                     margin="dense"
                     label="Mobile Number"
-                    name="mobileNumber"
-                    value={formik.values.mobileNumber}
+                    name="mobileNo"
+                    value={formik.values.mobileNo}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     error={
-                      formik.touched.mobileNumber &&
-                      Boolean(formik.errors.mobileNumber)
+                      formik.touched.mobileNo && Boolean(formik.errors.mobileNo)
                     }
                     helperText={
-                      formik.touched.mobileNumber && formik.errors.mobileNumber
+                      formik.touched.mobileNo && formik.errors.mobileNo
                     }
                     variant="outlined"
                   />

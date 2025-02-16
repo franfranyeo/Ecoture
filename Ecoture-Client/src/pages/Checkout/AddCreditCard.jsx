@@ -16,10 +16,14 @@ import {
   Typography,
 } from '@mui/material';
 
-// formating help from ai for ui
+// Import card logos
+import VisaLogo from '../../assets/images/Visa.png'; // Replace with actual path
+import MasterCardLogo from '../../assets/images/mastercard.png'; // Replace with actual path
+
 function AddCreditCard() {
   const navigate = useNavigate();
   const [confirmationOpen, setConfirmationOpen] = useState(false);
+  const [cardType, setCardType] = useState(null);
 
   const formik = useFormik({
     initialValues: {
@@ -33,7 +37,7 @@ function AddCreditCard() {
       cardHolderName: yup.string().required('Card Holder Name is required'),
       cardNumber: yup
         .string()
-        .matches(/^\d{16}$/, 'Card Number must be 16 digits')
+        .matches(/^(4|5)\d{15}$/, 'Card Number must be 16 digits and start with 4 (Visa) or 5 (MasterCard)')
         .required('Card Number is required'),
       expiryMonth: yup
         .number()
@@ -42,10 +46,7 @@ function AddCreditCard() {
         .required('Expiry Month is required'),
       expiryYear: yup
         .number()
-        .min(
-          new Date().getFullYear(),
-          `Must be ${new Date().getFullYear()} or later`
-        )
+        .min(new Date().getFullYear(), `Must be ${new Date().getFullYear()} or later`)
         .required('Expiry Year is required'),
       cvv: yup
         .string()
@@ -56,30 +57,31 @@ function AddCreditCard() {
       http
         .post('/creditcard', data)
         .then(() => {
-          navigate('/creditcards');
+          navigate('/choice');
         })
         .catch(() => {
-          toast.error(
-            'An error occurred while adding the credit card. Please try again.'
-          );
+          toast.error('An error occurred while adding the credit card. Please try again.');
         });
     },
   });
 
-  const handleConfirm = () => {
-    setConfirmationOpen(true);
-  };
+  // Handle card number change and detect card type
+  const handleCardNumberChange = (event) => {
+    const { value } = event.target;
+    formik.setFieldValue('cardNumber', value);
 
-  const handleClose = () => {
-    setConfirmationOpen(false);
+    if (value.startsWith('4')) {
+      setCardType('visa');
+    } else if (value.startsWith('5')) {
+      setCardType('mastercard');
+    } else {
+      setCardType(null);
+    }
   };
 
   return (
     <Box sx={{ maxWidth: 500, mx: 'auto', mt: 4 }}>
-      <Typography
-        variant="h5"
-        sx={{ mb: 3, fontWeight: 'bold', textAlign: 'center' }}
-      >
+      <Typography variant="h5" sx={{ mb: 3, fontWeight: 'bold', textAlign: 'center' }}>
         Add Credit Card
       </Typography>
 
@@ -92,25 +94,37 @@ function AddCreditCard() {
           value={formik.values.cardHolderName}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
-          error={
-            formik.touched.cardHolderName &&
-            Boolean(formik.errors.cardHolderName)
-          }
-          helperText={
-            formik.touched.cardHolderName && formik.errors.cardHolderName
-          }
+          error={formik.touched.cardHolderName && Boolean(formik.errors.cardHolderName)}
+          helperText={formik.touched.cardHolderName && formik.errors.cardHolderName}
         />
-        <TextField
-          fullWidth
-          margin="normal"
-          label="Card Number"
-          name="cardNumber"
-          value={formik.values.cardNumber}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          error={formik.touched.cardNumber && Boolean(formik.errors.cardNumber)}
-          helperText={formik.touched.cardNumber && formik.errors.cardNumber}
-        />
+
+        <Box sx={{ position: 'relative' }}>
+          <TextField
+            fullWidth
+            margin="normal"
+            label="Card Number"
+            name="cardNumber"
+            value={formik.values.cardNumber}
+            onChange={handleCardNumberChange}
+            onBlur={formik.handleBlur}
+            error={formik.touched.cardNumber && Boolean(formik.errors.cardNumber)}
+            helperText={formik.touched.cardNumber && formik.errors.cardNumber}
+          />
+          {cardType && (
+            <img
+              src={cardType === 'visa' ? VisaLogo : MasterCardLogo}
+              alt={`${cardType} logo`}
+              style={{
+                position: 'absolute',
+                right: '10px',
+                top: '50%',
+                transform: 'translateY(-50%)',
+                height: '30px',
+              }}
+            />
+          )}
+        </Box>
+
         <TextField
           fullWidth
           margin="normal"
@@ -120,9 +134,7 @@ function AddCreditCard() {
           value={formik.values.expiryMonth}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
-          error={
-            formik.touched.expiryMonth && Boolean(formik.errors.expiryMonth)
-          }
+          error={formik.touched.expiryMonth && Boolean(formik.errors.expiryMonth)}
           helperText={formik.touched.expiryMonth && formik.errors.expiryMonth}
         />
         <TextField
@@ -151,7 +163,7 @@ function AddCreditCard() {
 
         <Button
           variant="contained"
-          onClick={handleConfirm}
+          onClick={() => setConfirmationOpen(true)}
           sx={{ mt: 3 }}
           disabled={!formik.isValid || formik.isSubmitting}
         >
@@ -159,19 +171,19 @@ function AddCreditCard() {
         </Button>
       </form>
 
-      <Dialog open={confirmationOpen} onClose={handleClose}>
+      <Dialog open={confirmationOpen} onClose={() => setConfirmationOpen(false)}>
         <DialogTitle>Confirm Add Credit Card</DialogTitle>
         <DialogContent>
           Are you sure you want to add this credit card?
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} variant="outlined">
+          <Button onClick={() => setConfirmationOpen(false)} variant="outlined">
             Cancel
           </Button>
           <Button
             onClick={() => {
               formik.handleSubmit();
-              handleClose();
+              setConfirmationOpen(false);
             }}
             variant="contained"
             color="primary"

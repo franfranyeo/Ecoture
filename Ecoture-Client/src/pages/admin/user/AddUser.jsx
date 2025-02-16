@@ -31,7 +31,7 @@ const validationSchema = yup.object().shape({
     .trim()
     .min(2, 'Last name must be at least 2 characters')
     .max(50, "Last name can't be longer than 50 characters")
-    .required('Last name is required'),
+    .nullable(),
   email: yup
     .string()
     .trim()
@@ -39,7 +39,7 @@ const validationSchema = yup.object().shape({
     .email('Enter a valid email')
     .max(50, "Email can't be longer than 50 characters")
     .required('Email is required'),
-  mobileNumber: yup
+  mobileNo: yup
     .string()
     .matches(/^[0-9]+$/, 'Must be only digits')
     .min(8, 'Must be at least 8 digits')
@@ -83,7 +83,7 @@ function AddUser() {
       lastName: '',
       email: '',
       dateofBirth: '',
-      mobileNumber: '',
+      mobileNo: '',
     },
     validationSchema,
     onSubmit: async (values) => {
@@ -99,7 +99,7 @@ function AddUser() {
           password: generatedPassword,
           role: 'Staff',
           dateofBirth: values.dateofBirth || null,
-          mobileNumber: values.mobileNumber || null,
+          mobileNo: values.mobileNo || null,
         };
 
         await http.post('/user/staff', registerRequest);
@@ -223,17 +223,14 @@ function AddUser() {
                 fullWidth
                 margin="dense"
                 label="Mobile Number"
-                name="mobileNumber"
-                value={formik.values.mobileNumber}
+                name="mobileNo"
+                value={formik.values.mobileNo}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 error={
-                  formik.touched.mobileNumber &&
-                  Boolean(formik.errors.mobileNumber)
+                  formik.touched.mobileNo && Boolean(formik.errors.mobileNo)
                 }
-                helperText={
-                  formik.touched.mobileNumber && formik.errors.mobileNumber
-                }
+                helperText={formik.touched.mobileNo && formik.errors.mobileNo}
                 disabled={isLoading}
               />
             </Grid>

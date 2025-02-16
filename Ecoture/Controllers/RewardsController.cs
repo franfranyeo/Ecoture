@@ -18,7 +18,7 @@ namespace Ecoture.Controllers
         [HttpGet, Authorize]
         public async Task<IActionResult> GetRewards()
         {
-            if (User.IsInRole("Admin"))
+            if (User.IsInRole("Admin") || User.IsInRole("Staff"))
             {
                 var rewards = await _context.Rewards.ToListAsync();
                 return Ok(rewards);
@@ -158,7 +158,7 @@ namespace Ecoture.Controllers
         public async Task<IActionResult> ClaimReward(int rewardId)
         {
             // Get the current user's ID from the claims
-            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+            var userId = Convert.ToInt32(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
 
             // Find the user and reward in the database
             var user = await _context.Users
@@ -212,9 +212,9 @@ namespace Ecoture.Controllers
         [Authorize]
         public async Task<IActionResult> GetUserRedemptions()
         {
-            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+            var userId = Convert.ToInt32(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
 
-            if (User.IsInRole("Admin"))
+            if (User.IsInRole("Admin") || User.IsInRole("Staff"))
             {
                 var allRedemptions = await _context.UserRedemptions
                     .Include(ur => ur.User)

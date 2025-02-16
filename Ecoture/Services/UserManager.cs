@@ -85,8 +85,21 @@ namespace Ecoture.Services
             // Add user to the database
             await _context.Users.AddAsync(user);
             await _context.MfaResponses.AddAsync(mfaResponse);
-            await _context.SaveChangesAsync();
 
+            // Add welcome points
+            var welcomePoints = new PointsTransaction
+            {
+                UserId = user.UserId,
+                PointsEarned = 500, // Welcome bonus points
+                PointsSpent = 0,
+                TransactionType = "Welcome",
+                CreatedAt = now,
+                ExpiryDate = now.AddYears(1)
+            };
+            await _context.PointsTransactions.AddAsync(welcomePoints);
+            user.TotalPoints += welcomePoints.PointsEarned;
+
+            await _context.SaveChangesAsync();
 
             // Handle referral if provided
             if (!string.IsNullOrEmpty(request.ReferralCode))
@@ -202,7 +215,7 @@ namespace Ecoture.Services
                     FullName = user.FullName,
                     Email = user.Email,
                     MobileNo = user.MobileNo,
-                    DateOfBirth = user.DateofBirth,
+                    DateofBirth = user.DateofBirth,
                     Role = user.Role.ToString(),
                     PfpURL = user.PfpURL,
                     TotalSpending = user.TotalSpending,
@@ -436,6 +449,8 @@ namespace Ecoture.Services
                             return (false, "Invalid phone number format. Must start with '+65 ' and be 8 digits.", null);
                         }
                         user.MobileNo = phoneNumber;
+                        await _context.SaveChangesAsync();
+
                     }
                 }
 
@@ -560,7 +575,7 @@ namespace Ecoture.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task EditUserAsync(int userId, string firstName, string lastName, string email, DateTime? dateOfBirth, string role, string pfpUrl)
+        public async Task EditUserAsync(int userId, string firstName, string lastName, string email, DateTime? dateofBirth, string role, string pfpUrl)
         {
             var r = Enum.Parse<UserRole>(role);
             var user = await _context.Users.FindAsync(userId);
@@ -569,7 +584,7 @@ namespace Ecoture.Services
                 user.FirstName = firstName;
                 user.LastName = lastName;
                 user.Email = email;
-                user.DateofBirth = dateOfBirth;
+                user.DateofBirth = dateofBirth;
                 user.Role = r;
                 user.PfpURL = pfpUrl;
 
