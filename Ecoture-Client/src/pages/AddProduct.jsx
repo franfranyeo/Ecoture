@@ -477,15 +477,26 @@ function AddProduct() {
                     <Button
                       key={fit}
                       variant={
-                        formik.values.fits === fit ? 'contained' : 'outlined'
+                        formik.values.fits.includes(fit)
+                          ? 'contained'
+                          : 'outlined'
                       }
-                      onClick={() => formik.setFieldValue('fits', fit)} // Allow only one selection
+                      onClick={() => {
+                        const selected = formik.values.fits.includes(fit)
+                          ? formik.values.fits.filter((f) => f !== fit)
+                          : [...formik.values.fits, fit];
+
+                        formik.setFieldValue('fits', selected);
+                      }}
                       sx={{
                         borderRadius: '20px',
                         border: '1px solid #ccc',
-                        backgroundColor:
-                          formik.values.fits === fit ? '#555' : '#fff',
-                        color: formik.values.fits === fit ? '#fff' : '#000',
+                        backgroundColor: formik.values.fits.includes(fit)
+                          ? '#555'
+                          : '#fff',
+                        color: formik.values.fits.includes(fit)
+                          ? '#fff'
+                          : '#000',
                         '&:hover': {
                           backgroundColor: '#f0f0f0',
                           color: '#000',
