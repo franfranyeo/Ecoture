@@ -148,30 +148,21 @@ function Products({ onAddProductClick }) {
     }
   };
 
-  const getSizeRange = (sizes) => {
-    if (!sizes || sizes.length === 0) return 'No sizes available'; // If no sizes
-    const sizeOrder = ['XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL']; // Order of sizes
-
-    // Filter available sizes (those with stockQuantity > 0) and sort them by predefined size order
-    const availableSizes = sizes
-      .filter((size) => size.stockQuantity > 0) // Only include sizes that have stock
-      .sort(
-        (a, b) => sizeOrder.indexOf(a.sizeName) - sizeOrder.indexOf(b.sizeName)
-      ); // Sort sizes
-
-    if (availableSizes.length === 0) return 'Out of stock'; // If all sizes are out of stock
-
-    // If there's only one size available
-    if (availableSizes.length === 1) {
-      return availableSizes[0].sizeName;
-    }
-
-    // If there are multiple sizes, show the range
-    return `${availableSizes[0].sizeName} - ${
-      availableSizes[availableSizes.length - 1].sizeName
-    }`;
+  const getSizeRange = (sizeColors) => {
+    if (!sizeColors || sizeColors.length === 0) return 'No sizes available';
+  
+    const sizeOrder = ['XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL'];
+  
+    // Extract unique sizes, ignoring color variations
+    const uniqueSizes = [...new Set(sizeColors.map((item) => item.sizeName))]
+      .sort((a, b) => sizeOrder.indexOf(a) - sizeOrder.indexOf(b));
+  
+    if (uniqueSizes.length === 0) return 'Out of stock';
+    if (uniqueSizes.length === 1) return `Size: ${uniqueSizes[0]}`;
+  
+    return `Sizes: ${uniqueSizes[0]} - ${uniqueSizes[uniqueSizes.length - 1]}`;
   };
-
+  
   const toggleReviewForm = (productId, e) => {
     e.stopPropagation();
     setReviewFormOpen((prev) => (prev === productId ? null : productId));
@@ -351,7 +342,7 @@ function Products({ onAddProductClick }) {
                   <Box
                     sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}
                   >
-                    {product.sizes?.length > 0 && (
+                    {product.sizeColors?.length > 0 && (
                       <Box>
                         <Typography
                           variant="body2"
@@ -360,39 +351,9 @@ function Products({ onAddProductClick }) {
                         >
                           Available Sizes:
                         </Typography>
-                        <Box
-                          sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}
-                        >
-                          {product.sizes
-                            .filter((size) => size.stockQuantity > 0) // Only display available sizes
-                            .sort((a, b) => {
-                              const sizeOrder = [
-                                'XS',
-                                'S',
-                                'M',
-                                'L',
-                                'XL',
-                                'XXL',
-                                'XXXL',
-                              ];
-                              return (
-                                sizeOrder.indexOf(a.sizeName) -
-                                sizeOrder.indexOf(b.sizeName)
-                              );
-                            })
-                            .map((size) => (
-                              <Chip
-                                key={size.sizeName}
-                                label={`${size.sizeName} (${size.stockQuantity})`}
-                                size="small"
-                                sx={{
-                                  backgroundColor: 'rgba(0, 0, 0, 0.08)',
-                                  fontWeight: 500,
-                                  fontSize: '0.75rem',
-                                }}
-                              />
-                            ))}
-                        </Box>
+                        <Typography variant="body2" color="text.primary">
+                          {getSizeRange(product.sizeColors)}
+                        </Typography>
                       </Box>
                     )}
 
