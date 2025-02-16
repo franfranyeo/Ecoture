@@ -33,7 +33,7 @@ function Cart() {
     http
       .get('/cart')
       .then((response) => setCart(response.data))
-      .catch(() => alert('Failed to fetch cart items.'));
+      .catch(() => toast.error('Failed to fetch cart items.'));
   };
 
   const toggleSelectItem = (index) => {
@@ -61,7 +61,7 @@ function Cart() {
     http
       .delete(`/cart/${id}`)
       .then(fetchCart)
-      .catch(() => alert('Failed to remove item.'));
+      .catch(() => toast.error('Failed to remove item.'));
   };
 
   const calculateTotal = () => {
@@ -90,7 +90,7 @@ function Cart() {
 
   const handleCheckout = () => {
     if (selectedIndexes.size === 0) {
-      alert('Please select at least one item to proceed to checkout.');
+      toast.error('Please select at least one item to proceed to checkout.');
       return;
     }
 
@@ -103,7 +103,7 @@ function Cart() {
       .then((response) => {
         const orderId = response.data.orderId;
         if (!orderId) {
-          alert('Error: Order ID is missing.');
+          toast.error('Order ID is missing.');
           return;
         }
 
@@ -116,9 +116,11 @@ function Cart() {
             fetchCart();
             navigate('/choice', { state: { orderId: orderId } });
           })
-          .catch(() => alert('Failed to remove selected items from the cart.'));
+          .catch(() =>
+            toast.error('Failed to remove selected items from the cart.')
+          );
       })
-      .catch(() => alert('Failed to place order.'));
+      .catch(() => toast.error('Failed to place order.'));
   };
 
   return (
