@@ -1,0 +1,117 @@
+/* Newsletter Section (Now Above Footer) */
+.newsletter {
+    background-color: #0a224e;
+    color: white;
+    text-align: center;
+    padding: 12px; /* Reduced padding */
+    border-radius: 8px;
+    max-width: 700px; /* Reduced width */
+    margin: 0 auto 15px auto; /* Less spacing below */
+  }
+  
+  .newsletter h3 {
+    font-size: 18px; /* Smaller font */
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  .newsletter p {
+    font-size: 12px;
+    margin-top: 3px;
+  }
+  
+  .newsletter span {
+    font-style: italic;
+  }
+  
+  .newsletter-form {
+    margin-top: 8px;
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+  }
+  
+  .newsletter-form input {
+    padding: 7px;
+    width: 200px; /* More compact */
+    border-radius: 4px;
+    border: none;
+  }
+  
+  .newsletter-form button {
+    background-color: white;
+    color: #0a224e;
+    border: none;
+    padding: 7px 10px;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  
+  .footer {
+    background-color: #f4f4f4;
+    color: #333;
+    padding: 15px 10px;
+    font-family: Arial, sans-serif;
+    width: 98%;
+    position: relative; /* Ensures it stays within normal flow */
+    bottom: 0;
+}
+
+  
+  /* Footer Layout */
+  .footer-container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-top: 5px;
+    padding: 5px; /* Minimized padding */
+  }
+  
+  .footer-section {
+    flex: 1;
+    min-width: 120px; /* Slightly smaller */
+    margin-bottom: 5px;
+  }
+  
+  .footer-section h4 {
+    font-size: 12px; /* Smaller font */
+    font-weight: bold;
+    margin-bottom: 4px;
+  }
+  
+  .footer-section ul {
+    list-style: none;
+    padding: 0;
+    font-size: 11px; /* Smaller text */
+  }
+  
+  .footer-section ul li {
+    margin-bottom: 3px; /* Reduced spacing */
+  }
+  
+  .footer-section ul li a {
+    text-decoration: none;
+    color: #333;
+  }
+  
+  .footer-section ul li a:hover {
+    text-decoration: underline;
+  }
+  
+  /* Footer Bottom Section (Even More Compact) */
+  .footer-bottom {
+    border-top: 1px solid #ccc;
+    margin-top: 5px;
+    padding: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 10px; /* Smaller text */
+  }
+  
+  .payment-icons img {
+    height: 16px; /* Smaller icons */
+    margin-left: 5px;
+  }
+  

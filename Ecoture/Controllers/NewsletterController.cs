@@ -1,75 +1,113 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Ecoture.Model.Entity;
-using Ecoture.Model.DTO;
-using Microsoft.EntityFrameworkCore;
+using System.Net;
+using System.Net.Mail;
+
 
 namespace Ecoture.Controllers
 {
-	[Route("[controller]")]
-	[ApiController]
-	public class NewsletterController : ControllerBase
-	{
-		private readonly MyDbContext _context;
+    [Route("[controller]")]
+    [ApiController]
+    public class NewsletterController : ControllerBase
+    {
+        private readonly MyDbContext _context;
+        private readonly IConfiguration _configuration;
 
-		public NewsletterController(MyDbContext context)
-		{
-			_context = context;
-		}
 
-		[HttpGet("{id}")]
-		public IActionResult GetNewsletterById(int id)
-		{
-			var newsletter = _context.Newsletters.Include(n => n.Contents).FirstOrDefault(n => n.IssueId == id);
+        public NewsletterController(MyDbContext context, IConfiguration configuration)
+        {
+            _context = context;
+            _configuration = configuration;
+        }
 
-			if (newsletter == null)
-				return NotFound();
+        [HttpGet]
+        public IActionResult GetAllNewsletters()
+        {
+            var newsletters = _context.Newsletters.ToList();
+            return Ok(newsletters);
+        }
 
-			return Ok(newsletter);
+        [HttpGet("{id}")]
+        public IActionResult GetNewsletterById(int id)
+        {
+            var newsletter = _context.Newsletters.FirstOrDefault(n => n.IssueId == id);
+            if (newsletter == null)
+                return NotFound();
 
-		}
+            return Ok(newsletter);
+        }
 
-		[HttpPost]
-		public IActionResult CreateNewsletter([FromBody] NewsletterDto newsletterDto)
-		{
-			var newsletter = new Newsletter
-			{
-				IssueTitle = newsletterDto.IssueTitle,
-				ContentId = newsletterDto.ContentId,
-				DateSent = newsletterDto.DateSent,
-				NewsletterCategory = newsletterDto.NewsletterCategory
-			};
+        [HttpPost]
+        public IActionResult CreateNewsletter([FromBody] Newsletter newsletter)
+        {
+            if (newsletter == null)
+                return BadRequest("Invalid newsletter data.");
 
-			_context.Newsletters.Add(newsletter);
-			_context.SaveChanges();
-			return Ok(newsletterDto);
-		}
+            newsletter.DateCreated = DateTime.UtcNow;
 
-		[HttpPut("{id}")]
-		public IActionResult UpdateNewsletter(int id, [FromBody] NewsletterDto newsletterDto)
-		{
-			var newsletter = _context.Newsletters.Find(id);
-			if (newsletter == null)
-				return NotFound();
+            _context.Newsletters.Add(newsletter);
+            _context.SaveChanges();
+            return Ok(newsletter);
+        }
 
-			newsletter.IssueTitle = newsletterDto.IssueTitle;
-			newsletter.ContentId = newsletterDto.ContentId;
-			newsletter.DateSent = newsletterDto.DateSent;
-			newsletter.NewsletterCategory = newsletterDto.NewsletterCategory;
+        [HttpDelete("{id}")]
+        public IActionResult DeleteNewsletter(int id)
+        {
+            var newsletter = _context.Newsletters.Find(id);
+            if (newsletter == null)
+                return NotFound();
 
-			_context.SaveChanges();
-			return Ok(newsletter);
-		}
+            _context.Newsletters.Remove(newsletter);
+            _context.SaveChanges();
+            return NoContent();
+        }
 
-		[HttpDelete("{id}")]
-		public IActionResult DeleteNewsletter(int id)
-		{
-			var newsletter = _context.Newsletters.Find(id);
-			if (newsletter == null)
-				return NotFound();
+        [HttpPost("send/{id}")]
+        public async Task<IActionResult> SendNewsletter(int id, [FromBody] List<string> recipientEmails)
+        {
+            var newsletter = _context.Newsletters.FirstOrDefault(n => n.IssueId == id);
+            if (newsletter == null)
+                return NotFound(new { message = "Newsletter not found." });
 
-			_context.Newsletters.Remove(newsletter);
-			_context.SaveChanges();
-			return NoContent();
-		}
-	}
+            if (string.IsNullOrEmpty(newsletter.Template))
+                return BadRequest(new { message = "Newsletter template is empty." });
+
+            string senderEmail = _configuration["EmailSettings:SenderEmail"];
+            string senderPassword = _configuration["EmailSettings:SenderPassword"];
+            string smtpHost = _configuration["EmailSettings:SmtpHost"];
+            int smtpPort = int.Parse(_configuration["EmailSettings:SmtpPort"]);
+
+            try
+            {
+                var smtpClient = new SmtpClient(smtpHost)
+                {
+                    Port = smtpPort,
+                    Credentials = new NetworkCredential(senderEmail, senderPassword),
+                    EnableSsl = true
+                };
+
+                foreach (var recipientEmail in recipientEmails)
+                {
+                    var mailMessage = new MailMessage
+                    {
+                        From = new MailAddress(senderEmail),
+                        Subject = newsletter.IssueTitle,
+                        Body = newsletter.Template,
+                        IsBodyHtml = true
+                    };
+                    mailMessage.To.Add(recipientEmail);
+
+                    await smtpClient.SendMailAsync(mailMessage);
+                }
+
+                return Ok(new { message = $"Newsletter sent successfully to {recipientEmails.Count} recipients." });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "Failed to send email.", error = ex.Message });
+            }
+        }
+
+
+    }
 }

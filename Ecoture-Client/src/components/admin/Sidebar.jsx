@@ -61,6 +61,11 @@ const sideMenuOptions = [
     icon: usersIcon,
     path: '/admin/livechat',
   },
+  {
+    name: 'Newsletter',
+    icon: usersIcon,
+    path: '/admin/newsletter/createnewsletter',
+  }
 ];
 
 function Sidebar() {

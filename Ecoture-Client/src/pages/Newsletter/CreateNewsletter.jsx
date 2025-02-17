@@ -3,6 +3,7 @@ import EmailEditor from 'react-email-editor';
 import sampleDesign from './sampleDesign.json';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@mui/material';
+import http from 'utils/Http';
 
 function CreateNewsletter() {
   const navigate = useNavigate();
@@ -22,6 +23,28 @@ function CreateNewsletter() {
     }, 1000);
   };
 
+  const saveTemplate = () => {
+    if (emailEditorRef.current?.editor) {
+      emailEditorRef.current.editor.saveDesign((design) => {
+        const designString = JSON.stringify(design);
+
+          const payload = {
+            IssueTitle: "Test Issue",
+            DateCreated: new Date(),
+            NewsletterCategory: "General",
+            Template: designString
+          };
+          http.post('/newsletter', payload)
+            .then((res) => {
+              console.log("Saved newsletter:", res.data);
+              navigate('/newsletter');
+            })
+            .catch(err => console.error("Error saving newsletter:", err));
+
+      });
+    }
+  };
+
   return (
     <div>
       {/* <Button onClick={() => {
@@ -35,7 +58,7 @@ function CreateNewsletter() {
       <EmailEditor
         ref={emailEditorRef}
         onReady={handleEditorReady}
-        minHeight={700}
+        minHeight={600}
         options={{
           customFonts: [
             {
@@ -51,13 +74,10 @@ function CreateNewsletter() {
           ]
         }}
       />
-      <Button
-        variant="contained"
-        color="primary"
-        onClick={() => navigate('/addnewsletter')}
-        style={{ marginTop: '16px' }}
+      <Button variant="contained" color="primary" onClick={saveTemplate}
+        style={{ marginTop: '16px', display: 'block', marginLeft: 'auto', marginRight: '16px' }}
       >
-        Add Newsletter
+        Save Template
       </Button>
     </div>
   );

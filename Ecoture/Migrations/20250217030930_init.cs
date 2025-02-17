@@ -9,7 +9,7 @@ using MySql.EntityFrameworkCore.Metadata;
 namespace Ecoture.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -42,6 +42,38 @@ namespace Ecoture.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Colors", x => x.Id);
+                })
+                .Annotation("MySQL:Charset", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "Contents",
+                columns: table => new
+                {
+                    ContentId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    PreferencesId = table.Column<int>(type: "int", nullable: false),
+                    Membership = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    ContentTitle = table.Column<string>(type: "longtext", nullable: false),
+                    ProductIds = table.Column<string>(type: "longtext", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Contents", x => x.ContentId);
+                })
+                .Annotation("MySQL:Charset", "utf8mb4");
+
+            migrationBuilder.CreateTable(
+                name: "EmailLists",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    Email = table.Column<string>(type: "longtext", nullable: false),
+                    SubscribedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EmailLists", x => x.Id);
                 })
                 .Annotation("MySQL:Charset", "utf8mb4");
 
@@ -119,8 +151,9 @@ namespace Ecoture.Migrations
                         .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
                     IssueTitle = table.Column<string>(type: "varchar(200)", maxLength: 200, nullable: false),
                     ContentId = table.Column<int>(type: "int", nullable: false),
-                    DateSent = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    NewsletterCategory = table.Column<string>(type: "varchar(40)", maxLength: 40, nullable: false)
+                    DateCreated = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    NewsletterCategory = table.Column<string>(type: "varchar(40)", maxLength: 40, nullable: false),
+                    Template = table.Column<string>(type: "longtext", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -237,6 +270,7 @@ namespace Ecoture.Migrations
                     TotalSpending = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     TotalPoints = table.Column<int>(type: "int", nullable: false),
                     MembershipId = table.Column<int>(type: "int", nullable: false),
+                    LastClaimTime = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     MembershipStartDate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     MembershipEndDate = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     ReferralCode = table.Column<string>(type: "varchar(6)", maxLength: 6, nullable: true),
@@ -254,29 +288,6 @@ namespace Ecoture.Migrations
                         principalTable: "Memberships",
                         principalColumn: "MembershipId",
                         onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySQL:Charset", "utf8mb4");
-
-            migrationBuilder.CreateTable(
-                name: "Contents",
-                columns: table => new
-                {
-                    ContentId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
-                    PreferencesId = table.Column<int>(type: "int", nullable: false),
-                    Membership = table.Column<bool>(type: "tinyint(1)", nullable: false),
-                    ContentTitle = table.Column<string>(type: "longtext", nullable: false),
-                    ProductIds = table.Column<string>(type: "longtext", nullable: false),
-                    NewsletterIssueId = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Contents", x => x.ContentId);
-                    table.ForeignKey(
-                        name: "FK_Contents_Newsletters_NewsletterIssueId",
-                        column: x => x.NewsletterIssueId,
-                        principalTable: "Newsletters",
-                        principalColumn: "IssueId");
                 })
                 .Annotation("MySQL:Charset", "utf8mb4");
 
@@ -744,10 +755,10 @@ namespace Ecoture.Migrations
                 columns: new[] { "MembershipId", "CreatedAt", "SpendingRequired", "Tier", "UpdatedAt" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2025, 2, 16, 20, 16, 21, 130, DateTimeKind.Utc).AddTicks(8761), 0.00m, 1, new DateTime(2025, 2, 16, 20, 16, 21, 130, DateTimeKind.Utc).AddTicks(8762) },
-                    { 2, new DateTime(2025, 2, 16, 20, 16, 21, 130, DateTimeKind.Utc).AddTicks(8764), 2000.00m, 2, new DateTime(2025, 2, 16, 20, 16, 21, 130, DateTimeKind.Utc).AddTicks(8765) },
-                    { 3, new DateTime(2025, 2, 16, 20, 16, 21, 130, DateTimeKind.Utc).AddTicks(8767), 4000.00m, 3, new DateTime(2025, 2, 16, 20, 16, 21, 130, DateTimeKind.Utc).AddTicks(8768) },
-                    { 4, new DateTime(2025, 2, 16, 20, 16, 21, 130, DateTimeKind.Utc).AddTicks(8770), 0.00m, 0, new DateTime(2025, 2, 16, 20, 16, 21, 130, DateTimeKind.Utc).AddTicks(8770) }
+                    { 1, new DateTime(2025, 2, 17, 3, 9, 28, 44, DateTimeKind.Utc).AddTicks(879), 0.00m, 1, new DateTime(2025, 2, 17, 3, 9, 28, 44, DateTimeKind.Utc).AddTicks(879) },
+                    { 2, new DateTime(2025, 2, 17, 3, 9, 28, 44, DateTimeKind.Utc).AddTicks(881), 2000.00m, 2, new DateTime(2025, 2, 17, 3, 9, 28, 44, DateTimeKind.Utc).AddTicks(881) },
+                    { 3, new DateTime(2025, 2, 17, 3, 9, 28, 44, DateTimeKind.Utc).AddTicks(882), 4000.00m, 3, new DateTime(2025, 2, 17, 3, 9, 28, 44, DateTimeKind.Utc).AddTicks(883) },
+                    { 4, new DateTime(2025, 2, 17, 3, 9, 28, 44, DateTimeKind.Utc).AddTicks(884), 0.00m, 0, new DateTime(2025, 2, 17, 3, 9, 28, 44, DateTimeKind.Utc).AddTicks(884) }
                 });
 
             migrationBuilder.CreateIndex(
@@ -764,11 +775,6 @@ namespace Ecoture.Migrations
                 name: "IX_Carts_UserId",
                 table: "Carts",
                 column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Contents_NewsletterIssueId",
-                table: "Contents",
-                column: "NewsletterIssueId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_CreditCards_UserId",
@@ -927,7 +933,13 @@ namespace Ecoture.Migrations
                 name: "CreditCards");
 
             migrationBuilder.DropTable(
+                name: "EmailLists");
+
+            migrationBuilder.DropTable(
                 name: "MfaResponses");
+
+            migrationBuilder.DropTable(
+                name: "Newsletters");
 
             migrationBuilder.DropTable(
                 name: "PointsTransactions");
@@ -961,9 +973,6 @@ namespace Ecoture.Migrations
 
             migrationBuilder.DropTable(
                 name: "Wishlists");
-
-            migrationBuilder.DropTable(
-                name: "Newsletters");
 
             migrationBuilder.DropTable(
                 name: "Referrals");

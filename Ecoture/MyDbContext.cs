@@ -73,7 +73,7 @@ namespace Ecoture
         public required DbSet<UserRedemptions> UserRedemptions { get; set; }
         public required DbSet<Referral> Referrals { get; set; }
         public required DbSet<Reward> Rewards { get; set; }
-
+        public DbSet<EmailList> EmailLists{ get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
 		{

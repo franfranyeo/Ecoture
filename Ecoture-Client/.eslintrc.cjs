@@ -19,7 +19,7 @@ module.exports = {
     complexity: ['warn', 30],
     'max-depth': ['error', 3],
     'max-nested-callbacks': ['error', 3],
-    'max-lines': ['warn', { max: 600, skipBlankLines: true }],
+    'max-lines': ['warn', { max: 800, skipBlankLines: true }],
   },
   settings: { react: { version: '18.2' } },
   parserOptions: { ecmaVersion: 'latest', sourceType: 'module' },

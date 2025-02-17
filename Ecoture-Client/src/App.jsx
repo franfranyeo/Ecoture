@@ -14,6 +14,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 
 import ChatWidget from './components/ChatWidget';
+import Footer from './components/Footer';
 import ProtectedRoute from './components/admin/ProtectedRoute';
 import Navbar from 'components/Navbar';
 
@@ -37,31 +38,24 @@ import RefundRequests from './pages/Checkout/Refund';
 import CustomerLanding from './pages/CustomerLanding';
 import EditProduct from './pages/EditProduct';
 import AddEnquiry from './pages/Enquiries/AddEnquiry';
-import AddResponse from './pages/Enquiries/AddResponse';
+import ManageEnquiry from './pages/Enquiries/AddResponse';
 import EnquiriesDashboard from './pages/Enquiries/Dashboard';
 // Amelia Imports
 import Enquiries from './pages/Enquiries/Enquiries';
 import UpdateEnquiry from './pages/Enquiries/UpdateEnquiry';
-import AddNewsletter from './pages/Newsletter/AddNewsletter';
+// import AddNewsletter from './pages/Newsletter/AddNewsletter';
 import CreateNewsletter from './pages/Newsletter/CreateNewsletter';
+import Newsletter from './pages/Newsletter/Newsletter';
 import SelectContent from './pages/Newsletter/SelectContent';
 import ProductDetail from './pages/ProductDetail';
 import Products from './pages/Products';
 import Reviews from './pages/Reviews';
 import Wishlist from './pages/Wishlist';
 import AdminChat from './pages/admin/AdminChat';
+import Dashboard from './pages/admin/Dashboard';
 import RefundApproval from './pages/admin/RefundApproval';
 import StaffDashboard from './pages/admin/products/AdminProducts';
 import AdminProducts from './pages/admin/products/AdminProducts';
-
-// Fran Imports
-import Account from './pages/customer/user/Account';
-import ForgotPassword from './pages/customer/user/ForgotPassword';
-import Login from './pages/customer/user/Login';
-import PrivacyPolicy from './pages/customer/user/PrivacyPolicy';
-import Register from './pages/customer/user/Register';
-import ResetPassword from './pages/customer/user/ResetPassword';
-import TermsOfUse from './pages/customer/user/TermsOfUse';
 import AddReward from './pages/admin/rewards/AddReward';
 import EditReward from './pages/admin/rewards/EditReward';
 import Rewards from './pages/admin/rewards/Rewards';
@@ -70,8 +64,14 @@ import AddUser from './pages/admin/user/AddUser';
 import EditUser from './pages/admin/user/EditUser';
 import Users from './pages/admin/user/Users';
 import ViewUser from './pages/admin/user/ViewUser';
-import Dashboard from './pages/admin/Dashboard';
-
+// Fran Imports
+import Account from './pages/customer/user/Account';
+import ForgotPassword from './pages/customer/user/ForgotPassword';
+import Login from './pages/customer/user/Login';
+import PrivacyPolicy from './pages/customer/user/PrivacyPolicy';
+import Register from './pages/customer/user/Register';
+import ResetPassword from './pages/customer/user/ResetPassword';
+import TermsOfUse from './pages/customer/user/TermsOfUse';
 
 import './App.css';
 import MyTheme from './themes/MyTheme';
@@ -260,102 +260,118 @@ function App() {
               }}
             >
               {/* Navbar is always rendered */}
-              <Navbar onLogout={logout} user={user} />
-
-              <Routes>
-                <Route
-                  path="/"
-                  element={
-                    user?.role == 'Admin' ? (
-                      <StaffDashboard />
-                    ) : (
-                      <CustomerLanding />
-                    )
-                  }
-                />
-
-                {sharedRoutes.map((route, index) => (
+              <Navbar onLogout={logout} />
+              <Box
+                sx={{
+                  flexGrow: 1, // Expands to push footer down
+                  display: 'flex',
+                  flexDirection: 'column',
+                }}
+              >
+                <Routes>
                   <Route
-                    key={index}
-                    path={route.url}
-                    element={route.component}
+                    path="/"
+                    element={
+                      user?.role == 'Admin' ? (
+                        <StaffDashboard />
+                      ) : (
+                        <CustomerLanding />
+                      )
+                    }
                   />
-                ))}
-                <Route
-                  path="/admin"
-                  element={<Navigate to="/admin/dashboard" />}
-                />
 
-                {adminRoutes.map((route, index) => (
-                  <Route
-                    key={index}
-                    path={route.url}
-                    element={<ProtectedRoute element={route.component} />}
-                  />
-                ))}
-
-                {/* Keon Product */}
-                {/* Category Routes - Products.jsx handles category filtering */}
-                <Route path="/category/:categoryName" element={<Products />} />
-                <Route
-                  path="/addproduct"
-                  element={
-                    <AddProduct
-                      onAddSuccess={() => {
-                        // Navigate back to StaffDashboard after adding a product
-                        window.location.href = '/';
-                      }}
+                  {sharedRoutes.map((route, index) => (
+                    <Route
+                      key={index}
+                      path={route.url}
+                      element={route.component}
                     />
-                  }
-                />
-                <Route path="/editproduct/:id" element={<EditProduct />} />
-                <Route path="/product/:id" element={<ProductDetail />} />
-                <Route path="/reviews/:productId" element={<Reviews />} />
-                <Route path="/wishlist" element={<Wishlist />} />
+                  ))}
+                  <Route
+                    path="/admin"
+                    element={<Navigate to="/admin/dashboard" />}
+                  />
 
-                {/* AHMED CODES */}
-                <Route path="/addresses" element={<Addresses />} />
-                <Route path="/addaddress" element={<AddAddress />} />
-                <Route path="/editaddress/:id" element={<EditAddress />} />
-                <Route path="/creditcards" element={<CreditCards />} />
-                <Route path="/addcreditcard" element={<AddCreditCard />} />
-                <Route
-                  path="/editcreditcard/:id"
-                  element={<EditCreditCard />}
-                />
-                <Route path="/form" element={<MyForm />} />
-                <Route path="/choice" element={<Choice />} />
-                <Route path="/confirmation" element={<Confirmation />} />
-                <Route path="/order-history" element={<OrderHistory />} />
-                <Route path="/refund-requests" element={<RefundRequests />} />
-                <Route path="/cart" element={<Cart />} />
-                <Route
-                  path="/admin/refund-approval"
-                  element={<ProtectedRoute element={RefundApproval} />}
-                />
+                  {adminRoutes.map((route, index) => (
+                    <Route
+                      key={index}
+                      path={route.url}
+                      element={<ProtectedRoute element={route.component} />}
+                    />
+                  ))}
 
-                {/* Enquiry Management */}
-                <Route path="/dashboard" element={<EnquiriesDashboard />} />
-                <Route path="/enquiries" element={<Enquiries />} />
-                <Route path="/addenquiry" element={<AddEnquiry />} />
-                <Route path="/addresponse/:id" element={<AddResponse />} />
-                <Route path="/updateenquiry/:id" element={<UpdateEnquiry />} />
+                  {/* Keon Product */}
+                  {/* Category Routes - Products.jsx handles category filtering */}
+                  <Route
+                    path="/category/:categoryName"
+                    element={<Products />}
+                  />
+                  <Route
+                    path="/addproduct"
+                    element={
+                      <AddProduct
+                        onAddSuccess={() => {
+                          // Navigate back to StaffDashboard after adding a product
+                          window.location.href = '/';
+                        }}
+                      />
+                    }
+                  />
+                  <Route path="/editproduct/:id" element={<EditProduct />} />
+                  <Route path="/product/:id" element={<ProductDetail />} />
+                  <Route path="/reviews/:productId" element={<Reviews />} />
+                  <Route path="/wishlist" element={<Wishlist />} />
 
-                {/* Newsletter Management */}
-                <Route
-                  path="/createnewsletter"
-                  element={<CreateNewsletter />}
-                />
-                <Route path="/addnewsletter" element={<AddNewsletter />} />
-                <Route path="/selectcontent" element={<SelectContent />} />
+                  {/* AHMED CODES */}
+                  <Route path="/addresses" element={<Addresses />} />
+                  <Route path="/addaddress" element={<AddAddress />} />
+                  <Route path="/editaddress/:id" element={<EditAddress />} />
+                  <Route path="/creditcards" element={<CreditCards />} />
+                  <Route path="/addcreditcard" element={<AddCreditCard />} />
+                  <Route
+                    path="/editcreditcard/:id"
+                    element={<EditCreditCard />}
+                  />
+                  <Route path="/form" element={<MyForm />} />
+                  <Route path="/choice" element={<Choice />} />
+                  <Route path="/confirmation" element={<Confirmation />} />
+                  <Route path="/order-history" element={<OrderHistory />} />
+                  <Route path="/refund-requests" element={<RefundRequests />} />
+                  <Route path="/cart" element={<Cart />} />
+                  <Route
+                    path="/admin/refund-approval"
+                    element={<ProtectedRoute element={RefundApproval} />}
+                  />
 
-                <Route
-                  path="/admin/livechat"
-                  element={<ProtectedRoute element={AdminChat} />}
-                />
-              </Routes>
+                  {/* Enquiry Management */}
+                  <Route path="/dashboard" element={<EnquiriesDashboard />} />
+                  <Route path="/enquiries" element={<Enquiries />} />
+                  <Route path="/addenquiry" element={<AddEnquiry />} />
+                  <Route
+                    path="/manageenquiry/:id"
+                    element={<ManageEnquiry />}
+                  />
+                  <Route
+                    path="/updateenquiry/:id"
+                    element={<UpdateEnquiry />}
+                  />
 
+                  {/* Newsletter Management */}
+                  <Route
+                    path="/createnewsletter"
+                    element={<CreateNewsletter />}
+                  />
+                  <Route path="/newsletter" element={<Newsletter />} />
+                  <Route path="/selectcontent" element={<SelectContent />} />
+
+                  <Route
+                    path="/admin/livechat"
+                    element={<ProtectedRoute element={AdminChat} />}
+                  />
+                </Routes>
+              </Box>
               {!isAdmin && !isAdminRoute && <ChatWidget />}
+              {!isAdmin && !isAdminRoute && <Footer />}
             </Box>
           </ThemeProvider>
         </Router>
