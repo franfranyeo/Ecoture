@@ -1,5 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+
 import * as signalR from '@microsoft/signalr';
+
 import './AdminChat.css';
 
 const AdminChat = () => {
@@ -13,15 +15,19 @@ const AdminChat = () => {
   const [unreadCounts, setUnreadCounts] = useState({});
 
   useEffect(() => {
-    const storedUsers = JSON.parse(localStorage.getItem('adminChatUsers')) || [];
+    const storedUsers =
+      JSON.parse(localStorage.getItem('adminChatUsers')) || [];
     setUsers(storedUsers);
   }, []);
 
   useEffect(() => {
     const newConnection = new signalR.HubConnectionBuilder()
-      .withUrl(`${import.meta.env.VITE_API_BASE_URL}/chatHub?username=${user}`, {
-        withCredentials: true,
-      })
+      .withUrl(
+        `${import.meta.env.VITE_API_BASE_URL}/chatHub?username=${user}`,
+        {
+          withCredentials: true,
+        }
+      )
       .withAutomaticReconnect()
       .build();
 
@@ -69,9 +75,9 @@ const AdminChat = () => {
     return () => {
       newConnection.off('ReceiveMessage');
       if (newConnection.state === signalR.HubConnectionState.Connected) {
-        newConnection.stop().catch((err) =>
-          console.error('⚠️ Error stopping connection:', err)
-        );
+        newConnection
+          .stop()
+          .catch((err) => console.error('⚠️ Error stopping connection:', err));
       }
     };
   }, [targetUser, user]);
@@ -116,7 +122,9 @@ const AdminChat = () => {
   };
 
   const deleteChat = (usr) => {
-    if (window.confirm(`Are you sure you want to delete chat history for ${usr}?`)) {
+    if (
+      window.confirm(`Are you sure you want to delete chat history for ${usr}?`)
+    ) {
       localStorage.removeItem(`chatMessages_${usr}`);
 
       const updatedUsers = users.filter((u) => u !== usr);
@@ -149,7 +157,7 @@ const AdminChat = () => {
       <div className="sidebar">
         <h3>Connected Users</h3>
         {onlineUsers
-          .filter(usr => usr !== 'Admin' && usr !== 'System')
+          .filter((usr) => usr !== 'Admin' && usr !== 'System')
           .map((usr, index) => (
             <div
               key={index}
@@ -161,15 +169,13 @@ const AdminChat = () => {
                 <span className="new-badge">{unreadCounts[usr]}</span>
               )}
             </div>
-          ))
-        }
+          ))}
 
         <h3>Disconnected Chats</h3>
         {users
-          .filter((usr) =>
-            !onlineUsers.includes(usr) &&
-            usr !== 'Admin' &&
-            usr !== 'System'
+          .filter(
+            (usr) =>
+              !onlineUsers.includes(usr) && usr !== 'Admin' && usr !== 'System'
           )
           .map((usr, index) => (
             <div key={index} className="user-item">
@@ -182,10 +188,12 @@ const AdminChat = () => {
                   <span className="new-badge">{unreadCounts[usr]}</span>
                 )}
               </span>
-              <span className="delete-icon" onClick={() => deleteChat(usr)}> ❌</span>
+              <span className="delete-icon" onClick={() => deleteChat(usr)}>
+                {' '}
+                ❌
+              </span>
             </div>
-          ))
-        }
+          ))}
       </div>
 
       {!targetUser ? (
@@ -193,7 +201,7 @@ const AdminChat = () => {
           <p>Select a chat to view messages</p>
         </div>
       ) : (
-        <div className="chat-window" >
+        <div className="chat-window">
           <h3>Chat with {targetUser}</h3>
           <div className="chat-messages">
             {(messages[targetUser] || []).map((msg, index) => (
@@ -224,13 +232,15 @@ const AdminChat = () => {
               <button onClick={sendMessage}>Send</button>
             </div>
           ) : (
-
             <div className="chat-input offline-note">
-              <span style={{ color: 'red', marginRight: '5px', fontSize: '1.1rem' }}>❗</span>
-              The user is no longer online, you can't reply to this user.
+              <span
+                style={{ color: 'red', marginRight: '5px', fontSize: '1.1rem' }}
+              >
+                ❗
+              </span>
+              The user is no longer online, you can&apos;t reply to this user.
             </div>
           )}
-
         </div>
       )}
     </div>
