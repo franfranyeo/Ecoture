@@ -13,7 +13,6 @@ import {
   Card,
   CardContent,
   CardMedia,
-  Chip,
   Dialog,
   DialogActions,
   DialogContent,
@@ -55,6 +54,8 @@ function Products({ onAddProductClick }) {
   const [selectedPriceRange, setSelectedPriceRange] = useState('');
 
   const [wishlistStatus, setWishlistStatus] = useState({}); // Track wishlist status for each product
+
+  const [orders, setOrders] = useState([]);
 
   const handleAddToWishlist = async (productId) => {
     if (!user) {
@@ -104,6 +105,14 @@ function Products({ onAddProductClick }) {
   useEffect(() => {
     setSelectedCategory(categoryName || ''); // Sync category from URL
   }, [categoryName]);
+
+  useEffect(() => {
+    http
+      .get('/order')
+      .then((res) => setOrders(res.data))
+      .catch()
+      .finally();
+  }, []);
 
   const getProducts = () => {
     http
@@ -641,25 +650,38 @@ function Products({ onAddProductClick }) {
                 </Button>
 
                 <Box sx={{ padding: 2 }}>
-                  {user && (
-                    <Button
-                      variant="text"
-                      color="primary"
-                      onClick={(e) => toggleReviewForm(product.id, e)}
-                      sx={{ marginTop: 1 }}
-                    >
-                      {reviewFormOpen === product.id
-                        ? 'Cancel'
-                        : 'Write a Review'}
-                    </Button>
-                  )}
+                  {user &&
+                    orders &&
+                    orders.length > 0 &&
+                    orders.find((o) =>
+                      o.orderItems.some((oi) => oi.productId == product.id)
+                    ) && (
+                      <Button
+                        variant="text"
+                        color="primary"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          toggleReviewForm(product.id, e);
+                        }}
+                        sx={{ marginTop: 1 }}
+                      >
+                        {reviewFormOpen === product.id
+                          ? 'Cancel'
+                          : 'Write a Review'}
+                      </Button>
+                    )}
 
                   {reviewFormOpen === product.id && (
                     <Box sx={{ marginTop: 2 }}>
                       <InputBase
                         placeholder="Write your review..."
                         value={reviewText}
-                        onChange={(e) => setReviewText(e.target.value)}
+                        onChange={(e) => {
+                          setReviewText(e.target.value);
+                        }}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                        }}
                         sx={{
                           border: '1px solid #ccc',
                           borderRadius: '8px',
@@ -678,7 +700,12 @@ function Products({ onAddProductClick }) {
                         <Select
                           labelId="rating-label"
                           value={reviewRating}
-                          onChange={(e) => setReviewRating(e.target.value)}
+                          onChange={(e) => {
+                            setReviewRating(e.target.value);
+                          }}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                          }}
                         >
                           <MenuItem value={1}>1</MenuItem>
                           <MenuItem value={2}>2</MenuItem>
@@ -690,7 +717,10 @@ function Products({ onAddProductClick }) {
                       <Button
                         variant="contained"
                         color="primary"
-                        onClick={(e) => submitReview(product.id, e)}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          submitReview(product.id, e);
+                        }}
                       >
                         Submit
                       </Button>
@@ -699,7 +729,10 @@ function Products({ onAddProductClick }) {
                   <Button
                     variant="contained"
                     color="secondary"
-                    onClick={(e) => viewReviews(product.id, e)}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      viewReviews(product.id, e);
+                    }}
                     sx={{ marginTop: 2 }}
                   >
                     View All Reviews
