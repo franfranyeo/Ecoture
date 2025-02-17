@@ -48,7 +48,7 @@ function Enquiries() {
             color: 'black',
           }}
         >
-          Your Enquiries
+          All Enquiries
         </Typography>
 
         <Grid container spacing={4}>
