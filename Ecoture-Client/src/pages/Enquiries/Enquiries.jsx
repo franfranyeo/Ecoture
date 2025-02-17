@@ -168,28 +168,10 @@ function Enquiries() {
                       marginRight: '10px',
                     }}
                     onClick={() =>
-                      navigate(`/addresponse/${enquiry.enquiryId}`)
+                      navigate(`/manageenquiry/${enquiry.enquiryId}`)
                     }
                   >
                     Add Response
-                  </Button>
-
-                  <Button
-                    variant="outlined"
-                    sx={{
-                      textTransform: 'none',
-                      fontSize: '1rem',
-                      borderColor: 'black',
-                      color: 'black',
-                      ':hover': {
-                        backgroundColor: 'rgba(0, 0, 0, 0.04)',
-                        borderColor: 'black',
-                      },
-                      marginTop: '20px',
-                    }}
-                    onClick={() => handleUpdateStatus(enquiry.enquiryId)}
-                  >
-                    Update Status
                   </Button>
                 </CardContent>
               </Card>
