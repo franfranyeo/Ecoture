@@ -516,6 +516,12 @@ namespace Ecoture.Controllers
 
             await _context.SaveChangesAsync();
 
+            await _emailService.SendAsync(
+                user.Email,
+                "Ecoture: Password Reset",
+                $"Your temporary password is {generatedPassword}. Please change it upon your first login."
+            );
+
             return Ok(new { message = "Password reset successful" });
         }
 
