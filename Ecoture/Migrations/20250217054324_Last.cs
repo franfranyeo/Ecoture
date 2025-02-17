@@ -9,7 +9,7 @@ using MySql.EntityFrameworkCore.Metadata;
 namespace Ecoture.Migrations
 {
     /// <inheritdoc />
-    public partial class init : Migration
+    public partial class Last : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -153,7 +153,8 @@ namespace Ecoture.Migrations
                     ContentId = table.Column<int>(type: "int", nullable: false),
                     DateCreated = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     NewsletterCategory = table.Column<string>(type: "varchar(40)", maxLength: 40, nullable: false),
-                    Template = table.Column<string>(type: "longtext", nullable: false)
+                    Template = table.Column<string>(type: "longtext", nullable: false),
+                    HTML = table.Column<string>(type: "longtext", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -755,10 +756,10 @@ namespace Ecoture.Migrations
                 columns: new[] { "MembershipId", "CreatedAt", "SpendingRequired", "Tier", "UpdatedAt" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2025, 2, 17, 3, 9, 28, 44, DateTimeKind.Utc).AddTicks(879), 0.00m, 1, new DateTime(2025, 2, 17, 3, 9, 28, 44, DateTimeKind.Utc).AddTicks(879) },
-                    { 2, new DateTime(2025, 2, 17, 3, 9, 28, 44, DateTimeKind.Utc).AddTicks(881), 2000.00m, 2, new DateTime(2025, 2, 17, 3, 9, 28, 44, DateTimeKind.Utc).AddTicks(881) },
-                    { 3, new DateTime(2025, 2, 17, 3, 9, 28, 44, DateTimeKind.Utc).AddTicks(882), 4000.00m, 3, new DateTime(2025, 2, 17, 3, 9, 28, 44, DateTimeKind.Utc).AddTicks(883) },
-                    { 4, new DateTime(2025, 2, 17, 3, 9, 28, 44, DateTimeKind.Utc).AddTicks(884), 0.00m, 0, new DateTime(2025, 2, 17, 3, 9, 28, 44, DateTimeKind.Utc).AddTicks(884) }
+                    { 1, new DateTime(2025, 2, 17, 5, 43, 24, 507, DateTimeKind.Utc).AddTicks(3865), 0.00m, 1, new DateTime(2025, 2, 17, 5, 43, 24, 507, DateTimeKind.Utc).AddTicks(3865) },
+                    { 2, new DateTime(2025, 2, 17, 5, 43, 24, 507, DateTimeKind.Utc).AddTicks(3867), 2000.00m, 2, new DateTime(2025, 2, 17, 5, 43, 24, 507, DateTimeKind.Utc).AddTicks(3867) },
+                    { 3, new DateTime(2025, 2, 17, 5, 43, 24, 507, DateTimeKind.Utc).AddTicks(3869), 4000.00m, 3, new DateTime(2025, 2, 17, 5, 43, 24, 507, DateTimeKind.Utc).AddTicks(3869) },
+                    { 4, new DateTime(2025, 2, 17, 5, 43, 24, 507, DateTimeKind.Utc).AddTicks(3870), 0.00m, 0, new DateTime(2025, 2, 17, 5, 43, 24, 507, DateTimeKind.Utc).AddTicks(3871) }
                 });
 
             migrationBuilder.CreateIndex(

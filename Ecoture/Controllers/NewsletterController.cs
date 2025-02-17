@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Ecoture.Model.Entity;
-using System.Net;
-using System.Net.Mail;
+using Ecoture.Services;
+using Ecoture.Model.Request;
 
 
 namespace Ecoture.Controllers
@@ -12,12 +12,14 @@ namespace Ecoture.Controllers
     {
         private readonly MyDbContext _context;
         private readonly IConfiguration _configuration;
+        private readonly IEmailService _emailService;
 
 
-        public NewsletterController(MyDbContext context, IConfiguration configuration)
+        public NewsletterController(MyDbContext context, IConfiguration configuration, IEmailService emailService)
         {
             _context = context;
             _configuration = configuration;
+            _emailService = emailService;
         }
 
         [HttpGet]
@@ -63,48 +65,87 @@ namespace Ecoture.Controllers
         }
 
         [HttpPost("send/{id}")]
-        public async Task<IActionResult> SendNewsletter(int id, [FromBody] List<string> recipientEmails)
+        public async Task<IActionResult> SendNewsletter(int id, [FromBody] NewsletterRequest request)
         {
             var newsletter = _context.Newsletters.FirstOrDefault(n => n.IssueId == id);
             if (newsletter == null)
                 return NotFound(new { message = "Newsletter not found." });
 
-            if (string.IsNullOrEmpty(newsletter.Template))
-                return BadRequest(new { message = "Newsletter template is empty." });
-
-            string senderEmail = _configuration["EmailSettings:SenderEmail"];
-            string senderPassword = _configuration["EmailSettings:SenderPassword"];
-            string smtpHost = _configuration["EmailSettings:SmtpHost"];
-            int smtpPort = int.Parse(_configuration["EmailSettings:SmtpPort"]);
+            if (request == null || request.RecipientEmails == null || request.RecipientEmails.Count == 0)
+                return BadRequest(new { message = "Recipient list is empty or invalid." });
 
             try
             {
-                var smtpClient = new SmtpClient(smtpHost)
-                {
-                    Port = smtpPort,
-                    Credentials = new NetworkCredential(senderEmail, senderPassword),
-                    EnableSsl = true
-                };
+                Console.WriteLine($"Retrieving newsletter template for Issue ID {id}...");
 
-                foreach (var recipientEmail in recipientEmails)
+                //string htmlContent;
+                //try
+                //{
+                //    var design = Newtonsoft.Json.JsonConvert.DeserializeObject<dynamic>(request.Template);
+                //    htmlContent = ConvertJsonToHtml(design);
+                //}
+                //catch (Exception jsonEx)
+                //{
+                //    Console.WriteLine($"Error parsing JSON template: {jsonEx.Message}");
+                //    return BadRequest(new { message = "Failed to process newsletter template." });
+                //}
+
+                Console.WriteLine($"Sending newsletter to: {string.Join(", ", request.RecipientEmails)}");
+
+                foreach (var recipientEmail in request.RecipientEmails)
                 {
-                    var mailMessage = new MailMessage
+                    if (!string.IsNullOrWhiteSpace(recipientEmail))
                     {
-                        From = new MailAddress(senderEmail),
-                        Subject = newsletter.IssueTitle,
-                        Body = newsletter.Template,
-                        IsBodyHtml = true
-                    };
-                    mailMessage.To.Add(recipientEmail);
-
-                    await smtpClient.SendMailAsync(mailMessage);
+                        await _emailService.SendAsync(recipientEmail, request.Subject, request.Template);
+                        Console.WriteLine($"Email sent to {recipientEmail}");
+                    }
                 }
 
-                return Ok(new { message = $"Newsletter sent successfully to {recipientEmails.Count} recipients." });
+                return Ok(new { message = $"Newsletter sent successfully to {request.RecipientEmails.Count} recipients." });
             }
             catch (Exception ex)
             {
+                Console.WriteLine($"Error sending emails: {ex.Message}");
                 return StatusCode(500, new { message = "Failed to send email.", error = ex.Message });
+            }
+        }
+
+        private string ConvertJsonToHtml(dynamic design)
+        {
+            try
+            {
+                var htmlBuilder = new System.Text.StringBuilder();
+                htmlBuilder.Append("<html><body>");
+
+                foreach (var row in design.body.rows)
+                {
+                    htmlBuilder.Append("<div style='margin-bottom: 20px;'>");
+
+                    foreach (var cell in row.cells)
+                    {
+                        foreach (var content in cell.contents)
+                        {
+                            if (content.type == "text")
+                            {
+                                htmlBuilder.Append($"<p>{content.values.text}</p>");
+                            }
+                            else if (content.type == "image")
+                            {
+                                htmlBuilder.Append($"<img src='{content.values.src.url}' alt='' style='max-width:100%;'/>");
+                            }
+                        }
+                    }
+
+                    htmlBuilder.Append("</div>");
+                }
+
+                htmlBuilder.Append("</body></html>");
+                return htmlBuilder.ToString();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error converting JSON to HTML: {ex.Message}");
+                return "<html><body><p>Error loading newsletter content.</p></body></html>";
             }
         }
 

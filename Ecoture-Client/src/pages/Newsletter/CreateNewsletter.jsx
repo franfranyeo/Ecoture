@@ -27,12 +27,13 @@ function CreateNewsletter() {
     if (emailEditorRef.current?.editor) {
       emailEditorRef.current.editor.saveDesign((design) => {
         const designString = JSON.stringify(design);
-
+        emailEditorRef.current.editor.exportHtml(({ html }) => {
           const payload = {
             IssueTitle: "Test Issue",
-            DateCreated: new Date(),
+            DateSent: new Date(),
             NewsletterCategory: "General",
-            Template: designString
+            Template: designString,
+            Html: html
           };
           http.post('/newsletter', payload)
             .then((res) => {
@@ -40,10 +41,11 @@ function CreateNewsletter() {
               navigate('/newsletter');
             })
             .catch(err => console.error("Error saving newsletter:", err));
-
+        });
       });
     }
   };
+
 
   return (
     <div>

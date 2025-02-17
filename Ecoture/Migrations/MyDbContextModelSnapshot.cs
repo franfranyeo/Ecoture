@@ -296,34 +296,34 @@ namespace Ecoture.Migrations
                         new
                         {
                             MembershipId = 1,
-                            CreatedAt = new DateTime(2025, 2, 17, 3, 9, 28, 44, DateTimeKind.Utc).AddTicks(879),
+                            CreatedAt = new DateTime(2025, 2, 17, 5, 43, 24, 507, DateTimeKind.Utc).AddTicks(3865),
                             SpendingRequired = 0.00m,
                             Tier = 1,
-                            UpdatedAt = new DateTime(2025, 2, 17, 3, 9, 28, 44, DateTimeKind.Utc).AddTicks(879)
+                            UpdatedAt = new DateTime(2025, 2, 17, 5, 43, 24, 507, DateTimeKind.Utc).AddTicks(3865)
                         },
                         new
                         {
                             MembershipId = 2,
-                            CreatedAt = new DateTime(2025, 2, 17, 3, 9, 28, 44, DateTimeKind.Utc).AddTicks(881),
+                            CreatedAt = new DateTime(2025, 2, 17, 5, 43, 24, 507, DateTimeKind.Utc).AddTicks(3867),
                             SpendingRequired = 2000.00m,
                             Tier = 2,
-                            UpdatedAt = new DateTime(2025, 2, 17, 3, 9, 28, 44, DateTimeKind.Utc).AddTicks(881)
+                            UpdatedAt = new DateTime(2025, 2, 17, 5, 43, 24, 507, DateTimeKind.Utc).AddTicks(3867)
                         },
                         new
                         {
                             MembershipId = 3,
-                            CreatedAt = new DateTime(2025, 2, 17, 3, 9, 28, 44, DateTimeKind.Utc).AddTicks(882),
+                            CreatedAt = new DateTime(2025, 2, 17, 5, 43, 24, 507, DateTimeKind.Utc).AddTicks(3869),
                             SpendingRequired = 4000.00m,
                             Tier = 3,
-                            UpdatedAt = new DateTime(2025, 2, 17, 3, 9, 28, 44, DateTimeKind.Utc).AddTicks(883)
+                            UpdatedAt = new DateTime(2025, 2, 17, 5, 43, 24, 507, DateTimeKind.Utc).AddTicks(3869)
                         },
                         new
                         {
                             MembershipId = 4,
-                            CreatedAt = new DateTime(2025, 2, 17, 3, 9, 28, 44, DateTimeKind.Utc).AddTicks(884),
+                            CreatedAt = new DateTime(2025, 2, 17, 5, 43, 24, 507, DateTimeKind.Utc).AddTicks(3870),
                             SpendingRequired = 0.00m,
                             Tier = 0,
-                            UpdatedAt = new DateTime(2025, 2, 17, 3, 9, 28, 44, DateTimeKind.Utc).AddTicks(884)
+                            UpdatedAt = new DateTime(2025, 2, 17, 5, 43, 24, 507, DateTimeKind.Utc).AddTicks(3871)
                         });
                 });
 
@@ -338,6 +338,10 @@ namespace Ecoture.Migrations
 
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime(6)");
+
+                    b.Property<string>("HTML")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
                     b.Property<string>("IssueTitle")
                         .IsRequired()
