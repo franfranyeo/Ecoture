@@ -10,5 +10,6 @@ namespace Ecoture.Model.DTO
 		public DateTime DateCreated { get; set; }
 		public string NewsletterCategory { get; set; } = string.Empty;
         public string Template { get; set; } = string.Empty;
+		public string HTML {  get; set; } = string.Empty;
     }
 }

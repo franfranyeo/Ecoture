@@ -33,8 +33,8 @@ function AddEnquiry() {
       message: values.message,
     };
     http.post('/Enquiry', newEnquiry).then(() => {
-      toast.success('Enquiry added successfully!');
-      navigate('/enquiries');
+      toast.success('Your enquiry has been submitted!');
+      navigate('/');
     });
     resetForm();
   };

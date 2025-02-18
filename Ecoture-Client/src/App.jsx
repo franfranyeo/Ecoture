@@ -351,10 +351,7 @@ function App() {
                     path="/manageenquiry/:id"
                     element={<ManageEnquiry />}
                   />
-                  <Route
-                    path="/updateenquiry/:id"
-                    element={<UpdateEnquiry />}
-                  />
+
 
                   {/* Newsletter Management */}
                   <Route
