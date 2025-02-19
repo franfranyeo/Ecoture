@@ -76,6 +76,8 @@ const ProfileTab = ({ user }) => {
   const [imagePreview, setImagePreview] = useState(null);
   const [countdown, setCountdown] = useState(30);
   const [canResend, setCanResend] = useState(false);
+  const [isUploadingImage, setIsUploadingImage] = useState(false);
+  const [addresses, setAddresses] = useState([]);
 
   // Add these states to your ProfileTab component
   const [modalConfig, setModalConfig] = useState({
@@ -151,6 +153,13 @@ const ProfileTab = ({ user }) => {
       if (timer) clearInterval(timer);
     };
   }, [countdown, modalConfig.otpSent]);
+
+  useEffect(() => {
+    http.get('/address').then((res) => {
+      setAddresses(res.data);
+      console.log(res.data);
+    });
+  }, []);
 
   const handleResend = () => {
     if (canResend) {
@@ -385,6 +394,8 @@ const ProfileTab = ({ user }) => {
         const formData = new FormData();
         formData.append('file', file);
 
+        setIsUploadingImage(true);
+
         const response = await http.post('/file/upload', formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
@@ -392,13 +403,13 @@ const ProfileTab = ({ user }) => {
         });
 
         if (response.data.filename) {
-          formik.setFieldValue(
-            'pfpURL',
-            `${import.meta.env.VITE_FILE_BASE_URL}${response.data.filename}`
-          );
+          setIsUploadingImage(false);
+          formik.setFieldValue('pfpURL', `${response.data.filename}`);
           toast.success('Profile image uploaded successfully');
         }
       } catch (error) {
+        setIsUploadingImage(false);
+
         toast.error('Failed to upload image');
         setImagePreview(null);
       }
@@ -424,6 +435,7 @@ const ProfileTab = ({ user }) => {
                 <Button
                   variant="contained"
                   onClick={formik.handleSubmit}
+                  loading={isUploadingImage}
                   sx={{
                     backgroundColor: 'primary.main',
                     '&:hover': {
@@ -669,10 +681,27 @@ const ProfileTab = ({ user }) => {
           <Typography variant="h6" gutterBottom>
             Delivery Address
           </Typography>
-          <Typography variant="body1">
-            123 Main Street, City, Country
-          </Typography>
-          <Typography variant="body1">Postal Code: 123456</Typography>
+          {addresses.length === 0 && (
+            <Box
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                flexDirection: 'column',
+              }}
+            >
+              <Typography>No delivery addresses found.</Typography>
+              <Button variant="contained" sx={{ mt: 2 }}>
+                Add Address
+              </Button>
+            </Box>
+          )}
+          {addresses.length > 0 &&
+            addresses.map((address) => (
+              <Paper key={address.id} sx={{ p: 2, mb: 2 }}>
+                <Typography variant="h6">{address.title}</Typography>
+                <Typography variant="body1">{address.description}</Typography>
+              </Paper>
+            ))}
         </Paper>
       </Box>
       {/* Verification Modal */}

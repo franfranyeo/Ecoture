@@ -110,6 +110,8 @@ builder.Services.AddSwaggerGen(options =>
 builder.Services.AddTransient<IUserManager, UserManager>();
 builder.Services.AddTransient<IEmailService, EmailService>();
 builder.Services.AddSingleton<ISmsService, SmsService>();
+builder.Services.Configure<CloudinaryService>(builder.Configuration.GetSection("Cloudinary"));
+builder.Services.AddScoped<CloudinaryService>();
 
 var app = builder.Build();
 
