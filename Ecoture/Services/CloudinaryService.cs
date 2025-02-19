@@ -24,10 +24,8 @@ namespace Ecoture.Services
             _cloudinary = new Cloudinary(account);
         }
 
-        public async Task<ImageUploadResult> UploadImageAsync(IFormFile file)
+        public async Task<(string PublicId, string Format)> UploadImageAsync(IFormFile file)
         {
-            var uploadResult = new ImageUploadResult();
-
             if (file.Length > 0)
             {
                 using var stream = file.OpenReadStream();
@@ -37,10 +35,19 @@ namespace Ecoture.Services
                     Transformation = new Transformation().Width(500).Height(500).Crop("fill")
                 };
 
-                uploadResult = await _cloudinary.UploadAsync(uploadParams);
+                var uploadResult = await _cloudinary.UploadAsync(uploadParams);
+
+                if (uploadResult.Error == null)
+                {
+                    return (uploadResult.PublicId, uploadResult.Format);
+                }
+                else
+                {
+                    throw new Exception("Error uploading image to Cloudinary: " + uploadResult.Error.Message);
+                }
             }
 
-            return uploadResult;
+            throw new Exception("File is empty.");
         }
     }
 

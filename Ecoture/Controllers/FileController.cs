@@ -36,16 +36,15 @@ namespace Ecoture.Controllers
                     return BadRequest(new { message });
                 }
 
-                var uploadResult = await _cloudinaryService.UploadImageAsync(file);
+                var (publicId, format) = await _cloudinaryService.UploadImageAsync(file);
 
-                if (uploadResult.Error != null)
-                {
-                    _logger.LogError(uploadResult.Error.Message);
-                    return StatusCode(500, new { message = "Error uploading image to Cloudinary" });
-                }
+                var filename = $"{publicId}.{format}";
 
-                UploadResponse response = new() { Filename = uploadResult.SecureUrl.ToString() };
+
+
+                UploadResponse response = new() { Filename = filename };
                 return Ok(response);
+
             }
             catch (Exception ex)
             {

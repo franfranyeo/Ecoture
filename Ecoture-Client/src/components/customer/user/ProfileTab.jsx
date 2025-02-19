@@ -404,7 +404,10 @@ const ProfileTab = ({ user }) => {
 
         if (response.data.filename) {
           setIsUploadingImage(false);
-          formik.setFieldValue('pfpURL', `${response.data.filename}`);
+          formik.setFieldValue(
+            'pfpURL',
+            `${import.meta.env.VITE_FILE_BASE_URL}${response.data.filename}`
+          );
           toast.success('Profile image uploaded successfully');
         }
       } catch (error) {
