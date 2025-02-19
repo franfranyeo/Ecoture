@@ -856,6 +856,21 @@ namespace Ecoture.Controllers
             return Ok(new { message = "Spending updated successfully." });
         }
 
+        [HttpGet("six-months"), Authorize]
+        public async Task<IActionResult> GetSixMonthsData()
+        {
+            var userId = Convert.ToInt32(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+            var sixMonthsAgo = DateTime.UtcNow.AddMonths(-6);
+            var sixMonthsData = await _context.Orders
+                .Where(o => o.UserId == userId && o.CreatedAt >= sixMonthsAgo)
+                .ToListAsync();
+
+            decimal totalOrderAmount = sixMonthsData.Sum(o => o.TotalPrice);
+
+            return Ok(totalOrderAmount);
+        }
+
+
         public class SpendingRequest
         {
             public string Amount { get; set; }

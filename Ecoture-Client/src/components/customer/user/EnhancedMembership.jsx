@@ -1,11 +1,11 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
+import http from 'utils/http';
 
 import { AccessTime, MonetizationOn } from '@mui/icons-material';
 import {
   Box,
   Card,
   CardContent,
-  Dialog,
   Grid,
   LinearProgress,
   Typography,
@@ -24,7 +24,14 @@ const EnhancedMembership = ({
   onNavigateToEarnPoints,
   onNavigateToViewActivity,
 }) => {
+  const [pointsExpiring, setPointsExpiring] = useState(0);
   const theme = useTheme();
+  useEffect(() => {
+    // fetch points that are expiring soon for the user
+    http.get('/points/expiring').then((response) => {
+      setPointsExpiring(response.data);
+    });
+  }, []);
 
   const { currentTier, nextTier, progress } = useMemo(() => {
     const current = MEMBERSHIP_TIERS.find((tier, index, arr) => {
@@ -117,15 +124,20 @@ const EnhancedMembership = ({
               >
                 TOTAL POINTS:
               </Typography>
-              <Typography
-                variant="h3"
-                sx={{
-                  color: '#1a237e',
-                  fontWeight: 'bold',
-                }}
-              >
-                {totalPoints}
-              </Typography>
+              <Box sx={{ display: 'flex', alignItems: 'end', gap: 1 }}>
+                <Typography
+                  variant="h3"
+                  sx={{
+                    color: '#1a237e',
+                    fontWeight: 'bold',
+                  }}
+                >
+                  {totalPoints}
+                </Typography>
+                <Typography variant="body1" color="warning" sx={{ mb: 0.5 }}>
+                  ({pointsExpiring} points will expire on 31/12/2025)
+                </Typography>
+              </Box>
             </CardContent>
           </Card>
         </Grid>

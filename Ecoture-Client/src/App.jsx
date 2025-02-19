@@ -352,7 +352,6 @@ function App() {
                     element={<ManageEnquiry />}
                   />
 
-
                   {/* Newsletter Management */}
                   <Route
                     path="/createnewsletter"

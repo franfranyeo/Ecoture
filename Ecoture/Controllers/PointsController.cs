@@ -80,28 +80,29 @@ namespace Ecoture.Controllers
             }
         }
 
-        private string GetTransactionDescription(PointsTransaction transaction)
+        [HttpGet("expiring")]
+        public async Task<IActionResult> GetExpiringPoints()
         {
-            switch (transaction.TransactionType.ToLower())
+            try
             {
-                case "referral":
-                    return $"Earned {transaction.PointsEarned} points for referring a friend";
-                case "order":
-                    return $"Earned {transaction.PointsEarned} points for your purchase";
-                case "review":
-                    return $"Earned {transaction.PointsEarned} points for leaving a review";
-                case "daily":
-                    return $"Earned {transaction.PointsEarned} points for logging in today";
-                case "welcome":
-                    return $"Welcome Gift: {transaction.PointsEarned} points added to your account";
-                case "redemption":
-                    var rewardTitle = transaction.Reward?.RewardTitle ?? "reward";
-                    return $"Used {transaction.PointsSpent} points for {rewardTitle}";
-                default:
-                    return transaction.PointsEarned > 0
-                        ? $"Earned {transaction.PointsEarned} points"
-                        : $"Used {transaction.PointsSpent} points";
+                // Get user id from claims
+                var userId = Convert.ToInt32(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+                var expiringPoints = await _context.PointsTransactions
+                    .Where(pt => pt.UserId == userId &&
+                    pt.ExpiryDate.Date >= DateTime.UtcNow.Date &&
+                    pt.ExpiryDate.Date <= DateTime.UtcNow.AddMonths(12).Date)
+                    .ToListAsync();
+
+                // Calculate total expiring points
+                int totalExpiringPoints = expiringPoints.Sum(pt => pt.PointsEarned - pt.PointsSpent);
+
+                return Ok(totalExpiringPoints);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "An error occurred while fetching expiring points.");
             }
         }
+
     }
 }

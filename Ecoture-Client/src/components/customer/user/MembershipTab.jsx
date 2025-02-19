@@ -33,6 +33,7 @@ const MembershipTab = () => {
   const [tabIndex, setTabIndex] = useState(0);
   const [showReferralModal, setShowReferralModal] = useState(false);
   const [transactions, setTransactions] = useState([]);
+  const [totalSpending, setTotalSpending] = useState(0);
 
   const handleTabChange = (event, newIndex) => {
     setTabIndex(newIndex);
@@ -244,6 +245,9 @@ const MembershipTab = () => {
   useEffect(() => {
     try {
       Promise.all([fetchRewards(), fetchPointHistory()]);
+      http.get('/user/six-months').then((response) => {
+        setTotalSpending(response.data);
+      });
     } catch (error) {
       console.error(error);
     }
@@ -275,7 +279,7 @@ const MembershipTab = () => {
         {currentView === 'membership' ? (
           <>
             <EnhancedMembership
-              totalSpent={user.totalSpending}
+              totalSpent={totalSpending}
               totalPoints={user.totalPoints}
               onNavigateToEarnPoints={handleNavigateToEarnPoints}
               onNavigateToViewActivity={handleNavigateToViewActivity}
