@@ -55,6 +55,8 @@ const EARNING_ACTIVITIES = [
 ];
 
 const EarningActivityCard = ({ activity, user, onEarnPoints }) => {
+  const [isProcessingClaim, setIsProcessingClaim] = useState(false);
+
   const canClaim = useMemo(() => {
     if (activity.id !== 'daily-claim') return true;
     if (!user.lastClaimTime) return true;
@@ -71,10 +73,18 @@ const EarningActivityCard = ({ activity, user, onEarnPoints }) => {
     if (activity.id === 'refer') return 'Refer';
 
     if (activity.id === 'daily-claim') {
+      if (isProcessingClaim) return 'Claimed';
       return canClaim ? 'Claim' : 'Claimed';
     }
     return 'Earn';
-  }, [activity.id, canClaim]);
+  }, [activity.id, canClaim, isProcessingClaim]);
+
+  const handleEarnPoints = async (activityId) => {
+    if (activityId === 'daily-claim') {
+      setIsProcessingClaim(true);
+    }
+    await onEarnPoints(activityId);
+  };
 
   return (
     <Card
@@ -126,8 +136,10 @@ const EarningActivityCard = ({ activity, user, onEarnPoints }) => {
           <Button
             variant="contained"
             size="small"
-            disabled={activity.id === 'daily-claim' && !canClaim}
-            onClick={() => onEarnPoints(activity.id)}
+            disabled={
+              (activity.id === 'daily-claim' && !canClaim) || isProcessingClaim
+            }
+            onClick={() => handleEarnPoints(activity.id)}
             sx={{
               bgcolor:
                 activity.id === 'daily-claim' && !canClaim
