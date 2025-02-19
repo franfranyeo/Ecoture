@@ -290,6 +290,21 @@ function EditReward() {
             margin="dense"
           />
 
+          {/* Start Date */}
+          <TextField
+            fullWidth
+            label="Start Date"
+            name="startDate"
+            type="date"
+            InputLabelProps={{ shrink: true }}
+            value={formik.values.startDate}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            error={formik.touched.startDate && Boolean(formik.errors.startDate)}
+            helperText={formik.touched.startDate && formik.errors.startDate}
+            margin="dense"
+          />
+
           {/* Expiration Date */}
           <TextField
             fullWidth
@@ -307,21 +322,6 @@ function EditReward() {
             helperText={
               formik.touched.expirationDate && formik.errors.expirationDate
             }
-            margin="dense"
-          />
-
-          {/* Start Date */}
-          <TextField
-            fullWidth
-            label="Start Date"
-            name="startDate"
-            type="date"
-            InputLabelProps={{ shrink: true }}
-            value={formik.values.startDate}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            error={formik.touched.startDate && Boolean(formik.errors.startDate)}
-            helperText={formik.touched.startDate && formik.errors.startDate}
             margin="dense"
           />
 

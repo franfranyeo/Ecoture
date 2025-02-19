@@ -70,8 +70,7 @@ function Cart() {
           );
           finalTotal -= discountAmount;
           break;
-        case 'FreeShipping':
-          setShippingCost(0);
+        case 'Free Shipping':
           break;
         // For Cashback and Charity, we don't modify the final total
         default:
@@ -91,13 +90,17 @@ function Cart() {
   const handleRewardSelect = (reward, redemptionId) => {
     setSelectedReward(reward);
     setSelectedRedemptionId(redemptionId);
+
     if (reward) {
+      const currentTotal = calculateTotal(); // Get current total value
+
       switch (reward.rewardType) {
         case 'Discount': {
           const discountAmount = Math.min(
-            (total * reward.rewardPercentage) / 100,
+            (currentTotal * reward.rewardPercentage) / 100,
             reward.maximumDiscountCap || Infinity
           );
+          setShippingCost(5);
           setDiscount(discountAmount);
           toast.success(`Discount Applied: $${discountAmount.toFixed(2)} off!`);
           break;
@@ -107,20 +110,21 @@ function Cart() {
           toast.success('Free Shipping Applied!');
           break;
         case 'Cashback': {
-          const cashbackAmount = (total * reward.rewardPercentage) / 100;
+          const cashbackAmount = (currentTotal * reward.rewardPercentage) / 100;
+          setShippingCost(5);
           toast.success(
             `Cashback of $${cashbackAmount.toFixed(2)} will be credited to your account after purchase`
           );
           break;
         }
-        case 'Charity':
-          {
-            const donationAmount = (total * reward.rewardPercentage) / 100;
-            toast.success(
-              `$${donationAmount.toFixed(2)} will be donated to ${reward.rewardTitle}`
-            );
-          }
+        case 'Charity': {
+          const donationAmount = (currentTotal * reward.rewardPercentage) / 100;
+          setShippingCost(5);
+          toast.success(
+            `$${donationAmount.toFixed(2)} will be donated to ${reward.rewardTitle}`
+          );
           break;
+        }
         default:
           break;
       }

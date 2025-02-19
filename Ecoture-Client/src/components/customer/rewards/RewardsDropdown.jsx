@@ -44,7 +44,7 @@ const RewardsDropdown = ({
         const discountAmount = (subtotal * reward.rewardPercentage) / 100;
         return Math.min(discountAmount, reward.maximumDiscountCap || Infinity);
       }
-      case 'FreeShipping':
+      case 'Free Shipping':
         return 5; // Assuming standard shipping is $5
       case 'Cashback':
         return (subtotal * reward.rewardPercentage) / 100;
@@ -64,7 +64,7 @@ const RewardsDropdown = ({
             ? ` (max $${reward.maximumDiscountCap})`
             : ''
         }`;
-      case 'FreeShipping':
+      case 'Free Shipping':
         return 'Free Shipping';
       case 'Cashback':
         return `${reward.rewardPercentage}% Cashback ($${amount.toFixed(2)})`;
