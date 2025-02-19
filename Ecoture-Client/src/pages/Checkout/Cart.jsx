@@ -107,11 +107,13 @@ function Cart() {
         }
         case 'Free Shipping':
           setShippingCost(0);
+          setDiscount(0);
           toast.success('Free Shipping Applied!');
           break;
         case 'Cashback': {
           const cashbackAmount = (currentTotal * reward.rewardPercentage) / 100;
           setShippingCost(5);
+          setDiscount(0);
           toast.success(
             `Cashback of $${cashbackAmount.toFixed(2)} will be credited to your account after purchase`
           );
@@ -120,6 +122,7 @@ function Cart() {
         case 'Charity': {
           const donationAmount = (currentTotal * reward.rewardPercentage) / 100;
           setShippingCost(5);
+          setDiscount(0);
           toast.success(
             `$${donationAmount.toFixed(2)} will be donated to ${reward.rewardTitle}`
           );
