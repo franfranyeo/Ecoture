@@ -25,11 +25,15 @@ const EnhancedMembership = ({
   onNavigateToViewActivity,
 }) => {
   const [pointsExpiring, setPointsExpiring] = useState(0);
+  const [expiryDate, setExpiryDate] = useState('');
   const theme = useTheme();
   useEffect(() => {
     // fetch points that are expiring soon for the user
     http.get('/points/expiring').then((response) => {
-      setPointsExpiring(response.data);
+      const { data } = response;
+      if (data.points === 0) return;
+      setPointsExpiring(data.points);
+      setExpiryDate(data.expiryDate);
     });
   }, []);
 
@@ -124,7 +128,7 @@ const EnhancedMembership = ({
               >
                 TOTAL POINTS:
               </Typography>
-              <Box sx={{ display: 'flex', alignItems: 'end', gap: 1 }}>
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                 <Typography
                   variant="h3"
                   sx={{
@@ -134,9 +138,18 @@ const EnhancedMembership = ({
                 >
                   {totalPoints}
                 </Typography>
-                <Typography variant="body1" color="warning" sx={{ mb: 0.5 }}>
-                  ({pointsExpiring} points will expire on 31/12/2025)
-                </Typography>
+                {pointsExpiring > 0 && (
+                  <Typography
+                    variant="body2"
+                    color="warning"
+                    sx={{
+                      fontWeight: 'bold',
+                    }}
+                  >
+                    {pointsExpiring} points expiring on{' '}
+                    {new Date(expiryDate).toLocaleDateString()}
+                  </Typography>
+                )}
               </Box>
             </CardContent>
           </Card>

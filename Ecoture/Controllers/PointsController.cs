@@ -87,22 +87,34 @@ namespace Ecoture.Controllers
             {
                 // Get user id from claims
                 var userId = Convert.ToInt32(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
-                var expiringPoints = await _context.PointsTransactions
+
+                // Calculate one month from now
+                var oneMonthFromNow = DateTime.UtcNow.AddMonths(1).Date;
+
+                // Get future expiring transactions within the next month
+                var nearestExpiringTransaction = await _context.PointsTransactions
                     .Where(pt => pt.UserId == userId &&
-                    pt.ExpiryDate.Date >= DateTime.UtcNow.Date &&
-                    pt.ExpiryDate.Date <= DateTime.UtcNow.AddMonths(12).Date)
-                    .ToListAsync();
+                           pt.ExpiryDate.Date > DateTime.UtcNow.Date &&
+                           pt.ExpiryDate.Date <= oneMonthFromNow)
+                    .OrderBy(pt => pt.ExpiryDate) // Order by closest expiry date
+                    .FirstOrDefaultAsync();
 
-                // Calculate total expiring points
-                int totalExpiringPoints = expiringPoints.Sum(pt => pt.PointsEarned - pt.PointsSpent);
+                if (nearestExpiringTransaction == null)
+                {
+                    return Ok(new { points = 0, expiryDate = (DateTime?)null });
+                }
 
-                return Ok(totalExpiringPoints);
+                // Return points and expiry date
+                return Ok(new
+                {
+                    points = nearestExpiringTransaction.PointsEarned - nearestExpiringTransaction.PointsSpent,
+                    expiryDate = nearestExpiringTransaction.ExpiryDate
+                });
             }
             catch (Exception ex)
             {
                 return StatusCode(500, "An error occurred while fetching expiring points.");
             }
         }
-
     }
 }
